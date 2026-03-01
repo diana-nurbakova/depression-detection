@@ -1,0 +1,908 @@
+# =============================================================================
+# HiPerT-ADHD: ASRS-v1.1 Symptom Definitions
+# 18 items across 3 factors and 7 subclusters
+# =============================================================================
+
+symptoms:
+  # ---------------------------------------------------------------------------
+  # Factor: Inattention (F_IN) -- Subcluster: Organization/Planning
+  # ---------------------------------------------------------------------------
+  - item_number: 1
+    text: "How often do you have trouble wrapping up the final details of a project, once the challenging parts have been done?"
+    factor: "Inattention"
+    subcluster: "Organization/Planning"
+    token_budget: "compressed_3"
+    expected_reliability: "MEDIUM"
+    symptom_weight: 0.7
+    clinical_difficulty_prior: 0.5
+    keywords:
+      - "wrapping up"
+      - "final details"
+      - "finishing projects"
+      - "last step"
+      - "almost done but can't finish"
+      - "loose ends"
+      - "follow through"
+      - "completion"
+      - "focus"
+      - "distracted"
+      - "spacing out"
+      - "forgetful"
+      - "procrastinate"
+      - "brain fog"
+      - "zoning out"
+      - "can't concentrate"
+      - "lose track"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion IA-b: Often fails to give close attention to details or makes careless mistakes.
+        In adults this manifests as difficulty completing the final, less stimulating steps of a project
+        after the intellectually engaging portions are done.
+      L2_adult: |
+        Projects sit at 90% completion for weeks because the remaining administrative steps feel unbearable.
+        Reports are submitted with avoidable errors in formatting, citations, or data entry.
+        Household tasks like filing taxes or returning forms are chronically delayed at the last mile.
+        At work, colleagues may perceive the person as careless despite strong conceptual output.
+      L3_discussion: |
+        "I can start a hundred projects but finishing the boring parts is impossible."
+        "Everything is 90% done and nothing is 100% done."
+        "I always lose momentum right at the end."
+        "People think I'm lazy but the exciting part is over and my brain just shuts off."
+      L4_differential: |
+        Depression: loss of interest is pervasive and mood-congruent, not task-specific.
+        Perfectionism/OCD: delay stems from fear of imperfection, not boredom-driven disengagement.
+        ADHD-specific: difficulty is worst for low-stimulation wrap-up tasks while novel tasks remain engaging.
+
+  - item_number: 2
+    text: "How often do you have difficulty getting things organized?"
+    factor: "Inattention"
+    subcluster: "Organization/Planning"
+    token_budget: "compressed_3"
+    expected_reliability: "MEDIUM"
+    symptom_weight: 0.7
+    clinical_difficulty_prior: 0.5
+    keywords:
+      - "organized"
+      - "disorganized"
+      - "messy"
+      - "clutter"
+      - "planning"
+      - "prioritizing"
+      - "to-do list"
+      - "time management"
+      - "chaos"
+      - "focus"
+      - "distracted"
+      - "spacing out"
+      - "forgetful"
+      - "procrastinate"
+      - "brain fog"
+      - "zoning out"
+      - "can't concentrate"
+      - "lose track"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion IA-d: Often has difficulty organizing tasks and activities.
+        Adults struggle with sequencing steps, managing time, and maintaining orderly workspaces
+        or personal systems despite average-or-above intellectual ability.
+      L2_adult: |
+        Desks, bags, and digital files are chronically disorganized despite repeated clean-up attempts.
+        Time estimates are consistently inaccurate leading to missed deadlines or last-minute rushes.
+        Multiple planning systems are tried and abandoned within weeks.
+        Bills, paperwork, and appointments require external scaffolding from partners or apps.
+      L3_discussion: |
+        "My house looks like a tornado hit it no matter how much I clean."
+        "I've tried every planner app known to man and none of them stick."
+        "I can't figure out where to start so I just don't."
+        "People don't understand that organizing feels like solving a Rubik's cube blindfolded."
+      L4_differential: |
+        Hoarding disorder: disorganization is secondary to difficulty discarding; emotional attachment to objects is central.
+        Depression: disorganization arises from psychomotor retardation and anhedonia, not executive sequencing deficits.
+        ADHD-specific: the person wants to organize and may hyperfocus on organizing systems, but cannot sustain the structure.
+
+  # ---------------------------------------------------------------------------
+  # Factor: Inattention (F_IN) -- Subcluster: Memory/Avoidance
+  # ---------------------------------------------------------------------------
+  - item_number: 3
+    text: "How often do you have problems remembering appointments or obligations?"
+    factor: "Inattention"
+    subcluster: "Memory/Avoidance"
+    token_budget: "compressed_3"
+    expected_reliability: "MEDIUM"
+    symptom_weight: 0.7
+    clinical_difficulty_prior: 0.5
+    keywords:
+      - "forgetting appointments"
+      - "missed meeting"
+      - "obligations"
+      - "reminder"
+      - "calendar"
+      - "forgot"
+      - "memory"
+      - "slipped my mind"
+      - "focus"
+      - "distracted"
+      - "spacing out"
+      - "forgetful"
+      - "procrastinate"
+      - "brain fog"
+      - "zoning out"
+      - "can't concentrate"
+      - "lose track"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion IA-d (supplementary): Often forgetful in daily activities.
+        In adults, prospective memory failures cause missed appointments, deadlines, and social
+        commitments that erode reliability and relationships.
+      L2_adult: |
+        Double-booking or missing medical and professional appointments despite calendar apps.
+        Forgetting to return phone calls, reply to emails, or follow up on promises.
+        Birthdays, anniversaries, and social plans are missed unless someone else reminds them.
+        Work deliverables slip because the commitment was mentally "filed" and then lost.
+      L3_discussion: |
+        "If it's not in my phone with three alarms, it doesn't exist."
+        "I forgot my own dentist appointment for the third time this year."
+        "My friends think I don't care but I genuinely forgot we had plans."
+        "I need reminders for my reminders."
+      L4_differential: |
+        Age-related cognitive decline: memory loss is progressive and affects recall broadly, not selectively.
+        Anxiety: the person remembers obligations but worries excessively about them rather than forgetting.
+        ADHD-specific: prospective memory is disproportionately impaired; recognition memory is typically intact.
+
+  - item_number: 4
+    text: "When you have a task that requires a lot of thought, how often do you avoid or delay getting started?"
+    factor: "Inattention"
+    subcluster: "Memory/Avoidance"
+    token_budget: "compressed_3"
+    expected_reliability: "MEDIUM"
+    symptom_weight: 0.7
+    clinical_difficulty_prior: 0.5
+    keywords:
+      - "avoid"
+      - "delay"
+      - "putting off"
+      - "procrastination"
+      - "can't get started"
+      - "overwhelmed"
+      - "dread"
+      - "task initiation"
+      - "focus"
+      - "distracted"
+      - "spacing out"
+      - "forgetful"
+      - "procrastinate"
+      - "brain fog"
+      - "zoning out"
+      - "can't concentrate"
+      - "lose track"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion IA-f: Often avoids, dislikes, or is reluctant to engage in tasks requiring
+        sustained mental effort. Adults with ADHD experience this as an overwhelming initiation barrier
+        disproportionate to actual task difficulty.
+      L2_adult: |
+        Tax returns, long reports, and complex emails sit untouched for days or weeks.
+        The person may engage in productive-seeming but lower-priority tasks to avoid the dreaded one.
+        Avoidance often triggers guilt spirals that further entrench the pattern.
+        Deadlines become the only reliable activation mechanism, creating chronic last-minute crises.
+      L3_discussion: |
+        "I can't start anything unless the deadline is breathing down my neck."
+        "I'll clean the entire house before I open that one email."
+        "It's not laziness, my brain literally won't let me begin."
+        "The longer I avoid it the bigger the wall gets."
+        "Panic is my only motivator and I hate it."
+      L4_differential: |
+        Depression: avoidance is global and accompanied by low mood, not selective to cognitively demanding tasks.
+        GAD: avoidance is driven by worry about the outcome, not by an inability to initiate.
+        ADHD-specific: once started (often via external pressure), the person can perform well; the bottleneck is initiation, not ability.
+
+  # ---------------------------------------------------------------------------
+  # Factor: Motor H/I (F_MH) -- Subcluster: Fidgeting/Restlessness
+  # ---------------------------------------------------------------------------
+  - item_number: 5
+    text: "How often do you fidget or squirm with your hands or feet when you have to sit for a long time?"
+    factor: "Motor_HI"
+    subcluster: "Fidgeting/Restlessness"
+    token_budget: "minimal_2"
+    expected_reliability: "HIGH"
+    symptom_weight: 1.0
+    clinical_difficulty_prior: 0.2
+    keywords:
+      - "fidget"
+      - "squirm"
+      - "tapping"
+      - "bouncing leg"
+      - "can't sit still"
+      - "hands"
+      - "feet"
+      - "fidget spinner"
+      - "fidget"
+      - "restless"
+      - "can't sit still"
+      - "antsy"
+      - "squirming"
+      - "pacing"
+      - "tapping"
+      - "bouncing"
+      - "hyperactive"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion HI-a: Often fidgets with or taps hands or feet, or squirms in seat.
+        In adults, gross motor fidgeting may be socially modulated but persists as subtle,
+        repetitive movements during enforced sitting.
+      L2_adult: |
+        Leg bouncing, pen clicking, nail picking, or hair twirling during meetings and lectures.
+        Difficulty sitting through movies, flights, or long dinners without physical discomfort.
+        Fidget objects or doodling used as self-regulation strategies.
+      L3_discussion: |
+        "My leg is always bouncing and I don't even notice until someone points it out."
+        "I have to have something in my hands or I can't pay attention."
+        "Sitting through a two-hour meeting is physically painful."
+      L4_differential: |
+        Restless legs syndrome: sensations are primarily in the legs, worse at night, and relieved by movement.
+        Akathisia (medication-induced): inner restlessness with a compulsion to move, often linked to antipsychotics.
+        ADHD-specific: fidgeting is lifelong, context-dependent, and often improves rather than impairs focus.
+
+  # ---------------------------------------------------------------------------
+  # Factor: Motor H/I (F_MH) -- Subcluster: Internal Drive/Settling
+  # ---------------------------------------------------------------------------
+  - item_number: 6
+    text: "How often do you feel overly active and compelled to do things, like you were driven by a motor?"
+    factor: "Motor_HI"
+    subcluster: "Internal_Drive"
+    token_budget: "compressed_3"
+    expected_reliability: "MEDIUM"
+    symptom_weight: 1.0
+    clinical_difficulty_prior: 0.2
+    keywords:
+      - "driven by a motor"
+      - "overly active"
+      - "compelled"
+      - "always on the go"
+      - "can't slow down"
+      - "wired"
+      - "internal engine"
+      - "fidget"
+      - "restless"
+      - "can't sit still"
+      - "antsy"
+      - "squirming"
+      - "pacing"
+      - "tapping"
+      - "bouncing"
+      - "hyperactive"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion HI-c: Often "on the go," acting as if "driven by a motor."
+        In adults this internalizes as a subjective sense of mental and physical restlessness
+        and a compulsive need to stay busy.
+      L2_adult: |
+        Difficulty relaxing on weekends or vacations without scheduling activities.
+        Taking on excessive commitments because stillness feels intolerable.
+        Partners describe the person as "always going" or "impossible to keep up with."
+        Internal restlessness may manifest as racing thoughts rather than visible hyperactivity.
+      L3_discussion: |
+        "I feel like my brain has a motor that never turns off."
+        "Relaxing makes me anxious, I always need to be doing something."
+        "People think I'm a workaholic but I literally cannot stop."
+        "Even when I'm exhausted my mind is still racing."
+      L4_differential: |
+        Mania/hypomania: driven energy is episodic, accompanied by decreased need for sleep and grandiosity.
+        Anxiety: internal restlessness is accompanied by worry and tension, not a pleasure-seeking drive.
+        ADHD-specific: the driven quality is chronic, lifelong, and not mood-state dependent.
+
+  # ---------------------------------------------------------------------------
+  # Factor: Inattention (F_IN) -- Subcluster: Sustained Attention/Distractibility
+  # ---------------------------------------------------------------------------
+  - item_number: 7
+    text: "How often do you have difficulty unwinding and relaxing when you have time to yourself?"
+    factor: "Inattention"
+    subcluster: "Sustained_Attention"
+    token_budget: "full_4"
+    expected_reliability: "LOW"
+    symptom_weight: 0.5
+    clinical_difficulty_prior: 0.8
+    keywords:
+      - "unwinding"
+      - "relaxing"
+      - "can't relax"
+      - "restless mind"
+      - "racing thoughts"
+      - "downtime"
+      - "quiet time"
+      - "focus"
+      - "distracted"
+      - "spacing out"
+      - "forgetful"
+      - "procrastinate"
+      - "brain fog"
+      - "zoning out"
+      - "can't concentrate"
+      - "lose track"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion IA-h (cross-loaded with HI): Difficulty disengaging cognitive and motor
+        activity during unstructured time. Adults report an inability to "switch off" mentally
+        even when environmental demands are low.
+      L2_adult: |
+        Scrolling phone, channel-surfing, or starting new tasks instead of resting.
+        Sleep onset is delayed by mental chatter or the urge to "do one more thing."
+        Vacations feel stressful without a packed itinerary.
+        Meditation and mindfulness practices are attempted and quickly abandoned.
+        Free time triggers guilt or restlessness rather than restoration.
+      L3_discussion: |
+        "I don't know how people just sit and do nothing."
+        "My brain doesn't have an off switch."
+        "I scroll my phone for hours because I can't settle into anything."
+        "Weekends without plans make me feel worse, not better."
+        "Meditation apps just make me more aware of how loud my brain is."
+      L4_differential: |
+        GAD: difficulty relaxing is driven by identifiable worries and what-if scenarios.
+        PTSD: hyperarousal includes hypervigilance, exaggerated startle, and trauma-linked triggers.
+        Insomnia disorder: primary complaint is sleep disruption, not pervasive inability to relax.
+        ADHD-specific: the restlessness is chronic, non-content-specific, and often experienced as boredom intolerance.
+
+  - item_number: 8
+    text: "How often do you have difficulty concentrating on what people say to you, even when they are speaking to you directly?"
+    factor: "Inattention"
+    subcluster: "Sustained_Attention"
+    token_budget: "full_4"
+    expected_reliability: "LOW"
+    symptom_weight: 0.5
+    clinical_difficulty_prior: 0.8
+    keywords:
+      - "concentrating"
+      - "listening"
+      - "zone out in conversation"
+      - "not hearing"
+      - "what did you say"
+      - "spacing out"
+      - "tuning out"
+      - "focus"
+      - "distracted"
+      - "spacing out"
+      - "forgetful"
+      - "procrastinate"
+      - "brain fog"
+      - "zoning out"
+      - "can't concentrate"
+      - "lose track"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion IA-c: Often does not seem to listen when spoken to directly.
+        In adults, this presents as internally-driven inattention during conversations,
+        not defiance or disinterest.
+      L2_adult: |
+        Losing track of conversations mid-sentence and needing others to repeat themselves.
+        Nodding along in meetings while mentally elsewhere, then missing action items.
+        Partners and friends feel ignored or unimportant despite genuine care.
+        One-on-one conversations are easier than group settings but still affected.
+        Phone calls are particularly difficult; visual cues help anchor attention.
+      L3_discussion: |
+        "My partner says I never listen but I swear I'm trying."
+        "I zone out mid-conversation and have no idea what was just said."
+        "I can hear the words but they don't register."
+        "Group conversations are the worst -- too many threads to track."
+        "I've started repeating back what people say just to make sure I caught it."
+      L4_differential: |
+        Hearing impairment: difficulty is consistent, not context-dependent; audiometry is abnormal.
+        Social anxiety: the person is hyper-aware of the conversation, not drifting away from it.
+        Dissociation: episodes are distinct, often trauma-triggered, with depersonalization features.
+        ADHD-specific: inattention is worst during low-novelty conversations and improves with high emotional salience.
+
+  - item_number: 9
+    text: "How often do you misplace or have difficulty finding things at home or at work?"
+    factor: "Inattention"
+    subcluster: "Sustained_Attention"
+    token_budget: "full_4"
+    expected_reliability: "LOW"
+    symptom_weight: 0.5
+    clinical_difficulty_prior: 0.8
+    keywords:
+      - "misplace"
+      - "losing things"
+      - "can't find"
+      - "where did I put"
+      - "keys"
+      - "wallet"
+      - "phone"
+      - "scattered"
+      - "focus"
+      - "distracted"
+      - "spacing out"
+      - "forgetful"
+      - "procrastinate"
+      - "brain fog"
+      - "zoning out"
+      - "can't concentrate"
+      - "lose track"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion IA-g: Often loses things necessary for tasks and activities.
+        Adults frequently misplace everyday items due to absent-minded placement during
+        attentional shifts, not memory decline.
+      L2_adult: |
+        Keys, wallet, phone, and glasses are lost daily despite designated spots.
+        Important documents are misplaced, causing missed deadlines or duplicate purchases.
+        Digital files are saved in wrong folders or with non-descriptive names.
+        Time spent searching for items creates chronic lateness and frustration.
+        Compensatory strategies include tracking devices and minimalist environments.
+      L3_discussion: |
+        "I have Tile trackers on literally everything I own."
+        "I put my keys down somewhere and five minutes later they've vanished."
+        "I've bought the same charger six times because I keep losing them."
+        "My morning routine adds 20 minutes just for finding things."
+        "The amount of money I've spent replacing lost items is embarrassing."
+      L4_differential: |
+        Early dementia: object loss is progressive, with difficulty recognizing found objects; other cognitive domains affected.
+        Depression: items are not put away due to low motivation, not attentional lapses during placement.
+        OCD: items may be "lost" because they were moved to satisfy a compulsion.
+        ADHD-specific: objects are lost at the moment of distracted placement; the person can recall what they were doing when they lost it.
+
+  - item_number: 10
+    text: "How often are you distracted by activity or noise around you?"
+    factor: "Inattention"
+    subcluster: "Sustained_Attention"
+    token_budget: "full_4"
+    expected_reliability: "LOW"
+    symptom_weight: 0.5
+    clinical_difficulty_prior: 0.8
+    keywords:
+      - "distracted"
+      - "noise"
+      - "activity around"
+      - "can't filter"
+      - "sensory overload"
+      - "open office"
+      - "background noise"
+      - "focus"
+      - "distracted"
+      - "spacing out"
+      - "forgetful"
+      - "procrastinate"
+      - "brain fog"
+      - "zoning out"
+      - "can't concentrate"
+      - "lose track"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion IA-i: Is often easily distracted by extraneous stimuli.
+        Adults with ADHD have impaired sensory gating, making it difficult to filter
+        irrelevant environmental input from task-relevant information.
+      L2_adult: |
+        Open-plan offices are nearly impossible to work in without headphones.
+        Background conversations pull attention away even during focused work.
+        Visual movement in peripheral vision triggers involuntary attention shifts.
+        Noise-canceling headphones and white noise are essential work tools.
+        Productivity varies dramatically based on environmental control.
+      L3_discussion: |
+        "I literally cannot work if someone is having a conversation near me."
+        "Open offices are my personal hell."
+        "I need noise-canceling headphones just to function at work."
+        "A dog barking outside can derail my focus for 20 minutes."
+        "I notice every sound, every movement -- my brain won't ignore anything."
+      L4_differential: |
+        Sensory processing disorder: sensitivity extends across modalities with distress, not just attentional capture.
+        Misophonia: specific sounds trigger intense emotional reactions, not general distractibility.
+        Hyperacusis: sounds are perceived as physically painful or uncomfortably loud.
+        ADHD-specific: distractibility is worst during low-interest tasks and improves during hyperfocus states.
+
+  - item_number: 11
+    text: "How often do you have difficulty keeping your attention when you are doing boring or repetitive work?"
+    factor: "Inattention"
+    subcluster: "Sustained_Attention"
+    token_budget: "full_4"
+    expected_reliability: "LOW"
+    symptom_weight: 0.5
+    clinical_difficulty_prior: 0.8
+    keywords:
+      - "boring"
+      - "repetitive"
+      - "tedious"
+      - "monotonous"
+      - "mind wandering"
+      - "attention span"
+      - "sustained attention"
+      - "focus"
+      - "distracted"
+      - "spacing out"
+      - "forgetful"
+      - "procrastinate"
+      - "brain fog"
+      - "zoning out"
+      - "can't concentrate"
+      - "lose track"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion IA-e: Often has difficulty sustaining attention in tasks.
+        The hallmark ADHD attention deficit: interest-dependent attention regulation where
+        low-stimulation tasks produce rapid disengagement regardless of importance.
+      L2_adult: |
+        Data entry, expense reports, and routine paperwork trigger rapid mind-wandering.
+        Reading dense or uninteresting material requires re-reading the same paragraph multiple times.
+        Performance reviews note inconsistency between brilliant project work and neglected routine duties.
+        Errors of omission increase dramatically as task monotony increases.
+        Compensatory deadline pressure or novelty-seeking are used to maintain engagement.
+      L3_discussion: |
+        "I can hyperfocus on something interesting for 12 hours but can't do 10 minutes of data entry."
+        "My brain literally refuses to engage with boring stuff."
+        "I read the same page five times and still don't know what it says."
+        "I do my best work under pressure because that's the only way my brain turns on."
+        "The contrast between what I can do when interested vs. bored is insane."
+      L4_differential: |
+        Depression: low engagement is pervasive across all activities, including previously enjoyed ones.
+        Chronic fatigue: attention difficulties are accompanied by physical exhaustion and post-exertional malaise.
+        Intellectual disability: difficulty is consistent across task types, not interest-dependent.
+        ADHD-specific: the defining feature is the interest-attention link -- hyperfocus on engaging tasks coexists with inability to sustain attention on mundane ones.
+
+  # ---------------------------------------------------------------------------
+  # Factor: Motor H/I (F_MH) -- Subcluster: Internal Drive/Settling
+  # ---------------------------------------------------------------------------
+  - item_number: 12
+    text: "How often do you leave your seat in meetings or other situations in which you are expected to remain seated?"
+    factor: "Motor_HI"
+    subcluster: "Internal_Drive"
+    token_budget: "minimal_2"
+    expected_reliability: "HIGH"
+    symptom_weight: 1.0
+    clinical_difficulty_prior: 0.2
+    keywords:
+      - "leave seat"
+      - "getting up"
+      - "can't stay seated"
+      - "meetings"
+      - "walking around"
+      - "excuses to move"
+      - "fidget"
+      - "restless"
+      - "can't sit still"
+      - "antsy"
+      - "squirming"
+      - "pacing"
+      - "tapping"
+      - "bouncing"
+      - "hyperactive"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion HI-b: Often leaves seat in situations when remaining seated is expected.
+        In adults this is frequently masked by socially acceptable pretexts such as getting water
+        or using the restroom.
+      L2_adult: |
+        Frequent "bathroom breaks" or "coffee runs" during long meetings to satisfy the urge to move.
+        Standing at the back of conference rooms or choosing standing desks.
+        Volunteering for tasks that allow movement, such as writing on the whiteboard.
+      L3_discussion: |
+        "I always volunteer to get the supplies or write on the whiteboard just so I can move."
+        "I go to the bathroom during meetings even when I don't need to."
+        "Standing desks saved my career."
+      L4_differential: |
+        Restless legs syndrome: the urge is localized to legs, worse at rest and evening.
+        Anxiety: leaving the seat is driven by escape/avoidance of the social situation, not a need for movement.
+        ADHD-specific: the person wants to stay seated and participate but the physical need to move overrides intention.
+
+  # ---------------------------------------------------------------------------
+  # Factor: Motor H/I (F_MH) -- Subcluster: Fidgeting/Restlessness
+  # ---------------------------------------------------------------------------
+  - item_number: 13
+    text: "How often do you feel restless or fidgety?"
+    factor: "Motor_HI"
+    subcluster: "Fidgeting_Restlessness"
+    token_budget: "compressed_3"
+    expected_reliability: "MEDIUM"
+    symptom_weight: 1.0
+    clinical_difficulty_prior: 0.2
+    keywords:
+      - "restless"
+      - "fidgety"
+      - "antsy"
+      - "on edge"
+      - "can't settle"
+      - "uncomfortable"
+      - "need to move"
+      - "fidget"
+      - "restless"
+      - "can't sit still"
+      - "antsy"
+      - "squirming"
+      - "pacing"
+      - "tapping"
+      - "bouncing"
+      - "hyperactive"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion HI-a/c (combined): Subjective restlessness and fidgetiness.
+        In adults, the childhood pattern of running and climbing evolves into an internal
+        sense of restlessness and subtle motor overflow.
+      L2_adult: |
+        A persistent inner feeling of needing to move or do something.
+        Difficulty sitting through movies, flights, religious services, or formal events.
+        Jiggling legs, shifting posture, or playing with objects unconsciously.
+        Physical exercise is used as a primary self-regulation strategy.
+      L3_discussion: |
+        "I feel like I have ants under my skin if I sit too long."
+        "Exercise is the only thing that calms my brain down."
+        "I'm always shifting in my chair and people find it distracting."
+        "The restlessness is more mental than physical as I've gotten older."
+      L4_differential: |
+        Akathisia: typically medication-induced, with a distinct subjective quality of inner torment.
+        Hyperthyroidism: restlessness accompanied by weight loss, heat intolerance, and tremor.
+        ADHD-specific: restlessness is lifelong, partially relieved by stimulant medication, and improves with voluntary physical activity.
+
+  # ---------------------------------------------------------------------------
+  # Factor: Motor H/I (F_MH) -- Subcluster: Internal Drive/Settling
+  # ---------------------------------------------------------------------------
+  - item_number: 14
+    text: "How often do you have difficulty stopping your activity or what you are doing when you're supposed to?"
+    factor: "Motor_HI"
+    subcluster: "Internal_Drive"
+    token_budget: "compressed_3"
+    expected_reliability: "MEDIUM"
+    symptom_weight: 1.0
+    clinical_difficulty_prior: 0.2
+    keywords:
+      - "can't stop"
+      - "hard to switch"
+      - "hyperfocus"
+      - "transition difficulty"
+      - "stuck on task"
+      - "overcommitted"
+      - "one more thing"
+      - "fidget"
+      - "restless"
+      - "can't sit still"
+      - "antsy"
+      - "squirming"
+      - "pacing"
+      - "tapping"
+      - "bouncing"
+      - "hyperactive"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion HI-c (extended): Difficulty with behavioral inhibition and task termination.
+        Adults show impaired stop-signal processing, manifesting as an inability to disengage from
+        a current activity even when aware of competing priorities.
+      L2_adult: |
+        Hyperfocusing on a project for hours past the intended stopping point, missing meals or appointments.
+        Difficulty transitioning between tasks, especially from an engaging to a mundane activity.
+        Being late because "one more thing" always takes priority over leaving on time.
+        Video games, social media, or hobbies consume entire evenings unintentionally.
+      L3_discussion: |
+        "I meant to play the game for 30 minutes and suddenly it's 3 AM."
+        "I can't leave the house on time because I always have to do 'one more thing.'"
+        "My hyperfocus is a superpower and a curse."
+        "Transitions are the hardest part of my day."
+      L4_differential: |
+        OCD: inability to stop is driven by anxiety and compulsive rituals, not by engagement or reward.
+        Behavioral addiction: difficulty stopping is confined to specific reward-driven activities.
+        ADHD-specific: difficulty stopping generalizes across activities and is tied to attentional perseveration, not compulsion or craving.
+
+  # ---------------------------------------------------------------------------
+  # Factor: Verbal H/I (F_VH) -- Subcluster: Output Control
+  # ---------------------------------------------------------------------------
+  - item_number: 15
+    text: "How often do you talk too much when in social situations?"
+    factor: "Verbal_HI"
+    subcluster: "Output_Control"
+    token_budget: "minimal_2"
+    expected_reliability: "HIGH"
+    symptom_weight: 0.9
+    clinical_difficulty_prior: 0.2
+    keywords:
+      - "talk too much"
+      - "rambling"
+      - "oversharing"
+      - "motor mouth"
+      - "can't stop talking"
+      - "dominating conversation"
+      - "interrupt"
+      - "talk too much"
+      - "blurt out"
+      - "can't wait my turn"
+      - "finish sentences"
+      - "butting in"
+      - "rambling"
+      - "oversharing"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion HI-d: Often talks excessively.
+        In adults, verbal hyperactivity presents as difficulty self-monitoring conversational
+        output, leading to socially inappropriate over-disclosure and monologuing.
+      L2_adult: |
+        Dominating conversations without realizing until afterward.
+        Sharing personal details inappropriately or at excessive length.
+        Difficulty reading social cues that the listener wants to speak or leave.
+      L3_discussion: |
+        "I always realize I've been talking for 10 minutes straight and no one else got a word in."
+        "I overshare with strangers and then feel mortified later."
+        "My friends joke that I don't have a filter."
+      L4_differential: |
+        Mania: pressured speech is episodic, rapid, and accompanied by elevated or irritable mood.
+        Social anxiety: the person typically under-talks, not over-talks, in social settings.
+        ADHD-specific: excessive talking is chronic, often topic-driven by enthusiasm, and the person is distressed by it retrospectively.
+
+  - item_number: 16
+    text: "When you're in a conversation, how often do you find yourself finishing the sentences of the people you are talking to, before they can finish them themselves?"
+    factor: "Verbal_HI"
+    subcluster: "Output_Control"
+    token_budget: "minimal_2"
+    expected_reliability: "HIGH"
+    symptom_weight: 0.9
+    clinical_difficulty_prior: 0.2
+    keywords:
+      - "finishing sentences"
+      - "completing others' thoughts"
+      - "jumping ahead"
+      - "impatient listener"
+      - "anticipating words"
+      - "interrupt"
+      - "talk too much"
+      - "blurt out"
+      - "can't wait my turn"
+      - "finish sentences"
+      - "butting in"
+      - "rambling"
+      - "oversharing"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion HI-f: Often finishes others' sentences.
+        This reflects impaired verbal inhibition combined with rapid cognitive processing;
+        the person anticipates the speaker's point and verbalizes it prematurely.
+      L2_adult: |
+        Completing colleagues' sentences in meetings, perceived as condescending.
+        Jumping to conclusions about what someone is saying before they finish.
+        Partners feel unheard because their thoughts are "stolen" mid-sentence.
+      L3_discussion: |
+        "I finish people's sentences and they think I'm being rude but I just can't help it."
+        "My brain gets there before they do and the words just come out."
+        "I've been told I'm a terrible listener because of this."
+      L4_differential: |
+        Impatience from anxiety: finishing sentences is driven by wanting the conversation to end, not by cognitive impulsivity.
+        Narcissistic traits: interrupting is self-serving and dismissive; in ADHD it is often collaborative in intent.
+        ADHD-specific: the person is genuinely trying to help or connect, feels remorseful afterward, and cannot suppress the behavior despite awareness.
+
+  # ---------------------------------------------------------------------------
+  # Factor: Verbal H/I (F_VH) -- Subcluster: Turn-Taking/Interrupting
+  # ---------------------------------------------------------------------------
+  - item_number: 17
+    text: "How often do you have difficulty waiting your turn?"
+    factor: "Verbal_HI"
+    subcluster: "Turn_Taking"
+    token_budget: "minimal_2"
+    expected_reliability: "MEDIUM"
+    symptom_weight: 0.9
+    clinical_difficulty_prior: 0.2
+    keywords:
+      - "waiting turn"
+      - "impatient"
+      - "lines"
+      - "queues"
+      - "can't wait"
+      - "cutting in"
+      - "frustrated waiting"
+      - "interrupt"
+      - "talk too much"
+      - "blurt out"
+      - "can't wait my turn"
+      - "finish sentences"
+      - "butting in"
+      - "rambling"
+      - "oversharing"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion HI-h: Often has difficulty waiting their turn.
+        In adults, this extends beyond physical queues to cognitive and social turn-taking,
+        reflecting core deficits in delay aversion and temporal discounting.
+      L2_adult: |
+        Intense frustration in lines, traffic, or waiting rooms disproportionate to the actual wait.
+        Choosing faster but more expensive or less optimal options to avoid waiting.
+        Difficulty waiting for others to finish speaking before responding in group discussions.
+        Online ordering, self-checkout, and express lanes preferentially used.
+      L3_discussion: |
+        "Waiting in line makes me feel like I'm going to crawl out of my skin."
+        "I will pay extra just to skip a queue."
+        "I know I should wait my turn to talk but the thought will vanish if I don't say it now."
+        "Traffic makes me irrationally angry."
+      L4_differential: |
+        Antisocial traits: queue-cutting is entitled and without remorse; in ADHD there is awareness and guilt.
+        Impulse control disorders: difficulty waiting is confined to specific reward contexts.
+        ADHD-specific: difficulty waiting is pervasive across contexts and accompanied by subjective distress, not entitlement.
+
+  - item_number: 18
+    text: "How often do you interrupt others when they are busy?"
+    factor: "Verbal_HI"
+    subcluster: "Turn_Taking"
+    token_budget: "minimal_2"
+    expected_reliability: "HIGH"
+    symptom_weight: 0.9
+    clinical_difficulty_prior: 0.2
+    keywords:
+      - "interrupt"
+      - "butting in"
+      - "barging in"
+      - "can't hold thought"
+      - "blurting"
+      - "intruding"
+      - "urgent feeling"
+      - "interrupt"
+      - "talk too much"
+      - "blurt out"
+      - "can't wait my turn"
+      - "finish sentences"
+      - "butting in"
+      - "rambling"
+      - "oversharing"
+    layers:
+      L1_clinical: |
+        DSM-5-TR Criterion HI-g: Often interrupts or intrudes on others.
+        Adults interrupt conversations, meetings, or others' work because the thought feels
+        urgent and transient -- if not expressed immediately, it will be lost.
+      L2_adult: |
+        Walking into a colleague's office mid-task to share a thought that "can't wait."
+        Interrupting meetings with tangential ideas that derail the agenda.
+        Sending messages marked urgent for non-urgent matters.
+      L3_discussion: |
+        "I interrupt because if I don't say it right now, I'll forget it completely."
+        "People think I'm rude but I'm just terrified of losing the thought."
+        "I've started writing things down instead of interrupting but I still slip up."
+      L4_differential: |
+        Narcissistic traits: interrupting reflects a belief that one's input is more important; lacks remorse.
+        Mania: interrupting is accompanied by pressured speech, flight of ideas, and elevated mood.
+        ADHD-specific: interrupting is driven by working memory limitations and thought urgency, not self-importance; the person is typically apologetic.
+
+# =============================================================================
+# Hierarchy Metadata
+# =============================================================================
+hierarchy:
+  factors:
+    Inattention: [1, 2, 3, 4, 7, 8, 9, 10, 11]
+    Motor_HI: [5, 6, 12, 13, 14]
+    Verbal_HI: [15, 16, 17, 18]
+  subclusters:
+    Organization_Planning: [1, 2]
+    Memory_Avoidance: [3, 4]
+    Sustained_Attention: [7, 8, 9, 10, 11]
+    Fidgeting_Restlessness: [5, 13]
+    Internal_Drive: [6, 12, 14]
+    Output_Control: [15, 16]
+    Turn_Taking: [17, 18]
+
+keyword_clusters:
+  inattention:
+    - "focus"
+    - "distracted"
+    - "spacing out"
+    - "forgetful"
+    - "procrastinate"
+    - "brain fog"
+    - "zoning out"
+    - "can't concentrate"
+    - "lose track"
+  motor_hi:
+    - "fidget"
+    - "restless"
+    - "can't sit still"
+    - "antsy"
+    - "squirming"
+    - "pacing"
+    - "tapping"
+    - "bouncing"
+    - "hyperactive"
+  verbal_hi:
+    - "interrupt"
+    - "talk too much"
+    - "blurt out"
+    - "can't wait my turn"
+    - "finish sentences"
+    - "butting in"
+    - "rambling"
+    - "oversharing"
+  general_adhd:
+    - "adhd"
+    - "add"
+    - "executive function"
+    - "dopamine"
+    - "adderall"
+    - "ritalin"
+    - "vyvanse"
+    - "diagnosed"
+    - "neurodivergent"

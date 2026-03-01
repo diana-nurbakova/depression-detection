@@ -1,0 +1,43 @@
+data:
+  corpus_dir: "data/eRisk-2026/task3-adhd-symptom-ranking-20260204T094934Z-3-001/task3-adhd-symptom-ranking/output_trec_files/output_trec_files"
+  output_dir: "output"
+  checkpoint_dir: "output/checkpoints"
+
+retrieval:
+  models:
+    - "all-mpnet-base-v2"
+  top_k: 5000
+  keyword_boost: 0.05
+  first_person_filter: true
+
+llm:
+  providers:
+    ollama:
+      base_url_env: "OLLAMA_BASE_URL"
+      api_key_env: "OLLAMA_API_KEY"
+      model: "llama3.1:70b"
+      temperature: 0.1
+      max_tokens: 512
+    openai:
+      base_url: "https://api.openai.com/v1"
+      api_key_env: "OPENAI_API_KEY"
+      model: "gpt-5-nano"
+      temperature: 0.0
+      max_tokens: 512
+  max_retries: 5
+  rate_limit_delay: 0.5
+  read_timeout: 300
+
+scoring:
+  primary_provider: "ollama"
+  escalation_provider: "openai"
+  escalation_confidence_threshold: 2
+  escalation_max_rate: 0.40
+
+processing:
+  batch_size: 50
+  num_workers: 4
+
+logging:
+  level: "INFO"
+  dir: "output/logs"

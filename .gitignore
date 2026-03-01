@@ -1,0 +1,28 @@
+# Environment
+.env
+.venv/
+__pycache__/
+*.pyc
+
+# Data (too large for git)
+data/
+output/
+*.npy
+
+# Build
+dist/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# UV
+uv.lock
+
+# specs
+specs/

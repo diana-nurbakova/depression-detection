@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv sync --python 3.11)",
+      "Bash(python3 -c \"import yaml; data = yaml.safe_load\\(open\\(''C:/Users/dnurb/Documents/depression-detection/config/symptoms.yaml''\\)\\); print\\(''Top-level keys:'', list\\(data.keys\\(\\)\\)\\); print\\(''Number of symptoms:'', len\\(data[''symptoms'']\\)\\); print\\(''Factors:'', data[''hierarchy''][''factors'']\\); print\\(''Subclusters:'', list\\(data[''hierarchy''][''subclusters''].keys\\(\\)\\)\\); print\\(''Keyword clusters:'', list\\(data[''keyword_clusters''].keys\\(\\)\\)\\)\")",
+      "Bash(python3 -c \":*)",
+      "Bash(uv run pytest tests/ -v)",
+      "Bash(uv pip install pytest)",
+      "Bash(unset VIRTUAL_ENV)",
+      "Bash(uv sync --extra dev)",
+      "Bash(uv run hipert parse --stats-only)",
+      "Bash(uv run hipert score --symptoms 5 --dry-run --verbose)",
+      "Bash(uv run hipert --verbose score --symptoms 5 --dry-run)",
+      "Bash(uv run python -c \":*)"
+    ]
+  }
+}
