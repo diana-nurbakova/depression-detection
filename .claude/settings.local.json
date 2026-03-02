@@ -11,7 +11,10 @@
       "Bash(uv run hipert parse --stats-only)",
       "Bash(uv run hipert score --symptoms 5 --dry-run --verbose)",
       "Bash(uv run hipert --verbose score --symptoms 5 --dry-run)",
-      "Bash(uv run python -c \":*)"
+      "Bash(uv run python -c \":*)",
+      "Bash(wc -l src/hipert/**/*.py)",
+      "Bash(uv run pytest tests/test_annotation_queries.py tests/test_retrieve_candidates.py -v)",
+      "Bash(uv run pytest -v)"
     ]
   }
 }

@@ -7,6 +7,7 @@ Usage:
     uv run hipert score --resume
     uv run hipert output --top-n 1000
     uv run hipert audit
+    uv run hipert annotate-prep --symptoms 5
     uv run hipert run
 """
 
@@ -180,6 +181,69 @@ def audit(ctx: click.Context, symptoms: str | None) -> None:
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, default=str)
     click.echo(f"\nFull report saved to {report_path}")
+
+
+@cli.command("annotate-prep")
+@click.option(
+    "--output-dir", default="candidates",
+    help="Output directory for candidate TSV files.",
+)
+@click.option(
+    "--annotations-dir", default="annotations",
+    help="Output directory for annotation template JSON files.",
+)
+@click.option(
+    "--symptoms", type=str, default=None,
+    help="Comma-separated symptom IDs (default: all).",
+)
+@click.option(
+    "--top-k", type=int, default=50,
+    help="Top candidates to retrieve per symptom (default: 50).",
+)
+@click.option(
+    "--seed", type=int, default=42,
+    help="Random seed for reproducibility.",
+)
+@click.pass_context
+def annotate_prep(
+    ctx: click.Context,
+    output_dir: str,
+    annotations_dir: str,
+    symptoms: str | None,
+    top_k: int,
+    seed: int,
+) -> None:
+    """Generate annotation candidates and templates for few-shot examples."""
+    import logging
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
+
+    symptom_ids = _parse_symptom_ids(symptoms)
+
+    from scripts.retrieve_candidates import run_candidate_retrieval
+
+    result = run_candidate_retrieval(
+        config_path=ctx.obj["config_path"],
+        symptoms_config=ctx.obj["symptoms_path"],
+        symptom_ids=symptom_ids,
+        output_dir=output_dir,
+        annotations_dir=annotations_dir,
+        top_k=top_k,
+        seed=seed,
+    )
+
+    click.echo("\nAnnotation Prep Results:")
+    for sid, counts in sorted(result["symptoms"].items()):
+        click.echo(
+            f"  Symptom {sid}: {counts['retrieval']} retrieval "
+            f"+ {counts['score0']} score-0 = {counts['total']} total"
+        )
+    click.echo(f"  Shared score-0 pool: {result['score0_pool_size']} sentences")
+    click.echo(f"\n  Candidates: {output_dir}/symptom_*_candidates.tsv")
+    click.echo(f"  Templates:  {annotations_dir}/symptom_*_examples.json")
 
 
 @cli.command()
