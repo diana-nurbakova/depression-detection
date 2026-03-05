@@ -12,6 +12,8 @@ from typing import Optional
 from .config import PersonaModelConfig
 from .prompts import PERSONA_SYSTEM_PROMPT
 
+_BitsAndBytesConfig = None
+
 logger = logging.getLogger(__name__)
 
 # Lazy imports — these are heavy and may not be available in all envs
@@ -22,23 +24,25 @@ _PeftModel = None
 
 
 def _ensure_imports():
-    global _torch, _AutoTokenizer, _AutoModelForCausalLM, _PeftModel
+    global _torch, _AutoTokenizer, _AutoModelForCausalLM, _PeftModel, _BitsAndBytesConfig
     if _torch is None:
         import torch
-        from transformers import AutoTokenizer, AutoModelForCausalLM
+        from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
         from peft import PeftModel
 
         _torch = torch
         _AutoTokenizer = AutoTokenizer
         _AutoModelForCausalLM = AutoModelForCausalLM
         _PeftModel = PeftModel
+        _BitsAndBytesConfig = BitsAndBytesConfig
 
 
 class PersonaModel:
     """Manages a single persona: base model + LoRA adapter."""
 
-    def __init__(self, config: PersonaModelConfig):
+    def __init__(self, config: PersonaModelConfig, quantize_4bit: bool = False):
         self.config = config
+        self.quantize_4bit = quantize_4bit
         self.tokenizer = None
         self.model = None
         self._loaded_adapter: Optional[str] = None
@@ -59,10 +63,21 @@ class PersonaModel:
         self.tokenizer.pad_token_id = self.tokenizer.eos_token_id
         self.tokenizer.padding_side = "left"
 
-        self.model = _AutoModelForCausalLM.from_pretrained(
-            self.config.base_model,
+        load_kwargs = dict(
             torch_dtype=dtype,
             device_map=self.config.device_map,
+        )
+        if self.quantize_4bit:
+            load_kwargs["quantization_config"] = _BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_compute_dtype=dtype,
+                bnb_4bit_quant_type="nf4",
+            )
+            logger.info("Using 4-bit quantization (NF4)")
+
+        self.model = _AutoModelForCausalLM.from_pretrained(
+            self.config.base_model,
+            **load_kwargs,
         )
         logger.info("Base model loaded")
 

@@ -69,6 +69,17 @@ class TogetherConfig:
 
 
 @dataclass
+class SentenceTransformerConfig:
+    """Config for Tier 2 symptom sentence transformer."""
+    enabled: bool = False
+    base_model: str = "all-mpnet-base-v2"
+    model_path: str = ""  # path to fine-tuned model; empty = use base
+    max_seq_length: int = 128
+    device: str = "cpu"
+    batch_size: int = 32
+
+
+@dataclass
 class LoggingConfig:
     output_dir: str = "./runs/task1"
     log_level: str = "INFO"
@@ -114,6 +125,9 @@ class PipelineConfig:
     )
 
     execution: ExecutionConfig = field(default_factory=ExecutionConfig)
+    sentence_transformer: SentenceTransformerConfig = field(
+        default_factory=SentenceTransformerConfig
+    )
     ollama: OllamaConfig = field(default_factory=OllamaConfig)
     openai: OpenAIConfig = field(default_factory=OpenAIConfig)
     together: TogetherConfig = field(default_factory=TogetherConfig)
@@ -198,6 +212,28 @@ def load_config(config_path: str | Path = "config/task1.yaml") -> PipelineConfig
             cfg.together.base_url = t.get("base_url", cfg.together.base_url)
             cfg.together.timeout_seconds = t.get("timeout_seconds", cfg.together.timeout_seconds)
             cfg.together.retry_attempts = t.get("retry_attempts", cfg.together.retry_attempts)
+
+        # Sentence transformer
+        if "sentence_transformer" in raw:
+            st = raw["sentence_transformer"]
+            cfg.sentence_transformer.enabled = st.get(
+                "enabled", cfg.sentence_transformer.enabled
+            )
+            cfg.sentence_transformer.base_model = st.get(
+                "base_model", cfg.sentence_transformer.base_model
+            )
+            cfg.sentence_transformer.model_path = st.get(
+                "model_path", cfg.sentence_transformer.model_path
+            )
+            cfg.sentence_transformer.max_seq_length = st.get(
+                "max_seq_length", cfg.sentence_transformer.max_seq_length
+            )
+            cfg.sentence_transformer.device = st.get(
+                "device", cfg.sentence_transformer.device
+            )
+            cfg.sentence_transformer.batch_size = st.get(
+                "batch_size", cfg.sentence_transformer.batch_size
+            )
 
         # Logging
         if "logging" in raw:

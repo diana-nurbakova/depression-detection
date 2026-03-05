@@ -4,8 +4,12 @@ from __future__ import annotations
 
 import re
 from collections import Counter
+from typing import TYPE_CHECKING
 
 from .models import LinguisticFeatures, SeverityBand
+
+if TYPE_CHECKING:
+    from .sentence_transformer import SymptomScorer
 
 # --- Word lists ---
 
@@ -132,7 +136,9 @@ def _count_keyword_hits(text_lower: str, keywords: frozenset) -> list[str]:
     return hits
 
 
-def extract_features(text: str) -> LinguisticFeatures:
+def extract_features(
+    text: str, symptom_scorer: SymptomScorer | None = None,
+) -> LinguisticFeatures:
     """Extract linguistic features from a single persona response."""
     text_lower = text.lower()
     words = _tokenize(text)
@@ -171,6 +177,18 @@ def extract_features(text: str) -> LinguisticFeatures:
     worthlessness_hits = _count_keyword_hits(text_lower, WORTHLESSNESS_KEYWORDS)
     suicidal_hits = _count_keyword_hits(text_lower, SUICIDAL_KEYWORDS)
 
+    # Tier 2: sentence transformer symptom relevance
+    symptom_rel = None
+    if symptom_scorer is not None and symptom_scorer.is_loaded():
+        try:
+            scores = symptom_scorer.score_text(text)
+            symptom_rel = scores.tolist()
+        except Exception as e:
+            import logging
+            logging.getLogger(__name__).warning(
+                "Symptom scorer failed: %s", e
+            )
+
     return LinguisticFeatures(
         word_count=total_words,
         sentence_count=sentence_count,
@@ -193,6 +211,7 @@ def extract_features(text: str) -> LinguisticFeatures:
         anhedonia_keywords=anhedonia_hits,
         worthlessness_keywords=worthlessness_hits,
         suicidal_keywords=suicidal_hits,
+        symptom_relevance=symptom_rel,
     )
 
 

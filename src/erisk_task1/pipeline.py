@@ -36,6 +36,7 @@ def run_persona_conversation(
     persona_model: PersonaModel,
     clients: dict[str, LLMClient],
     config: PipelineConfig,
+    symptom_scorer=None,
 ) -> PersonaResult:
     """Run the full pipeline for a single persona.
 
@@ -64,6 +65,7 @@ def run_persona_conversation(
         assess_every_n=config.execution.assess_every_n_turns,
         parallel_assessors=config.execution.parallel_assessors,
         termination_confidence=config.execution.termination_confidence,
+        symptom_scorer=symptom_scorer,
     )
 
     # Initial guidance
@@ -193,8 +195,25 @@ def run_pipeline(config: PipelineConfig) -> list[PersonaResult]:
     # Create LLM clients
     clients = make_clients(config)
 
-    # Create persona model
-    persona_model = PersonaModel(config.persona)
+    # Create symptom scorer (Tier 2 sentence transformer) if enabled
+    symptom_scorer = None
+    if config.sentence_transformer.enabled:
+        from .sentence_transformer import SentenceTransformerConfig, SymptomScorer
+
+        st_cfg = SentenceTransformerConfig(
+            base_model=config.sentence_transformer.base_model,
+            model_path=config.sentence_transformer.model_path,
+            max_seq_length=config.sentence_transformer.max_seq_length,
+            device=config.sentence_transformer.device,
+            batch_size=config.sentence_transformer.batch_size,
+        )
+        symptom_scorer = SymptomScorer(st_cfg)
+        symptom_scorer.load()
+        logger.info("Symptom scorer loaded (Tier 2 features enabled)")
+
+    # Create persona model (4-bit quantization for limited-VRAM scenarios)
+    quantize = config.hardware_scenario in ("colab_t4", "low_vram")
+    persona_model = PersonaModel(config.persona, quantize_4bit=quantize)
     persona_model.load_base()
 
     base_dir = Path(config.logging.output_dir)
@@ -202,7 +221,8 @@ def run_pipeline(config: PipelineConfig) -> list[PersonaResult]:
     for persona_id in config.persona_ids:
         try:
             result = run_persona_conversation(
-                persona_id, persona_model, clients, config
+                persona_id, persona_model, clients, config,
+                symptom_scorer=symptom_scorer,
             )
             results.append(result)
 
@@ -213,8 +233,10 @@ def run_pipeline(config: PipelineConfig) -> list[PersonaResult]:
         except Exception as e:
             logger.error("Failed processing persona %02d: %s", persona_id, e, exc_info=True)
 
-    # Unload persona model
+    # Unload models
     persona_model.unload()
+    if symptom_scorer is not None:
+        symptom_scorer.unload()
 
     # Log client stats
     for name, client in clients.items():

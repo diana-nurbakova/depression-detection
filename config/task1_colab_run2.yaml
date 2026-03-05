@@ -49,6 +49,12 @@ execution:
   min_turns: 3
   termination_confidence: 0.4
 
+sentence_transformer:
+  enabled: true
+  model_path: "models/symptom_transformer"
+  device: "cuda"
+  batch_size: 64
+
 together:
   timeout_seconds: 120
   retry_attempts: 3

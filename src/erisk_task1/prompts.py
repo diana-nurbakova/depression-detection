@@ -1,6 +1,16 @@
-"""Prompt templates for all pipeline agents."""
+"""Prompt templates for all pipeline agents.
+
+Assessor prompts are calibrated with DepreSym data: per-symptom relevance
+rates and true positive/negative examples from human expert consensus.
+"""
 
 from __future__ import annotations
+
+import json
+import logging
+from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
 # MANDATORY PERSONA SYSTEM PROMPT (verbatim from eRisk — DO NOT MODIFY)
@@ -12,6 +22,119 @@ PERSONA_SYSTEM_PROMPT = (
     "or formal speech. Keep natural speaking style (e.g., short answers, "
     "hesitations, casual expressions). Do not mention you are an AI."
 )
+
+# ---------------------------------------------------------------------------
+# DepreSym calibration data — loaded once at module init
+# ---------------------------------------------------------------------------
+
+# Item name → calibration data (relevance rate, examples)
+_CALIBRATION: dict[str, dict] = {}
+
+# Relevance rates from DepreSym consensus (human experts)
+_RELEVANCE_RATES: dict[str, str] = {
+    "Sadness": "16.1%",
+    "Pessimism": "9.0%",
+    "Past failure": "16.4%",
+    "Loss of pleasure": "9.6%",
+    "Guilty feelings": "10.0%",
+    "Punishment feelings": "1.9%",
+    "Self-dislike": "15.7%",
+    "Self-criticalness": "7.1%",
+    "Suicidal thoughts or wishes": "27.3%",
+    "Crying": "23.4%",
+    "Agitation": "6.4%",
+    "Loss of interest": "6.5%",
+    "Indecisiveness": "5.5%",
+    "Worthlessness": "6.7%",
+    "Loss of energy": "11.9%",
+    "Changes in sleeping pattern": "21.6%",
+    "Irritability": "9.0%",
+    "Changes in appetite": "10.5%",
+    "Concentration difficulty": "8.1%",
+    "Tiredness or fatigue": "11.9%",
+    "Loss of interest in sex": "10.0%",
+}
+
+# Strictness tier based on relevance rate
+# < 7% = VERY_STRICT, 7-12% = STRICT, 12-20% = MODERATE, >= 20% = CLEARER
+_STRICTNESS: dict[str, str] = {}
+for _name, _rate_str in _RELEVANCE_RATES.items():
+    _rate = float(_rate_str.rstrip("%"))
+    if _rate < 7.0:
+        _STRICTNESS[_name] = "VERY_STRICT"
+    elif _rate < 12.0:
+        _STRICTNESS[_name] = "STRICT"
+    elif _rate < 20.0:
+        _STRICTNESS[_name] = "MODERATE"
+    else:
+        _STRICTNESS[_name] = "CLEARER"
+
+
+def _load_calibration() -> None:
+    """Load calibration_for_prompts.json if available."""
+    global _CALIBRATION
+    if _CALIBRATION:
+        return
+    candidates = [
+        Path(__file__).parent / "data" / "calibration_for_prompts.json",
+        Path(__file__).parent.parent.parent / "specs" / "task-1" / "calibration_for_prompts.json",
+    ]
+    for path in candidates:
+        if path.exists():
+            with open(path, encoding="utf-8") as f:
+                _CALIBRATION = json.load(f)
+            logger.debug("Loaded calibration data from %s", path)
+            return
+    logger.warning("calibration_for_prompts.json not found — prompts will lack examples")
+
+
+def _build_calibration_section(item_name: str) -> str:
+    """Build a calibration section for a single BDI-II item.
+
+    Includes relevance rate, strictness warning, and true pos/neg examples.
+    """
+    _load_calibration()
+
+    rate = _RELEVANCE_RATES.get(item_name, "?")
+    strictness = _STRICTNESS.get(item_name, "MODERATE")
+    cal = _CALIBRATION.get(item_name, {})
+    relevant = cal.get("relevant", [])[:3]
+    not_relevant = cal.get("not_relevant", [])[:3]
+
+    lines = [f"DepreSym calibration — relevance rate: {rate}"]
+
+    if strictness == "VERY_STRICT":
+        lines.append(
+            f"VERY STRICT: Only {rate} of sentences mentioning this symptom are "
+            "clinically relevant. Default to score 0 unless strong, specific, "
+            "first-person evidence."
+        )
+    elif strictness == "STRICT":
+        lines.append(
+            f"STRICT: Only {rate} of mentions are relevant. Require clear "
+            "first-person statements about the person's own experience."
+        )
+    elif strictness == "MODERATE":
+        lines.append(
+            f"About 1 in 6 mentions are relevant ({rate}). "
+            "Require personal, specific evidence."
+        )
+    else:
+        lines.append(
+            f"Clearer signal ({rate}) but still majority are NOT relevant."
+        )
+
+    if relevant:
+        lines.append("True positives (experts confirmed relevant):")
+        for ex in relevant:
+            lines.append(f'  + "{ex}"')
+    if not_relevant:
+        lines.append("Hard negatives (looks relevant but experts REJECTED):")
+        for ex in not_relevant:
+            lines.append(f'  - "{ex}"')
+
+    return "\n".join(lines)
+
 
 # ---------------------------------------------------------------------------
 # INTERVIEWER AGENT
@@ -102,6 +225,21 @@ Produce ONLY the message to send to the persona. No metadata, no reasoning, no b
 # ---------------------------------------------------------------------------
 
 ASSESSOR_SHARED_PREAMBLE = """\
+## CRITICAL: Over-scoring bias correction
+
+Our system has a validated +5 to +9 point over-scoring bias. The primary
+cause: CONFLATING MENTION WITH CLINICAL RELEVANCE. DepreSym data shows
+that most sentences mentioning a symptom are NOT clinically relevant.
+For example, only 9% of sentences containing pessimism-related language
+are actually relevant to BDI-II Pessimism.
+
+YOU MUST apply these strictness rules:
+- If the symptom's relevance rate is below 10%, DEFAULT to score 0 and
+  only score higher with strong, specific, first-person evidence.
+- Mentions of symptoms in the THIRD PERSON or HYPOTHETICAL do NOT count.
+- General complaints without personal specificity do NOT count.
+- The person must be describing THEIR OWN current/recent experience.
+
 ## Scoring protocol
 
 For each of your assigned BDI-II items, produce one of three states:
@@ -125,8 +263,8 @@ SEVERE (BDI-II ~40): Saturated absolutism. Zero coping language. Flat rejection 
 ## Critical principle: response pattern IS data
 
 The WAY the person responds is as diagnostic as WHAT they say:
-- Response length: severe → shorter, flatter
-- Engagement level: severe → answers the question but adds nothing
+- Response length: severe -> shorter, flatter
+- Engagement level: severe -> answers the question but adds nothing
 - Coping language: present in minimal, absent in mild-severe
 - Hedging density: peaks in moderate
 - Absolutist density: tracks severity linearly
@@ -157,7 +295,7 @@ You are a specialised depression symptom assessor focused on AFFECTIVE symptoms.
 You analyse conversation transcripts to evaluate evidence for BDI-II items \
 related to mood, emotional reactivity, pleasure, and interest.
 
-{shared_preamble}
+{{shared_preamble}}
 
 ## Your BDI-II items
 
@@ -171,6 +309,8 @@ Linguistic markers: sadness vocabulary (sad, unhappy, miserable, down, blue, low
 
 IMPORTANT — Non-sadness depression: Depression can present WITHOUT overt sadness. When you observe persistent irritability (Item 17 >= 2), vague dysphoria ("feels a bit off"), emotional flatness, OR somatic complaints as primary presentation — consider scoring Item 1 at least 1.
 
+{{calibration_1}}
+
 ### Item 4: Loss of Pleasure (Anhedonia)
 0 = Gets as much pleasure as ever
 1 = Doesn't enjoy things as much
@@ -179,11 +319,15 @@ IMPORTANT — Non-sadness depression: Depression can present WITHOUT overt sadne
 
 Linguistic markers: discrepancy words (want, need, should, would, could), negated pleasure, temporal comparison ("used to love"), absence of activity language.
 
+{{calibration_4}}
+
 ### Item 10: Crying
 0 = Doesn't cry more than usual
 1 = Cries more than usual
 2 = Cries over every little thing
 3 = Feels like crying but can't (emotional numbing — severe)
+
+{{calibration_10}}
 
 ### Item 12: Loss of Interest
 0 = Has not lost interest in people or activities
@@ -193,13 +337,17 @@ Linguistic markers: discrepancy words (want, need, should, would, could), negate
 
 Distinguished from Item 4: interest/caring vs hedonic response. "I don't care" (interest) vs "I don't enjoy" (pleasure). Behavioural signal: short flat answers suggest reduced interest.
 
+{{calibration_12}}
+
 ### Item 17: Irritability
 0 = No more irritable than usual
 1 = More irritable than usual
 2 = Much more irritable than usual
 3 = Irritable all the time
 
-NOTE: Irritability can be the PRIMARY mood presentation in depression. When irritability is Score 2+, flag as possible non-sadness presentation."""
+NOTE: Irritability can be the PRIMARY mood presentation in depression. When irritability is Score 2+, flag as possible non-sadness presentation.
+
+{{calibration_17}}"""
 
 # ---------------------------------------------------------------------------
 # COGNITIVE ASSESSOR
@@ -212,7 +360,7 @@ related to thinking patterns, self-evaluation, future orientation, and suicidal 
 
 This is the most discriminative symptom cluster for depression.
 
-{shared_preamble}
+{{shared_preamble}}
 
 ## Your BDI-II items
 
@@ -224,11 +372,15 @@ This is the most discriminative symptom cluster for depression.
 
 Linguistic markers: future-tense negativity, hopelessness vocabulary, absolutist + temporal ("always be like this"), reduced future-focus language.
 
+{{calibration_2}}
+
 ### Item 3: Past Failure
 0 = Does not feel like a failure
 1 = Has failed more than should have
 2 = Looks back and sees a lot of failures
 3 = Feels total failure as a person
+
+{{calibration_3}}
 
 ### Item 5: Guilty Feelings
 0 = Does not feel particularly guilty
@@ -238,6 +390,8 @@ Linguistic markers: future-tense negativity, hopelessness vocabulary, absolutist
 
 DEFLECTION AS GUILT SIGNAL: "I don't want to bother them" often masks guilt.
 
+{{calibration_5}}
+
 ### Item 6: Punishment Feelings
 0 = Does not feel being punished
 1 = Feels may be punished
@@ -246,17 +400,23 @@ DEFLECTION AS GUILT SIGNAL: "I don't want to bother them" often masks guilt.
 
 Low clinical relevance. Only score if clear evidence.
 
+{{calibration_6}}
+
 ### Item 7: Self-Dislike
 0 = Feels same about self as ever
 1 = Has lost confidence in self
 2 = Disappointed in self
 3 = Dislikes self
 
+{{calibration_7}}
+
 ### Item 8: Self-Criticalness
 0 = Doesn't criticise or blame self more than usual
 1 = More critical than before
 2 = Criticises self for all faults
 3 = Blames self for everything bad that happens
+
+{{calibration_8}}
 
 ### Item 9: Suicidal Thoughts or Wishes
 0 = No thoughts of killing self
@@ -269,11 +429,15 @@ HARDEST SYMPTOM TO DETECT. Look for:
 - MODERATE SIGNALS (score 1, conf 0.4-0.6, ONLY with Item 2 >= 2): morning dread, perceived burdensomeness
 - NEVER score above 1 without converging strong signals
 
+{{calibration_9}}
+
 ### Item 14: Worthlessness
 0 = Does not feel worthless
 1 = Doesn't consider self as worthwhile as before
 2 = More worthless compared to others
-3 = Feels utterly worthless"""
+3 = Feels utterly worthless
+
+{{calibration_14}}"""
 
 # ---------------------------------------------------------------------------
 # SOMATIC ASSESSOR
@@ -286,7 +450,7 @@ related to physical manifestations: energy, sleep, appetite, fatigue, psychomoto
 
 These symptoms are LEAST SPECIFIC to depression but EASIEST to detect.
 
-{shared_preamble}
+{{shared_preamble}}
 
 ## Your BDI-II items
 
@@ -296,6 +460,8 @@ These symptoms are LEAST SPECIFIC to depression but EASIEST to detect.
 2 = Hard to stay still
 3 = Must keep moving/doing
 
+{{calibration_11}}
+
 ### Item 15: Loss of Energy
 0 = As much energy as ever
 1 = Less energy
@@ -303,6 +469,8 @@ These symptoms are LEAST SPECIFIC to depression but EASIEST to detect.
 3 = Not enough to do anything
 
 Emphasis on MOTIVATIONAL deficit.
+
+{{calibration_15}}
 
 ### Item 16: Changes in Sleeping Pattern
 0 = No change
@@ -313,6 +481,8 @@ Emphasis on MOTIVATIONAL deficit.
 
 BIDIRECTIONAL. Early morning awakening (3b) is classic depression marker.
 
+{{calibration_16}}
+
 ### Item 18: Changes in Appetite
 0 = No change
 1 = Somewhat more/less
@@ -322,6 +492,8 @@ BIDIRECTIONAL. Early morning awakening (3b) is classic depression marker.
 
 BIDIRECTIONAL.
 
+{{calibration_18}}
+
 ### Item 20: Tiredness / Fatigue
 0 = No more tired than usual
 1 = Tire more easily
@@ -329,6 +501,8 @@ BIDIRECTIONAL.
 3 = Too tired for most things
 
 PHYSICAL SENSATION emphasis (vs motivational in Item 15).
+
+{{calibration_20}}
 
 ## Important: somatic-dominant presentations
 When somatic scores are moderate but affective scores are low, flag in cross_observations."""
@@ -341,7 +515,7 @@ FUNCTIONAL_ASSESSOR_PROMPT = """\
 You are a specialised depression symptom assessor focused on FUNCTIONAL symptoms: \
 cognitive functioning, decision-making, and libido.
 
-{shared_preamble}
+{{shared_preamble}}
 
 ## Your BDI-II items
 
@@ -351,6 +525,8 @@ cognitive functioning, decision-making, and libido.
 2 = Much greater difficulty
 3 = Trouble making any decisions
 
+{{calibration_13}}
+
 ### Item 19: Concentration Difficulty
 0 = Concentrates as well as ever
 1 = Can't concentrate as well
@@ -359,13 +535,17 @@ cognitive functioning, decision-making, and libido.
 
 Low specificity (appears in ADHD, anxiety, sleep deprivation).
 
+{{calibration_19}}
+
 ### Item 21: Loss of Interest in Sex
 0 = No change
 1 = Less interested
 2 = Much less
 3 = Lost interest completely
 
-MOST PRIVATE SYMPTOM. Only score if EXPLICITLY mentioned. Default: null (NO_EVIDENCE)."""
+MOST PRIVATE SYMPTOM. Only score if EXPLICITLY mentioned. Default: null (NO_EVIDENCE).
+
+{{calibration_21}}"""
 
 # ---------------------------------------------------------------------------
 # ORCHESTRATOR REASONING MODULE
@@ -439,7 +619,7 @@ Item 9 >= 1 but Item 2 <= 1. Rare — consider if Item 9 was over-scored.
 
 ## Override rules
 - Only adjust items with confidence < 0.5
-- Adjustments limited to ±1 per item
+- Adjustments limited to +/-1 per item
 - Must explain every adjustment
 - NEVER adjust Item 9 upward
 
@@ -471,11 +651,44 @@ Respond ONLY with valid JSON:
 
 
 # ---------------------------------------------------------------------------
-# Helper to format assessor prompts with shared preamble
+# Item name lookup for calibration (item_id -> calibration JSON key)
+# ---------------------------------------------------------------------------
+
+_ITEM_ID_TO_CAL_NAME: dict[int, str] = {
+    1: "Sadness",
+    2: "Pessimism",
+    3: "Past failure",
+    4: "Loss of pleasure",
+    5: "Guilty feelings",
+    6: "Punishment feelings",
+    7: "Self-dislike",
+    8: "Self-criticalness",
+    9: "Suicidal thoughts or wishes",
+    10: "Crying",
+    11: "Agitation",
+    12: "Loss of interest",
+    13: "Indecisiveness",
+    14: "Worthlessness",
+    15: "Loss of energy",
+    16: "Changes in sleeping pattern",
+    17: "Irritability",
+    18: "Changes in appetite",
+    19: "Concentration difficulty",
+    20: "Tiredness or fatigue",
+    21: "Loss of interest in sex",
+}
+
+
+# ---------------------------------------------------------------------------
+# Helper to format assessor prompts with shared preamble + calibration
 # ---------------------------------------------------------------------------
 
 def get_assessor_prompt(assessor_name: str) -> str:
-    """Return the full system prompt for a given assessor."""
+    """Return the full system prompt for a given assessor.
+
+    Injects the shared preamble and per-item DepreSym calibration data
+    (relevance rates, strictness warnings, true positive/negative examples).
+    """
     templates = {
         "AFFECTIVE": AFFECTIVE_ASSESSOR_PROMPT,
         "COGNITIVE": COGNITIVE_ASSESSOR_PROMPT,
@@ -483,4 +696,17 @@ def get_assessor_prompt(assessor_name: str) -> str:
         "FUNCTIONAL": FUNCTIONAL_ASSESSOR_PROMPT,
     }
     template = templates[assessor_name]
-    return template.format(shared_preamble=ASSESSOR_SHARED_PREAMBLE)
+
+    # Build calibration sections for each item placeholder in the template
+    replacements = {"shared_preamble": ASSESSOR_SHARED_PREAMBLE}
+    for item_id, cal_name in _ITEM_ID_TO_CAL_NAME.items():
+        key = f"calibration_{item_id}"
+        if "{{" + key + "}}" in template:
+            replacements[key] = _build_calibration_section(cal_name)
+
+    # Replace {{placeholder}} markers
+    result = template
+    for key, value in replacements.items():
+        result = result.replace("{{" + key + "}}", value)
+
+    return result

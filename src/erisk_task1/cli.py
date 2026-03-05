@@ -141,6 +141,61 @@ def assess(config_path: str, personas: str | None, log_level: str):
 
 
 @cli.command()
+@click.option("--base-model", default="all-mpnet-base-v2", help="Base sentence transformer model")
+@click.option("--epochs", default=10, type=int, help="Training epochs")
+@click.option("--batch-size", default=64, type=int, help="Batch size")
+@click.option("--lr", default=2e-4, type=float, help="Learning rate")
+@click.option("--loss", default="weighted_bce", type=click.Choice(["weighted_bce", "focal"]), help="Loss function")
+@click.option("--output", default="models/symptom_transformer", help="Output directory")
+@click.option("--device", default="cpu", help="Device (cpu, cuda, cuda:0)")
+@click.option("--log-level", default="INFO", help="Log level")
+def train(base_model: str, epochs: int, batch_size: int, lr: float, loss: str, output: str, device: str, log_level: str):
+    """Train the symptom sentence transformer (Tier 2 model).
+
+    Trains a multi-label classifier head on DepreSym + ReDSM5 + BDI-Sen
+    datasets. Outputs to models/symptom_transformer/.
+
+    Example:
+      uv run python -m erisk_task1.cli train --epochs 10 --device cuda
+      uv run python -m erisk_task1.cli train --loss focal --lr 1e-4
+    """
+    setup_logging(log_level)
+
+    from .sentence_transformer import SentenceTransformerConfig, train_symptom_transformer
+
+    config = SentenceTransformerConfig(
+        base_model=base_model,
+        epochs=epochs,
+        batch_size=batch_size,
+        learning_rate=lr,
+        loss=loss,
+        output_dir=output,
+        device=device,
+    )
+
+    click.echo(f"Training symptom transformer")
+    click.echo(f"  Base model: {base_model}")
+    click.echo(f"  Epochs: {epochs}, Batch size: {batch_size}, LR: {lr}")
+    click.echo(f"  Loss: {loss}, Device: {device}")
+    click.echo(f"  Output: {output}")
+    click.echo()
+
+    model_dir = train_symptom_transformer(config)
+    click.echo(f"\nTraining complete. Model saved to: {model_dir}")
+
+    # Print summary stats
+    import json
+    stats_path = model_dir / "training_stats.json"
+    if stats_path.exists():
+        with open(stats_path) as f:
+            stats = json.load(f)
+        click.echo(f"Best macro F1: {stats['best_macro_f1']:.4f}")
+        click.echo("Per-symptom F1:")
+        for name, f1 in stats["per_symptom_f1"].items():
+            click.echo(f"  {name}: {f1:.3f}")
+
+
+@cli.command()
 @click.argument("text")
 def features(text: str):
     """Extract linguistic features from a text sample."""

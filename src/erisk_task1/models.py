@@ -144,6 +144,10 @@ class LinguisticFeatures:
     worthlessness_keywords: list[str] = field(default_factory=list)
     suicidal_keywords: list[str] = field(default_factory=list)
 
+    # Tier 2: sentence transformer symptom relevance scores (21-dim)
+    # None if sentence transformer is not loaded/available
+    symptom_relevance: Optional[list[float]] = None
+
 
 @dataclass
 class ConversationTurn:

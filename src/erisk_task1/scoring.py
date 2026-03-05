@@ -58,11 +58,37 @@ def pass1_score(item_scores: dict[int, ItemScore]) -> int:
     return total
 
 
+def _estimate_transformer_band(
+    features_history: list[LinguisticFeatures],
+) -> Optional[SeverityBand]:
+    """Estimate severity band from sentence transformer symptom relevance.
+
+    Max-pools relevance across all turns, then sums the top probabilities
+    to approximate a BDI-II total. Returns None if no transformer scores.
+    """
+    import numpy as np
+
+    relevance_vectors = [
+        f.symptom_relevance for f in features_history
+        if f.symptom_relevance is not None
+    ]
+    if not relevance_vectors:
+        return None
+
+    # Max-pool across turns for each of the 21 items
+    max_rel = np.max(relevance_vectors, axis=0)
+    # Convert probabilities to approximate scores (0-3 scale):
+    # p >= 0.7 → 2, p >= 0.4 → 1, else 0
+    approx_scores = np.where(max_rel >= 0.7, 2, np.where(max_rel >= 0.4, 1, 0))
+    approx_total = int(approx_scores.sum())
+    return score_to_band(approx_total)
+
+
 def compute_preliminary_consensus(
     pass1_total: int,
     features_history: list[LinguisticFeatures],
 ) -> tuple[SeverityBand, SeverityBand, SeverityBand, SeverityBand]:
-    """Compute preliminary severity from 3 independent signals.
+    """Compute preliminary severity from 3+ independent signals.
 
     Returns: (consensus_band, assessor_band, absolutist_band, engagement_band)
     """
@@ -70,7 +96,16 @@ def compute_preliminary_consensus(
     cum = compute_cumulative_features(features_history)
     absolutist_band = cum["absolutist_band"]
     engagement_band = estimate_engagement_band(features_history)
-    consensus = _majority_vote(assessor_band, absolutist_band, engagement_band)
+
+    # Include sentence transformer band in vote if available
+    transformer_band = _estimate_transformer_band(features_history)
+    if transformer_band is not None:
+        consensus = _majority_vote(
+            assessor_band, absolutist_band, engagement_band, transformer_band
+        )
+    else:
+        consensus = _majority_vote(assessor_band, absolutist_band, engagement_band)
+
     return consensus, assessor_band, absolutist_band, engagement_band
 
 

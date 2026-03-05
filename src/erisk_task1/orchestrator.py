@@ -57,6 +57,7 @@ class Orchestrator:
         assess_every_n: int = 1,
         parallel_assessors: bool = True,
         termination_confidence: float = 0.5,
+        symptom_scorer=None,
     ):
         self.interviewer_client = interviewer_client
         self.assessor_client = assessor_client
@@ -66,6 +67,7 @@ class Orchestrator:
         self.assess_every_n = assess_every_n
         self.parallel_assessors = parallel_assessors
         self.termination_confidence = termination_confidence
+        self.symptom_scorer = symptom_scorer  # Optional SymptomScorer
 
         # State
         self.conversation: list[ConversationTurn] = []
@@ -89,7 +91,7 @@ class Orchestrator:
         """Format cumulative linguistic features as a summary string."""
         cum = compute_cumulative_features(self.features_history)
         profile = detect_persona_profile(self.features_history)
-        return (
+        summary = (
             f"Absolutist density: {cum['absolutist_density']:.4f} ({cum['absolutist_band'].value})\n"
             f"Total words: {cum['total_words']}, Avg response length: {cum['avg_response_length']:.0f}\n"
             f"Total hedging: {cum['total_hedging']}, Total coping: {cum['total_coping']}\n"
@@ -97,6 +99,24 @@ class Orchestrator:
             f"Positive emotion: {cum['total_positive_emotion']}\n"
             f"Persona profile: {profile}"
         )
+
+        # Append max-pooled symptom relevance across all turns (if available)
+        relevance_vectors = [
+            f.symptom_relevance for f in self.features_history
+            if f.symptom_relevance is not None
+        ]
+        if relevance_vectors:
+            import numpy as np
+            max_rel = np.max(relevance_vectors, axis=0)
+            top_items = sorted(
+                range(len(max_rel)), key=lambda i: max_rel[i], reverse=True
+            )[:5]
+            top_str = ", ".join(
+                f"{BDI_ITEMS[i + 1]}: {max_rel[i]:.2f}" for i in top_items
+            )
+            summary += f"\nSentence transformer top-5 signals: {top_str}"
+
+        return summary
 
     def generate_interviewer_message(
         self, guidance: OrchestratorGuidance, turn_number: int
@@ -240,7 +260,7 @@ class Orchestrator:
 
     def process_persona_response(self, response: str, turn_number: int):
         """Process a persona response: extract features and update state."""
-        features = extract_features(response)
+        features = extract_features(response, symptom_scorer=self.symptom_scorer)
         self.features_history.append(features)
 
         self.conversation.append(ConversationTurn(
