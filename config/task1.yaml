@@ -1,0 +1,78 @@
+# eRisk 2026 Task 1 — Pipeline Configuration
+# Hardware scenario: "high_vram" (48GB+) or "limited_vram" (24GB)
+hardware_scenario: "high_vram"
+
+# ── Model configuration ──
+models:
+  persona:
+    base_model: "meta-llama/Meta-Llama-3-8B-Instruct"
+    adapter_pattern: "Anxo/erisk26-task1-patient-{id:02d}-adapter"
+    torch_dtype: "float16"
+    device_map: "auto"
+    generation:
+      temperature: 0.6
+      top_p: 0.9
+      max_new_tokens: 256
+    system_prompt: >
+      You are a simulated patient. Act realistically based on your
+      internal training. Ensure contextual realism. Avoid overly detailed
+      or formal speech. Keep natural speaking style (e.g., short answers,
+      hesitations, casual expressions). Do not mention you are an AI.
+
+  interviewer:
+    provider: "openai"
+    model: "gpt-5-nano"
+    temperature: 0.7
+    max_tokens: 300
+
+  assessor:
+    provider: "ollama"
+    model: "llama3.3:70b"
+    fallback_model: "qwen3:32b"
+    temperature: 0.1
+    max_tokens: 2000
+
+  orchestrator_llm:
+    provider: "ollama"
+    model: "llama3.3:70b"
+    temperature: 0.3
+    max_tokens: 1500
+
+  justificator:
+    provider: "ollama"
+    model: "llama3.3:70b"
+    temperature: 0.2
+    max_tokens: 3000
+
+# ── Execution parameters ──
+execution:
+  assess_every_n_turns: 1
+  parallel_assessors: true
+  max_turns: 10
+  min_turns: 5
+  termination_confidence: 0.5
+
+# ── Ollama connection ──
+# Uses OLLAMA_BASE_URL and OLLAMA_API_KEY from .env
+ollama:
+  timeout_seconds: 300
+  retry_attempts: 2
+
+# ── OpenAI connection ──
+# Uses OPENAI_API_KEY from .env
+openai:
+  timeout_seconds: 60
+  retry_attempts: 3
+
+# ── Logging ──
+logging:
+  output_dir: "./runs/task1"
+  log_level: "INFO"
+  save_raw_llm_responses: true
+  save_linguistic_features: true
+
+# ── Run configuration ──
+run:
+  id: 1
+  type: "automated"
+  # persona_ids: [0, 1, 2, 3, 4, 5]  # Uncomment to limit to specific personas

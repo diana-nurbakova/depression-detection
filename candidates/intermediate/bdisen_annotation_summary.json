@@ -1,0 +1,152 @@
+{
+  "total": 5003,
+  "symptoms": {
+    "Sadness": {
+      "total": 644,
+      "label_1": 152,
+      "severity_1": 113,
+      "severity_2": 8,
+      "severity_3": 0
+    },
+    "Pessimism": {
+      "total": 274,
+      "label_1": 72,
+      "severity_1": 7,
+      "severity_2": 9,
+      "severity_3": 50
+    },
+    "Sense_of_failure": {
+      "total": 299,
+      "label_1": 62,
+      "severity_1": 7,
+      "severity_2": 4,
+      "severity_3": 44
+    },
+    "Loss_of_Pleasure": {
+      "total": 739,
+      "label_1": 140,
+      "severity_1": 80,
+      "severity_2": 23,
+      "severity_3": 0
+    },
+    "Guilty_feelings": {
+      "total": 317,
+      "label_1": 27,
+      "severity_1": 6,
+      "severity_2": 0,
+      "severity_3": 18
+    },
+    "Sense_of_punishment": {
+      "total": 287,
+      "label_1": 18,
+      "severity_1": 0,
+      "severity_2": 13,
+      "severity_3": 1
+    },
+    "Self-dislike": {
+      "total": 505,
+      "label_1": 60,
+      "severity_1": 8,
+      "severity_2": 40,
+      "severity_3": 6
+    },
+    "Self-incrimination": {
+      "total": 118,
+      "label_1": 10,
+      "severity_1": 3,
+      "severity_2": 1,
+      "severity_3": 4
+    },
+    "Suicidal_ideas": {
+      "total": 230,
+      "label_1": 44,
+      "severity_1": 26,
+      "severity_2": 16,
+      "severity_3": 0
+    },
+    "Crying": {
+      "total": 278,
+      "label_1": 34,
+      "severity_1": 5,
+      "severity_2": 21,
+      "severity_3": 1
+    },
+    "Agitation": {
+      "total": 161,
+      "label_1": 26,
+      "severity_1": 9,
+      "severity_2": 4,
+      "severity_3": 12
+    },
+    "Social_withdrawal": {
+      "total": 143,
+      "label_1": 25,
+      "severity_1": 13,
+      "severity_2": 3,
+      "severity_3": 6
+    },
+    "Indecision": {
+      "total": 80,
+      "label_1": 22,
+      "severity_1": 1,
+      "severity_2": 8,
+      "severity_3": 6
+    },
+    "Feelings_of_worthlessness": {
+      "total": 147,
+      "label_1": 28,
+      "severity_1": 1,
+      "severity_2": 4,
+      "severity_3": 17
+    },
+    "Loss_of_energy": {
+      "total": 124,
+      "label_1": 16,
+      "severity_1": 1,
+      "severity_2": 9,
+      "severity_3": 0
+    },
+    "Change_of_sleep": {
+      "total": 31,
+      "label_1": 9,
+      "severity_1": 1,
+      "severity_2": 3,
+      "severity_3": 4
+    },
+    "Irritability": {
+      "total": 305,
+      "label_1": 55,
+      "severity_1": 28,
+      "severity_2": 11,
+      "severity_3": 0
+    },
+    "Changes_in_appetite": {
+      "total": 27,
+      "label_1": 8,
+      "severity_1": 2,
+      "severity_2": 1,
+      "severity_3": 2
+    },
+    "Concentration_difficulty": {
+      "total": 141,
+      "label_1": 13,
+      "severity_1": 3,
+      "severity_2": 3,
+      "severity_3": 1
+    },
+    "Tiredness_or_fatigue": {
+      "total": 129,
+      "label_1": 28,
+      "severity_1": 17,
+      "severity_2": 6,
+      "severity_3": 3
+    },
+    "Loss_of_interest_in_sex": {
+      "total": 24,
+      "label_1": 3,
+      "severity_1": 2,
+      "severity_2": 0,
+      "severity_3": 0
+    }
+  }
+}

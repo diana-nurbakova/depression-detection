@@ -1,0 +1,106 @@
+[
+  {
+    "symptom_id": 2,
+    "sentence_text": "I'm really conflicted about this.",
+    "bdisen_symptom": "Indecision",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 2,
+    "sentence_text": "i have no idea what to do.",
+    "bdisen_symptom": "Indecision",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 2,
+    "sentence_text": "I dont know what to do either.",
+    "bdisen_symptom": "Indecision",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 2,
+    "sentence_text": "I dont know what to do.",
+    "bdisen_symptom": "Indecision",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 2,
+    "sentence_text": "I dont even know what to do with myself.",
+    "bdisen_symptom": "Indecision",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 2,
+    "sentence_text": "I do not know what to do with myself, and my anxiety is heightened with mild depression.",
+    "bdisen_symptom": "Indecision",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 2,
+    "sentence_text": "I barely know what to do anymore.",
+    "bdisen_symptom": "Indecision",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 2,
+    "sentence_text": "It makes no sense, and it gets in the way of the plans i make.",
+    "bdisen_symptom": "Indecision",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 2,
+    "sentence_text": "I'm sorry I don't have alot of helpful things to say, still trying to figure things out for myself too.",
+    "bdisen_symptom": "Indecision",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 2,
+    "sentence_text": "I don't really have a lot of advice, don't have all this figured out for myself, sorry.",
+    "bdisen_symptom": "Indecision",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 2,
+    "sentence_text": "It's actually a fantastic decision I made, and I'm really happy I'm doing it.",
+    "bdisen_symptom": "Indecision",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 2,
+    "sentence_text": "I know that it's really hard to do but making up your mind is honestly most of the battle.",
+    "bdisen_symptom": "Indecision",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 2,
+    "sentence_text": "I think it will be hard to say it so calmly, but I won't know until I try.",
+    "bdisen_symptom": "Indecision",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  }
+]

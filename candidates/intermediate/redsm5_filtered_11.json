@@ -1,0 +1,1714 @@
+[
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_993_1060_4",
+    "sentence_text": "I can't concentrate at all now.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Many people with problems to concentrate ant thinking, or your reasoning is impaired, might be a similar symptom like is mentioned in criterio eight of major depressive disorder in DSM-5, which could be a signal alert.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1997_963_1",
+    "sentence_text": "I'm so indecisive, if I was in your boots I'd never be able to decide.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The indecisiveness is characterized by problems in the thought. If this problem es recurrent and is a new situation in the person that make a personal, social or laboral impairment, could be relate to criteria nine in the major depressive disorder in DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2886_101_3",
+    "sentence_text": "I've come out of a major depressive episode that lasted about a year and I still have some problems with focus.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The concentration difficulty is common in people with depression symptomatology or diagnostic previously like this. In this post is possible detect that inn this person the previously depressive episodic es is a risk factor to develop a new potential depressive symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2401_6_1",
+    "sentence_text": "I have really important exams coming in less then 20 days and i can concentrate at all.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post can suggest that this person has concentration difficulty produced by an eventual situation. Although concentration problems are widespread in depression, and in this person it seems to be a specific episode, this can be a risk factor if the concentration problem becomes widespread and affects other areas of life without there being a situation that causes it.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1265_353_3",
+    "sentence_text": "When I was forced to make decisions I had such anxiety before during and after.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "In this post you can see an indecisive character to make decisions, people with anxiety and depression can have this pattern of behavior. If this indecision generates a sadness for the consequences caused by not taking them at the right time, it can possibly trigger symptoms related with problems  to make decisions and difficulty thinking as described in the seventh diagnostic criterion of major depression of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_3008_185_4",
+    "sentence_text": "I'm fighting with myself to not make a stupid decision, and it's tearing me apart.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "According to this post, this person is overwhelmed by feelings of indecision and doubt about making decisions. These symptoms are recurrent in people with depressive symptomatology. If these feelings are recurrent and clinically significant could be depressive symptoms. In this context, is important to pay attention to this kind of emotional problem because it can last over time and facilitate the appearance of other cognitive distortions.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_632_560_1",
+    "sentence_text": "I've literally made the best financial decision of my life!!",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "In this sentence is true that this sentence indicates indecisiveness, however, these feelings are normal and appropriate to the situation. For this reason, there are no significant elements to affirm that this indecisiveness is a depressive symptom as is mentioned in DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2974_110_5",
+    "sentence_text": "I work a lot and make decisions all day.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post suggests that this person is making daily decisions, which can generate persistent emotional tiredness. However, these sentences are not enough to confirm that this indecisiveness is a symptom similar to that included in a major depressive disorder diagnosis.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_715_5",
+    "sentence_text": "I simply can't focus.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post might suggest that the person is experiencing concentration difficulty. These cognitive changes could be related to symptom eight the diminished ability to think \"diminished ability to think or concentrate, or indecisiveness, nearly every day\". These symptoms could be a possible depressive episode or a  risk factor to develop it.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1580_37_2",
+    "sentence_text": "I became lethargic, couldn't focus and constantly tired.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post expresses problems with the ability to think. Many people with depression have concentration problems like this, and it affects their cognitive functions. The DSM-5 has described decreased thinking ability as a diagnostic criterion for major depressive disorder. In this context, an important symptom is the ability to concentrate, as it can be a consequence of sadness and negative moods.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_993_839_16",
+    "sentence_text": "I can't concentrate...at least less than usual.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post may suggest that this person is experiencing cognitive changes, such as difficulty concentrating. These symptoms are associated with the eighth symptom of criterion A of major depressive disorder of DSM-5, which describes the diminished ability to think.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_640_4",
+    "sentence_text": "I think that's why I can't focus on study.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This sentence can indicate concentration difficulties that affect the study areas. If this issue results in changes in other areas like job, family, and personal functionality, this person can develop depressive symptomatology. Many times, depression brings emotional problems that affect thinking and cognitive function. Thus, this person is developing depressive symptomatology as major depressive disorder, precisely the symptom eight of criterion A.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2448_219_5",
+    "sentence_text": "I just don't know what to do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post can suggest indecisiveness symptoms that could be related to depressive symptomatology. This clinical disorder presents a persistent pattern of depressive mood. Indecisiveness is a symptom of concentration issues and is a signal of diminished ability to think of symptom eight of the major depressive disorder criterion.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1692_39_15",
+    "sentence_text": "I also find it easier to concentrate when I *have* to make an effort to zone people out.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "When a person reports feeling sad or hopeless and begins to have difficulty concentrating, they may develop concentration difficulties as a result of a possible depressed mood. Thus, this person could be bringing this emotional difficulty that involves thinking problems mentioned in symptom eight of criterion A for the diagnosis of major depressive disorder of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1160_93_13",
+    "sentence_text": "Overall I just don't know what should i do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "In the previous comment, this person expresses a general feeling of indecision. This difficulty in making decisions can be a way of manifesting depressive symptoms if this problem is due to an emotional issue, such as sadness. According to the DSM-5, people with major depressive disorder may develop difficulties in thinking, such as slowness or decision-making, as mentioned in symptom eight of criterion A for the diagnosis of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_629_9",
+    "sentence_text": "Where 3 years ago I could study many hour per day without getting tired, now I cannot even focus ONE MINUTE without getting distracted.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post may indicate possible difficulties concentrating, such as those mentioned in DSM-5 major depressive disorder, which refers to slowed thinking due to depressed moods. This problem relates to symptom eight of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1151_536_1",
+    "sentence_text": "I like that I can make decisions that affect only me -- I've made good and bad, but the bad ones only hurt myself.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post can suggest the thinking issues as indecisiveness. This symptom is a signal to develop a clinical pattern of diminished ability to think, which mentions this problem in symptom eight of criterion A for major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1551_232_1",
+    "sentence_text": "I try forcing myself but when I do the focus isnt there.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "From the emotions that this person relates in the previous post, it is possible to infer that this person has difficulty concentrating. This symptomatology may be caused by a depressed mood. These feelings can be part of a clinical picture to develop depressive symptoms such as those mentioned in symptom eight of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1551_30_9",
+    "sentence_text": "Wish I didnt but I did, I was alone and incapable of making the right decisions.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although that person expresses indecisiveness in the personal situation, these feelings are common in similar situations in other people, and the symptoms are not significant to develop a depressive mood. for this reason, it is not successful enough to relate this indecisiveness with a diminished ability to think of major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_706_197_1",
+    "sentence_text": "I can only get things into focus if they are extremely close, is it my fault?",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The above post indicates difficulties in concentrating and that it is generating emotional discomfort and feelings of guilt. These moods and cognitive difficulties are characteristic symptoms of major depression and are present in the eighth symptom of DSM-5 criterion A for the diagnosis of major depression. This symptom describes a diminished ability to think and mood the person's optimal functioning.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_984_874_1",
+    "sentence_text": "I couldn't really focus on anything.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although the previous publication reports a difficulty in maintaining concentration, the information is not enough to affirm that this difficulty is caused by a possible depressive symptomatology and that it implies the development of major depressive disorder as mentioned in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1831_20_59",
+    "sentence_text": "I can't concentrate, and my addiction to Smash Bros. and it's world has become destructive.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Constant and abusive use of video games can affect cognitive functioning and emotional stability. Many people may experience a loss of the ability to think and process information and produce emotional distress that leads to depressive symptoms. To this end, this person may develop symptoms of the eighth symptom of DSM-5 criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1831_20_76",
+    "sentence_text": "I don't know what to do with myself anymore.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "When someone has problems knowing what to do, and this problem is generalized, it could be a symptom of indecisiveness that is present in major depressive disorder. This symptom is the ninth symptom of criterion A for diagnoses of this disorder and consists of a diminished ability to t. The DSM-5 mentioned this disorder as a mood disorder, and this symptom is important to diagnose.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2958_25_7",
+    "sentence_text": "I had problems with concentration, but that was probably a mix of dissociation and stress.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The previous publication gives an account of a malaise caused by difficulties in concentration and thinking that may be related to depressive symptoms. This is due to many people with depressive symptoms developing issues in the ability to concentrate due to the intense thoughts and emotions that are present in depression. According to the DSM-5, this person may develop the eighth symptom of criterion A for the diagnosis of major depressive disorder, which refers to \"slowness of thought, ability to concentrate.\"",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2257_110_30",
+    "sentence_text": "I cannot concentrate on projects and have trouble sitting in one place for long.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although in this post, this person is expressing problems with concentration, there are not enough elements to affirm that this person has depressive symptoms that explain or are related to cognitive issues. In depression, attention and thinking problems are caused by a depressed mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_729_2",
+    "sentence_text": "I cant focus and i have no energy.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "According to the DSM-5, the person writing this post is developing a significant loss of energy and pleasure that is related to the sixth symptom of criterion A for the diagnosis of major depressive disorder. The manual mentions that this symptom is characterized by the generalized presence of fatigue and energy loss that this symptom is characterized by the generalized presence of fatigue and loss of energy for more than two weeks. This aspect may be present in the person writing this publication.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1738_101_3",
+    "sentence_text": "I'm still able to churn out stuff, I'm just not as consistent and focused.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The previous person is manifesting a possible concentration problem with a depressed mood. According to the depressive symptomatology mentioned in major depressive disorder, this person would meet symptom eight of criterion A for the diagnosis of this disorder. This symptom describes a marked decrease in thinking ability that can result in concentration loss, memory problems, indecisiveness, slowness of thought, and other cognitive problems.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1542_38_21",
+    "sentence_text": "I don't always make the best decisions when I'm tired.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This person's indecision is due to possible physical or mental fatigue. If this tiredness is a consequence of a depressed emotional state, this person may develop a decreased ability to think, which is a symptom of major depressive disorder. According to the DSM-5, people with major depressive disorder can develop slow thinking that can cause problems making decisions.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_282_58_7",
+    "sentence_text": "I still feel tired and I don't know, I think I just get distracted to quickly.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Consistent with the symptoms in criterion A for the diagnosis of major depressive disorder, this person may meet symptom eight of decreased ability to think due to the presence of emotions associated with sadness that affect the ability to think. Many people with major depressive disorder have slow thinking because of depression. This diminished ability to think can affect decision-making, thinking, reasoning, and the processing of information.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1899_123_14",
+    "sentence_text": "I can't concentrate on homework at all.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The concentration issues that many people have by depressive mood could be symptomatology related to the ninth symptom of criterion A for the diagnosis of major depressive disorder. According to the DSM-5, this person could develop depressive symptoms related to this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_993_798_3",
+    "sentence_text": "So that's makes me question my decisions a lot.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The difficulty in making decisions that this person claims to have is a symptom associated with a decreased capacity and ability to think. Many people with depressive symptoms have a decrease in thinking ability due to generalized depressed mood. For this reason, this person would meet the eighth symptom of DSM-5 criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_993_1080_5",
+    "sentence_text": "Each day I dreaded if I am making the right choice.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although this publication expresses a feeling of discomfort for not knowing how to decide, this problem responds to a specific situation that does not clinically affect the person who feels it. For this reason, this person would not meet symptom eight on difficulty in the ability to think according to the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2401_0_28",
+    "sentence_text": "I cant concentrate in any think for more than a minute.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The concentration problems this person describes may be associated with symptom eight of DSM-5 criterion A for the diagnosis of major depression, which refers to thinking difficulties caused by depression. A depressed mood can cause mental sluggishness, issues in memory and concentration, or trouble making decisions.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1738_394_3",
+    "sentence_text": "I constantly lose things, can't manage time, can't focus because I'm in a bad mood much of the time, everything is harder to do because I lack the energy.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Following the behavioral and mood problems mentioned in the previous post, it is possible to identify issues in the ability to concentrate and organize, which are associated with an emotional state of sadness and disagreement that generates discomfort. If these changes are a consequence of a depressed mood, this person could be developing depressive symptoms as symptom eight of criterion A for the diagnosis of Major pressure disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1190_10_0",
+    "sentence_text": "How indecisive I am about important things.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This comment suggests difficulty in making decisions about different tasks and situations of quotidian life. Given the DSM-5 criteria for the diagnosis of major depressive disorder, this comment relates to the eighth symptom of criterion A of major depressive disorder. According to this symptom, people with MDD have a marked slowness in thinking that can manifest itself with difficulty in making decisions.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2993_474_3",
+    "sentence_text": "Hope you don't have a hard time making decisions like me lol but I'm open and willing to try for you",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although the above statement expresses indecisive behavior, the above post is not sufficient to affirm that the indecision this person manifests to have is related to a depressive episode such as the one mentioned in DSM-5 major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1856_49_2",
+    "sentence_text": "Insecurities are getting to me and I don't know what to do anymore",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The previous post shows the appearance of feelings of generalized cloudiness and mental doubts that cause depressed moods. The indecision, doubt, and discomfort caused by these in the person may be a problem that would be related to the eighth symptom of criterion A for the diagnosis of major depressive disorder of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2993_443_1",
+    "sentence_text": "My brain is so fucked it's so hard to do anything or focus for long.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Depression can affect mental faculties, including thinking and concentration. Many people have problems concentrating or attending due to the sadness and instructive thoughts that suddenly appear, which generates significant discomfort. If this problem persists for more than two weeks, this person could be developing the eighth symptom of criterion A for the diagnosis of DSM-5 major depression disorder. This symptom refers to a decrease in thinking skills for more than two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2661_399_2",
+    "sentence_text": "I just need to spend some time and make decisions",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This phrase suggests the issue of making decisions, and that it could be related to depressive symptomatology following DSM-5. This manual included the diminished ability to think and indecisiveness as symptom eight of major depressive disorder. If this issue is maintained for two weeks or more and is the cause of emotional changes, this indecisiveness could be a behavior to major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2401_11_1",
+    "sentence_text": "I cant concentrate at anything.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although this sentence expresses difficulty in concentrating, the tone and context of the sentence suggest that this difficulty results from a depressed mood. The DSM-5 mentions some issues in thinking resulting from depression in the eighth symptom of criterion A for the diagnosis of major depressive disorder. It is important to assess the intensity and deterioration this symptom causes in the person and their environment.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2139_45_5",
+    "sentence_text": "Like I cant concentrate well, am either unfocused or so focused I dont see whats around me.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Depression can cause difficulties in thinking and cognitive skills, such as memory, attention, and concentration, due to the depressed mood. According to the DSM-5, this person could meet the eighth symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_257_579_1",
+    "sentence_text": "I think I might have low dopamine levels because my concentration and motivation levels are extremely low.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "In line with the symptoms of major depressive disorder, this person would meet the eighth symptom of major depressive disorder of the DSM-5, which refers to concentration difficulties.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_151_12_8",
+    "sentence_text": "I sadly could go on and on of the terrible decisions I made.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This person claims to make poor decisions and evaluates his or her decision-making ability negatively, which could be an indicator of a thinking issue and the ability to think appropriately due to a depressed mood. More specifically, the behavior of thinking issue is manifested by people who develop the eighth symptom of criterion A for the diagnosis of major depression and could be the cause of this statement.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1933_177_2",
+    "sentence_text": "I'm so indecisive.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This phrase may be a manifestation of a problem in thinking derived from a depressed mood. Thus, according to the DSM-5, people with major depressive disorder develop issues in the mental capacity to make decisions, concentrate, or the ability to think. Therefore, it is possible to infer the presence of a possible depressive symptom of decreased ability to think from the previous phrase.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2130_209_1",
+    "sentence_text": "I just don't know what to do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This statement may be related to the indecisiveness or slowness of thought that causes depression in many people. This problem may be associated with the eighth symptom of criterion A of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2855_5_2",
+    "sentence_text": "I don't have the attention span to sit there for hours and constantly read words.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The sentence above mentions concentration difficulties, but it does not reflect the type of concentration issues typically seen in individuals with depression, as there is no underlying mood disturbance explaining the impairment. Therefore, this post is not indicative of a possible depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_976_910_3",
+    "sentence_text": "I also issues with concentration and motivation when I'm not getting any, and tried mindfulness, but I wasn't very good at that.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post is an emotional expression of concentration difficulty. However, this issue is not an emotional problem related to depression or emotional changes. Thus, the information in the previous post does not correspond to depressive symptomatology in line with the Major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_3040_931_1",
+    "sentence_text": "So, long story short, I make really idiotic decisions when it comes to boys.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This message could be associated with a feeling of worthlessness or failure due to the bad decisions that the person has made in his/her life. Following the symptoms of major depressive disorder, this person could manifest difficulty in making decisions, and that is generating a feeling of failure after evaluating its consequences. This difficulty in making decisions can be an indicator of the presence of the eighth symptom of depressed mood on difficulty in concentration and decision making.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2492_1_46",
+    "sentence_text": "This is probably one of the toughest decisions I've had to make thus far in my life, and I am so lost as to what to do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post seems to be a manifestation of an ethical conflict and not a symptom of a depressed mood. To this end, it is not possible to affirm that this statement manifests a symptom of slowness in thinking or difficulty in making decisions, symptoms typical of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2662_0_0",
+    "sentence_text": "Awkward Request - I can't concentrate at work at all.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although this statement is not very exact, the problems with concentration could be associated with a depressed mood, and the change in thinking ability in this post may have an affective component. For this reason, it is necessary to accurately assess whether this cognitive problem is derived from a depressed mood since it may be associated with the eighth symptom of criterion A for the diagnosis of major depression in the DSM-5 manual.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2662_0_4",
+    "sentence_text": "But now-a-days I can not even focus for five minutes.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Though the statement lacks precision, difficulties with concentration may be linked to a depressed mood, suggesting a potential affective component. It is important to carefully evaluate whether this cognitive issue stems from a depressive state, as it could correspond to the eighth symptom of Criterion A for Major Depressive Disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2662_0_8",
+    "sentence_text": "I have been doing so for the last two months and I am exhausted, unable to focus and I feel plain dumb.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although the statement is somewhat vague, concentration difficulties may be related to a depressed mood, indicating a possible emotional influence. It is crucial to assess whether this cognitive issue arises from a depressive state, as it may align with the eighth symptom of Criterion A for Major Depressive Disorder according to the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_316_7",
+    "sentence_text": "I can't focus on my homework 7.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The loss of the ability to concentrate is a possible consequence of a depressed mood that causes a problem with the ability to think. According to the DSM-5, people with depressive symptoms may develop difficulty concentrating for several weeks, and this could also be associated with the eighth symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2401_23_0",
+    "sentence_text": "I'm lacking concentration and having trouble remembering my lessons",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The previous sentence does not offer any information about this behavior. Following the criteria of possible mental disorders, it is important to evaluate the origin, intensity, and frequency of this cognitive problem to establish possible etiologies and clinical classification in the case that there is some mental disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2402_339_8",
+    "sentence_text": "I can't concentrate enough in College.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Constant negative feelings, such as sadness, hopelessness, or physical problems derived from these feelings, can generate difficulty in thinking skills, such as concentration or slowness of thought. For this reason, the problem mentioned in the sentence can provide information about a possible deterioration in the ability to think typical of a depressed mood. These types of alterations are present in the eighth symptom of criterion A for the diagnosis of major depression in the DSM5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_759_88_0",
+    "sentence_text": "I have a very hardtime making decisions.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The emotional tone of this sentence suggests a possible change in the ability to think, make decisions, and respond appropriately to daily demands due to the presence of a depressed mood. This cognitive problem corresponds with the eighth symptom of criterion A of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1601_1053_15",
+    "sentence_text": "I lose my focus and my memory as well.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The loss of concentration, as well as the other symptoms that are present in the publication, allow us to infer the presence of a cognitive alteration caused by a depressed mood that would be causing intense discomfort. For this reason, this comment could be associated with the ninth symptom of depression in the DSM-5, which refers to an alteration of consciousness and thought and causes problems with concentration, response time, or mental emptiness.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2401_22_5",
+    "sentence_text": "I just don't know what to do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although the phrase does not clearly illustrate the feelings and changes in mood, it is possible to affirm that this person is developing an alteration in thinking that is related to the feelings of sadness, anxiety, and difficulty concentrating that this person also presents. These symptoms together may indicate a possible depressive episode, and the previous phrase could be associated with the eighth symptom of major depressive disorder included in the DSM-5 manual.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_134_349_3",
+    "sentence_text": "I can't concentrate, I don't care about getting good grades, I don't go to class b/c I can't get out of bed, I feel sick when I get a bad grade or don't know something, I feel alone in the classroom, or i won't be able to complete a class so then i start thinking about my future and how i won't graduate because i can't complete the coursework, so i won't get a job, won't get a house, be broke, no one will want to marry me, can't provide for family, friends hate me, etc, the list goes and on and on it goes.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Given the emotional tone of the sentence and the problems described in the post, it is possible to infer the presence of a possible concentration problem typical of a depressed mood. In this context, the above sentence may be a marker of the eighth symptom of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_105_18",
+    "sentence_text": "Where in the past I could easily study for hours without getting distracted, now I cannot effectively study more than a few minutes per day.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The comment \"Where in the past I could easily study for hours without getting distracted, now I cannot effectively study more than a few minutes per day\" may indicate difficulty concentrating, which is a key symptom of major depressive disorder, according to the DSM-5. Difficulty sustaining attention, focus, or making decisions is often associated with depression, particularly when it impacts daily activities such as studying or work. If this concentration difficulty persists and is accompanied by other symptoms, it could be a manifestation of a depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_105_21",
+    "sentence_text": "I just cant focus anymore.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The sentence may reflect difficulty concentrating, a core symptom of major depressive disorder (MDD) as outlined in the DSM-5. Problems with attention, focus, or decision-making are commonly associated with depression, especially when they interfere with essential tasks like studying or work. If this concentration issue persists and is accompanied by other depressive symptoms, it could indicate the presence of a depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_102_34",
+    "sentence_text": "I'm not interested in anything.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of pleasure is a  characteristic symptom linked to many people with depression. This post could be relevant to symptomatology associeted to major depressive disorder, and is a signal alert.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_205_396_1",
+    "sentence_text": "I've just never been that interested in sex or relationships and I don't think I ever will be.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "when many people have problems to interest in sex or loss of sexual appetite during a few weeks, and this loss interes is persistent, the symptomatology es recurrent with people with episodic of depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2055_843_7",
+    "sentence_text": "I almost don't know what to do with myself, all my hobbies withered over the years.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Many people with problems to have interest is relate to difficult to have motivation and maintain their hobbies or recurrent activities. In this context, is relevant this loss of interest because is common and affects their life in general. which is a symptom mentioned in major depressive disorder in DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2417_69_1",
+    "sentence_text": "Im not sure if I am just seem to loose all motivation to do anything and I get upset at everything.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This comment may suggest a generalized state of loss of interests and a change in motivation to do daily activities that could previously do. Many people with people with depression begin to develop symptoms with the loss of interest in everyday activities. This person may be developing depressive symptoms related to major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_577_1186_1",
+    "sentence_text": "Admittedly I am less actively these days but I am still very interested.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post shows how the person has lost some interest in performing some of the daily activities. On the other hand, the person who writes in the text still maintains a general interest in certain activities and has not lost everything. It is important to pay attention to this beginning of loss of interest because many people with depressive symptoms start with this form of discouragement.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_762_0_2",
+    "sentence_text": "I dont do the things that I used to love either.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "In this sentence it can understand how the person manifests a significant loss of pleasure to do activities that he usually performs, which is a sign of alarm due to the temporary nature of this change in behavior. Many people with depression symptoms have loss of pleasure as described by criterion number two of the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_762_0_2",
+    "sentence_text": "I dont do the things that I used to love either.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This person can suggests that this feelings are relate with loss of interest. When someone affirm that can not do the things that it used to love, could be develop a depressive symptomatology similar to describe in major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2904_522_5",
+    "sentence_text": "I lost my libido.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of energy from sexual activity is a characteristic symptom that many people with symptoms of depression usually develop due to the loss or decrease of pleasure. Although many people with depression can maintain a certain type of sexual activity or habits, the energy and quality of relationships are much less intense. DSM-5 in criterion two of major depression describes how loss of pleasure is a characteristic symptom of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2904_522_6",
+    "sentence_text": "I used to be obssesed about sex, but since I take my medication, I totally forgot about sex.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Many people take medication that can affect sexual behavior and sexual interest. In depression, many people who have needed medication for depressive symptoms or related disorders, can develop a loss of sexual interest that can affect their self-esteem and be a risk factor to continue developing other symptoms related to depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_585_9",
+    "sentence_text": "One day I'm desperate for friends, the other day I tell everyone to fuck off because I'm not interested in friendship anymore.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This person may experience constant changes of interest in friends and significant others. Mood swings can degenerate emotional stability and produce a loss of interest and pleasure. According to the DSM-5, people with major depressive disorder may experience changes in pleasure and interest related to this person. Criterion two specifically mentions these symptoms as criteria for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_301_619_2",
+    "sentence_text": "I used to enjoy watching football",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This sentence indicates a feeling of nostalgia for a frequently performed activity that he no longer enjoys. When a person is nostalgic for feeling a pleasure that can no longer feel, there may be a significant loss of pleasure. This can be a warning sign since, according to the DSM-5, people with This sentence indicate a feeling of nostalgia for a frequently performed activity that he no longer enjoys. When a person is nostalgic for feeling a pleasure that can no longer feel, there may be a significant loss of pleasure. This can be a warning sign because, according to the DSM-5, people with major depression have a significant loss of pleasure in doing different tasks that they used to enjoy, and this loss of pleasure occurs for no apparent reason. Major depression have a significant loss of pleasure in doing different tasks that they used to enjoy and this loss of pleasure occurs for no apparent reason.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1939_347_1",
+    "sentence_text": "However, I HAVE had relationships and sexual encounters before, but right now they don't interest me.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Indicating that \"now they don´t interest me\" when someone talks about the sexual relationship, can indicate a loss of interest in sex or difficulty feeling desired. These behavioral changes can be symptoms related to markedly diminished interest or pleasure described in the major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_60_1",
+    "sentence_text": "I dont know how it feels to be happy or even enjoy something, because the last time I enjoyed anything was so long ago that I dont remember it.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "When a person says that he or she does not know how to enjoy life and does not remember what happiness is like, it may indicate a possible loss of pleasure and enjoyment. This post may suggest that this person has difficulty finding pleasure in life, and these feelings relate to the symptoms described in the DSM-5 diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_60_7",
+    "sentence_text": "I just cant enjoy anything.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of ability to enjoy as is shown in this post, is a signal of loss of pleasure. This sentence can indicate difficulty in being good and finding enjoyment in daily activities. According to DSM-5, this is a symptom that is related to the criterion of major depressive disorder. People with this diagnosis could develop symptoms like diminished interest or pleasure in all or almost all, activities most of the day, nearly every day.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_60_8",
+    "sentence_text": "I cannot enjoy my favorite food, I cannot enjoy playing videogames, I cannot enjoy going outside, I hate life and there is no more fun in life for me.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post indicates a loss of pleasure in food, video games, and going outside and these three aspects are relevant to identify an important loss of pleasure that is characterized as depression. According to the level of interference, these symptoms affect different personal areas like ocio, social, and eating habits, for this reason, this sentence is related to the criterion of diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_60_8",
+    "sentence_text": "I cannot enjoy my favorite food, I cannot enjoy playing videogames, I cannot enjoy going outside, I hate life and there is no more fun in life for me.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of interest and pleasure is linked to depression. According to this sentence, this person has emotional changes that  This person is experiencing changes that make them think and feel that the activities they previously did are no longer of interest. Suppose this person claims to hate life, not wanting to enjoy it anymore, and changes healthy routines that they previously had. In that case, we can say that this loss of interest is significant, as mentioned in the DSM-5 on the diagnostic criteria for major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1639_672_7",
+    "sentence_text": "My eyes have been so dry and Ive had no libido whatsoever.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "In this sentence, the person tells how felt the loss of pleasure and sexual desire and mentions a series of characteristics of physiological changes. However, this statement does not give enough elements to identify if these changes in libido are due to mood changes, as occurs in depression. Many people may have changes in sexual desire due to the consumption of hormonal treatment drugs, which often leads to a decrease in the ability to feel pleasure.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2257_194_34",
+    "sentence_text": "The things that used to excite me arent the same for me anymore.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This person is expressing a possible loss of pleasure in activities that were previously of interest. Many people experience these mood changes, however, when it affects different areas of personal, social, work, family, or other areas in which the person is involved, we can speak of an emotional deterioration that is related to one of the symptoms of the diagnosis of major depression as described in the DSM-5. Thus, this publication can be related to criterion two of the disorder, which speaks of a marked decrease in interest or pleasure in daily activities.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2578_30_7",
+    "sentence_text": "My ambition really took a hit and right now it's difficult for me to focus on activities that I had fun doing before and now they just seem, don't know how to say, pointless.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This publication shows how this person is feeling mood swings to the detriment of the positive emotions that facilitate enjoyment, pleasure, and concentration in these activities. When a person experiences mood swings that are the cause of loss of pleasure it can be a symptom associated with major depression. The DSM-5 manual lists a marked decrease in interest and pleasure in doing activities as one of the symptoms of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_258_546_2",
+    "sentence_text": "I was able to experience novelty and joy even if I did still feel lonely/ depressed and would self harm , I had the ability to enjoy and feel like the real me - now all thats gone and Ive just gotten buried into a depressive hole where everyday is lived robotically or ghostly.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This publication may suggest that this person is going through a difficult time in their life and that among the feelings that bother them is the inability to feel pleasure and to be able to remain interested in the activities that they previously performed recurrently. This situation may be related to the symptoms described in the DSM-5 on major depressive disorder, where loss of pleasure is described as a diagnostic symptom of the disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2495_9_0",
+    "sentence_text": "I don't really understand what that means, but I'm not all that interested in sex.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This publication reports that this person is confused by a possible loss of interest and pleasure in sexual activity. In this sense, these possible behavioral and affective changes may be related to the second diagnostic criterion for depression as mentioned in the DSM-5: \"Markedly diminished interest or pleasure in all, or almost all, activities most of the day, nearly every day\".",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2415_1017_8",
+    "sentence_text": "and here I am finding it hard to enjoy anything.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This could be an indication of loss of pleasure, which is related to depressive symptomatology associated with DSM-5 criterion A (Markedly diminished interest or pleasure in all, or almost all, activities most of the day, nearly every day). This is a possible symptom of a diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1931_491_3",
+    "sentence_text": "I know sex is important to some people but not me.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post might suggest that the person is experiencing a loss of interest in sex. Many people with depressive symptoms experience these emotional changes which could be related to symptom two of criterion A of major depressive disorder. The disorder can develop if these symptoms are intense and affect significantly.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_342_952_3",
+    "sentence_text": "But I noticed I stopped doing things, lost interest in reading, and, I'm sure you guys know the rest.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This phrase is a statement of the markedly diminished interest in pleasure, which is included in major depressive disorder. In this context, many people with this disorder experience a marked decrease in pleasure as described in the second symptom of criterion A of major depressive disorder of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_467_1",
+    "sentence_text": "I don't like the idea of having sex.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This statement may be a way of expressing a loss of sexual interest. These feelings can appear in people with depression when they maintain this loss of interest. The loss of sexual interest is accompanied by possible sadness, guilt, or changes in eating and personal care habits. Loss of sexual interest is included in symptom two of criterion A for the DSM-5 diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2625_821_1",
+    "sentence_text": "I like to masturbate but I don't really enjoy sex.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post may indicate that this person is experiencing a symptom associated with a loss of sexual pleasure and interest. People with depressive symptoms experience a marked and significant decrease in interest and pleasure in everyday activities, including sexual interest. Consistent with symptom two of criterion A of major depressive disorder, loss of pleasure is a characteristic symptom of persons with depressive symptoms, such as the one in this publication.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_256_57_4",
+    "sentence_text": "Any tips that would help cure my interest loss would be highly appreciated.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post suggests that this person is asking for help because they may have a significant loss of interest, and it is affecting their behavior. Many people with depressive symptoms develop a marked loss of interest and pleasure. These symptoms have been included in criterion A of the DSM-5 diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1127_16_1",
+    "sentence_text": "So here is the case.. It's been nearly 4 years, since i really don't feel like myself..I am still interested in activities that interested me before,but my emotions are so weak and i am much less sensitive to particular things/people.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This person could be developing a possible loss of pleasure. According to the DSM-5, this is a characteristic symptom of criterion A for the diagnosis of major depression. People who experience the symptom of loss of pleasure find it difficult to find enjoyment and tranquility in activities that they routinely perform, an aspect demonstrated in the statement made by this person.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1127_16_1",
+    "sentence_text": "So here is the case.. It's been nearly 4 years, since i really don't feel like myself..I am still interested in activities that interested me before,but my emotions are so weak and i am much less sensitive to particular things/people.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This person could be developing a possible loss of interest. According to the DSM-5, this is a characteristic symptom of criterion A for the diagnosis of major depression. People who experience the symtomatology of loss of interest have issues in the motivation and pleasure in the daily task and new activities, an aspect demonstrated in the statement made by this person.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_703_27_7",
+    "sentence_text": "I don't even know what would make me happy, I think I forgot how to be happy a long time ago.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "To indicate that you have forgotten what it means to feel and be happy can be an expression that indicates loss of pleasure and capacity for enjoyment. This behavior change may be associated with a marked diminished interest in pleasure, a symptom mentioned in criterion A for the DSM-5 diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2958_116_21",
+    "sentence_text": "I like socializing with people, I like to talk about what's happening in the day to day, have drinks, go to parties and have a good time, but I feel like a whole side of me is never engaged.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This person manifests feelings of misunderstanding and inability to feel comfortable with others due to feelings of misunderstanding. Many people with depression have difficulty relating to others because they report feeling misunderstood and undervalued by others. For this reason, the feelings described may relate to the symptoms of worthlessness mentioned in criterion A of the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_3040_704_7",
+    "sentence_text": "And I really enjoy doing things myself.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This publication expresses feelings and emotions of pleasure and enjoyment,  and this behavior corresponds to an expected response to the situation. For this reason, this behavior is not similar to a symptom associated with major depression, in which loss of pleasure is a symptom that develops due to depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_473_485_7",
+    "sentence_text": "Plus, having a lower sex drive would be a good thing since it will allow me to focus more on other things but also allow me to have sex when I will want to.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post may indicate that this person has difficulty having an interest in sexual activity. These behavioral changes may be related to the second symptom of criterion A of the DSM-5 diagnosis of major depression. In this post, you can see that there is a significant loss or decrease in interest and pleasure.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_890_2",
+    "sentence_text": "There is nothing I enjoy in life.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This sentence may indicate that this person is developing a feeling associated with depressive symptoms, such as loss of pleasure. Many people with depressive symptoms can bring a loss of pleasure a deep sadness, and this case is a negative experience and is related to depressive symtomatology. This symptom is the second in criterion A of major depressive disorder in DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2247_51_5",
+    "sentence_text": "I mean it all seems so simple, but it's like now I know who ever I'm sexuality active with it's still me every time.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The above publication is a sign of loss of sexual interest that may be related to a symptom of loss of interest and pleasure, as mentioned in the second symptom of criterion A of the DSM-5 major depressive disorder. Many people with depressive symptomatology develop marked loss of motivation and motor sluggishness that have as their basis the loss or inability to feel enjoyment and pleasure in routine activities.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_212_394_1",
+    "sentence_text": "I don't have a passion for anything I lost interest in most things about the age of 10 (idk what happened to me maybe some event or one of my childhood operations something gone wrong) after losing it at 10; my time became occupied with philosophy and just wasting time mindlessly or on intellectual things like science and math.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Loss of pleasure is a problem that many people often develop when they have depressive symptoms. Thus, this person could bring the second symptom of major depression as described in criterion A for the diagnosis of this disorder. Depression causes a significant loss of pleasure due to negative feelings and emotions that affect the ability to enjoy.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_212_394_1",
+    "sentence_text": "I don't have a passion for anything I lost interest in most things about the age of 10 (idk what happened to me maybe some event or one of my childhood operations something gone wrong) after losing it at 10; my time became occupied with philosophy and just wasting time mindlessly or on intellectual things like science and math.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of interest that this person reports in the post may be a sign that they are developing symptoms associated with depression. Many people with depressive symptoms also experience a marked decrease in interest due to low self-esteem, self-confidence, and the deep sadness they experience. These feelings generate feelings and thoughts that decrease interest in new activities. These feelings are included in symptom two of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_955_1",
+    "sentence_text": "I haven't enjoyed anything the last 5 years",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This statement indicates a generalized and sustained state of anhedonia, a loss of pleasure and interest prolonged over time that generates constant negative and depressive emotional states. The loss of pleasure is a symptom that is related to symptom two of criterion A for the diagnosis of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_640_2",
+    "sentence_text": "Due to my depression I have been unable to enjoy anything the last 4 years.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This person tells how he lost the ability to feel a place for many years due to depression. Many people with depressive symptoms develop a marked loss of interest that includes low self-esteem and motivation that prevents finding a place and enjoying everyday tasks such as working, walking, eating, and maintaining social contact. \nMany people want to carry out different leisure activities that they previously enjoyed. According to DSM-5, these symptoms correspond to the second symptom of criterion A for the diagnosis of major depression disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_640_2",
+    "sentence_text": "Due to my depression I have been unable to enjoy anything the last 4 years.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This person reports that he has difficulty maintaining interest in everyday activities and that this behavior has continued for a long time. This marked loss of interest could be significant and affect the personal, social, family, and job. The loss of interest is a symptom that develops people with depression and is characterized by finding and maintaining motivation to carry out any activity that previously did not involve effort. The DSM-5 mentions the loss of interest in criterion A for the diagnosis of major depression disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_640_6",
+    "sentence_text": "Because I don't enjoy anything, I constantly crave to try to enjoy something.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of the ability to feel place is a common symptom among people with depressive symptoms. Therefore, this person may be experiencing difficulties finding a place and feeling enjoyment, which can make issues to enjoy different tasks daily. This person could comply with the symptom of criterion A for the diagnosis of major depression disorder in DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_274_393_1",
+    "sentence_text": "I recently lost all interest in anything I did.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post indicates a generalized loss of pleasure that affects the life of this person and affects the well-being of life and performing routine activities that this person used to do normally. The loss of pleasure is a symptomatology present in major depressive disorder, as mentioned in the DSM-5, specifically in symptom two of criterion A.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_274_393_1",
+    "sentence_text": "I recently lost all interest in anything I did.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post indicates a generalized loss of interest that affects the life of this person and preventing enjoy life and performing routine activities that this person used to do normally. The loss of interest is a symptomatology present in major depressive disorder, as mentioned in the DSM-5, specifically in symptom two of criterion A.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_703_51_8",
+    "sentence_text": "My brain just stopped working, everything seems dull and I no longer feel fulfilled by anything.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of interest reflected in this publication is a symptom that may be related to the depressive symptomatology of DSM-5 major depressive disorder. This loss of interest can originate in moments of melancholy, discomfort, deep sadness, and loss of motivation. These symptoms accompany the diagnosis of Major depression and usually generate daily problems due to anhedonia and inability to function in the essential tasks of self-care, work, relationships, and emotional areas.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_746_0",
+    "sentence_text": "No motivation and energy to improve my lifestyle",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Loss of motivation and energy can be symptoms related to depressed moods, specified in the second depressive symptom, which is included in the DSM-5. If the loss of interest continues for more than two weeks, this person could develop symptoms associated with depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2007_76_2",
+    "sentence_text": "I can't feel something to people the way I did before.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post is experiencing a significant loss of pleasure that causes difficulties in feeling affection for others. These mood changes may be related to the second symptom of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2023_576_10",
+    "sentence_text": "I just wish I could enjoy life like I used to.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post indicates feelings of deep nostalgia and loss of the ability to feel pleasure, which are symptoms that are present in people with major depression disorder and affect mood, personal, social, family, work, and other developmental areas. The DSM-5 includes these symptoms and problems in symptom two of criterion A for Major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_500_8",
+    "sentence_text": "Actually I don't even want sex.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Loss of sexual appetite can be a consequence of depressed mood and can affect relationships and interest in interacting with others. This situation also occurs in people with depressive symptoms. If these symptoms persist for a long time, they may be related to the second symptom of criterion A for the diagnosis of major depression as included in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_313_493_9",
+    "sentence_text": "For reasons unknown in my early (to not-so-early) years I just wasnt interested in sex.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Although the previous publication indicates a possible period and difficulty for sexual desire, there are not enough elements to affirm that these feelings are due to emotions and moods. These behaviors are mentioned in symptom two of criterion A of the DSM-5 diagnosis of Major depression about a marked loss of interest and pleasure in sex.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_215_54_3",
+    "sentence_text": "I feel exactly the same, I don't enjoy anything anymore and I'm too tired to do anything.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Based on the above statement, it is possible to infer feelings of loss of energy and pleasure related to depressive symptomatology. One of the characteristics of depressive symptomatology is the presence of a marked decrease in interest and pleasure, as described in symptom two of criterion A for the diagnosis of major depressive disorder, which could be related to the symptomatology described in the previous post.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_215_54_3",
+    "sentence_text": "I feel exactly the same, I don't enjoy anything anymore and I'm too tired to do anything.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Based on the above statement, it is possible to infer feelings of loss of interest related to depressive symptomatology. One of the characteristics of depressive symptomatology is the presence of a marked decrease in interest and pleasure, as described in symptom two of criterion A for the diagnosis of major depressive disorder. If this symptom is recurrent for two weeks or more time, it is possible to develop several symptoms of depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_996_384_1",
+    "sentence_text": "Over the course of several years I lost hope of ever feeling better and stopped doing most things I enjoyed.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Sadness sometimes manifests itself as a loss of pleasure, with which one experiences constant difficulty in finding pleasure or enjoyment in everyday tasks. Thus, this person may be developing a marked decrease in interest and pleasure linked to the second symptom of DSM-5 criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2456_821_1",
+    "sentence_text": "I don't like Sex",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Although this person expresses little interest in sexual activity, this decrease in pleasure is not the result of a depressed mood or a situation that results in a significant change in mood. For this reason, there is not enough evidence to affirm that this loss of pleasure is a depressive symptom.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2415_550_8",
+    "sentence_text": "I don't enjoy anything.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Losing the ability to feel pleasure and enjoyment is a characteristic symptom that can be present in major depression. If the person writing this review has a generalized loss of pleasure for more than two weeks, he or she may be developing the second symptom of criterion A for the diagnosis of major depressive disorder included in DSM-5 mood disorders.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1551_239_3",
+    "sentence_text": "Ive spent the better part of 2 years trying to focus on self improvement and only had sex twice in that time, both times I just didnt get as excited as I used to.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The previous publication allows us to identify a generalized loss of pleasure and interest for a long time, which may be related to a marked decrease in interest and pleasure present in DSM-5 major depressive disorder. This disorder mentions this behavior in the second symptom of criterion A for the diagnosis of depression. For this reason, this person may meet a maintained and generalized clinical profile of depressive symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_76_3",
+    "sentence_text": "i enjoy nothing in life im depressed .",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The above phrase indicates a loss of pleasure caused by a feeling of sadness; this problem is related to major depressive disorder mentioned in the DSM-5. In the manual of mental disorders, loss of pleasure is mentioned as the second symptom of criterion A for the diagnosis of major depression. This loss of pleasure is a consequence of a generalized feeling of sadness.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_984_45_0",
+    "sentence_text": "I've been detached from games, movies, and pretty much all the shit I really enjoy for a little while.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The above sentence indicates that the person is experiencing a significant loss of pleasure that could be related to depressive symptomatology. The second symptom of criterion A of the diagnosis of major depression mentions the loss of pleasure as a significant symptom characterized by a loss of the ability to feel enjoyment and enjoyment in routine activities. The above sentence indicates that the person is experiencing a significant loss of pleasure that could be related to depressive symptomatology. The second symptom of criterion A of the diagnosis of major depression mentions the loss of pleasure as a significant symptom characterized by a loss of the ability to feel enjoyment in routine activities.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_984_45_0",
+    "sentence_text": "I've been detached from games, movies, and pretty much all the shit I really enjoy for a little while.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The above sentence indicates that the person is experiencing a significant loss of interest that could be caused by a loss of ability to feel enjoyment. This symptom is related to depressive symptomatology. The second symptom of criterion A of the diagnosis of major depression mentions the loss of pleasure as a significant symptom characterized by a loss of motivation in routine activities.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2456_769_2",
+    "sentence_text": "But to answer your question, I personally lack sexual attraction and a lack of sexual drive.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Indicating that you have lost interest in sex and that you no longer feel sexual attraction to someone can be a symptom that appears in major depression. The DSM-5 manual of mental disorders describes major depressive disorder as having nine symptoms, and one of them is loss of pleasure and interest. If this person maintains this symptom for more than two weeks and affects other areas of personal life, this person will meet this symptom for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2415_1014_2",
+    "sentence_text": "I want to improve myself and my life but I am so lazy and there just seems something inside my mind that stops me from having fun.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The previous publication reports the presence of a feeling of loss of pleasure and generalized interest that could be related to depressive symptomatology. Many people with major depressive disorder develop a marked decrease in interest brought on by the deep depressed mood, as mentioned in the DSM-5 in major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1609_169_3",
+    "sentence_text": "I personally suffer anxiety and depression that sometimes lead into things like disinterest, etc.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Anxiety and depression can lead to a marked loss of interest and pleasure due to a depressed mood. According to the DSM-5, the person writing this post may meet the second symptom of criterion A for the diagnosis of major depressive disorder. This symptom refers to the loss of interest caused by depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_8_5",
+    "sentence_text": "I do NOT have any sexual desires with my girlfriend.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of interest in the sex of the person who wrote this post could be a depressive symptom. Many people with major depressive disorder meet with the symptoms of loss of interest in sex. According to DSM-5, the feelings expressed in this post could be related to the second symptom of criterion A for this diagnosis.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2035_776_2",
+    "sentence_text": "I cant pinpoint certain times of the month that I want sex more or less.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The person writing this post expresses a sustained difficulty concerning interest in sex. According to the DSM-5, this person would meet the second symptom of criterion A for the diagnosis of major depressive disorder, which consists of a marked decrease in interest and generalized pleasure. One of the behaviors affected is motivation in daily activities, self-care, or sexual interest.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_820_0",
+    "sentence_text": "There is nothing I enjoy in life, and the things I might enjoy are impossibl to achieve.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Loss of the ability to enjoy and feel pleasure is a characteristic symptom of depressive symptomatology, and it involves a marked decrease in interest and pleasure consistent with the second symptom of criterion A for the diagnosis of major depressive disorder of DSM-5. Loss of the ability to feel pleasure and interest is a behavioral and affective symptom that people with Major depression experience",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_820_0",
+    "sentence_text": "There is nothing I enjoy in life, and the things I might enjoy are impossibl to achieve.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This person's loss of interest may be a generalized symptom of a marked decrease in pleasure and may be related to the diagnostic symptoms of major depressive disorder. According to the DSM-5, this person would meet the second symptom of criterion A of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_820_9",
+    "sentence_text": "There is nothing that I enjoy.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The above phrase is an emotional indicator of a decrease in the capacity for enjoyment, which relates to the symptoms of Major depressive disorder described in the second symptom of criterion A for the disorder's diagnosis of DSM-5. Loss of energy for any activity is a behavioral symptom that many people with depression experience and lose the ability to self-care, and find happiness, and joy in daily activities.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_820_10",
+    "sentence_text": "I don't enjoy eating my favorite food anymore, I don't enjoy gaming, I don't enjoy being with my friends... I've done all these things for my whole life and its becoming boring.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The problem that this person is reporting is a generalized symptom of the loss of the ability to enjoy. According to the DSM-5 criteria, these feelings meet the criteria for major depression associated with the second symptom of criterion A for diagnosis.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_820_10",
+    "sentence_text": "I don't enjoy eating my favorite food anymore, I don't enjoy gaming, I don't enjoy being with my friends... I've done all these things for my whole life and its becoming boring.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This person's problem is a generalized symptom of losing interest. Thus, according to the DSM-5 criteria, these feelings affect the normal functioning of daily because the person loses the ability to take care of themselves, to do activities like work and ocio, and other routine tasks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_820_18",
+    "sentence_text": "I dont enjoy my life anymore.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "If a person claims that they can no longer feel pleasure, it may be a sign of a loss of the ability to enjoy due to possible sadness or depressed mood. According to the DSM-5, this person may meet the second symptom of criterion A for the diagnosis of major depressive disorder. Loss of pleasure and energy are two core symptoms of major depressive disorder and affect daily functioning.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_820_23",
+    "sentence_text": "The things I can do became boring, the things I want to achieve are impossible.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of interest in the previous sentence is a sign of the presence of depressive symptomatology, and according to the DSM-5, this sentence gives elements to relate this feeling to the second symptom of criterion A for the diagnosis of major depression. This symptom is characterized by a significant loss of interest that causes a decrease in the person's energy, and they stop doing activities that they used to do regularly.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1777_14_10",
+    "sentence_text": "All of my hobbies and interests go unfulfilled and eventually they no longer make me happy because I realize how very boring it all actually is.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The above sentence indicates a marked loss of interest that could be caused by intentional emotional distress, sadness, or depression. Considering the criteria and the characteristic symptoms of major depressive disorder, this person would meet the second symptom of criterion A for the diagnosis of depression. Likewise, this person could meet the criteria of temporality and intensity due to the manifestation of the symptom.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_117_857_8",
+    "sentence_text": "Whenever we are intimate, I can tell that he wishes he could do more for me, but I'm just not that into sex.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The behavioral comment in the above post could be a symptomatology of markedly diminished interest in pleasure as the loss of interest in sex. This symptom is a signal of emotional issues to major depressive disorder. Within DSM-5, the markedly diminished interest in pleasure is the second symptom of criterion A for the diagnosis of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1551_7_5",
+    "sentence_text": "But now I feel like Im hitting a wall, it becomes so frustrating I feel like I get burnt out, and then end up feeling like I need to force myself into doing something however I just end up thinking about it all day and maybe do it last minute if that, and if I dont do it i really beat myself up over it the next day and it becomes harder.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Considering the criteria and symptoms for the DSM-5 diagnosis of major depression, it is possible to affirm that the feelings and changes in behavior described by this person are related to a possible generalized loss of interest.  According to the manual, this symptom is characterized by a marked loss of interest that significantly affects daily functioning and overall quality of life.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_117_153_0",
+    "sentence_text": "I have an extremely low sex drive so I don't usually initiate sex.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of interest in sex described by this person is widespread and sustained over time. This behavior is a symptom that could be related to major depressive disorder since many people develop a loss of pleasure due to the depressed mood they have most of the time. Thus, this person would meet the second symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1609_780_1",
+    "sentence_text": "I know that if he isn't willing to wait either, I should be strong in my decision, but sex is such a regular thing in relationships now, it terrifies me.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The feelings expressed by the person who has written this post could indicate the presence of difficulties in the ability to enjoy and feel pleasure. Many people with depressive symptoms have a decreased ability to feel sexual interest. Thus, this person may meet the second symptom of criterion A for the diagnosis of depression.  \nLoss of sexual interest can manifest with a decreased sex drive, little desire to interact with other people, and absence or less frequency of sexual intercourse or encounters compared to behavior before the onset of symptoms of sadness.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1265_364_1",
+    "sentence_text": "Only downside for me is lowered sex drive.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of interest in appetite sex of this person is a signal of depressive symptoms. Many people with Major depressive disorder can develop significant behavioral changes related to depressive mood as a markedly diminished interest in pleasure. According to DSM-5, this person has the second symptom of criterion A for the diagnosis of MDD and refers to changes in the pleasure and ability to enjoinment.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2800_31_4",
+    "sentence_text": "But I feel extremely disgusted by even the thought of having sex or actually anything sexual They also constantly ask if Ive had sex and my experiences with boys.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Following the DSM-5 criteria for the diagnosis of major depression, it is possible to infer the presence of changes in the behavior and sexual desire of the person who made the previous comment. This issue means that there is a loss of pleasure associated with the appearance of generalized sadness and that it affects relationships and the ability to feel pleasure daily.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2887_244_0",
+    "sentence_text": "I still try but I just don't have the passion for it like I used to and it's so hard to stay focused.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Loss of pleasure refers to the loss of the ability to enjoy and feel pleasure in every day and daily tasks that maintain a positive mood. According to the feelings described in the previous publication, it is possible to infer that this person presents a marked loss of pleasure and that according to the symptoms associated with DSM-5 major depressive disorder, this person could meet the second symptom of criterion A.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2887_244_0",
+    "sentence_text": "I still try but I just don't have the passion for it like I used to and it's so hard to stay focused.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Loss of interest refers to wanting to do activities previously done daily. From the feelings described in the previous publication, it is possible to infer that this person has a marked decrease in interest associated with the second symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1352_177_4",
+    "sentence_text": "What used to feel natural to me now just felt off, like putting on your old favorite shirt and finding it didnt fit right anymore.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "According to the principal symptoms of major depressive disorder, this person could develop a loss of pleasure, which, following the information of this post, the symptomatology refers to the symptomatology of diagnosis for the disorder.    According to DSM-5, this person meets this symptom related to loss of pleasure, and this issue can generate a significant interference in daily functionality.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2143_84_1",
+    "sentence_text": "I didn't enjoy past hobbies like I used to and when my sister told me she was engaged I felt empty.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This phrase signals the second symptom of a markedly diminished interest in pleasure, which, following the symptoms and criteria for the diagnosis of major depression, this person could be developing a depressive episode by manifesting the presence of the second symptom of criterion A.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_301_61_2",
+    "sentence_text": "A little overdramatic but I definitely feel like I don't enjoy anything the way I used to.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post suggests that this person is developing a significant change in motivation and markedly diminished interest and pleasure. This problem could be a consequence of depressive mood related to the diagnosis of major depressive disorder. This disorder is in the DSM-5, and this post is related to the second symptom for the diagnosis of the disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1856_49_9",
+    "sentence_text": "I've gone to therapy and have improved but still little no desire to have any sexual activity.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Many people experience a loss of interest in sex as a consequence of a depressive mood, which is related to a markedly diminished interest in pleasure. So that, this person could meet the second symptom of criterion A for the diagnosis of Major Depressive Disorder, which is included in DSM-5, and mention the loss of interest as an important symptom of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1255_238_1",
+    "sentence_text": "I had a strong sexual libido before.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of interest in sexual drive could be a signal of markedly diminished pleasure or motivation, which is a signal of episodic depression. According to DSM-5, this person could be developing the second symptom of criterion A for the diagnosis of major depressive disorder. Moreover, this post suggests the time and intensity criteria for clinical relevance to Major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_449_1",
+    "sentence_text": "In real life I am depressed and lonely and I never enjoy anything.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This comment refers to the presence of two symptoms associated with DSM-5 major depression disorder, specifically sadness and the loss of pleasure. According to the previous comment, this person has a depressed mood accompanied by a significant decrease in pleasure. For this reason, this publication could be the manifestation of this depressive symptom. When the tiredness endures for two weeks, the issue becomes a clinical problem.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_1214_1",
+    "sentence_text": "I dont care about sex actually.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The previous publication is a manifestation of a loss of interest, pleasure, and motivation related to sexual activity, which, according to the criteria for the diagnosis of major depression of the DSM-5 phrase will be associated with the second symptom of criterion A. This symptom refers to a marked decrease in interest and pleasure and is maintained for two weeks minimum.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1749_791_30",
+    "sentence_text": "I don't really care about anything anymore.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The general loss of interest that this person expresses in the previous sentence could be a sign of a possible decrease in motivation, loss of energy, or a possible depressive episode. If this behavior continues for more than two weeks and generates a negative impact on the person's life, the presence of a depressive symptom of DSM-5 major depressive disorder could be considered relevant for the diagnosis.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2886_1_11",
+    "sentence_text": "It's not that I cant derive pleasure from anything so it's not anhedonia, but I just cant find any justification to keep going on with my life.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of pleasure and the ability to enjoy is one way in which depression affects the ability to enjoy, maintain energy, and the ability to perform daily tasks without displacement. The previous publication allows us to infer that the loss of this capacity is generating intense discomfort and hopelessness. According to the criteria for the diagnosis of major depressive disorder, this person would develop the second symptom of criterion A. It is necessary to consider the temporality of this symptom since if it persists for two weeks, we could speak of a depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_257_602_1",
+    "sentence_text": "I guess I find it hard because I really enjoy video games, and when I've tried out other stuff it hasn't given me the same satisfaction as gaming.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Loss of pleasure is a symptom that characterizes depression. According to the DSM-5, people can develop a marked loss of pleasure and interest, which affects the motivation to do routine tasks that previously did not require effort. The DSM-5 mentions this behavior in the second symptom of criterion A for the diagnosis of major depression. If this problem persists for two weeks and generates deterioration in other areas of life, it could be clinically relevant for the diagnosis.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_762_102_3",
+    "sentence_text": "After my heartbreak I lost interest in everything too and gave up on a Lot of stuff.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post is an example of a loss of interest in the daily task. According to DSM-5, this phrase could be a signal of a symptom two of major depressive disorder. la pérdida de interés es un síntoma característico de un episodio depresivo. People with this disorder develop a marked loss of pleasure, interest, and motivation that lasts for more than two weeks, affects regular functioning, and significantly interferes with the person's life.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2993_509_3",
+    "sentence_text": "I lack the motivation and shit to help myself much and I've tried reaching out for help, but it hasn't worked out too well.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Loss of motivation may also be a way of explaining the loss of interest that characterizes people with depressive symptoms, and that would be related to the second symptom of criterion A for the diagnosis of major depressive disorder. Thus, this post could be a signal relevant for a depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1476_3_8",
+    "sentence_text": "I used to have hobbies, things I was good at, now all I do is browse the Internet all day.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "In the previous post, it is possible to infer the presence of sadness and loss of pleasure that manifests in the activities that this person routinely performed without effort. This problem with mood is related to the symptomatology of an episode of major depression of DSM-5, in particular, the second symptom of the marked decrease in interest and pleasure.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2415_102_6",
+    "sentence_text": "I can get a job but some days I am so depressed it's hard to even go out.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "A depressed mood can cause psychomotor retardation, that is, loss of motivation or reluctance to perform any activity that previously did not involve effort. For this reason, this phrase can be an emotional indicator related to the second symptom of criterion A for the diagnosis of major depression in the DSM-5. Loss or decreased interest for more than two weeks can be a relevant factor for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1830_896_0",
+    "sentence_text": "Honestly, I am rapidly losing interest.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This statement describes an emotional risk factor for developing major depression. According to the DSM-5, this phrase may be a manifestation of the symptom of loss or decrease in interest, typical of symptom two of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_752_69_3",
+    "sentence_text": "I used to enjoy things.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This phrase indicates a loss of pleasure in performing tasks that previously did not require a best effort. In line with the DSM-5, this phrase could be an emotional indicator of the second symptom of criterion A for the diagnosis of major depression or major depressive disorder and refers to a marked decrease in interest and pleasure.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_752_69_3",
+    "sentence_text": "I used to enjoy things.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "When a person affirms he/his has stopped enjoying things that previously did, it could signal loss of interest. In line with the DSM-5, this phrase could be an emotional indicator of the second symptom of criterion A for the diagnosis of major depression or major depressive disorder and refers to a marked decrease in interest and pleasure.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2334_184_11",
+    "sentence_text": "I loved sex, now I feel like a casual participant in someone elses sexual activity.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Many people with a Major depressive disorder experience a significant loss of interest in sex as a consequence of depressive mood. Thus, and according to the second symptom of criteria A for the diagnosis, this sentence is a signal of markedly diminished interest in the pleasure of MDD.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1537_1_5",
+    "sentence_text": "I don't find joy in my old hobbies, and I just spend my days sleeping, crying, or staring into space.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The emotional tone of this sentence suggests a depressed mood, as well as a loss of pleasure in pastimes that were not effortful. Thus, this person could be describing a symptom of criterion A for the diagnosis of major depression in the DSM-5, specifically the second symptom of a constant decrease in interest and pleasure for more than two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_257_579_1",
+    "sentence_text": "I think I might have low dopamine levels because my concentration and motivation levels are extremely low.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post manifests low levels of motivation, which could be an emotional marker of loss of interest, a symptom of a depressive episode of major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_356_98_0",
+    "sentence_text": "Every hobby that i have has lost all meaning.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The above phrase is a sign of loss of pleasure that would imply the presence of the second symptom of criterion A for the diagnosis of major depression in the DSM-5. This symptom refers to the marked decrease in interest and pleasure as a consequence of a generalized depressed mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_356_98_0",
+    "sentence_text": "Every hobby that i have has lost all meaning.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The above phrase is a sign of loss of interest that would imply the presence of the second symptom of criterion A for the diagnosis of major depression in the DSM-5. This symptom refers to the marked decrease in interest as a consequence of impairment caused by depressive mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_356_98_1",
+    "sentence_text": "The things i love to do bring me no pleasure anymore and i cant find anything that absorbs me.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The previous phrase is a sign of loss of pleasure that would imply the presence of the second symptom of criterion A for the diagnosis of depressive episodes in the DSM-5. This symptom refers to the marked decrease in interest as a consequence of impairment caused by depressive mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_356_98_1",
+    "sentence_text": "The things i love to do bring me no pleasure anymore and i cant find anything that absorbs me.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The above phrase is a sign of loss of interest that would imply the presence of the second symptom of criterion A for the diagnosis of major depression in the DSM-5. This symptom refers to the marked decrease in interest as a consequence of impairment caused by depressive mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2415_566_0",
+    "sentence_text": "I have lost motivation.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Loss of interest may manifest itself as a loss of motivation, as exemplified in the previous sentence. According to the DSM-5, this person could be developing the second symptom of criterion A for the diagnosis of major depression, which consists of a marked decrease in interest and pleasure in daily activities.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2833_963_5",
+    "sentence_text": "I recognize that I've lost what was good in my life.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The melancholy tone of the previous sentence is a manifestation of a depressed mood and, according to the content of the sentence, could be related to a symptom of loss of interest and motivation. This marked loss or decrease in interest is a characteristic symptom of the second symptom of criterion A for the diagnosis of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2455_120_9",
+    "sentence_text": "My passion for life has disappeared.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This phrase is an emotional marker of depressive symptomatology of markedly diminished interest, which is the second symptom of a depressive episode to the diagnosis of Major depressive disorder. In line with DSM-5, in depressive disorder, the loss of interest is a signal of loss of motivation as a consequence of depressive mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2748_421_2",
+    "sentence_text": "I'm desperately trying to fill the void in my life with things I thought would help me feel better, or at least get a quick break from the constant depression and feel a hint of joy.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The depressive tone of the post is a manifestation of deep feelings of a marked loss in the ability to maintain interest, and according to the DSM-5, this post could be a behavior associated with the second symptom of criterion A for the diagnosis of major depression. Likewise, it is possible to infer that this feeling could be causing significant discomfort. Therefore, it is necessary to evaluate other symptoms related to mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_57_30",
+    "sentence_text": "I dont care about family anymore, I dont care about my friends anymore, I dont care about my hobbies anymore, I dont care about study anymore, I dont care about anything except I just want a girlfriend.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "As a mental health professional, I can confirm that this phrase is relevant for identifying depressive symptoms, especially a significant loss of interest. For this reason, this phrase is related to a possible emotional marker of a depressive episode by the second symptom of criterion A for the diagnosis of major depression in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_976_103_3",
+    "sentence_text": "For the past few years I had been having issues with my partner, he would rarely initiate and would never reciprocate if I did, making me feel unwanted and undesirable, I gained weight, lost my fitness level, I blamed it all on the lack of sex, I became fixated in the sex I wasn't having.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This phrase reveals a low emotional tone that could be indicative of a depressed mood, such as that described in the major depressive episode of the DSM-5. This manual mentions that a major depressive disorder episode complies with five of nine depressive symptoms and that it includes a marked decrease in interest and pleasure due to the development of a depressive mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_993_959_4",
+    "sentence_text": "I have lost interest in everything it seems.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This phrase could be an emotional marker of loss of pleasure in line with the depressive symptomatology of Major Depressive Disorder of the DSM-5. This manual includes loss of pleasure in the second symptom of criterion A of the depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_993_959_4",
+    "sentence_text": "I have lost interest in everything it seems.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This phrase could be an emotional marker of loss of interest in line with the depressive symptomatology of Major Depressive Disorder of the DSM-5. This manual includes loss of pleasure in the second symptom of criterion A of the depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_439_76_0",
+    "sentence_text": "I have some hobbies, things that I used to think that I liked to do.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "When a person reports that he or she has stopped doing hobbies that he or she used to have, this could imply the presence of a symptom of a profound loss of interest and pleasure. This issue motivates identifying this marked loss of pleasure with the second symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1601_96_18",
+    "sentence_text": "My social skills then dropped to absolute zero, my self-esteem reached an all-time low, and I slowly started secluding myself.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Loss of social contact, low self-esteem, or less time spent on hobbies may be risk behaviors for the development of major depression because these behaviors may be related to the second symptom of criterion A for developing an episode of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2338_1069_6",
+    "sentence_text": "My sex drive was way down, and it has remained so after being off it for a month now.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "According to the DSM-5, this phrase talks about the loss of sexual desire and that it could be a manifestation of a depressive symptom in line with the second symptom of criterion A to develop a major depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2415_1024_4",
+    "sentence_text": "I don't enjoy anything.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Following the context of the phrase and the meaning of this comment, it is possible to classify this statement as a symptom of a marked loss of interest and pleasure, which is part of criterion A for the diagnosis of major depression in the DSM-5 mental disorders manual.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_258_149_0",
+    "sentence_text": "Yeah... don't know what to say but I feel like there's a \"high\", a pleasurable high that we get from starving and overtime it becomes a suffering but still we try to seek the same pleasure we originally felt from it but can never get again.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This comment could be an expression of loss of pleasure as a clinical symptom of a depressive episode. Following the criterion for diagnosis of a Major depressive disorder, this phrase is an emotional marker to the second symptom of criterion A,  which refers to markedly diminished interest in pleasure.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2958_299_9",
+    "sentence_text": "Lost interest in everything I enjoy, was a snob to my friends, and walked around with a chip on my shoulder.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Loss of interest is a symptom that is present in this comment. This symptom could be related to the second symptom of criterion A for the diagnosis of a major depressive episode. It is important to evaluate the clinical relevance and other possible symptoms associated with major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2455_134_8",
+    "sentence_text": "My passion for life has disappeared.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "When a person loses interest in living, he or she may be expressing a feeling associated with a depressed mood, such as loss of energy, motivation, or emotional exhaustion. These mood characteristics are present in the sixth symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2748_461_3",
+    "sentence_text": "I play guitar, but have lost interest because of my depression.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This person affirms feeling depressive, which could be an emotional indicator of major depression in line with the criteria for a depressive episode of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_1080_10",
+    "sentence_text": "I don't know what I need in my life to enjoy it because currently I do not enjoy anything in my life No matter how good my breakfast tastes, even if I eat something new that tastes really good, I don't enjoy eating it.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The phrase \"I don't know what I need in my life to enjoy it... I don't enjoy eating it\" reflects a classic presentation of anhedonia, the inability to experience pleasure, which is a key symptom in the diagnosis of Major Depressive Disorder (MDD) according to the DSM-5. Specifically, this relates to the second symptom under Criterion A, which describes a \"markedly diminished interest or pleasure in all, or almost all, activities most of the day, nearly every day.\" The individual’s inability to derive satisfaction from typically enjoyable experiences, such as eating a good meal, suggests a pervasive loss of pleasure and interest, significantly impairing their daily life and overall functioning. This symptom is essential in identifying the broader depressive episode within the framework of MDD.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_716_38_13",
+    "sentence_text": "I stopped interacting with my peers mostly.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This person is expressing an important loss of interest, which could be a signal of a depressive mood in line with the second symptom of a major depressive disorder. This symptom mentions the markedly diminished interest in pleasure for two weeks. These mood changes would cause a significant detriment.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_1422_8",
+    "sentence_text": "want a girlfriend but not friends I don't seem to have any interest that any normal person of my age has.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Social isolation is a behavior that appears in many people with depressive symptoms. Following the statement of the previous person who has begun to lose interest in socializing, it is possible to affirm that this person is developing symptoms of a marked loss of pleasure and interest that are symptoms of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2143_170_0",
+    "sentence_text": "I have depression, the illness makes me feel empty, I used to enjoy skiing and other activities but I have lost interest in some activities that I used to love doing and everything just feels grey to me.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The emotional tone of the statement reflects sadness and a loss of pleasure, common in individuals experiencing depressive symptoms for at least two weeks. According to the DSM-5, the loss of pleasure (anhedonia) is a core manifestation of emotional decline in Major Depressive Disorder, rendering individuals unable to enjoy activities that were previously effortless and enjoyable.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2143_170_0",
+    "sentence_text": "I have depression, the illness makes me feel empty, I used to enjoy skiing and other activities but I have lost interest in some activities that I used to love doing and everything just feels grey to me.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The emotional tone of the statement reflects sadness and a loss of interest, common in individuals experiencing depressive symptoms for at least two weeks. According to the DSM-5, the loss of interest is a core manifestation of emotional decline in Major Depressive Disorder, rendering individuals unable to enjoy activities that were previously effortless and enjoyable.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2139_287_6",
+    "sentence_text": "And suddenly I just lose all interest in it or them.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This phrase manifests an important change in motivation and interest, which could be a markedly diminished pleasure and interest. This issue is the anhedonia of depressive mood and affects the functionality and daily tasks. Following the DSM-5, this phrase could be related to the second symptom of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1773_564_2",
+    "sentence_text": "I love meeting new people.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The above sentence does not seem to show a problem associated with loss of interest. Therefore, it is not possible to affirm that this comment is a manifestation of a clinical symptom of depressive mood in line with the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1601_754_3",
+    "sentence_text": "The things I want to enjoy are things I cannot enjoy.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Although the previous sentence indicates a feeling of loss of pleasure in enjoying things that previously brought pleasure and interest, the contextual information is not sufficient to affirm that this behavior corresponds to a symptom of major depressive disorder of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1601_754_3",
+    "sentence_text": "The things I want to enjoy are things I cannot enjoy.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Although the previous sentence indicates a feeling of loss of interest in enjoying things that previously brought pleasure and interest, the contextual information is not sufficient to affirm that this behavior corresponds to a symptom of major depressive disorder of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_993_478_0",
+    "sentence_text": "I feel empty and bored with life.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "When a person says they feel empty and bored, they may be expressing a mood of low motivation and interest, which could be related to the second symptom of major depressive disorder. This symptom indicates a marked loss of interest and pleasure for more than two weeks, which causes significant discomfort to the person's life and optimal functioning.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1551_240_2",
+    "sentence_text": "Ive spent the better part of 2 years trying to focus on self improvement and only had sex twice in that time, both times I just didnt get as excited as I used to.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Depression can cause a loss of pleasure and interest in sex. For this reason, the person who wrote the post may be developing a loss of interest in sex. According to the DSM-5, people with symptoms of depression may meet the second depressive symptom, which describes the marked loss of pleasure and interest, and that in a depressive episode can last for more than two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_3047_140_24",
+    "sentence_text": "I used to love my things, and to a point, I still do, but more and more, they are just things to take care of and things that require space that I don't want to clean and take care of.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "When exploring the changes in this person's mood, it is possible to see that there is a significant loss of pleasure and a decrease in energy, which could indicate a possible symptom of a clinical case of depressive episodes. If this change in mood persists for more than two weeks, it could be considered a relevant problem for the diagnosis of depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2292_916_8",
+    "sentence_text": "I rarely enjoy doing anything I normally like to do, so it's all but an impossibility for me to actually motivate myself to do something I *don't* want to do.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This post reflects a potential symptom of anhedonia, which is a core criterion for major depressive disorder (MDD) according to the DSM-5. Anhedonia refers to a marked loss of interest or pleasure in most, if not all, activities that were previously enjoyable. Anhedonia is one of the two primary symptoms required for diagnosing a major depressive episode, along with a depressed mood. The individual’s inability to experience pleasure, even in activities they typically enjoy, and the resulting lack of motivation point to the emotional and motivational impairments often seen in depression. If this persists for at least two weeks, alongside other symptoms, it could contribute to a diagnosis of MDD.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1965_78_4",
+    "sentence_text": "But it's always bittersweet, because I can't join in with my friends; or experience those highs I used to have that calmed my unpleasant mental symptoms.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The emotional tone of this sentence shows a feeling of discouragement and loss of pleasure, which could indicate the presence of a significant loss of pleasure, one of the main symptoms of major depressive disorder. Therefore, in line with the DSM-5, this sentence may be a clinical marker of the second symptom of criterion A for this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_993_781_12",
+    "sentence_text": "I have lost all interest.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This comment could express a loss of pleasure in line with the DSM-5´s symptoms of Major depressive disorder, which mentions these emotional changes in the second symptom of criterion A. Furthermore, this post includes feelings related to sadness and worthlessness that are present in MDD, too.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_785_383_0",
+    "sentence_text": "I don't really have passions anymore.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The emotional tone of the above sentence may be an indicator of a possible symptom of depression, such as a marked loss of interest and pleasure. The DSM-5 mentions this problem as one of the main symptoms of depressed mood within criterion A, and it can affect the person's daily functioning.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2402_24_0",
+    "sentence_text": "I have hardly any motivation to do stuff anymore.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The loss of motivation that this person mentions may be related to a possible loss of interest and pleasure described in the DSM-5 in major depressive disorder. This manual mentions loss of pleasure as one of the main symptoms of MDD.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_105_5",
+    "sentence_text": "I cannot enjoy anything.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "When a person claims that he or she does not enjoy anything, he or she may be experiencing a possible loss of pleasure, and if it continues for more than two weeks, it may be a depressive symptom in line with the symptoms of depression in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_105_11",
+    "sentence_text": "I cannot enjoy any of it anymore.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "When someone expresses that they no longer enjoy anything, they may be experiencing a loss of pleasure (anhedonia). If this persists for more than two weeks, it could be considered a symptom of major depressive disorder, according to the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_105_12",
+    "sentence_text": "I do not even remember how it feels to enjoy anything because it was so long ago that I was able to enjoy life.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Yes, the comment \"I do not even remember how it feels to enjoy anything because it was so long ago that I was able to enjoy life\" could be a manifestation of anhedonia, which is a core symptom of major depressive disorder (MDD) according to the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_105_14",
+    "sentence_text": "I tried doing things I enjoyed in the past, I tried doing new hobbies.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The comment \"I tried doing things I enjoyed in the past, I tried doing new hobbies\" could suggest a possible manifestation of loss of interest, a key symptom of major depressive disorder (MDD) according to the DSM-5. The individual is attempting to engage in past enjoyable activities and new hobbies, which may indicate that despite their efforts, they no longer experience the same pleasure or interest. This aligns with anhedonia or loss of interest, which is one of the two main criteria for diagnosing MDD, particularly if this lack of interest persists over time and is accompanied by other depressive symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_105_29",
+    "sentence_text": "Talking with a psychologist doesn't make me enjoy life.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The statement \"Talking with a psychologist doesn't make me enjoy life\" may indicate a potential manifestation of the loss of pleasure, a key symptom of major depressive disorder (MDD) according to the DSM-5. The individual's engagement with previously enjoyable activities and new hobbies may suggest that, despite their efforts, they no longer derive the same pleasure or satisfaction. This reflects anhedonia or loss of interest, which is one of the primary criteria for diagnosing MDD, particularly if the lack of interest persists and is accompanied by other depressive symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_105_39",
+    "sentence_text": "How can I enjoy anything again?",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The statement \"How can I enjoy anything again?\" may reflect a potential loss of pleasure, a core symptom of major depressive disorder (MDD) as outlined in the DSM-5. Despite attempts to engage in previously enjoyable activities and explore new hobbies, the individual may no longer experience the same sense of pleasure or satisfaction. This aligns with anhedonia or loss of interest, one of the primary criteria for diagnosing MDD, particularly when it persists and is accompanied by other depressive symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_105_39",
+    "sentence_text": "How can I enjoy anything again?",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The previous sentence may indicate a potential manifestation of loss of interest, a key symptom of major depressive disorder (MDD) according to the DSM-5. The individual's engagement with previously enjoyable activities and new hobbies may suggest that, despite their efforts, they no longer derive the same pleasure or satisfaction. This reflects anhedonia or loss of interest, which is one of the primary criteria for diagnosing MDD, particularly if the lack of interest persists and is accompanied by other depressive symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_258_537_2",
+    "sentence_text": "I dont know how to have fun anymore.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Loss of pleasure is a symptom of major depressive episodes and, together with a depressed mood, can make up a major depressive episode. Therefore, by analyzing the changes in this person's behavior, particularly the loss of pleasure, it is possible to infer that this person is developing the second symptom of major depressive disorder. The DSM-5 mentions in this symptom that people with major depression can experience a marked loss of significant pleasure for more than two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_106_89_25",
+    "sentence_text": "I used to love myself and be proud of things I did, I used to be my friend but I just don't feel that way anymore.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This phrase describes an intense feeling of emotional emptiness and a possible loss of pleasure that would be causing the appearance of feelings typical of depressed mood states, such as a marked decrease in interest and pleasure. Thus, following the feelings typical of the depression disorder in the DSM-5, this person would meet the second symptom that corresponds to the appearance of depressive episodes.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_958_0",
+    "sentence_text": "I suffer because of the fact that no matter how hard I try to enjoy anything, I can't enjoy anything in life.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This phrase seems to demonstrate a significant loss of pleasure, which the person feels he or she cannot enjoy. This problem is present in the second symptom of depression and, in line with the symptoms of major depression in the DSM-5, is one of the main symptoms of the disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1551_393_2",
+    "sentence_text": "I have no motivation and I just feel negative about myself all the time, just about everything feels pointless and I have these doubts.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "According to the DSM-5, this phrase expresses feelings related to major depressive disorder regarding loss of interest and pleasure, which would allow us to affirm that this person is manifesting a possible deterioration due to the presence of a symptom of a major depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_331_7",
+    "sentence_text": "I eat the same favorite food but I don't enjoy eating it anymore.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "Many people with depression experience a loss of pleasure due to the depressed moods and physical weakness that depression brings. For this reason, by identifying a possible loss of pleasure in line with the feelings of major depressive disorder in the DSM-5, we classified this phrase as a potential emotional marker of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_2024_223_0",
+    "sentence_text": "i love telling jokes, listening to music and writing but lately i haven't found pleasure in anything",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This phrase can be the manifestation of a depressive symptom due to a generalized loss of pleasure. These types of problems with the mood are associated with the second symptom of criterion A, and that concurrently with the depressed mood conforms to the main symptoms of the disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_398_2",
+    "sentence_text": "I have been unable to enjoy anything in life.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The tone of this sentence suggests a possible loss of pleasure in everyday tasks. This problem may be related to the second symptom of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1404_398_4",
+    "sentence_text": "But now that I'm still unable to enjoy anything, I'm growing tired of life.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "The tone of this statement indicates a possible loss of enjoyment in daily activities, which may correspond to the second symptom of major depressive disorder as outlined in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1601_321_0",
+    "sentence_text": "I have tried many times but I lose interest immediately.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This comment could indicate a loss of interest, which aligns with one of the core symptoms of major depressive disorder. Persistent difficulty maintaining interest in activities, despite repeated efforts, is often associated with MDD, particularly when it occurs over an extended period and impacts overall functioning.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 11,
+    "sentence_id": "s_1601_321_1",
+    "sentence_text": "I don't want to do anything with myself, because everything else is boring, which reminds me of the fact that I can't feel pleasure anymore, which in itself is quiet depressive.",
+    "dsm5_symptom": "ANHEDONIA",
+    "explanation": "This comment may reflect a loss of interest, a core symptom of major depressive disorder (MDD) as outlined in the DSM-5. Persistent difficulty sustaining engagement in activities, even with repeated efforts, is frequently associated with MDD, especially when it endures over time and affects daily functioning.",
+    "source": "redsm5"
+  }
+]

@@ -84,6 +84,15 @@ class PipelineConfig:
     log_level: str
     log_dir: Path
 
+    # External datasets (annotation protocol v3)
+    redsm5_dir: Path | None = None
+    erisk2023_dir: Path | None = None
+    erisk2023_trec_dir: Path | None = None
+    bdisen_dir: Path | None = None
+    erisk2025_dir: Path | None = None
+    erisk2025_trec_dir: Path | None = None
+    candidates_dir: Path | None = None
+
     # Symptom definitions
     symptoms: list[SymptomDefinition] = field(default_factory=list)
 
@@ -188,6 +197,36 @@ def load_config(
     checkpoint_dir = project_root / data_cfg.get("checkpoint_dir", "output/checkpoints")
     log_dir = project_root / logging_cfg.get("dir", "output/logs")
 
+    # External dataset paths (optional)
+    redsm5_dir = (
+        project_root / data_cfg["redsm5_dir"]
+        if "redsm5_dir" in data_cfg else None
+    )
+    erisk2023_dir = (
+        project_root / data_cfg["erisk2023_dir"]
+        if "erisk2023_dir" in data_cfg else None
+    )
+    erisk2023_trec_dir = (
+        project_root / data_cfg["erisk2023_trec_dir"]
+        if "erisk2023_trec_dir" in data_cfg else None
+    )
+    bdisen_dir = (
+        project_root / data_cfg["bdisen_dir"]
+        if "bdisen_dir" in data_cfg else None
+    )
+    erisk2025_dir = (
+        project_root / data_cfg["erisk2025_dir"]
+        if "erisk2025_dir" in data_cfg else None
+    )
+    erisk2025_trec_dir = (
+        project_root / data_cfg["erisk2025_trec_dir"]
+        if "erisk2025_trec_dir" in data_cfg else None
+    )
+    candidates_dir = (
+        project_root / data_cfg["candidates_dir"]
+        if "candidates_dir" in data_cfg else None
+    )
+
     # Load symptoms YAML
     symptoms: list[SymptomDefinition] = []
     hierarchy: dict = {}
@@ -208,6 +247,13 @@ def load_config(
         corpus_dir=corpus_dir,
         output_dir=output_dir,
         checkpoint_dir=checkpoint_dir,
+        redsm5_dir=redsm5_dir,
+        erisk2023_dir=erisk2023_dir,
+        erisk2023_trec_dir=erisk2023_trec_dir,
+        bdisen_dir=bdisen_dir,
+        erisk2025_dir=erisk2025_dir,
+        erisk2025_trec_dir=erisk2025_trec_dir,
+        candidates_dir=candidates_dir,
         retrieval_models=retrieval_cfg.get("models", ["all-mpnet-base-v2"]),
         retrieval_top_k=retrieval_cfg.get("top_k", 5000),
         keyword_boost=retrieval_cfg.get("keyword_boost", 0.05),

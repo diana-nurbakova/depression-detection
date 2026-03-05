@@ -1,0 +1,2538 @@
+[
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_1060_4",
+    "sentence_text": "I can't concentrate at all now.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Many people with problems to concentrate ant thinking, or your reasoning is impaired, might be a similar symptom like is mentioned in criterio eight of major depressive disorder in DSM-5, which could be a signal alert.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1997_963_1",
+    "sentence_text": "I'm so indecisive, if I was in your boots I'd never be able to decide.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The indecisiveness is characterized by problems in the thought. If this problem es recurrent and is a new situation in the person that make a personal, social or laboral impairment, could be relate to criteria nine in the major depressive disorder in DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2886_101_3",
+    "sentence_text": "I've come out of a major depressive episode that lasted about a year and I still have some problems with focus.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The concentration difficulty is common in people with depression symptomatology or diagnostic previously like this. In this post is possible detect that inn this person the previously depressive episodic es is a risk factor to develop a new potential depressive symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2401_6_1",
+    "sentence_text": "I have really important exams coming in less then 20 days and i can concentrate at all.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post can suggest that this person has concentration difficulty produced by an eventual situation. Although concentration problems are widespread in depression, and in this person it seems to be a specific episode, this can be a risk factor if the concentration problem becomes widespread and affects other areas of life without there being a situation that causes it.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1265_353_3",
+    "sentence_text": "When I was forced to make decisions I had such anxiety before during and after.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "In this post you can see an indecisive character to make decisions, people with anxiety and depression can have this pattern of behavior. If this indecision generates a sadness for the consequences caused by not taking them at the right time, it can possibly trigger symptoms related with problems  to make decisions and difficulty thinking as described in the seventh diagnostic criterion of major depression of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_3008_185_4",
+    "sentence_text": "I'm fighting with myself to not make a stupid decision, and it's tearing me apart.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "According to this post, this person is overwhelmed by feelings of indecision and doubt about making decisions. These symptoms are recurrent in people with depressive symptomatology. If these feelings are recurrent and clinically significant could be depressive symptoms. In this context, is important to pay attention to this kind of emotional problem because it can last over time and facilitate the appearance of other cognitive distortions.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_632_560_1",
+    "sentence_text": "I've literally made the best financial decision of my life!!",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "In this sentence is true that this sentence indicates indecisiveness, however, these feelings are normal and appropriate to the situation. For this reason, there are no significant elements to affirm that this indecisiveness is a depressive symptom as is mentioned in DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2974_110_5",
+    "sentence_text": "I work a lot and make decisions all day.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post suggests that this person is making daily decisions, which can generate persistent emotional tiredness. However, these sentences are not enough to confirm that this indecisiveness is a symptom similar to that included in a major depressive disorder diagnosis.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_715_5",
+    "sentence_text": "I simply can't focus.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post might suggest that the person is experiencing concentration difficulty. These cognitive changes could be related to symptom eight the diminished ability to think \"diminished ability to think or concentrate, or indecisiveness, nearly every day\". These symptoms could be a possible depressive episode or a  risk factor to develop it.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1580_37_2",
+    "sentence_text": "I became lethargic, couldn't focus and constantly tired.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post expresses problems with the ability to think. Many people with depression have concentration problems like this, and it affects their cognitive functions. The DSM-5 has described decreased thinking ability as a diagnostic criterion for major depressive disorder. In this context, an important symptom is the ability to concentrate, as it can be a consequence of sadness and negative moods.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_839_16",
+    "sentence_text": "I can't concentrate...at least less than usual.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post may suggest that this person is experiencing cognitive changes, such as difficulty concentrating. These symptoms are associated with the eighth symptom of criterion A of major depressive disorder of DSM-5, which describes the diminished ability to think.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_640_4",
+    "sentence_text": "I think that's why I can't focus on study.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This sentence can indicate concentration difficulties that affect the study areas. If this issue results in changes in other areas like job, family, and personal functionality, this person can develop depressive symptomatology. Many times, depression brings emotional problems that affect thinking and cognitive function. Thus, this person is developing depressive symptomatology as major depressive disorder, precisely the symptom eight of criterion A.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2448_219_5",
+    "sentence_text": "I just don't know what to do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post can suggest indecisiveness symptoms that could be related to depressive symptomatology. This clinical disorder presents a persistent pattern of depressive mood. Indecisiveness is a symptom of concentration issues and is a signal of diminished ability to think of symptom eight of the major depressive disorder criterion.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1692_39_15",
+    "sentence_text": "I also find it easier to concentrate when I *have* to make an effort to zone people out.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "When a person reports feeling sad or hopeless and begins to have difficulty concentrating, they may develop concentration difficulties as a result of a possible depressed mood. Thus, this person could be bringing this emotional difficulty that involves thinking problems mentioned in symptom eight of criterion A for the diagnosis of major depressive disorder of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1160_93_13",
+    "sentence_text": "Overall I just don't know what should i do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "In the previous comment, this person expresses a general feeling of indecision. This difficulty in making decisions can be a way of manifesting depressive symptoms if this problem is due to an emotional issue, such as sadness. According to the DSM-5, people with major depressive disorder may develop difficulties in thinking, such as slowness or decision-making, as mentioned in symptom eight of criterion A for the diagnosis of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_629_9",
+    "sentence_text": "Where 3 years ago I could study many hour per day without getting tired, now I cannot even focus ONE MINUTE without getting distracted.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post may indicate possible difficulties concentrating, such as those mentioned in DSM-5 major depressive disorder, which refers to slowed thinking due to depressed moods. This problem relates to symptom eight of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1151_536_1",
+    "sentence_text": "I like that I can make decisions that affect only me -- I've made good and bad, but the bad ones only hurt myself.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post can suggest the thinking issues as indecisiveness. This symptom is a signal to develop a clinical pattern of diminished ability to think, which mentions this problem in symptom eight of criterion A for major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1551_232_1",
+    "sentence_text": "I try forcing myself but when I do the focus isnt there.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "From the emotions that this person relates in the previous post, it is possible to infer that this person has difficulty concentrating. This symptomatology may be caused by a depressed mood. These feelings can be part of a clinical picture to develop depressive symptoms such as those mentioned in symptom eight of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1551_30_9",
+    "sentence_text": "Wish I didnt but I did, I was alone and incapable of making the right decisions.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although that person expresses indecisiveness in the personal situation, these feelings are common in similar situations in other people, and the symptoms are not significant to develop a depressive mood. for this reason, it is not successful enough to relate this indecisiveness with a diminished ability to think of major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_706_197_1",
+    "sentence_text": "I can only get things into focus if they are extremely close, is it my fault?",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The above post indicates difficulties in concentrating and that it is generating emotional discomfort and feelings of guilt. These moods and cognitive difficulties are characteristic symptoms of major depression and are present in the eighth symptom of DSM-5 criterion A for the diagnosis of major depression. This symptom describes a diminished ability to think and mood the person's optimal functioning.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_984_874_1",
+    "sentence_text": "I couldn't really focus on anything.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although the previous publication reports a difficulty in maintaining concentration, the information is not enough to affirm that this difficulty is caused by a possible depressive symptomatology and that it implies the development of major depressive disorder as mentioned in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1831_20_59",
+    "sentence_text": "I can't concentrate, and my addiction to Smash Bros. and it's world has become destructive.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Constant and abusive use of video games can affect cognitive functioning and emotional stability. Many people may experience a loss of the ability to think and process information and produce emotional distress that leads to depressive symptoms. To this end, this person may develop symptoms of the eighth symptom of DSM-5 criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1831_20_76",
+    "sentence_text": "I don't know what to do with myself anymore.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "When someone has problems knowing what to do, and this problem is generalized, it could be a symptom of indecisiveness that is present in major depressive disorder. This symptom is the ninth symptom of criterion A for diagnoses of this disorder and consists of a diminished ability to t. The DSM-5 mentioned this disorder as a mood disorder, and this symptom is important to diagnose.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2958_25_7",
+    "sentence_text": "I had problems with concentration, but that was probably a mix of dissociation and stress.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The previous publication gives an account of a malaise caused by difficulties in concentration and thinking that may be related to depressive symptoms. This is due to many people with depressive symptoms developing issues in the ability to concentrate due to the intense thoughts and emotions that are present in depression. According to the DSM-5, this person may develop the eighth symptom of criterion A for the diagnosis of major depressive disorder, which refers to \"slowness of thought, ability to concentrate.\"",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2257_110_30",
+    "sentence_text": "I cannot concentrate on projects and have trouble sitting in one place for long.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although in this post, this person is expressing problems with concentration, there are not enough elements to affirm that this person has depressive symptoms that explain or are related to cognitive issues. In depression, attention and thinking problems are caused by a depressed mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_729_2",
+    "sentence_text": "I cant focus and i have no energy.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "According to the DSM-5, the person writing this post is developing a significant loss of energy and pleasure that is related to the sixth symptom of criterion A for the diagnosis of major depressive disorder. The manual mentions that this symptom is characterized by the generalized presence of fatigue and energy loss that this symptom is characterized by the generalized presence of fatigue and loss of energy for more than two weeks. This aspect may be present in the person writing this publication.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1738_101_3",
+    "sentence_text": "I'm still able to churn out stuff, I'm just not as consistent and focused.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The previous person is manifesting a possible concentration problem with a depressed mood. According to the depressive symptomatology mentioned in major depressive disorder, this person would meet symptom eight of criterion A for the diagnosis of this disorder. This symptom describes a marked decrease in thinking ability that can result in concentration loss, memory problems, indecisiveness, slowness of thought, and other cognitive problems.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1542_38_21",
+    "sentence_text": "I don't always make the best decisions when I'm tired.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This person's indecision is due to possible physical or mental fatigue. If this tiredness is a consequence of a depressed emotional state, this person may develop a decreased ability to think, which is a symptom of major depressive disorder. According to the DSM-5, people with major depressive disorder can develop slow thinking that can cause problems making decisions.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_282_58_7",
+    "sentence_text": "I still feel tired and I don't know, I think I just get distracted to quickly.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Consistent with the symptoms in criterion A for the diagnosis of major depressive disorder, this person may meet symptom eight of decreased ability to think due to the presence of emotions associated with sadness that affect the ability to think. Many people with major depressive disorder have slow thinking because of depression. This diminished ability to think can affect decision-making, thinking, reasoning, and the processing of information.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1899_123_14",
+    "sentence_text": "I can't concentrate on homework at all.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The concentration issues that many people have by depressive mood could be symptomatology related to the ninth symptom of criterion A for the diagnosis of major depressive disorder. According to the DSM-5, this person could develop depressive symptoms related to this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_798_3",
+    "sentence_text": "So that's makes me question my decisions a lot.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The difficulty in making decisions that this person claims to have is a symptom associated with a decreased capacity and ability to think. Many people with depressive symptoms have a decrease in thinking ability due to generalized depressed mood. For this reason, this person would meet the eighth symptom of DSM-5 criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_1080_5",
+    "sentence_text": "Each day I dreaded if I am making the right choice.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although this publication expresses a feeling of discomfort for not knowing how to decide, this problem responds to a specific situation that does not clinically affect the person who feels it. For this reason, this person would not meet symptom eight on difficulty in the ability to think according to the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2401_0_28",
+    "sentence_text": "I cant concentrate in any think for more than a minute.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The concentration problems this person describes may be associated with symptom eight of DSM-5 criterion A for the diagnosis of major depression, which refers to thinking difficulties caused by depression. A depressed mood can cause mental sluggishness, issues in memory and concentration, or trouble making decisions.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1738_394_3",
+    "sentence_text": "I constantly lose things, can't manage time, can't focus because I'm in a bad mood much of the time, everything is harder to do because I lack the energy.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Following the behavioral and mood problems mentioned in the previous post, it is possible to identify issues in the ability to concentrate and organize, which are associated with an emotional state of sadness and disagreement that generates discomfort. If these changes are a consequence of a depressed mood, this person could be developing depressive symptoms as symptom eight of criterion A for the diagnosis of Major pressure disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1190_10_0",
+    "sentence_text": "How indecisive I am about important things.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This comment suggests difficulty in making decisions about different tasks and situations of quotidian life. Given the DSM-5 criteria for the diagnosis of major depressive disorder, this comment relates to the eighth symptom of criterion A of major depressive disorder. According to this symptom, people with MDD have a marked slowness in thinking that can manifest itself with difficulty in making decisions.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2993_474_3",
+    "sentence_text": "Hope you don't have a hard time making decisions like me lol but I'm open and willing to try for you",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although the above statement expresses indecisive behavior, the above post is not sufficient to affirm that the indecision this person manifests to have is related to a depressive episode such as the one mentioned in DSM-5 major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1856_49_2",
+    "sentence_text": "Insecurities are getting to me and I don't know what to do anymore",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The previous post shows the appearance of feelings of generalized cloudiness and mental doubts that cause depressed moods. The indecision, doubt, and discomfort caused by these in the person may be a problem that would be related to the eighth symptom of criterion A for the diagnosis of major depressive disorder of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2993_443_1",
+    "sentence_text": "My brain is so fucked it's so hard to do anything or focus for long.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Depression can affect mental faculties, including thinking and concentration. Many people have problems concentrating or attending due to the sadness and instructive thoughts that suddenly appear, which generates significant discomfort. If this problem persists for more than two weeks, this person could be developing the eighth symptom of criterion A for the diagnosis of DSM-5 major depression disorder. This symptom refers to a decrease in thinking skills for more than two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2661_399_2",
+    "sentence_text": "I just need to spend some time and make decisions",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This phrase suggests the issue of making decisions, and that it could be related to depressive symptomatology following DSM-5. This manual included the diminished ability to think and indecisiveness as symptom eight of major depressive disorder. If this issue is maintained for two weeks or more and is the cause of emotional changes, this indecisiveness could be a behavior to major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2401_11_1",
+    "sentence_text": "I cant concentrate at anything.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although this sentence expresses difficulty in concentrating, the tone and context of the sentence suggest that this difficulty results from a depressed mood. The DSM-5 mentions some issues in thinking resulting from depression in the eighth symptom of criterion A for the diagnosis of major depressive disorder. It is important to assess the intensity and deterioration this symptom causes in the person and their environment.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2139_45_5",
+    "sentence_text": "Like I cant concentrate well, am either unfocused or so focused I dont see whats around me.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Depression can cause difficulties in thinking and cognitive skills, such as memory, attention, and concentration, due to the depressed mood. According to the DSM-5, this person could meet the eighth symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_257_579_1",
+    "sentence_text": "I think I might have low dopamine levels because my concentration and motivation levels are extremely low.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "In line with the symptoms of major depressive disorder, this person would meet the eighth symptom of major depressive disorder of the DSM-5, which refers to concentration difficulties.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_151_12_8",
+    "sentence_text": "I sadly could go on and on of the terrible decisions I made.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This person claims to make poor decisions and evaluates his or her decision-making ability negatively, which could be an indicator of a thinking issue and the ability to think appropriately due to a depressed mood. More specifically, the behavior of thinking issue is manifested by people who develop the eighth symptom of criterion A for the diagnosis of major depression and could be the cause of this statement.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1933_177_2",
+    "sentence_text": "I'm so indecisive.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This phrase may be a manifestation of a problem in thinking derived from a depressed mood. Thus, according to the DSM-5, people with major depressive disorder develop issues in the mental capacity to make decisions, concentrate, or the ability to think. Therefore, it is possible to infer the presence of a possible depressive symptom of decreased ability to think from the previous phrase.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2130_209_1",
+    "sentence_text": "I just don't know what to do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This statement may be related to the indecisiveness or slowness of thought that causes depression in many people. This problem may be associated with the eighth symptom of criterion A of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2855_5_2",
+    "sentence_text": "I don't have the attention span to sit there for hours and constantly read words.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The sentence above mentions concentration difficulties, but it does not reflect the type of concentration issues typically seen in individuals with depression, as there is no underlying mood disturbance explaining the impairment. Therefore, this post is not indicative of a possible depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_976_910_3",
+    "sentence_text": "I also issues with concentration and motivation when I'm not getting any, and tried mindfulness, but I wasn't very good at that.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post is an emotional expression of concentration difficulty. However, this issue is not an emotional problem related to depression or emotional changes. Thus, the information in the previous post does not correspond to depressive symptomatology in line with the Major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_3040_931_1",
+    "sentence_text": "So, long story short, I make really idiotic decisions when it comes to boys.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This message could be associated with a feeling of worthlessness or failure due to the bad decisions that the person has made in his/her life. Following the symptoms of major depressive disorder, this person could manifest difficulty in making decisions, and that is generating a feeling of failure after evaluating its consequences. This difficulty in making decisions can be an indicator of the presence of the eighth symptom of depressed mood on difficulty in concentration and decision making.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2492_1_46",
+    "sentence_text": "This is probably one of the toughest decisions I've had to make thus far in my life, and I am so lost as to what to do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post seems to be a manifestation of an ethical conflict and not a symptom of a depressed mood. To this end, it is not possible to affirm that this statement manifests a symptom of slowness in thinking or difficulty in making decisions, symptoms typical of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2662_0_0",
+    "sentence_text": "Awkward Request - I can't concentrate at work at all.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although this statement is not very exact, the problems with concentration could be associated with a depressed mood, and the change in thinking ability in this post may have an affective component. For this reason, it is necessary to accurately assess whether this cognitive problem is derived from a depressed mood since it may be associated with the eighth symptom of criterion A for the diagnosis of major depression in the DSM-5 manual.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2662_0_4",
+    "sentence_text": "But now-a-days I can not even focus for five minutes.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Though the statement lacks precision, difficulties with concentration may be linked to a depressed mood, suggesting a potential affective component. It is important to carefully evaluate whether this cognitive issue stems from a depressive state, as it could correspond to the eighth symptom of Criterion A for Major Depressive Disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2662_0_8",
+    "sentence_text": "I have been doing so for the last two months and I am exhausted, unable to focus and I feel plain dumb.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although the statement is somewhat vague, concentration difficulties may be related to a depressed mood, indicating a possible emotional influence. It is crucial to assess whether this cognitive issue arises from a depressive state, as it may align with the eighth symptom of Criterion A for Major Depressive Disorder according to the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_316_7",
+    "sentence_text": "I can't focus on my homework 7.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The loss of the ability to concentrate is a possible consequence of a depressed mood that causes a problem with the ability to think. According to the DSM-5, people with depressive symptoms may develop difficulty concentrating for several weeks, and this could also be associated with the eighth symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2401_23_0",
+    "sentence_text": "I'm lacking concentration and having trouble remembering my lessons",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The previous sentence does not offer any information about this behavior. Following the criteria of possible mental disorders, it is important to evaluate the origin, intensity, and frequency of this cognitive problem to establish possible etiologies and clinical classification in the case that there is some mental disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2402_339_8",
+    "sentence_text": "I can't concentrate enough in College.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Constant negative feelings, such as sadness, hopelessness, or physical problems derived from these feelings, can generate difficulty in thinking skills, such as concentration or slowness of thought. For this reason, the problem mentioned in the sentence can provide information about a possible deterioration in the ability to think typical of a depressed mood. These types of alterations are present in the eighth symptom of criterion A for the diagnosis of major depression in the DSM5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_759_88_0",
+    "sentence_text": "I have a very hardtime making decisions.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The emotional tone of this sentence suggests a possible change in the ability to think, make decisions, and respond appropriately to daily demands due to the presence of a depressed mood. This cognitive problem corresponds with the eighth symptom of criterion A of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1601_1053_15",
+    "sentence_text": "I lose my focus and my memory as well.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The loss of concentration, as well as the other symptoms that are present in the publication, allow us to infer the presence of a cognitive alteration caused by a depressed mood that would be causing intense discomfort. For this reason, this comment could be associated with the ninth symptom of depression in the DSM-5, which refers to an alteration of consciousness and thought and causes problems with concentration, response time, or mental emptiness.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2401_22_5",
+    "sentence_text": "I just don't know what to do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although the phrase does not clearly illustrate the feelings and changes in mood, it is possible to affirm that this person is developing an alteration in thinking that is related to the feelings of sadness, anxiety, and difficulty concentrating that this person also presents. These symptoms together may indicate a possible depressive episode, and the previous phrase could be associated with the eighth symptom of major depressive disorder included in the DSM-5 manual.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_134_349_3",
+    "sentence_text": "I can't concentrate, I don't care about getting good grades, I don't go to class b/c I can't get out of bed, I feel sick when I get a bad grade or don't know something, I feel alone in the classroom, or i won't be able to complete a class so then i start thinking about my future and how i won't graduate because i can't complete the coursework, so i won't get a job, won't get a house, be broke, no one will want to marry me, can't provide for family, friends hate me, etc, the list goes and on and on it goes.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Given the emotional tone of the sentence and the problems described in the post, it is possible to infer the presence of a possible concentration problem typical of a depressed mood. In this context, the above sentence may be a marker of the eighth symptom of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_105_18",
+    "sentence_text": "Where in the past I could easily study for hours without getting distracted, now I cannot effectively study more than a few minutes per day.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The comment \"Where in the past I could easily study for hours without getting distracted, now I cannot effectively study more than a few minutes per day\" may indicate difficulty concentrating, which is a key symptom of major depressive disorder, according to the DSM-5. Difficulty sustaining attention, focus, or making decisions is often associated with depression, particularly when it impacts daily activities such as studying or work. If this concentration difficulty persists and is accompanied by other symptoms, it could be a manifestation of a depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_105_21",
+    "sentence_text": "I just cant focus anymore.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The sentence may reflect difficulty concentrating, a core symptom of major depressive disorder (MDD) as outlined in the DSM-5. Problems with attention, focus, or decision-making are commonly associated with depression, especially when they interfere with essential tasks like studying or work. If this concentration issue persists and is accompanied by other depressive symptoms, it could indicate the presence of a depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_1060_1",
+    "sentence_text": "I was filled with energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "this post could indicate that person has been problems to start and doing their normal activities. Is very important to pay attention this emotional and behavioral changes because, if this problem affect  different aspects to the life, is a signas for a major depressive disorder described in DSM-5 in the criterion two of loss energy or los plesasure.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1639_444_16",
+    "sentence_text": "I feel really terrible, and fatigued.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post is a relevant affirmation about one characteristic symptoms of major depressive disorder. Is possible that this person can not realized other activities and affect different areas of your personal life as happens with people with depression. The fatigue is a common symptom that explains the low motivation in many people with the disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1341_0",
+    "sentence_text": "I don't exercise because of my extreme fatigue.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This comment shows how widespread fatigue and fatigue are generating a physical impact, which indicates an important problem that needs to be analyzed. Many people with depression (about DSM-5) can present in a generalized way a form of deep fatigue that affects their motivation and mood, as in this person.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2748_389_3",
+    "sentence_text": "I cant get anything done feeling this tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post suggest that this person in very tired and this feeling could be generalized because this emotion can make it impossible to do different tasks in your daily life. The tiredness and fatigue are common criterion sex of major depressive disorder and could be a signal alert.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2748_389_5",
+    "sentence_text": "On the upside my depression is gone, but at the expense of my energy levels.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Although this person claims that he has possibly overcome depression, the symptoms associated with loss of energy and fatigue are still present. This is a very common situation in people with previous history of depression, which is a sign of alarm because the disorder can reappear. The DSM-5 and the psychotherapist recommend to pay attention the reappear  of the symptoms like loss of energy.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_258_598_3",
+    "sentence_text": "Then the fatigue , always always tired, body feels heavy - I have a few energy peaks but generally by 5pm, I just want to sleep or feel like Im waiting to sleep.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "In this post is possible detected loss of energy in the patient because this comment affirm that have sometime good moments in the day only, and the rest of the day is not motivate. Many people with depression have this type of loss energy where it is generalized, but there are times of the day when they may be relatively a little better. Despite this, this comment could fit into criterion six of fatigue and energy loss described in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_258_598_3",
+    "sentence_text": "Then the fatigue , always always tired, body feels heavy - I have a few energy peaks but generally by 5pm, I just want to sleep or feel like Im waiting to sleep.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The fatigue is the principal symptom described in this post. As is reported by this person, this fatigue generates the impossibility of having more energy and constant exhaustion. In the criterion sex of major depressive disorder is mentioned this symptomatology, reason why this person could be develop depressive symptomatology.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_676_482_1",
+    "sentence_text": "I've had 0 energy to do anything but forcing myself to make cookies may help, lol.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post may suggest that the person is living a time when the motivation and energy to perform activities in their daily life are null. Many people with depressive symptoms experience a prolonged loss of energy in activities that they could previously do without effort or that they enjoyed. This can lead to a significant change in habits such as self-care, work, studies or relationships. These symptoms are related to those described in the DSM-5 major depression disorder",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1741_59_9",
+    "sentence_text": "I have depression and my energy used to be quite low as it is before I started.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This sentence in the publication is an example of a person who is feeling how he is losing energy to carry out his different daily activities. Many people with depression experience moments and times when the motivation and energy to start new activities is decreasing due to sadness, negative thoughts, low self-esteem or self-blame for what happens to them. This could be a sign of alarm for due to its relationship with criterion two of major depression disorder described in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2107_98_1",
+    "sentence_text": "i used to be very active but can no longer be.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "In this publication, this person describes his loss of energy and especially the change he has made in the activities he could do before. These behavioral changes are specific symptoms that may be related to the major depressive disorder described in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2107_98_1",
+    "sentence_text": "i used to be very active but can no longer be.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The feelings expressed in the publication can account for a possible fatigue and tiredness as a result of energy loss. A person who has loss of energy and fatigue are symptoms that affect the optimal functioning of the person during a period of depression or symptoms of depression. Many people with major depression experience these symptoms associated with loss of energy and fatigue.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2679_86_6",
+    "sentence_text": "I just don't have the energy to put work into it.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This sentence may suggest that this person has been trying to change and work on personal aspects and that he has hardly been able to maintain a motivation and energy to continue doing them. Many people with depressive symptoms are characterized by claiming that they have no energy, that they have lost energy or that they have less energy than before because sadness or other symptoms affect the mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_60_9",
+    "sentence_text": "My energy is depleted and I will probably never enjoy life anymore.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "According to the major depressive disorder mentioned in DSM-5, this person has experienced an important loss of energy because feels that never enjoys life. These negative thoughts are common in people with this disorder and affect the ability to maintain motivation and start new routines. This sentence can be related to criterion six about fatigue or loss of energy described in this manual.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1483_10_2",
+    "sentence_text": "That's all I have energy for after work.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This phrase indicates a period of loss of energy after work. Many people with depressive symptoms can maintain a certain level of autonomy and energy for some tasks. However, after these episodes, they fail to regain and maintain energy. This can affect the mood and maintain the energy. For this reason, this sentence could be a symptom related to major depressive disorder of DSM-5 like is mentioned in symptom six: fatigue or loss of energy nearly every day.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2139_322_0",
+    "sentence_text": "It could have just been depression but when I got off of it I was no longer as tired lol",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "It may indicate that the person feels hopelessness and exhaustion, and this feelings are related to tiredness or fatigue. According to the DSM-5, these symptoms are related to symptomatology that may be depressive as many people with diagnosed with major depressive disorder or experiencing a depressive episode. Fatigue and tiredness are characteristic symptoms of depression, specifically the sixth symptom of criterion A of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2958_51_0",
+    "sentence_text": "If I'm tired I'm socially skills totally disappear.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This phrase can be seen as how the person is experiencing a moment of sadness and emotional discomfort that coincides with episodes of changes in sleep patterns. Many people with depression experience changes in sleep patterns which can cause insomnia like this person. These symptoms are associated with symptom four of criterion A of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1580_37_2",
+    "sentence_text": "I became lethargic, couldn't focus and constantly tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post suggests that this person is manifesting a loss of energy due to tiredness. Symptom six of major depressive disorder of DSM-5 mentioned fatigue or less energy as a criterion of diagnosis. Many people with depression have a loss of energy in activities that are recurrent and affect their regular habits.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1580_37_2",
+    "sentence_text": "I became lethargic, couldn't focus and constantly tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post expresses tiredness or fatigue. Many people with depression have fatigue and less energy like this, and it affects their routine tasks. The DSM-5 has described decreased fatigue and less energy as a diagnostic criterion for major depressive disorder. In this context, an important symptom is tiredness because the depressive mood can affect the energy",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_547_567_2",
+    "sentence_text": "I'm really tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This person is experiencing a moment of tiredness that could be emotional or physical tiredness. The DSM-5 describes nine symptoms within criterion A of major depressive disorder. The sixth symptom describes fatigue and loss of energy as a characteristic symptom of depression. Often, this loss of energy manifests itself with generalized and sustained fatigue.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2606_449_0",
+    "sentence_text": "I think I'm bored, but I don't have the energy to do anything.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post is an example of a loss of energy. The person who is publishing this sentence expresses a symptom associated with the symptoms described in the DSM-5 on Major depressive disorder. In criterion A, fatigue and energy loss are mentioned as characteristic symptoms of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1455_72_50",
+    "sentence_text": "I have no energy at all.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This sentence indicates that this person may be feeling a loss of energy and pleasure in many activities that regularly performs. Loss of energy is a symptom described in the DSM-5 and refers to possible chronic fatigue and tiredness that many people with major depressive disorder develop due to sadness.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_879_0",
+    "sentence_text": "My body is weak and im always tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This sentence may suggest an experience of intense fatigue and tiredness that may be a consequence of a depressed mood or deep sadness. According to the experience reported by this person, the symptoms of tiredness and fatigue may be related to symptom six of the diagnosis of major depressive disorder included in the DSM-5. This symptom mentions fatigue and loss of energy as a diagnostic symptom of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1030_1290_8",
+    "sentence_text": "I am very tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This person is expressing weariness in this post. This is a symptom of possible generalized fatigue or tiredness as described in the DSM-5 manual of mental disorders. This manual includes major depressive disorder, which in its criterion A mentions fatigue and tiredness in the sixth diagnostic symptom of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1958_921_2",
+    "sentence_text": "I'm 26 (27 this march) and I've had the symptoms of fatigue easily since I was 16ish.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post indicates that this person may develop symptomatology of fatigue and loss of energy. Generalized and persistent tiredness for two weeks or more can be a sign of fatigue associated with depressive symptoms. Many people with major depressive disorder meet symptom six of fatigue and loss of energy within criterion A of the diagnosis.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2006_107_10",
+    "sentence_text": "I'm so tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post may suggest that this person has fatigue and tiredness that are present in the sixth symptoms of the diagnosis of major depression. People with this disorder may develop symptoms associated with fatigue and loss of energy due to the depressed mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2006_107_16",
+    "sentence_text": "I'm so tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Tiredness and fatigue are feelings associated with depressive symptoms. Many people with major depressive disorder express that they feel tired, and this emotion is because sadness when it invades life, can generate deep tiredness. For this reason, this person may develop symptom eight of the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_890_3",
+    "sentence_text": "Ofcourse I tried many hobby ideas but they rather exhaust me than give me joy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The emotion underlying this thought refers to a generalized fatigue about activities and hobbies. Many people with depressive symptoms develop a loss of interest and pleasure due to sadness and depression that prevent them from enjoying life. The DSM-5 lists a marked decrease in interest and pleasure as the second characteristic symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1514_136_150",
+    "sentence_text": "I think maybe I'm just tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Indicating tiredness is a signal of negative mood that affects life. This person can be developing symptomatology related to major depressive symptomatology, in particular the sixth symptom of criterion A for the diagnosis of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_258_426_1",
+    "sentence_text": "My energy is low,as is my enthusiasm but Ive found the only way I can survive this job without crying every day is by being myself.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The sentence can suggest a possible loss of energy, a symptom related to fatigue, or less energy of major depressive disorder. The DSM-5 includes this symptom of less energy as a significant behavior to this diagnosis.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1292_0",
+    "sentence_text": "How can I stop being always extremely tired?",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post indicates that this person is feeling extreme fatigue, and the fatigue is affecting them emotionally. Many people with depressive symptomatology develop intense feelings and a deep sadness that generates excessive emotional tiredness. The DSM-5 includes tiredness and fatigue as a criterion A symptom for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1292_10",
+    "sentence_text": "Im always extremely tired all day, despite enough sleep, I tried all the things above, I dont know what to do anymore, what can I do to have more energy?",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The loss of energy felt by this person may be a sign that this person is developing symptoms related to depressive symptomatology associated with fatigue and loss of energy. The DSM-5 describes this symptomatology as the sixth symptom of criterion A for the diagnosis of major depressive disorder. If this person develops five other symptoms for two weeks or more, they may meet the criteria for a clinical pattern of depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1292_10",
+    "sentence_text": "Im always extremely tired all day, despite enough sleep, I tried all the things above, I dont know what to do anymore, what can I do to have more energy?",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post indicates that this person is feeling extreme fatigue and that it is significantly affecting their moods. People with depressive symptomatology develop intense feelings that can affect them physically and emotionally. The DSM-5 includes tiredness and fatigue as the sixth symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1008_5",
+    "sentence_text": "I haven't really had free time in years now and im feeling more and more tired and stressed out",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This person is manifesting tiredness and fatigue, and these feelings bring to depressive symptomatology depressive that develop many people with this disorder. These feelings are common in this disorder because tiredness and fatigue are part of it in the sixth symptom of diagnoses for major depressive disorder in DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_419_1079_3",
+    "sentence_text": "I wont feel tired at all but I still yawn.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The feelings and changes in behavior reported by this person indicate that significant tiredness and fatigue are developing that are related to depressive symptoms. These symptoms imply that this person can meet symptom six of criterion A for the diagnosis of major depression. If these symptoms persist for two weeks and affect normal functioning, they can generate interference and develop other symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1269_1",
+    "sentence_text": "I sleep 21 hours per night and im still always tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The post can suggest possible tiredness and fatigue, a relevant symptom of major depressive disorder included in DSM-5. The depressive symptomatology of this disorder included fatigue or less energy for weeks. Thus, this person might develop these behavioral changes related to major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_746_1",
+    "sentence_text": "Going to bed too late, eating only 1 meal per day and the rest is fat and sugar snacks, not working out at all my depression killed me I have no motivation or energy to even care about my health",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post explicitly states the presence of depression and is accompanied by less-energy symptoms. These mood changes can generate issues in personal life, as this person relates. Less energy can cause problems at work, less desire to eat, and other symptoms such as loss of motivation. In this sense, this person may meet the sixth symptom of major depression in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_621_0",
+    "sentence_text": "I just don't have the energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Based on the feelings of loss of energy that this person describes, and the intensity of these, this person could present symptoms related to fatigue and less energy, a criterion A symptom for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_84_34_4",
+    "sentence_text": "I'm tired of being tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "According to the previous post, this person is associated with a clinical profile that shares the symptoms of tiredness and fatigue of depression. The tiredness and fatigue that this person mentions are present in the sixth symptom for the diagnosis of major depressive disorder in the DSM-5. Tiredness and fatigue usually present as generalized symptoms that last for two weeks and make the person unable to do other activities.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_8_622_2",
+    "sentence_text": "My main symptom that I can never get over is the emptiness/anhedonia and I'm always tired and low energy and low sex drive and low concentration.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "From the clinical symptoms mentioned in this post, it can infer anhedonia or problems maintaining energy in daily task. These issues are symptoms of fatigue and tiredness that are included in symptom six of major depressive disorder of DSM-5. These symptoms may cause changes in the ability to perform any daily activities.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_949_967_5",
+    "sentence_text": "It felt like I got an amazing nights sleep and woke up well rested but all of today I was really tired and spacey and I almost fell asleep in my business class.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Although this publication indicates difficulties in sleep and the ability to rest, this is not due to a mood problem, and there are not enough elements to demonstrate that it is a recurring symptom for more than two weeks and that it causes discomfort. For this reason, this behavior cannot be related to a clinically significant symptom.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2705_127_1",
+    "sentence_text": "I started off with a lot of activity but now im tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The fatigue that this person describes may be related to a symptom of major depressive disorder, and that mentions fatigue and tiredness as a behavior developed in depressive episodes. This symptomatology causes difficulty maintaining energy and general fatigue that involves the person's life and normal functioning.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_17_969_1",
+    "sentence_text": "I get tired real fast",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "When a person claims to feel tired with ease, it may be a possible state of fatigue and generalized tiredness. The symptoms of tiredness may be accompanied by depressed moods and cause general malaise as described in the DSM-5 on Symptom Six of Fatigue and Loss of Energy of Major Depressive Disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2338_943_7",
+    "sentence_text": "I'm also tired all the time.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The person writing this post is expressing a symptom of generalized tiredness, which lasts all day and causes discomfort. According to the DSM-5, people with major depressive disorder can develop insomnia or hypersomnia, and that can persist for two weeks or more. This symptom falls under criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_215_54_3",
+    "sentence_text": "I feel exactly the same, I don't enjoy anything anymore and I'm too tired to do anything.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "In line with the previous statement, this person claims to have a generalized and disabling tiredness. These behaviors may be symptomatic of a depressive episode and may be related to symptom six of DSM-5 criterion A for major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2331_447_0",
+    "sentence_text": "I always keep a reserve of energy for myself.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The above post might suggest that this person is constantly experiencing a loss of energy. This loss of energy may be related to possible depressive symptomatology as described in symptom six of criterion A for the DSM-5 diagnosis of major depression. This symptomatology implies a marked fatigue or less energy that affects motivation, interest, daily functioning, and mental health in general.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1846_53_44",
+    "sentence_text": "I'm shaking from lack of sleep and trying to exert to much energy today.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The above post expresses a behavior of loss of energy due to difficulties in sleeping, such as insomnia. Loss of sleep due to a depressed mood event can cause physical and emotional problems such as loss of energy and sleep. For this reason, this person may be developing the sixth symptom of Major depressive disorder included in criterion A for diagnosing this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1514_213_111",
+    "sentence_text": "And I was so tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "From the symptoms mentioned in the DSM-5 on Major depressive disorder, it can be stated that the person writing this post manifests the presence of fatigue and loss. These symptoms produce a depressed mood and significant distress caused by the illness. These symptoms can cause an important discomfort if symptoms persist for more than two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2107_100_3",
+    "sentence_text": "i suffer from fatigue and exhaustion and have no energy to lose weight.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Based on the previous publication, he reports possible depressive symptomatology associated with the loss of energy and interest. This emotional problem may meet the second symptom of criterion A for the diagnosis of major depressive disorder, which refers to markedly diminished interest and pleasure.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_117_150_1",
+    "sentence_text": "But I don't have the energy to fight people about it.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Although the post expresses a loss of energy, this refers to a specific and not generalized situation. This possible loss of energy is an appropriate or expected response to the situation. Therefore, since it is not a generalized behavior that affects the life and daily functioning of the person, there are not enough elements to affirm that there are clinical elements for possible depressive symptomatology.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1435_368_8",
+    "sentence_text": "Im always tired and my mental health is bad bad right now.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post can suggest the presence of tiredness and fatigue that is related to depressive symptomatology. In this person, the feelings of tiredness are the consequence of depressed mood, a necessary condition to link this behavior with a major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_8_303_0",
+    "sentence_text": "i dont have the energy too, imm just suffering so much man",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The feeling of tiredness and emotional exhaustion described in this post may be a risk factor for major depressive disorder since this symptomatology is in symptom six for the diagnosis of this disorder. Thus, this person may meet this symptom for the DSM-5 diagnosis of depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2953_602_89",
+    "sentence_text": "Some days, I'm just so tired and don't want to do anything.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "According to this publication, the person feels tiredness that can be generalized. The DSM-5, as a diagnostic tool, mentions generalized tiredness and fatigue as the sixth symptom of criterion A for the diagnosis of major depressive disorder. Many people with depressive symptoms develop marked fatigue because of a depressed mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_282_58_7",
+    "sentence_text": "I still feel tired and I don't know, I think I just get distracted to quickly.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Consistent with the symptoms in criterion A for the diagnosis of major depressive disorder, this person might meet symptom six about fatigue or loss of energy that is present in criterion A for the diagnosis of the disorder. Many people with depression experience tiredness or fatigue and loss of energy that prevents them from doing any activity or maintaining minimal self-care.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2143_141_2",
+    "sentence_text": "I felt very tired at the beginning but then your body will adjust.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This person reports having had general tiredness and fatigue in the past. Even if the symptom has occurred in the past, if the symptom was generalized and caused significant emotional distress, it may reappear or develop another depressive symptomatology associated with the sixth symptom of fatigue and loss of energy for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_681_475_2",
+    "sentence_text": "I am tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "When someone affirms that feeling tiredness could be developing depressive symptomatology as the feeling of fatigue and less energy of criterion A for diagnoses of major depressive disorder. Thus, according to DSM-5, if these symptoms are generalized and affect normal functionality daily, this person could have depressive symptoms. Many people with this disorder have markedly fatigue and less energy as a consequence of depressive mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2669_4_3",
+    "sentence_text": "I get tired very easily.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Easy tiredness is a common symptom in people with depressive symptoms and is present in DSM-5 major depressive disorder. Many people like this meet the sixth symptom of fatigue and loss of energy that many people experience from prolonged depressed mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2338_1027_15",
+    "sentence_text": "I get tired, my eyes go cross, my anxiety creeps back up on me.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The previous post indicates the presence of loss of energy caused by intense anxiety and sadness. This behavior could be related to a clinical profile of depressive symptomatology. According to the DSM-5, people with major depression experience a loss of energy. If this symptom persists for more than two weeks and affects the person's life, this person may meet the sixth symptom of the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2338_1027_15",
+    "sentence_text": "I get tired, my eyes go cross, my anxiety creeps back up on me.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The previous post indicates the presence of tiredness or fatigue caused by intense anxiety and sadness symptomatology. This behavior could be related to a clinical profile of depressive symptomatology. According to the DSM-5, people with major depression experience a loss of energy. If this symptom persists for more than two weeks and affects the person's life, this person may meet the sixth symptom of the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2455_48_6",
+    "sentence_text": "I have no problem getting to sleep though, but my I'm fatigued the entire time I'm awake.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The presence of fatigue and generalized tiredness may be symptoms associated with a deep malaise and depressed mood, indicating that this problem may be a symptom associated with DSM-5 major depressive disorder and that it mentions tiredness and fatigue within the sixth symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_969_1077_3",
+    "sentence_text": "I would really like some free energy right now.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The previous post indicates the presence of problems to have an energy. The DSM-5 diagnostic criteria for major depressive disorder mentions the loss of energy within the sixth symptom of criterion A for the disorder's diagnosis. This loss of energy and fatigue is due to an intense state of sadness maintained over time.\nIn depression, many people experience listlessness, boredom, apathy, tiredness, and fatigue, affecting the development of daily tasks that they used to perform normally.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_774_2",
+    "sentence_text": "Sadly I know I won't have the energy to do it.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Loss of energy and fatigue are symptoms that people with depressive symptoms experience as a result of a depressed mood. In this context, it is possible to affirm that the person who wrote the previous publication could present symptom six about fatigue and tiredness of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1738_394_3",
+    "sentence_text": "I constantly lose things, can't manage time, can't focus because I'm in a bad mood much of the time, everything is harder to do because I lack the energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This person has a loss of energy that could be associated with a depressive emotional profile due to the intensity of the discomfort. If this person maintains this loss of energy for more than two weeks, this person could meet the sixth symptom of DSM-5 criterion A for the diagnosis of major depressive disorder may be met. This symptom refers to the marked loss of energy and generalized tiredness for two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_622_0",
+    "sentence_text": "I just don't have the energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "According to the previous post, this person could develop significant symptomatology related to fatigue or less energy. Many people have a loss of energy due to deep sadness and continuous depressive mood, which produce behavioral changes such as anhedonia, less motivation, or the ability to work. If these behavioral changes persist for two weeks, these changes are depressive symptomatology of Major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2993_296_2",
+    "sentence_text": "But I am truly tired, but I say that but can't find the energy to figure out what way to go.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "When a person claims to be tired, have no energy, or lose meaning in life, they could be developing a marked loss of energy. When feeling these moods, this person may be presenting stronger clinical depressive symptoms, which would coincide with symptom six of criterion A for the diagnosis of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2832_876_0",
+    "sentence_text": "I dont have the energy for that!",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post suggests the presence of a marked loss of energy and motivation, a symptom that if sustained for more than two weeks and ñerdhurts personal, social, family, and work functioning, could meet the sixth symptom of criterion A for the diagnosis of major depressive disorder. According to the description of major depressive disorder, loss of energy is a symptom that can last for more than two weeks and manifests itself in many ways. People stop taking care of themselves, not get out of bed, and may lose their appetite.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1749_905_17",
+    "sentence_text": "Even my low pain days I have no energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The previous sentence describes the presence of two important symptoms for the diagnosis of depression disorder: loss of energy and generalized fatigue. The DSM-5 explains that people with major depression develop a marked loss of energy that is widespread and affects daily life. Thus, this person could be developing the sixth symptom of criterion A for the diagnosis of the disorder, which refers to fatigue and generalized energy loss.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1499_927_40",
+    "sentence_text": "And I don't even have a reason to be tired because I don't do anything.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The language used in the previous post and the loss of energy that this person comments give provide information to identify a possible symptom of a depressive episode that has persisted over time and that is also causing significant emotional deterioration. According to the DSM-5, this person could be developing clinically significant behaviors for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1499_927_40",
+    "sentence_text": "And I don't even have a reason to be tired because I don't do anything.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The tone of the sentences in this publication denotes a symptom of tiredness and fatigue in many areas of life. This issue causes personal and social deterioration. This change in behavior and this feeling of emotional fatigue are signs that could be related to the sixth symptom of criterion A for the diagnosis of major depressive disorder in the DSM-5. In this manual, fatigue and tiredness manifest themselves, along with a reluctance to do routine activities that previously did not require effort.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_697_17_12",
+    "sentence_text": "I am so exhausted.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Being exhausted is a way of expressing generalized tiredness that would cause significant emotional distress, which would be clinically relevant to identifying an episode of major depression. According to the diagnostic manual of mental disorders, this person would be developing behavior to the sixth symptom of tiredness and fatigue of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1673_492_2",
+    "sentence_text": "My fatigue isn't that bad any more and so I find it does what I need.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "According to the above text, it is possible to infer that the fatigue expressed by the person writing this post is due to a symptom associated with a sleep disorder and not a mood problem. According to the DSM-5, people with episodes of depression may experience generalized tiredness or fatigue as a consequence of their mood but not due to a sleep problem as occurs in this person.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1255_131_8",
+    "sentence_text": "The last couple weeks I've found myself really tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This sentence is significant evidence of a loss of energy and motivation as a clinical symptom of depressive disorder. This is because this loss of energy is related to the second symptom of criterion A, and it has also lasted for at least two weeks. The tone of the sentence allows us to infer significant distress, two criteria for the diagnosis of a major depressive episode according to the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1255_131_15",
+    "sentence_text": "And that's mostly true, I just don't like being tired all the time, and... I'm really frustrated waiting for changes to take place.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "According to the DSM-5, this person presents a symptom of generalized tiredness and fatigue that causes significant discomfort at a functional level. For this reason, it is possible to relate this problem to the sixth symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1942_20_1",
+    "sentence_text": "I am so fucking burnt out and emotionally and mentally exhausted.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The emotional tone of this publication allows us to infer the presence of a significant loss of energy, and physical and emotional exhaustion. For this reason, mental health professionals could associate this exhaustion with the loss of energy as a symptom of a depressive episode of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1808_10_5",
+    "sentence_text": "any time I do try to do something, I feel like I don't have the energy and I just go lay in my bed reading reddit from my phone.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The previous sentence is a clear example of energy loss, which could be generalized and maintained for a long time. This person may be developing symptomatology of MDD because the second symptom of criterion A speaks about markedly diminished interest in pleasure, which is present in the previous phrase.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_3003_343_1",
+    "sentence_text": "Today I feel just tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post is an emotional signal about tiredness or fatigue, which could be a specific behavior of depressive symptomatology. Many people with Major depressive disorder experience significant tiredness for two weeks. The mental health professional should do a deep assessment of these symptoms and other changes in mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1155_59_2",
+    "sentence_text": "By the end of the day, I feel exhausted, mentally and physically, and when I get home, I don't want to do anything.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The previous post describes a feeling of tiredness and fatigue related to a major depressive disorder manifested in the post. For this reason, this phrase can express behaviors and symptoms of an episode of major depression, specifically symptom six about fatigue and loss of energy for two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2094_142_1",
+    "sentence_text": "Like, I'm tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Although this comment is related to a complaint about a specific situation, the tone of disappointment and emotional exhaustion is intense and generalized, similar to the feelings that are described in a major depressive episode of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_687_1",
+    "sentence_text": "I wish I had the energy to do that.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This person claims to have lost energy over the past 15 days, which could be a temporary and symptomatic indicator of energy loss due to the presence of a depressed mood. The DSM-5 includes loss of energy as a form of fatigue and energy, the sixth symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2455_120_8",
+    "sentence_text": "I can't find the energy to do anything anymore.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This phrase is an emotional marker of depressive symptomatology of markedly diminished interest, which is the second symptom of a depressive episode to the diagnosis of Major depressive disorder. In line with DSM-5, this persona could be developing this depressive mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2455_120_8",
+    "sentence_text": "I can't find the energy to do anything anymore.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This phrase is an emotional marker of depressive symptomatology of fatigue or less energy, which is the seventh symptom of a depressive episode to the diagnosis of Major depressive disorder. In line with DSM-5, this persona could be developing this depressive mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_57_25",
+    "sentence_text": "I feel very frustrated and tired and stressed and im starting to hate life.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The frustration that this person describes in this post seems to be a deep feeling that causes intense discomfort. Following the criteria for the diagnosis of major depression of the DSM-5, this publication coincides with the sixth symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2815_1557_91",
+    "sentence_text": "Stress always made me tired, and now I was exhausted.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "In the publication, it is possible to infer a non-somatic issue, but mental fatigue manifests itself with a feeling of exhaustion manifesting as an emotional symptom. To the symptoms of major depressive disorder in the DSM-5, this post could be related to the sixth symptom of criterion A for the diagnosis of MDD.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_852_2",
+    "sentence_text": "read my previous post to see how stressed I am (24 / 7) I have no energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post is an emotional marker of the intensity of a mood problem about loss of energy. In line with the manual on mental disorders, this mood problem is present in the sixth symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_852_6",
+    "sentence_text": "Mentally I have no energy either.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post is an example of the relationship between loss of energy and depressed mood. Thus, this phrase may be an emotional indicator of depressive symptoms as the sixth symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_580_0",
+    "sentence_text": "How to be sure that for me, the cause of being always tired is my depression?",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The previous sentence shows a concern about generalized and intense fatigue that would be causing emotional discomfort and that following the DSM-5 could coincide with the sixth symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_580_3",
+    "sentence_text": "I went to doctors and hospitals for a bout a year long and they were always unable to find the cause of my low energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The above publication shows the presence of a physical problem with psychosomatic etiology, as it has no apparent organic cause. For this reason, there is evidence of a symptom of loss of energy due to a depressed mood. According to the DSM-5, this phrase corresponds to the sixth symptom of criterion A for the diagnosis of MDD.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_580_4",
+    "sentence_text": "I'm always extremely tired and I think the only cause is my mental health.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "When a person claims that their mental health is the cause of their emotional distress and physical fatigue, the probability of developing a mood disorder is very high. As a mental health professional, I can mention that there are risk factors for developing depressive symptoms related to tiredness and generalized fatigue. These symptoms are related to criterion A for the diagnosis of major depression in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2449_126_0",
+    "sentence_text": "I've been writing for two years, but honestly I don't have the energy anymore.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This phrase motivates the classification of the feeling described in the previous post as a form of loss of energy of symptom six of criterion A for the diagnosis of major depression according to the symptoms of this disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1768_341_17",
+    "sentence_text": "I am getting very tired now, from lack of sleep, and the physical exertion of the panic attacks.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This person is experiencing panic attacks that could explain the appearance of intense fatigue and tiredness. This problem also motivates the classification of this behavior as an emotional marker of depressive symptoms. Thus, this phrase could be related to the sixth symptom of criterion A for the diagnosis of major depression according to the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2013_16_1",
+    "sentence_text": "I feel tired and sleepy even after sleeping a lot and this has been for a week.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post describes feelings of fatigue, a problem associated with depressive symptoms and characterized by a marked loss of energy and motivation. This tiredness can be a problem that motivates the classification of this behavior as a depressive symptom of criterion A for the diagnosis of major depression in line with the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_116_18",
+    "sentence_text": "I also have no energy because my health is bad and because I'm in depression.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Low energy may indicate a loss of motivation and interest in previously effortless activities. Thus, the above statement refers to a loss of energy, which could result from a depressive mood. According to DSM-5, this comment could result from depressive symptomatology about the criterion A for MDD.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_116_20",
+    "sentence_text": "I DONT EVEN HAVE TIME AND ENERGY TO BRUSH MY TEETH ANYMORE, HELP",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This phrase indicates a significant loss of energy associated with a depressed mood because it is causing interference with elemental hygiene habits. This issue may be an indicator of the presence of a depressive episode as described in the major depressive disorder of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2392_30_2",
+    "sentence_text": "I can feel exhausted after getting ready for work in the morning.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Feeling constantly exhausted without an organic reason can be the consequence of a depressed mood, and taking into account that the context of this phrase refers to emotional exhaustion, it is possible to infer the presence of a depressive symptom. This symptom is the sixth and references the feelings of fatigue and tiredness that can appear in depressive episodes of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2958_166_1",
+    "sentence_text": "At the moment I'm experiencing quite a bit of fatigue, sometimes I don't even notice how exhausted I am, but I can fall asleep at almost anytime and anywhere, it's not really helpful while in school.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This person feels fatigued due to problems with sleep habits. Worries, intrusive thoughts, or intense discomfort can cause the appearance of excessive tiredness and fatigue, as in major depression. This DSM-5 disorder mentions fatigue as one of the core symptoms of the diagnosis. It would be relevant to evaluate if this person meets other symptoms associated with this behavior.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2455_134_7",
+    "sentence_text": "I can't find the energy to do anything anymore.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This comment corresponds to an affective expression of discomfort caused by the loss of energy and possibly motivation, which may be a manifestation of the presence of a depressive symptom on the loss of energy of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2455_134_7",
+    "sentence_text": "I can't find the energy to do anything anymore.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This comment corresponds to an affective expression of discomfort caused by tiredness and fatigue, which may be a manifestation of the presence of a depressive symptom of fatigue, the sixth symptom of the Major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_703_71_11",
+    "sentence_text": "My energy levels have been extra low recently and my concentration is basically non existent atm.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post is an emotional marker that could manifest a significant loss of energy, such as that which appears in episodes of major depression in line with the sixth symptom of criterion A for the diagnosis of this disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_703_71_11",
+    "sentence_text": "My energy levels have been extra low recently and my concentration is basically non existent atm.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post may serve as an emotional indicator, reflecting a substantial tiredness, which is often observed in individuals experiencing major depressive episodes. This symptom aligns with the sixth criterion in the DSM-5 for diagnosing Major Depressive Disorder, where fatigue or loss of energy nearly every day is a key feature.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_549_729_38",
+    "sentence_text": "But today morning, I realized I've lost all energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "While this statement lacks detail regarding the nature and duration of the reported energy loss, it could reflect an early sign of a developing depressive episode. According to the DSM-5, persistent fatigue or loss of energy is identified as the sixth symptom under Criterion A for Major Depressive Disorder and is associated with significant functional impairment.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2415_577_3",
+    "sentence_text": "I have been tired and depressed and what not for as long as I can remember.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This person reports feeling sad and tired, which could indicate the possible presence of a depressed mood. According to the DSM-5, depression can manifest itself with a state of general tiredness and affect daily functioning.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2408_55_4",
+    "sentence_text": "I can clearly see what is going on with me, but I simply don't have the energy to do anything about it.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "It’s essential to recognize that depression often presents as a loss of energy and can lead to emotional distress, impairing one's ability to manage daily responsibilities. Therefore, this statement could relate to the second symptom under Criterion A for diagnosing Major Depressive Disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2908_105_3",
+    "sentence_text": "So I'm pretty tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "While the statement's context doesn't offer extensive details about the person's experience of fatigue, the underlying cause could be a depressed mood, considering the overall tone and content. In line with Criterion A for Major Depressive Disorder, this fatigue may correspond to the sixth symptom, which involves loss of energy or persistent fatigue. It is crucial to further assess whether this fatigue is accompanied by sleep disturbances, as these are commonly associated with depressive episodes and may exacerbate the individual's overall condition.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_943_5",
+    "sentence_text": "Also I do have some energy now.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Certainly, the person speaks of having energy at this moment. However, the context provides information that allows us to identify episodes of loss of energy related to depressive symptoms, such as those mentioned in the major depressive disorder of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_822_12",
+    "sentence_text": "I also have no energy and time to go out.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Overwork can cause the onset of symptoms of tiredness and fatigue like those experienced by this person. However, these symptoms may be a risk factor for the onset of major depressive disorder in line with the sixth symptom of criterion A for the diagnosis of major depression in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_865_2",
+    "sentence_text": "but due to my depression and low energy i'm unable to get a decent amount of work done.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The previous phrase could be interpreted as a depressive symptom in line with the DSM-5 criteria. It specifically references two key symptoms of depression: low energy or fatigue, which is listed as one of the symptoms under Criterion A for Major Depressive Disorder, and difficulty completing work, which may indicate impaired concentration or decision-making—another symptom outlined in the DSM-5. If these symptoms persist nearly every day for at least two weeks, alongside other depressive symptoms, they could support a diagnosis of Major Depressive Disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2415_150_10",
+    "sentence_text": "Anyway, well, I am so out of energy and I don't breath well.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Traumatic experiences from the past may be risk factors for the appearance of depressive symptoms. Some people experience a loss of energy for two weeks, which coincides with the sixth symptom of criterion A for the diagnosis of major depression in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1306_0",
+    "sentence_text": "How can I wake up without being tired and lazy in the morning?",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Generalized fatigue is a symptom that appears in major depressive disorder and is included in the DSM-5 in criterion A. The manual describes that this fatigue lasts over two weeks and can affect daily functioning. Although this phrase refers to a problem with sleep, it is relevant to evaluate the traceability of this symptom if the fatigue is a consequence of a depressed mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2415_174_9",
+    "sentence_text": "I have lost motivation, have no direction, I'm anxious, socially retarded, don't even have the courage to go for job interviews let alone doing a job and I feel exhausted all the time.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The previous post expresses feelings of loss of energy and sadness, which could be an emotional indicator of the second symptom of Major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2139_149_3",
+    "sentence_text": "I had moments of energy and feeling fine and then it just went back down to sadness.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The above expression could be a form of loss of energy typical of people who develop depressive episodes similar to those described in major depressive disorder in the DSM-5. For this reason, the feelings described in the publication may indicate a significant decrease in interest and pleasure as the second symptom of criterion A for the diagnosis of depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_316_6",
+    "sentence_text": "I have no energy to take care of myself, to even brush my teeth 6.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This statement reflects a significant loss of energy and interest in performing tasks that previously did not require prior effort. In addition, this publication shows significant anhedonia, which could indicate a case of a marked loss of energy and generalized fatigue, which is a symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2107_102_4",
+    "sentence_text": "i have no more energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The loss of energy that this person describes is related to a possible episode of major depression. It refers to a possible depressed mood that causes a significant loss of energy and fatigue. This problem is present in the sixth symptom of criterion A for the diagnosis of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_1037_5",
+    "sentence_text": "Whatever little energy I can have is at night.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The emotional tone of the previous sentence is related to a low mood and low energy, which could indicate that this person is developing a significant loss of energy in line with the sixth symptom of criterion A on the diagnosis of major depression and that it lasts for more than two weeks according to the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1933_287_2",
+    "sentence_text": "I have very little energy for basic day-to-day activities and this took a lot out of me.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The comment, \"I have very little energy for basic day-to-day activities, and this took a lot out of me,\" can be interpreted as a potential symptom of major depressive disorder (MDD) according to the DSM-5. This phrase reflects the criterion of fatigue or loss of energy nearly every day, which is one of the nine core symptoms for diagnosing MDD. The individual describes a significant energy reduction, which affects their ability to engage in routine activities, suggesting that this symptom may impact their daily functioning. If persistent for at least two weeks, along with other criteria such as a depressed mood or loss of interest, this could contribute to a diagnosis of a major depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2408_44_2",
+    "sentence_text": "Sometimes I have enough energy to do the dishes or a bit of laundry and it is awesome!",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The person who wrote this post may be going through a difficult emotional time, and the feelings in the post reflect a possible loss of energy over the past two weeks. Considering the symptomatic profile described by this person, it is possible to infer that this person is developing a potential loss of energy in line with the sixth symptom of criterion A for the diagnosis of major depression in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_111_5",
+    "sentence_text": "I always feel weak and tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "By exploring the possible feelings and emotions of the post, and in particular of this sentence, it is possible to infer the presence of loss of energy due to a depressed mood that coincides with the sixth symptom of criterion A of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_111_5",
+    "sentence_text": "I always feel weak and tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Clinical examination of possible symptoms associated with depressed mood may be related to a symptom of major depressive disorder of the DSM-5, especially with the sixth symptom that refers to a marked decrease in energy typical of depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_111_9",
+    "sentence_text": "I have no energy and I am unable to be productive for more than 3 minutes what should I do?",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Considering the symptoms expressed in the previous publication, it is possible to state that this person is developing a possible loss of energy or generalized fatigue that prevents him from carrying out activities that did not previously require effort. This person's mood could be related to the sixth symptom of criterion A for major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1978_1055_9",
+    "sentence_text": "Why am I so tired, tired of this world and this life?",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The emotional tone of the publication reflects a possible low mood and loss of energy that coincides with the sixth symptom of criterion A for the diagnosis of depression in the DSM-5 manual.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1978_1055_9",
+    "sentence_text": "Why am I so tired, tired of this world and this life?",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "After considering the possible feelings associated with this phrase, it is possible to infer the presence of a low mood that causes tiredness and fatigue and is associated with the sixth symptom of depression in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2107_94_1",
+    "sentence_text": "i have fatigue and exhaustion where i fall and can't walk.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Fatigue and exhaustion suggest the presence of anhedonia and a possible depressed mood. This problem generates a significant reduction in energy in different activities that previously did not involve effort. As a mental health professional, I can confirm that this behavior is related to the sixth symptom of criterion A for the diagnosis of major depression in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2107_94_1",
+    "sentence_text": "i have fatigue and exhaustion where i fall and can't walk.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post suggests the presence of anhedonia, a key symptom of major depressive disorder (MDD), as outlined in the DSM-5. Anhedonia involves a significant reduction in interest or pleasure in nearly all previously enjoyable activities. Along with depressed mood, it is one of the two primary symptoms required to diagnose a major depressive episode. The individual's inability to derive pleasure from activities they once enjoyed, coupled with a lack of motivation, highlights the emotional and motivational deficits commonly associated with depression. If this persists for at least two weeks, along with other symptoms, it may meet the criteria for MDD.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_3045_67_0",
+    "sentence_text": "Feel like my hypersomnia + chronic fatigue are making it impossible for me to stick with any kind of routine.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "When a person reports feeling fatigued, they may develop anhedonia, a symptom of depressive episodes characterized by a marked loss of energy that affects daily functioning for at least two weeks. According to the DSM-5, anhedonia is one of the main symptoms of depressed mood and is the sixth symptom of criterion A within the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_186_136_14",
+    "sentence_text": "But I've lost about 30-40 on my own so far and havent felt any major changes in energy levels, in fact I think the weight loss might be causing my depression to become worse due to the stored fat being burned containing hormones and them being released.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Although this comment is not very precise in providing information about the origin of the loss of energy experienced, it is possible to associate this statement as a symptom of depression, such as loss of energy, which is included in the second symptom of criterion A for the diagnosis of major depression in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1752_5_2",
+    "sentence_text": "Before my surgery I struggled every day with the same feelings as you...I had no idea if anything was working and I always felt low on energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This comment meets the characteristics of a symptom of loss of energy, such as that present in major depressive disorder in the DSM-5. This loss of energy appears with intensity and is maintained for a long period, which implies a possible clinical pathology that is affecting the mood of this person and perhaps a risk behavior for a symptom of episodes of major depression that develop in people with major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_866_2",
+    "sentence_text": "But I can't get enough done because of my mental issues and low energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "Loss of energy is one of the characteristic symptoms of depressed mood and causes intense emotional distress if the symptoms persist for two weeks. For this purpose, this person could meet the second symptom of criterion A of the diagnosis of major depression in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1601_1053_14",
+    "sentence_text": "I lose my appetite, I lose my motivation and my energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "I lose my appetite, I lose my motivation and my energy\" could indicate symptoms of major depressive disorder (MDD)as described in the DSM-5. Specifically, it reflects three potential depressive symptoms: loss of energy, anhedonia, and fatigue. If these symptoms persist for at least two weeks and are accompanied by other signs such as a depressed mood, feelings of worthlessness, or sleep disturbances, they may indicate a major depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2107_89_4",
+    "sentence_text": "i get fatigued.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This post shows an empathetic tone in which the person describes their situation of physical and emotional discomfort, which could imply a possible feeling and physical state of tiredness and fatigue. This state of fatigue could be associated with the sixth symptom of major depressive disorder of the DSM 5, which refers to a marked decrease in energy and the appearance of generalized fatigue. This issue could cause significant deterioration.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1551_9_0",
+    "sentence_text": "Some days I have the drive to work hard, then some I just feel so fatigued and cant bring myself to do anything.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "By analyzing the emotional distress expressed in this publication, it is possible to infer an episode of change in mood that coincides with a possible episode of fatigue typical of the sixth symptom of criterion A of the diagnosis of major depression within the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_670_55_13",
+    "sentence_text": "I'm hungry, tired and alone.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The emotional tone of the previous sentence is an example of a general feeling of tiredness and fatigue typical of people who experience depressed moods or who have developed depressive episodes. Therefore, this sentence can be associated with the sixth symptom of depression in line with the symptoms described in the DSM-5 for this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_105_33",
+    "sentence_text": "I just lost my energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The comment \"I just lost my energy\" could be a potential manifestation of low energy or fatigue, which is a recognized symptom of major depressive disorder (MDD) according to the DSM-5. Persistent fatigue or a significant energy reduction is often associated with depression, particularly when it affects daily functioning. If this loss of energy persists for an extended period and is accompanied by other symptoms of MDD, it could indicate a depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_105_36",
+    "sentence_text": "Why is my energy so low?",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "A person's low energy may indicate anhedonia—a loss of pleasure. If this persists for over two weeks, it could be a symptom of major depressive disorder (MDD) as defined by the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_105_38",
+    "sentence_text": "How can I get my energy back that I had when I was a child?",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The comment \"How can I get my energy back that I had when I was a child?\" may suggest a possible manifestation of low energy or fatigue, which is a common symptom of major depressive disorder (MDD) as described in the DSM-5. Feelings of persistent tiredness or a noticeable reduction in energy levels are often present in individuals experiencing depression. This reflection on a loss of energy compared to earlier life may point to such a symptom, particularly if this lack of energy persists over time and is accompanied by other depressive features.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_592_276_0",
+    "sentence_text": "I am just tired at this point.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The previous sentence could manifest emotions typical of depressed mood states, such as tiredness and fatigue. If they persist for at least two weeks, they could be associated with the first symptom of depressive episodes in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_565_5",
+    "sentence_text": "Some days I feel so exhausted and empty.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "When a person feels exhausted, they may be experiencing a change in mood. For this reason, this phrase can be an emotional marker of loss of energy associated with depressive episodes, especially the sixth symptom of criterion A of the disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_565_5",
+    "sentence_text": "Some days I feel so exhausted and empty.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "When a person feels exhausted, they may be experiencing a change in mood. For this reason, this phrase can be an emotional marker of tiredness and fatigue associated with depressive episodes, especially the second symptom of criterion A of the disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1139_2",
+    "sentence_text": "I sleep about 12 hours per night and I'm STILL exhausted during the day.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The previous comment could be a manifestation of tiredness and fatigue, which is a common symptom of major depressive disorder. Despite sleeping for 12 hours per night, the individual continues to feel exhausted during the day, which suggests that the fatigue may not be alleviated by rest. This persistent feeling of exhaustion is frequently seen in individuals with MDD, where even prolonged sleep fails to restore energy, pointing to an underlying depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1139_9",
+    "sentence_text": "I have also been seeing a doctor way too many times for my physical health issues and they can never find why I'm so extremely tired.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The previous comment could be a manifestation of tiredness or generalized fatigue, which is a typical symptom of Major depressive disorder. Despite visiting the doctor, the behavior described in this post would be a depressive symptom in line with the sixth symptom of this disorder in DSM-5. The persistent symptom of tiredness could be a signal of a deterioration in the personal life.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1139_13",
+    "sentence_text": "I have absolutely no energy to ever do anythink productive.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "According to DSM-5, this comment could be a manifestation of low energy or fatigue, a common symptom of major depressive disorder. The individual's statement about having \"absolutely no energy\" to do anything productive aligns with one of the key criteria for MDD, which involves persistent fatigue or a significant loss of energy that impacts daily functioning and productivity. If this symptom persists alongside other depressive features, it could be indicative of a major depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1139_13",
+    "sentence_text": "I have absolutely no energy to ever do anythink productive.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This comment could reflect tiredness and fatigue, which are key symptoms of major depressive disorder. The individual's statement about having \"absolutely no energy\" to do anything productive suggests a persistent feeling of fatigue or lack of energy, which can interfere with daily activities. This symptom is one of the core features of MDD and, if accompanied by other depressive symptoms, may contribute to a diagnosis of a depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_3040_683_14",
+    "sentence_text": "I can't even work up the energy to cry.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "According to the DSM-5, this phrase may be related to the sixth symptom of major depression disorder, which mentions loss of energy as a behavioral problem that appears in episodes of major depression for at least two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_90_5",
+    "sentence_text": "I have no energy to study.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "The loss of energy that this person describes coincides with the sixth symptom of criterion A for the diagnosis of major depression in the DSM-5. This symptom refers to the loss of energy or anhedonia that appears in depressive episodes for at least two weeks and causes significant emotional and functional deterioration.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_90_9",
+    "sentence_text": "I dont have energy to get up to make food, to brush my teeth, take a shower.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This phrase describes a case of anhedonia, a set of symptoms and behaviors associated with loss of energy that appear during episodes of major depression. According to the DSM-5, this symptom is part of the first criterion of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2408_57_1",
+    "sentence_text": "Now I don't have the energy for that any more.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This statement, \"Now I don't have the energy for that anymore,\" could be interpreted as a possible manifestation of reduced energy or fatigue, which is a key symptom of major depressive disorder (MDD). Persistent fatigue or a significant decrease in energy, particularly when it affects daily activities or things the individual previously engaged in, aligns with criterion A for MDD. If this reduced energy has persisted for at least two weeks and is accompanied by other symptoms such as low mood, loss of interest, or changes in sleep or appetite, it could indicate a depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_356_91_3",
+    "sentence_text": "I guess lately i just dont have the energy.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This phrase could be associated with the sixth symptom of criterion A, which mentions anhedonia or loss of energy as one of the main symptoms of the disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1380_11",
+    "sentence_text": "I'm always too tired, I have no energy for socializing 3.",
+    "dsm5_symptom": "FATIGUE",
+    "explanation": "This comment could be a manifestation of a depressive mood because the emotional changes mentioned in this phrase correspond to anhedonia and loss of energy. These energy changes are aligned with the second symptom of criterion A for the diagnosis of MDD in DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1270_9_6",
+    "sentence_text": "I remember after running off, I was lying in the middle of the room for weeks, in complete horror and not being able to move.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This post can suggest a possible changes in sleeping pattern because this problem has been a problem for two weeks. Many people with depressive symptoms experience these changes, That similar to major depressive disorder described in DSM-5",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1270_9_8",
+    "sentence_text": "My sleep schedule was non existent, I was sleeping days and playing games or watching anime during nights.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This comment is related to symtom of changes in sleeping pattern, which is related to behavioral changes and problems that many people with depressive symptomatology had. Is necessary to pay attention why is the principal problem because it could be a sleeping changes to major depressive disorder in DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_1060_5",
+    "sentence_text": "I have more sleep troubles and now rely on sleeping pills.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "when someone experienced changes in sleep pattern over weeks and need pills to sleep, this person could be develop a several problems to sleeping pattern. The DSM-5 describe in the major depressive disorder a criteria four, which explein changes and problems to sleep like hypersomnia and imnomnia during two week.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2392_17_2",
+    "sentence_text": "There was a time when I was getting 6 hours sleep per week.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This post suggests that this person had been an episode of sleeping problems in the past. Many people with changes in sleeping pattern in the past, had more probability to develop other depressive symptomatology similar to major depressive symptoms in DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1048_1",
+    "sentence_text": "I never get enough sleep unless I dont have to wake with an alarm clock.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Many people with depressive symptoms experience changes in sleeping pattern, this changes consist of changes in the rhythm and duration of sleep, as seen in this post. Although, in this context is possible the this person can be a changes in sleeping pattern related to major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2748_278_1",
+    "sentence_text": "I was so tired all the time and would sleep for 14+ hours a day and wake up feeling like I needed to go back to sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Hypersomnia is a very common characteristic in people with depression, because it is a change in sleep patterns. The statistical manual of mental disorders describes that these changes in the sleep cycle occur almost every day, since the appearance of other symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_258_598_3",
+    "sentence_text": "Then the fatigue , always always tired, body feels heavy - I have a few energy peaks but generally by 5pm, I just want to sleep or feel like Im waiting to sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "When people really want to sleep during the day, and this desire comes from the need not to be awake, there may be negative emotions that prevent maintaining an adequate state of wakefulness. This happens with many people with depression, who change the pattern of their sleep due to the idea of fleeing their feelings of sadness. The Insomnia is described in criterion four of the DSM-5 for the diagnosis of major depression disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1673_863_17",
+    "sentence_text": "I've suffered from mild insomnia for years, so this wasn't anything new to me.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This affirmation can suggest a persistent problem to sleep that many people with depression have. When these problem are maintained for a long time and generate significant changes in the person's life, they can be a sign of meeting one of the criteria of major depression disorder described in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_697_81_3",
+    "sentence_text": "I hardly sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "La persona que escribe este comentario en la publicación, está pasando por episodios de insomnio que pueden ser recurrentes y prolongados lo que coincide con los criterios de diagnóstico de depresión mayor mencionados en el DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_852_229_1",
+    "sentence_text": "I've been like this for a long time now wherein I sleep at around 9 or 10pm, hoping to wake up early in the morning at around 7-8pm, then all of a sudden I wake up at 12 or 2am in the morning feeling groggy and now I cant get back bed.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This comment is relevant because it shows that the person is repeatedly having changes associated with the regular sleep pattern and prevents him from having an optimal rest. It is very important to identify how long this problem has been maintained since many people with symptoms of depression usually develop changes in the sleep cycle due to their moods and thoughts that overwhelm them. The statistical manual for the diagnosis of mental disorders mentions insomnia and hypersomnia in symptom four of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_852_229_2",
+    "sentence_text": "As soon as my grogginess fades away I then become unable to feel tired thus here I am fully awake not knowing how to sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This phrase indicates problems falling asleep. Many people with depression have changes in common habits, such as eating or sleeping. Precisely. People with depressive symptoms may have problems reconciling, maintaining and waking up. The fourth diagnostic criterion of major depression of the DSM-5, describes changes in sleep as a symptom of anxiety and for this reason it must be clinically analyzed.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_852_229_3",
+    "sentence_text": "I rarely get like 6-7 hours of sleep and at this point I may think I have a medical condition like insomnia but I don't want to self-diagnose .",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This person claims that he is a quotient that he has trouble sleeping. Although each person has a personal time with which he manages to rest, many people with symptoms of depression do not manage to fall asleep or their cycle is very short, which generates emotional and emotional problems related to depressive symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1574_260_1",
+    "sentence_text": "I can't just get a good 8 hour or normal sleep pattern.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "In this publication, the person shows a concern about having had a change in sleep habits and the concern of not having a full sleep. People with depression can have significant changes that disturb sleep and that if they are long-lasting they can increase emotional discomfort.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2292_195_42",
+    "sentence_text": "I sleep at night like most people do, and I sleep periodically during the day because it's the only way I know to escape the inevitable depression and anxiety I go through at all times.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "It may indicate that the persona has behavioral changes in sleeping patterns. According to DSM-5 in the criterion fourth of major depressive disorder, many people with this diagnosis have problems with sleep like insomnia or hypersomnia. this person mentioned that needs to sleep more hours during the day by \"forgetting or escaping\" to sadness and this is a recurrent symptomatology related to this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_456_1",
+    "sentence_text": "Getting sleepy helps as I always have trouble sleeping anyways.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "this post can suggest possible changes in the sleeping pattern because this person has reduced sleep and difficulties starting the sleep. In a depressed mood, is very common to find people with problems with changes in sleeping patterns like insomnia or hypersomnia. Is important to pay attention to these behavioral changes because according to DSM-5 people with major depressive disorder have significant problems with sleep habits and this is a symptom of the diagnosis criteria.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1732_4_1",
+    "sentence_text": "I couldnt sleep because of the flashbacks which lead me into a deeper depression.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This post is an example of how a depressed mood affects sleep patterns. This person is going through a difficult time in which thoughts and feelings are significantly affecting the person. The DSM-5 describes changes in sleep patterns within the fourth symptom mentioned in criterion A of major depressive disorder. If these feelings and thoughts negatively affect the sleep cycle, it can be affirmed that it is a clinically significant problem for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2338_145_2",
+    "sentence_text": "I don't sleep well due to worry",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Sadness and despair can generate worry that alters sleep patterns. These emotional and behavioral changes may be associated with depression or depressive episodes. According to the DSM-5, if sadness and negative feelings are causing excessive sleepiness or loss of ability to sleep, it can be stated that this preoccupation is the cause of a change in sleep pattern similar to that present in major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1455_0",
+    "sentence_text": "Masturbating right before and also during sleep I feel like its affecting my sleep quality If I wake up tired in the morning when I should go back to sleep, instead I start masturbating which also affects how much rest I get.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This post may suggest significant fatigue that affects the quality of sleep and upon awakening. Many people with depressive symptoms experience mood changes such as worry, and that can affect sleep. For this reason, and according to the DSM-5, the post manifests symptoms that correspond to those mentioned in criterion A of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_144_37_1",
+    "sentence_text": "Doesn't matter how long I sleep, what tricks I do with my alarm, whatever, I wake up groggy and drag myself to consciousness slowly.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This post may suggest that this person is experiencing significant changes in sleep patterns as described in the DSM-5, specifically in symptom four of criterion A: \"Insomnia or hypersomnia nearly every day.\" Many people with depression may experience changes in the duration and quality of sleep, affecting other areas of their personal lives.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_697_54_3",
+    "sentence_text": "At this point Im so sad that I feel numb, all my days are just one and I hardly sleep, hardly eat.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This post indicates that sadness is a cause of changes in sleeping patterns and possibly eating changes too. According to DSM-5 the changes in sleeping patterns are a symptom of criterion A to diagnosis of major depressive disorder. Many people with depression or depressive episodes could experience these changes that can affect and worsen their health.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2008_231_7",
+    "sentence_text": "I get about 4-5 hours of sleep per night sometimes less.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "this post may indicate that this person is suffering changes in the sleeping pattern, which is related to depressive symptomatology associated with DSM-5 criterion fourth for a possible diagnosis of major depressive disorder. These changes are related to insomnia, a syndrome characterized by loss of sleep habits and less time to sleep.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1313_32_0",
+    "sentence_text": "I am sleep deprived I need help",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This post indicates changes in sleeping patterns as is mentioned in major depressive disorder. The insomnia described by this person is a symptom four of this disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_697_215_0",
+    "sentence_text": "So did I. I hardly eat or sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This could be an indication of changes in sleeping patterns, which is a criterion for symptom seven in the DSM-5 diagnostic criteria for depressive disorder. This manual includes the insomnia or hypersomnia in a major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_67_475_2",
+    "sentence_text": "Still not sleeping thr best but I'm feeling better everyday.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This affirmation indicates that this person is experiencing changes in sleeping patterns. Many people with depression symptoms have hypersomnia, a disorder of sleep in which the sleeping pattern is long and affects the sleep-wake cycle. In symptom four of major depressive disorder in DSM-5, this feeling is mentioned as a diagnosis criterion.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2292_402_1",
+    "sentence_text": "I work from home, and I don't sleep well for the most part (I have insomnia and completely rely on sleep aids, and they tend not to give you a good night's rest, which results in fatigue a few hours after waking up), so at some point during the day, I usually get a little tired and have the urge to just crawl into bed and finish my work later (which I could do, but staying awake and doing it right then would be better).",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Indicating sleep problems and using medications to fall asleep may be a risk factor and symptom associated with depression. Many people with depressive disorder develop sleeping problems such as insomnia or hypersomnia due to sadness and a depressed state. According to the DSM-5, insomnia can be a symptom associated with changes in sleep patterns experienced by people with major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2448_297_3",
+    "sentence_text": "Ironically, I stay up late because I don't want to sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This post may suggest a problem consolidating and maintaining sleep. It may be necessary to explore the cause of this possible sudden insomnia since many people with emotional issues related to sadness or depression begin to develop behavioral changes such as difficulty sleeping.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1269_845_0",
+    "sentence_text": "Mine was less insomnia and more trouble staying asleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Problems falling asleep may be present in people with depressive symptoms or may be developing similar symptoms. According to this publication, this person may develop issues falling asleep, and therefore, this is a risk factor for depression. The reason is problems with sleep patterns are symptoms included in the diagnostic criteria for major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2089_388_4",
+    "sentence_text": "I can now get a great mornings sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This statement may indicate that this person has been having difficulty sleeping. People with previous insomnia episodes have some recovery possibly. However, the presence of preceding episodes of insomnia increases the risk of developing depressive symptoms if no cause explains the changes in sleeping habits. In the DSM-5, insomnia and hypersomnia are mentioned within the criteria A symptoms of the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2606_400_1",
+    "sentence_text": "My sleeping patterns are all out of whack.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This person comments that they are experiencing a significant change in their sleeping patterns. The DSM-5 describes changes in sleep disturbances within the fourth symptom of criterion A for the diagnosis of major depressive disorder. According to this symptom, these people can develop insomnia or hypersomnia. That is problems consolidating and maintaining sleep or having excessively long sleep.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2402_779_5",
+    "sentence_text": "My sleeping is terrible at the moment, 3 nights ago I went to bed at 11PM and woke up at 3AM.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This person may be developing symptoms associated with changes in sleep patterns. These changes are described in the diagnostic criteria for major depressive disorder. In the DSM-5, insomnia is a symptom of the consolidation of depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2338_830_4",
+    "sentence_text": "Waking up every 90 minutes except from 4-8 where I actually get sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This message indicates a persistent problem maintaining sleep. Sleep issues are symptomatology that can relate to a possible change in sleep patterns. Insomnia is a characteristic of this symptom, and this symptomatology can last for several weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2338_1046_15",
+    "sentence_text": "Also, I've been having panic spells lasting about 3 minutes after I wake up, and I can't stay asleep for more than 90 minutes at a time.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This statement could suggest a possible emotional problem that is generating moments of panic that are intense and these symptoms may be affecting this person's sleep cycle. For this reason, it is necessary to explore this change in sleep patterns in more detail because it may be a consequence of a symptom associated with depression. If the emotional basis for this change in sleep is sadness, it could meet the fourth symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_151_786_31",
+    "sentence_text": "I couldn't sleep most nights.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This comment may suggest that this person has had previous episodes of problems with sleep patterns. The insomnia described by the participant may be related to the fourth symptom of criterion A for the diagnosis of major depression in the DSM-5. This manual describes sleeping problems within the symptoms associated with depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1535_1109_0",
+    "sentence_text": "I haven't slept in days.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "When a person experiences a significant change in healthy sleep habits and patterns, they may develop the symptomatology of DSM-5 major depressive disorder. This manual includes problems falling and staying asleep as the fourth symptom for diagnosis. If this person experiences this symptom in the company of five other symptoms described in the manual, they may be developing a major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2100_94_0",
+    "sentence_text": "I'm a little scared that I'm developing insomnia.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The above statement is evidence that this person may be developing problems with sleep. Although this person is experiencing discomfort at night, this would indicate that this person may be developing symptoms associated with depression, such as changes in sleep patterns. The DSM-5 includes this symptom as a diagnostic criterion for major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2100_94_4",
+    "sentence_text": "For the past week or so, I've been sleeping really badly.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This publication indicates changes in sleep patterns, and these changes may be related to the symptomatology of DSM-5 major depressive disorder. Sleep disorders are often the cause of mood problems and can cause issues doing routine tasks and activities while awake. If this person experiences this symptom in the company of five other symptoms described in the manual, the risk of developing sleep problems that increase symptoms of depression could increase.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_155_318_3",
+    "sentence_text": "I've always been a night owl and now at age 60 it's gotten pretty dysfunctional -- I'm usually sleep-deprived.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Although sleep decreases in older people compared to earlier ages, this does not mean that changes in sleep patterns are due to age alone. For this reason, this person may be developing symptoms and behavioral changes associated with depression. If this change in sleep is accompanied by other affective symptoms, it could increase the risk of developing major depressive disorder as described in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_155_318_4",
+    "sentence_text": "I've read that regular sleep habits, and adequate sleep, are important to dieting, but changing my sleep habits has been difficult.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Many people with symptomatology associated with depression have problems recovering lost sleep habits, as in this publication. The DSM-5 lists insomnia as a characteristic symptom within criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_155_318_5",
+    "sentence_text": "If I go to bed early I just wake up every 90 minutes.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Many people with sadness and depressed moods have trouble staying asleep and often have moments of irritability, loss of interest, and other mood changes that are a consequence of problems sleeping and staying asleep. The DSM-5 includes sleep problems as the fourth symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2402_1247_1",
+    "sentence_text": "I'm too scared to sleep, and when I finally do get to bed, it takes ages for me to fall asleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This person tells how they have developed a fear of sleeping, possibly having difficulty conciliating the sleep. These behavioral changes could be related to the symptoms forth of major depressive disorder. This symptom describes insomnia or hypersomnia as a significant behavior of these people.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1269_0",
+    "sentence_text": "Its not nice that I need so much sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This person may be possibly experiencing hypersomnia, a sudden illness characteristic of people who feel profound sadness and maintain depressed moods for several days or weeks. According to the DSM-5, this person can meet the fourth symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1269_1",
+    "sentence_text": "I sleep 21 hours per night and im still always tired.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This person may be possibly experiencing changes in sleeping patterns, specifically hypersomnia, a sudden illness characteristic of people who maintain depressed moods for several days or weeks. These behavioral changes can produce significant issues for life. According to the DSM-5, this person can meet the fourth symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1265_99_1",
+    "sentence_text": "I had insomnia all my life until a couple of years ago when I got meds.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The symptom described in the previous post suggests a pattern of problems falling and staying asleep for years. Although people with depression experience sleeping problems, these appear due to low mood, and in the publication, there are not enough elements to affirm that this person is developing some manner of emotional problem that generates sleeping problems.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1351_95_10",
+    "sentence_text": "And occasionally I get the weird dreams and insomnia when I come down again.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Insomnia and hypersomnia are behavioral symptoms included in major depressive disorder. The person who wrote this post indicates insomnia that could be related to this depressive symptomatology of the major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1792_217_0",
+    "sentence_text": "I don't have to sleep much...like 4-5 hours and I'm good to go.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This post may suggest a possible sleep disorder due to loss of sleep and difficulty falling asleep. These symptoms may be related to major depressive disorder. The DSM-5 describes different symptoms, and if they are present for two weeks, they can be a sign of developing major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_697_62_3",
+    "sentence_text": "I have a lot of issues sleeping so theres that.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The previous post mentions changes in sleep patterns that are present along with depressed moods. If this change is maintained, this person may develop symptoms associated with major depression, as mentioned in criterion four of criterion A for this disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2606_237_1",
+    "sentence_text": "I have a lot of trouble sleeping, and it makes my depression even worse.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "From the previous clinical profile, this person could develop changes in the sleeping pattern by depressed mood as mentioned in major depressive disorder. This symptomatology refers to insomnia or hypersomnia of symptoms of this disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1965_10_8",
+    "sentence_text": "Occasionally I've taken 25/50mg to get to sleep at night but I've definitely never experienced anything on it before other than getting drowsy...so, like twenty minutes later I'm getting in bed, and I turn on this white noise ten hour youtube video I sometimes use to help me sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Based on the above information, this person may be developing symptoms of changes in sleep patterns that are causing affliction, and may involve emotional changes related to depression. Thus, this person may be developing symptoms such as those mentioned in major depressive disorder and mentioned in insomnia in symptom four for the diagnosis of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_84_99_6",
+    "sentence_text": "With the medication, it does help but lately for some reason, I'm always up this late and I would go to bed at 2am.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "From the previous post, this person may be experiencing symptoms associated with changes in sleep habits and patterns that are present in major depression. The DSM-5 mentions insomnia and sleep disorders within symptom four of criterion A for the diagnosis of depression. For this reason, this symptom is important for subsequent diagnosis.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_452_1147_8",
+    "sentence_text": "I haven't had a good night's sleep for a couple days in a row.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "From the previous post, it can be inferred the presence of possible symptomatology of changes in sleep patterns as a result of a depressed mood for several days. The DSM-5 states that people with major depression experience significant changes in sleep patterns for two weeks or more. Thus, if this person develops problems in sleep habits for more than two weeks, it may be a risk factor for the onset of major depressive disorder since would meet symptom four of criterion A for the diagnosis of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_46_1801_1",
+    "sentence_text": "Once I move to bed I can't fall asleep for another hour or two.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The person writing the above post indicates the presence of sleep problems, particularly problems upon awakening. Many people with depression have trouble waking up because of difficulty staying asleep and not having a restful wheel. Thus, if this person persists recurrently and persistently, this behavior may be clinically significant for depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2415_550_16",
+    "sentence_text": "I get ridiculed for sleeping too much while in reality I usually sleep in the morning and never at night.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "From the previous publication, can be detected the development of difficulties in sleep habits. If this problem is maintained, causes issues with optimal functioning, and is accompanied by a depressed mood, this person could develop depressive symptoms linked to the fourth symptom of criterion A of major depressive disorder. This symptom is included in the diagnostic criteria for depression in the DSM-5 and refers to changes in soil patterns due to insomnia or hypersomnia.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1278_99_23",
+    "sentence_text": "I sleeping pretty peacefully when it was disturbed by a dream that wouldn't be scary to normal people.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The previous post may suggest difficulties in sleep habits that prevent optimal rest. Many people with depression experience night terrors during sleep that affect sleep quality. Is possible to develop a clinical profile of the Major depressive disorder, that falls under the DSM-5 if these symptoms are accompanied by depressed moods and other depressive symptomatology.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2257_110_54",
+    "sentence_text": "My sleep cycle is in disarray.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Based on the symptomatology described in DSM-5 major depressive disorder, it is possible to affirm that this person meets the fourth symptom of criterion A for the diagnosis of this disorder. This symptom refers to changes and problems in sleep patterns issues to a deep depressive emotional state.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2434_538_2",
+    "sentence_text": "I tried to stay up longer past 3 pm yesterday but I got way too tired and fell asleep until 11 pm and now I cant get any sleep since Im not tired and my tics want to come out, but I cant let them since my mom will be angry.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The changes in sleeping patterns are a significant issue related to the major depressive disorder that is present in this post. According to DSM-5, the fifth symptom of criterion A mentions this behavioral problem as a symptom of major depression. Thus, this person could meet this criterion and other symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1475_26_24",
+    "sentence_text": "I sleep once a week; when I do sleep, I sleep in a chair.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "According to the DSM-5, this person is developing depressive symptoms associated with changes in sleep patterns present in Major Depressive Disorder. This disorder includes problems falling asleep and staying asleep, as well as problems related to difficulty waking up due to excessive sleep.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_50_762_0",
+    "sentence_text": "I Know that but I'm very sleep deprived",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "According to the DSM-5, people with depressive symptomatology may develop the fourth symptom of criterion A, which consists of significant changes in sleep patterns. Thus, the loss of the ability to sleep of the person who has written this post may be related to possible depressive symptomatology, and the basis of the problem is a generalized depressed mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2139_54_2",
+    "sentence_text": "My sleep is terrible to the point my body crashes and I even fainted yesterday.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This post can suggest sleeping pattern issues due to emotional changes. Many people with major depressive disorder experience hypersomnia or a deep sleep, causing problems waking up and maintaining a good sleeping pattern. Thus, this person could be developing the fourth symptom of criterion A for a diagnosis of major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2008_331_0",
+    "sentence_text": "I have sleep paralysis almost every night.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Based on what was expressed in the previous post, this person could be developing symptoms of a sleep disorder caused by depressive symptoms. According to the DSM-5 description of major depressive disorder, people with depressive symptoms often develop sleep problems with falling, maintaining, and waking up. Depression affects sleep quality, such as paralysis, night terrors, or tremors. Thus, this person may meet the fourth symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1435_302_1",
+    "sentence_text": "I can easily sleep 12-15 hrs a day when super depressed.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The above phrase indicates a persistent sleep problem. The DSM-5 mentions that depression can cause hypersomnia, i.e., prolonged sleep due to sadness. For this reason, this person may be developing the fourth symptom of criterion A for the diagnosis of major depression of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1514_921_14",
+    "sentence_text": "I was sleeping worse, and groggy even when I did sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The changes in sleep patterns described by this person in the post are symptoms of problems associated with a depressed mood, as mentioned in DSM-5 major depressive disorder. This symptom is part of the fourth symptom of criterion A of the disorder and is characterized by the recurrent problems of insomnia or hypersomnia associated with depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2527_4_12",
+    "sentence_text": "Last night I was having my usual night of insomnia.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The person writing this post recounts his difficulties sleeping and staying asleep during the night. These sleep problems are associated with the symptoms of major depression if these symptoms persist for more than two weeks. The DSM-5 includes insomnia problems as the fourth symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1265_1003_3",
+    "sentence_text": "I finally have no insomnia after struggling with it for decades.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Although this person states that they no longer have insomnia, previous insomnia symptoms may be a risk factor in the future for developing symptoms again if other symptoms of depression appear. The DSM-5 comments that sleep disorders are common in major depression, and their presence increases the risk of the appearance of other symptoms associated with a depressive clinical profile.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1265_747_1",
+    "sentence_text": "I had sleep problems for most of my life (I'm 52).",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The above post indicates the presence of problems in sleeping for a long time. If this behavior is associated with a depressed emotional state, it may be a symptom of a major depressive disorder. In symptomatology, it is insomnia or hypersomnia as a consequence of a deep sadness.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1542_38_3",
+    "sentence_text": "Currently taking 2mg a day for past week, few hours before bed, am using to help sleep, during pandemic finding my depression is worse and is harder to sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Sleep medications due to depression can be a symptom that denotes the severity of the insomnia problem. According to the DSM-5, this person may have the fourth symptom of criterion A for the diagnosis of major depression. This symptom refers to the onset of insomnia due to a depressed mood that leads to changes in sleep patterns.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1542_38_26",
+    "sentence_text": "So I think I'm back to normal, after day 9 I started sleeping normally, good amount of deep sleep and woke feeling good.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The previous statement is a psycho-affective indicator that allows us to affirm that the person writing this post does not have problems with sleep patterns. Although sleep problems in major depressive disorder are recurrent and must be present at the time of diagnosis, the presence of past sleep disorders can increase the risk and severity of new depressive symptoms. For this reason, this person could meet the fourth symptom of criterion A for the DSM-5 diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2706_133_1",
+    "sentence_text": "I wake up at 3am and it's pretty annoying when I can't go to sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The previous publication expresses insomnia problems that cause him problems staying asleep. Although the statement does not indicate the severity of symptoms, if this problem persists for more than two weeks and causes discomfort in daily life, this person may meet the fourth symptom of DSM-5 criterion A for the diagnosis of major depressive disorder. Symptom four mentions changes in the sleep pattern and causing physical, mental, and social discomfort in the person.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2434_755_0",
+    "sentence_text": "My sleep pattern changes over and over again and I hate it so much.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This previous post signals the presence of problems in sleep patterns that cause intense emotional distress. Many people with depressive symptoms experience changes in sleep habits and cycles due to sadness, irritability, and intrusive thoughts that cause discomfort. According to the DSM-5, this person would meet the first symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_341_1177_1",
+    "sentence_text": "I have insomnia.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The previous post indicates a change in sleep patterns due to a case of insomnia. According to the DSM-5, people with depressive symptoms develop sleep problems due to the deep feeling of generalized sadness that depression produces. If this symptomatology prolongs over time, it could be a risk factor for developing a clinical profile of depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2632_107_0",
+    "sentence_text": "i can sleep after a lil more than an hour",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Based on the above comment, the person has trouble staying asleep during the night. When a person with emotional problems such as sadness develops sleep problems, they could meet a symptomatic profile of depression. Consistent with the symptoms of criterion A for major depression, people with depressive symptomology may develop insomnia due to persistent depressed mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1194_33_2",
+    "sentence_text": "i just feel really depressed and anxious and i wanna sleep but im not tired so i cant force myself.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This post indicates problems maintaining an optimal mood due to the presence of anxiety. This feeling indicates irritability, a way to manifest the depressed mood about major depressive disorder symptomatology. Many people with this clinic profile have irritability, anxiety, or annoyance from the depressed mood, as the person who wrote this post. According to this, this person meets symptom one of criterion A for diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_3028_322_2",
+    "sentence_text": "Mainly, my sleep schedule has really been affected.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The previous phrase indicates the presence of difficulties in having an adjusted and restorative sleep habit and rhythm. If these problems persist for more than two weeks and affect different areas of personal life, this person could meet the criteria for major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2455_48_6",
+    "sentence_text": "I have no problem getting to sleep though, but my I'm fatigued the entire time I'm awake.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The above comment indicates that the person writing this post is having changes in sleep patterns due to generalized tiredness and intense emotional distress related to sadness. Thus, this person could relate to the fourth symptom of criterion A for the diagnosis of Major depression included in the DSMV.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_486_0_3",
+    "sentence_text": "Lately I either dont sleep at all or I sleep 17 hours (done that twice now since this episode started).",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The above sentence may indicate that this person is developing a change in sleep patterns, as mentioned in the fourth symptom of criterion A for the diagnosis of major depression. Many people with depressive symptoms develop sleep changes such as insomnia or hypersomnia due to sadness, such as increased hours of sleep or difficulty falling and staying asleep.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_448_505_0",
+    "sentence_text": "Neither like I already suffer from sleeping problems, no way will I make it worse",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This person is manifesting a Significant change in sleep patterns, which may be related to possible depressive symptoms. According to the DSM-5, people with depressive symptoms can change their sleep habits and patterns due to depression causing problems in initiating and maintaining sleep. Some people may develop insomnia and be awake with ruminations in thought. Thus, this person may meet the fourth symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1034_161_0",
+    "sentence_text": "I don't get enough sleep",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "In this post, it is possible to infer insomnia, a significant behavioral change related to the clinical profile of depressive mood. Following the criteria of Major depressive disorder, this person could be developing the third symptom of this disorder. If this behavior persists over time for more than two weeks, this person meets this depressive symptom.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_993_703_13",
+    "sentence_text": "My insomnia got worse though and I am on regular sleeping pills.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "According to the feelings of the previous post, it is possible to infer an emotional disgust and discomfort as a consequence of a change in sleep habits that have produced insomnia in the person writing this post. For this reason, it is possible to state that this person is developing the fourth symptom of criterion A for the diagnosis of major depressive disorder. It is important to explore whether this symptom persists for two weeks and causes significant discomfort. In such a case, this symptom is clinically relevant for DSM-5 major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_313_967_9",
+    "sentence_text": "I slept most of the day and night.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This phrase may express a possible beginning of changes in sleep patterns. Many people with major depressive disorder begin to experience symptoms when they develop changes in regular sleep. Therefore, this phrase may indicate the possible appearance of symptom four of criterion A for the diagnosis of major depression according to the DSM-5, which refers to hypersomnia.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_818_658_0",
+    "sentence_text": "I am I am just severely sleep deprived",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Deprived sleep deprivation can be a symptom associated with depressive episodes and could be related to the fourth symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2392_58_5",
+    "sentence_text": "My sleep pattern hasn't improved much but my mood is far better and I can cope on the sleep I get.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "According to DSM-5 and the symptoms of criterion A for the diagnosis of Major depressive disorder, this person has an important change in the sleeping pattern caused by medication for depression. Furthermore, The previous sentence reflects the criteria of temporality and intensity of symptom four about sleep problems.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1749_905_16",
+    "sentence_text": "Sometimes I can't stay awake, other times I can't sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The previous sentence can be a sign of constant problems in regulating sleeping patterns. Many people with depressive episodes experience constant changes in sleep and develop problems starting or waking up, so it can generate new problems in physical health and emotional stability. For this reason, this person could fulfill the fourth symptom of criterion A for the diagnosis of DSM-5 major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_586_904_1",
+    "sentence_text": "I have not to good sleeping hours do to thoughts, stress, in other words emotions and also night time is the only time of day were it's peace and quite so I tend to take a hour or so of that in... I have a hard time falling asleep at times and I really have a hard time staying asleep, I can't tell you how many times I could wake up in just one night!",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The sadness, loneliness, and emptiness provoked by depression often trigger physical problems such as changes in sleep patterns. These changes are no more than an external manifestation of internal suffering, that intensely affects the person who suffers them. The physical symptoms described by this person in this post are likely a problem associated with symptom four of criterion A for the diagnosis of DSM-5 major depression. Among these symptoms are the changes in the regular pattern of sleep, as experienced by the person who wrote the previous post.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1749_931_0",
+    "sentence_text": "I generally do wake up exhausted.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The tiredness when waking up can be a signal of sleep problems, including poor sleep quality and difficulties falling or staying asleep. If this problem is widespread and present for two weeks, it could be a major problem. This problem generates significant changes in the person's life; this person is probably developing a problem in their sleep patterns, a symptom of criterion A for the diagnosis of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_697_192_3",
+    "sentence_text": "I didnt get very much sleep last night as I dont most every night.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "\"Like almost every night\" in depression, the emotional pain is intense, and the suffering clouds reality, seeing life in a gray way and slowing down the mind. This phrase shows too many physical problems, such as increasing or decreasing sleep hours constantly and for more than two weeks, causing intense discomfort in people's lives and functioning. According to the DSM-5, a person who experiences notable changes in their regular sleep pattern may develop the fourth symptom for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_586_586_0",
+    "sentence_text": "Thank you, I hope so but I usually don't sleep well.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The previous phrase indicates a recurring problem in sleep quality that could be causing discomfort to the person writing this phrase. Thus, this phrase meets the intensity and possibly temporality criteria associated with symptom four on changes in sleep patterns within DSM-5 major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2139_5_12",
+    "sentence_text": "I have insomnia and anxiety as well and may even have hypomania.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This comment could be an emotional signal about changes in sleeping patterns, a symptom related to Major depressive disorder. According to DSM-5, this phrase may be a significant alarm to depressive symptomatology because this disorder mentioned the changes in sleeping for two weeks as a several symptom of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_580_2",
+    "sentence_text": "No matter how much I sleep: 8, 10, 12 hours, I'm stll sleepy at day.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This person experiences constant tiredness caused by problems maintaining a healthy sleep pattern. Following the above context, it is possible to state that this behavior may be the consequence of a depressive episode, as mentioned in criterion A for the diagnosis of Major depression, especially symptom four regarding changes in sleep for two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1775_17_0",
+    "sentence_text": "Sorry but I don't sleep at night.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Although this statement does not provide information that characterizes a depressive symptom underlying the sleep disorder, it may be an indicator of a problem that is caused by a depressed mood. It is important to assess the etiology of this problem and its intensity to improve understanding of this symptom.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2013_16_1",
+    "sentence_text": "I feel tired and sleepy even after sleeping a lot and this has been for a week.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This publication can identify changes in sleeping patterns, which are depressive symptoms in line with depressive episodes. Thus, it is necessary to evaluate the relevance and deterioration that causes this problem in the life of the author of the phrase.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_17_844_1",
+    "sentence_text": "I'm sleep deprived.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Sleep deprivation can be a consequence of a depressive mood. Thus, this comment may be a risk factor for possible depressive symptoms. Mental health professionals must evaluate the traceability of the symptom. Some aspects to know are the duration and the deterioration it causes in this person.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_17_1_3",
+    "sentence_text": "Sometimes I'm never able to fall asleep again and stay up for the rest of the early morning.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "According to the DSM-5, this person is experiencing a change in sleep behavior due to sleeping with the partner. Although people with depression may develop significant changes in their usual sleep patterns over the past two weeks, this symptom does not correspond to a problem associated with depression, and there is not enough information to classify this symptom as part of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_885_199_1",
+    "sentence_text": "Sometimes, I just keep waking up from my sleep (like from a dream) and I end up getting less than an hour.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The tone and meaning of the above sentence may indicate sleep problems that are also present in people with depressive symptoms or who develop episodes of major depression. According to the DSM-5, changes in sleep patterns may be a manifestation of a mood problem such as depression. I consider it relevant to evaluate the clinical pertinence of this behavior and other symptoms that this person may develop.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2958_166_1",
+    "sentence_text": "At the moment I'm experiencing quite a bit of fatigue, sometimes I don't even notice how exhausted I am, but I can fall asleep at almost anytime and anywhere, it's not really helpful while in school.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The tone and meaning of the above sentence may indicate sleep problems that are also present in people with depressive symptoms or who develop episodes of major depression. According to the DSM-5, changes in sleep patterns may be a manifestation of a mood problem such as depression. I consider it relevant to evaluate the clinical pertinence of this behavior and other symptoms that this person may develop.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_697_314_0",
+    "sentence_text": "Ive experienced this before, for a whole week I went with only about 4-5 hours of sleep for the whole week, it was absolute hell.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This person mentions a sleeping problem that has persisted for the past few nights. If this problem causes emotional damage and interferes with the person's life, it could be a marker of a change in sleep patterns typical of a major depressive episode, according to the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2402_711_4",
+    "sentence_text": "I wake up terrified most nights and I find it really hard to get to sleep, which is making me tired and it's just making things worse.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Night terrors can occur during periods of intense sadness, often triggered by feelings of deep discomfort and a depressed mood, and may lead to significant distress in a person's daily life. According to the DSM-5, this experience may be linked to the third symptom of criterion A for the diagnosis of Major Depressive Disorder, which involves a persistent loss of interest or pleasure (anhedonia) and profound sadness lasting for more than two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2495_165_4",
+    "sentence_text": "I just want a good night's sleep.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Although this statement is more typical of a sleep disorder, it can also be a clinical marker of the presence of a depressive episode since the DSM-5 mentions changes in sleep patterns in people with episodes of major depression. Therefore, it is important to evaluate in greater detail the origin of this behavior and whether it is clinically relevant to major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1006_0",
+    "sentence_text": "Due to my bad health I need about 10-12 hours of sleep per night.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Although this person talks about a problem of fatigue that forces him to sleep for many hours, the problem mentioned in the publication does not refer to any symptoms of depression in line with the symptoms described in the DSM5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1601_595_1",
+    "sentence_text": "I really can't fall asleep early, so I rather shower immediately before bed (midnight) so I can wake up at 7 instead of 6 or 6:30.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Although the above statement denotes a concern about the amount of time the person usually sleeps, the meaning of the above statement does not refer to a problem arising from a depressed mood or a symptom of major depressive disorder. Therefore, it is possible to state that there is not enough information to associate this comment with a symptom of depressed mood in line with the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2625_465_4",
+    "sentence_text": "Also, you should try to get 8 hours of sleep - I started taking melatonin at night since I sometimes have trouble getting to bed on time.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "When a person experiences stress, anxiety, and sadness, the likelihood of developing other physical problems, such as changes in sleep, increases. Following the feelings and mood problems that this person has described in the publication, the changes experienced in sleep may be associated with a symptom of depression. Therefore, it is necessary to evaluate whether these changes in sleep may have an affective basis related to depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1030_236_1",
+    "sentence_text": "It might not help that I am a light sleeper and tend to wake up a lot during the night.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Although the previous sentence is not consistent in expressing changes in sleep patterns due to an episode of depression, the emotional information of the context allows us to relate these changes in the rhythm of sleep as a manifestation of a possible depressed mood and could meet the fourth symptom of a major depressive disorder of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2107_94_0",
+    "sentence_text": "i sleep all night and i sleep all day.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "As a mental health professional, I can confirm that this phrase is a possible manifestation of a change in mood. Often, changes in sleep patterns, such as sleeping for prolonged periods, are present in episodes of mood disorders. Although information on this behavior change is not very comprehensive, there may be indications of possible symptoms of depression. It will be relevant to assess the mood of the past two weeks to detect possible depressive episodes and related symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2459_691_2",
+    "sentence_text": "I haven't been able to sleep for like a week...",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Changes in sleep patterns may occur in depressive episodes and may be associated with episodes of intense sadness that are present for two weeks and may cause significant impairment in daily functioning. Therefore, the impairment intensity and the mood of the person who wrote this post are relevant as expressions of a symptom of major depression related to the symptoms and criteria of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_264_2_50",
+    "sentence_text": "I couldn't sleep for weeks after this.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Although this publication describes a change in sleep patterns for a few weeks, as occurs in major depression, the information obtained from this change in sleep habits in the publication does not correspond to a problem associated with a depressed mood. For this reason, this phrase is discarded as a depressive symptom as it does not meet the criteria for depression mentioned in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2402_721_2",
+    "sentence_text": "I've only been sleeping for 3-4 hours a night which isn't normal for me.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This person claims to be experiencing a change in their sleep cycle and also seems to experience mood changes. Although the situation that causes this change in the patient is not very specific, it is possible to affirm that this behavior change is associated with the third symptom of major depressive disorder in the DSM-5 and that it refers to a significant change in sleep habits in the last two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_2402_721_4",
+    "sentence_text": "But since I've came home my nightmares have been the same, stopping me from going to sleep because I've been too scared to, so I've been staying up at like 3-4 in the morning to completey exhaust me, but I always wake up around 7-8 to get ready for my course which starts at 9:30 and carries on till 4.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This individual reports a disruption in their sleep cycle and appears to experience mood changes. While the specific cause of these changes is unclear, this shift in behavior may be linked to the third symptom of major depressive disorder as outlined in the DSM-5, which involves a significant alteration in sleep patterns over the past two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_885_196_1",
+    "sentence_text": "I kept getting irregular hours and was staying in bed even when it was time to get up (about less than 5 to less than 7 hours before).",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Irregular sleep patterns can be present in episodes of depression as well as in sleep disorders. Although the exact cause of this disorder is not known, it is possible to find this change in sleep in people with major depressive disorders since the third symptom of criterion A recognizes the change in sleep pattern as a depressive symptom.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1404_1139_2",
+    "sentence_text": "I sleep about 12 hours per night and I'm STILL exhausted during the day.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "This behavioral issue could potentially reflect a change in sleeping patterns, which is a symptom of major depressive disorder, according to the DSM-5. The individual reports sleeping for 12 hours per night yet still feeling exhausted during the day, which may indicate hypersomnia (excessive sleep), a common symptom of MDD. This pattern of excessive sleep combined with persistent fatigue can point to a disruption in the sleep-wake cycle often associated with depressive episodes, particularly when accompanied by other depressive symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1287_438_0",
+    "sentence_text": "I sleep for 23 hours.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Hypersomnia is a behavior that is present in depressive mood states. It is necessary to evaluate whether this behavior is due to a depressive symptom since it would meet the third symptom of major depressive disorder of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1514_41_272",
+    "sentence_text": "I was getting increasingly fatigued, but I was far too tense to sleep for many reasons.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "Tiredness, fatigue, and worry can affect the sleep cycle and mood. In line with the criteria for major depressive disorder in the DSM-5, this person would meet the fourth symptom of criterion A, which refers to changes in sleep patterns as a consequence of depressive mood states. It is important to assess the intensity and frequency of this behavioral pattern to identify whether it is clinically relevant to a depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_697_74_0",
+    "sentence_text": "I miss sleep, more than anything.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The previous post describes a possible symptom of depression, such as changes in sleep patterns, and that, in line with the DSM-5, this person could be developing the fourth symptom of criterion A of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 7,
+    "sentence_id": "s_1599_115_38",
+    "sentence_text": "Ive always had sleeping problems (now more than ever) so I knew I wouldnt get back to sleep for another few hours.",
+    "dsm5_symptom": "SLEEP_ISSUES",
+    "explanation": "The sleep problems mentioned by this person may be risk factors for developing symptoms of major depressive disorder. The DSM-5 mentions in the criteria for this disorder the symptom A4, which refers to the presence of insomnia or hypersomnia accompanied by depressed mood states.",
+    "source": "redsm5"
+  }
+]

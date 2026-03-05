@@ -1,0 +1,12 @@
+{
+  "majority": {
+    "total": 11042,
+    "relevant": 6117,
+    "queries": 21
+  },
+  "consensus": {
+    "total": 11042,
+    "relevant": 3410,
+    "queries": 21
+  }
+}

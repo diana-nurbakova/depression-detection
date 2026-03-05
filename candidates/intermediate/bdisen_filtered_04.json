@@ -1,0 +1,226 @@
+[
+  {
+    "symptom_id": 4,
+    "sentence_text": "All I do is eat, sleep, and look at my phone because thats all I have the energy to do.",
+    "bdisen_symptom": "Loss_of_energy",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "i burnt out and i still am unmotivated and feeling like shit.",
+    "bdisen_symptom": "Loss_of_energy",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "I'm so tired, and being tired only makes it worse.",
+    "bdisen_symptom": "Loss_of_energy",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "Like maybe I'm just not exerting enough energy to sleep through the night.",
+    "bdisen_symptom": "Loss_of_energy",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "I thought it was hopeless and I was exhausted.",
+    "bdisen_symptom": "Loss_of_energy",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "Since childhood, I've been sad, anxious, or sick.",
+    "bdisen_symptom": "Loss_of_energy",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "Omfg I feel enlightened",
+    "bdisen_symptom": "Loss_of_energy",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "I have sleeping problems and thats why i usually skip school(thats why im stressed all the time).",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "Also i started smoking because i coudnt handle the stress that i had every day.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "i burnt out and i still am unmotivated and feeling like shit.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "Unmotivated, lazy, over emotional, feeling like shit, i over eat or eat too little, nothing is enjoyable or interesting.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "If i have a good night sleep, I love to wake up early and do my own projects or something but if i dont get a good night sleep(more likely to happen) im unmotivated an lazy and feeling like shit.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "I know my thoughts get louder when I'm stressed, overwhelmed, hungry, angry, lonely, or tired.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "I get more urges when I'm hungry, angry, lonely, overwhelmed, or tired.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "I didn't gain any weight, but I was pretty drowsy (But I welcomed that because otherwise I wasn't getting any sleep).",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "I thought it was hopeless and I was exhausted.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "I'd be back on my feet in 20 minutes, often exhausted from the whole ordeal.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "Now I'm trying to sleep for more than two hours and I'm about to give up again.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "In those days I usually feel lazier and don't want to do anything the whole day.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "I usually had only 5 hours of sleep a day and felt good, but recently I just can't sleep no matter how tired I am or how many hours of sleep I had the other night.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "\"today I don't feel like doing anything...\"",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "Can't sleep even when I'm super tired",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "I'm sorry this is so badly written i just pulled an all nighter and now I'm tired lol",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "I feel lightheaded and sick constantly, and even the smallest chores make me tired.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "For the past few days, I have been completely exhausted.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "All I do is eat, sleep, and look at my phone because thats all I have the energy to do.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "Everything makes me tired.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 4,
+    "sentence_text": "Yeah, mainly because Im tired all the time, no matter how much sleep I get.",
+    "bdisen_symptom": "Tiredness_or_fatigue",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  }
+]

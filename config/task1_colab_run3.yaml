@@ -1,0 +1,68 @@
+# eRisk 2026 Task 1 — Run 3: Conservative (Colab + Together AI)
+# Strategy: more turns, assess every turn, higher confidence threshold
+hardware_scenario: "colab_t4"
+
+models:
+  persona:
+    base_model: "meta-llama/Meta-Llama-3-8B-Instruct"
+    adapter_pattern: "Anxo/erisk26-task1-patient-{id:02d}-adapter"
+    torch_dtype: "float16"
+    device_map: "auto"
+    generation:
+      temperature: 0.6
+      top_p: 0.9
+      max_new_tokens: 256
+    system_prompt: >
+      You are a simulated patient. Act realistically based on your
+      internal training. Ensure contextual realism. Avoid overly detailed
+      or formal speech. Keep natural speaking style (e.g., short answers,
+      hesitations, casual expressions). Do not mention you are an AI.
+
+  interviewer:
+    provider: "openai"
+    model: "gpt-5-nano"
+    temperature: 0.7
+    max_tokens: 300
+
+  assessor:
+    provider: "together"
+    model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+    temperature: 0.1
+    max_tokens: 2000
+
+  orchestrator_llm:
+    provider: "together"
+    model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+    temperature: 0.3
+    max_tokens: 1500
+
+  justificator:
+    provider: "together"
+    model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+    temperature: 0.2
+    max_tokens: 3000
+
+execution:
+  assess_every_n_turns: 1
+  parallel_assessors: true
+  max_turns: 12
+  min_turns: 7
+  termination_confidence: 0.6
+
+together:
+  timeout_seconds: 120
+  retry_attempts: 3
+
+openai:
+  timeout_seconds: 60
+  retry_attempts: 3
+
+logging:
+  output_dir: "./runs/task1"
+  log_level: "INFO"
+  save_raw_llm_responses: true
+  save_linguistic_features: true
+
+run:
+  id: 3
+  type: "automated"

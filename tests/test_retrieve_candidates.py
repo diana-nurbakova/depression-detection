@@ -319,7 +319,8 @@ class TestCreateAnnotationTemplates:
 
         assert len(rows) == 2
         assert "symptom_id" in reader.fieldnames
-        assert "score_0_docno" in reader.fieldnames
+        assert "score_0_source" in reader.fieldnames
+        assert "score_1_confounder" in reader.fieldnames
         assert "synthetic_count" in reader.fieldnames
 
     def test_synthetic_examples_file(self, tmp_path, sample_symptoms):

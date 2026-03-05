@@ -1,0 +1,178 @@
+symptom_id	sentence_text	bdisen_symptom	severity	label	source
+1	I'm really conflicted about this.	Indecision	1	1	bdisen
+1	i have no idea what to do.	Indecision	2	1	bdisen
+1	I dont know what to do either.	Indecision	2	1	bdisen
+1	I dont know what to do.	Indecision	2	1	bdisen
+1	I dont even know what to do with myself.	Indecision	2	1	bdisen
+1	I do not know what to do with myself, and my anxiety is heightened with mild depression.	Indecision	2	1	bdisen
+1	I barely know what to do anymore.	Indecision	2	1	bdisen
+1	It makes no sense, and it gets in the way of the plans i make.	Indecision	3	1	bdisen
+1	I'm sorry I don't have alot of helpful things to say, still trying to figure things out for myself too.	Indecision	3	1	bdisen
+1	I don't really have a lot of advice, don't have all this figured out for myself, sorry.	Indecision	3	1	bdisen
+1	It's actually a fantastic decision I made, and I'm really happy I'm doing it.	Indecision	3	1	bdisen
+1	I know that it's really hard to do but making up your mind is honestly most of the battle.	Indecision	3	1	bdisen
+1	I think it will be hard to say it so calmly, but I won't know until I try.	Indecision	3	1	bdisen
+2	I'm really conflicted about this.	Indecision	1	1	bdisen
+2	i have no idea what to do.	Indecision	2	1	bdisen
+2	I dont know what to do either.	Indecision	2	1	bdisen
+2	I dont know what to do.	Indecision	2	1	bdisen
+2	I dont even know what to do with myself.	Indecision	2	1	bdisen
+2	I do not know what to do with myself, and my anxiety is heightened with mild depression.	Indecision	2	1	bdisen
+2	I barely know what to do anymore.	Indecision	2	1	bdisen
+2	It makes no sense, and it gets in the way of the plans i make.	Indecision	3	1	bdisen
+2	I'm sorry I don't have alot of helpful things to say, still trying to figure things out for myself too.	Indecision	3	1	bdisen
+2	I don't really have a lot of advice, don't have all this figured out for myself, sorry.	Indecision	3	1	bdisen
+2	It's actually a fantastic decision I made, and I'm really happy I'm doing it.	Indecision	3	1	bdisen
+2	I know that it's really hard to do but making up your mind is honestly most of the battle.	Indecision	3	1	bdisen
+2	I think it will be hard to say it so calmly, but I won't know until I try.	Indecision	3	1	bdisen
+4	All I do is eat, sleep, and look at my phone because thats all I have the energy to do.	Loss_of_energy	2	1	bdisen
+4	i burnt out and i still am unmotivated and feeling like shit.	Loss_of_energy	2	1	bdisen
+4	I'm so tired, and being tired only makes it worse.	Loss_of_energy	2	1	bdisen
+4	Like maybe I'm just not exerting enough energy to sleep through the night.	Loss_of_energy	2	1	bdisen
+4	I thought it was hopeless and I was exhausted.	Loss_of_energy	2	1	bdisen
+4	Since childhood, I've been sad, anxious, or sick.	Loss_of_energy	2	1	bdisen
+4	Omfg I feel enlightened	Loss_of_energy	2	1	bdisen
+4	I have sleeping problems and thats why i usually skip school(thats why im stressed all the time).	Tiredness_or_fatigue	1	1	bdisen
+4	Also i started smoking because i coudnt handle the stress that i had every day.	Tiredness_or_fatigue	1	1	bdisen
+4	i burnt out and i still am unmotivated and feeling like shit.	Tiredness_or_fatigue	1	1	bdisen
+4	Unmotivated, lazy, over emotional, feeling like shit, i over eat or eat too little, nothing is enjoyable or interesting.	Tiredness_or_fatigue	1	1	bdisen
+4	If i have a good night sleep, I love to wake up early and do my own projects or something but if i dont get a good night sleep(more likely to happen) im unmotivated an lazy and feeling like shit.	Tiredness_or_fatigue	1	1	bdisen
+4	I know my thoughts get louder when I'm stressed, overwhelmed, hungry, angry, lonely, or tired.	Tiredness_or_fatigue	1	1	bdisen
+4	I get more urges when I'm hungry, angry, lonely, overwhelmed, or tired.	Tiredness_or_fatigue	1	1	bdisen
+4	I didn't gain any weight, but I was pretty drowsy (But I welcomed that because otherwise I wasn't getting any sleep).	Tiredness_or_fatigue	1	1	bdisen
+4	I thought it was hopeless and I was exhausted.	Tiredness_or_fatigue	1	1	bdisen
+4	I'd be back on my feet in 20 minutes, often exhausted from the whole ordeal.	Tiredness_or_fatigue	1	1	bdisen
+4	Now I'm trying to sleep for more than two hours and I'm about to give up again.	Tiredness_or_fatigue	1	1	bdisen
+4	In those days I usually feel lazier and don't want to do anything the whole day.	Tiredness_or_fatigue	1	1	bdisen
+4	I usually had only 5 hours of sleep a day and felt good, but recently I just can't sleep no matter how tired I am or how many hours of sleep I had the other night.	Tiredness_or_fatigue	1	1	bdisen
+4	"""today I don't feel like doing anything..."""	Tiredness_or_fatigue	1	1	bdisen
+4	Can't sleep even when I'm super tired	Tiredness_or_fatigue	1	1	bdisen
+4	I'm sorry this is so badly written i just pulled an all nighter and now I'm tired lol	Tiredness_or_fatigue	1	1	bdisen
+4	I feel lightheaded and sick constantly, and even the smallest chores make me tired.	Tiredness_or_fatigue	2	1	bdisen
+4	For the past few days, I have been completely exhausted.	Tiredness_or_fatigue	2	1	bdisen
+4	All I do is eat, sleep, and look at my phone because thats all I have the energy to do.	Tiredness_or_fatigue	3	1	bdisen
+4	Everything makes me tired.	Tiredness_or_fatigue	3	1	bdisen
+4	Yeah, mainly because Im tired all the time, no matter how much sleep I get.	Tiredness_or_fatigue	3	1	bdisen
+5	I dont take naps, but every morning I feel sick with stress Im not even sure why.	Agitation	1	1	bdisen
+5	My instant reaction is to cry out of frustration during tests, which is so frivolous and annoying.	Agitation	1	1	bdisen
+5	I mean my emotions are much more strong than usual.	Agitation	1	1	bdisen
+5	Also i dont feel anxious when i meditate.	Agitation	1	1	bdisen
+5	My body convulses so much that it looks like I'm seizing.	Agitation	1	1	bdisen
+5	Its actually starting to get really frustrating, and I just feel really stupid.	Agitation	2	1	bdisen
+5	I think I have depression. Stream of consciousness rant	Agitation	2	1	bdisen
+5	Im not suicidal or homicidal or anything like that, but I'm just sick and tired of feeling this way.	Agitation	2	1	bdisen
+5	"I have never been diagnosed with anxiety or anything, but I am a fairly ""high-strung"" person, however I didn't notice anything out of the ordinary in regards to my mental health."	Agitation	2	1	bdisen
+5	I can't sleep bc it beats so hard and then it's all I can focus on.	Agitation	3	1	bdisen
+5	I know my thoughts get louder when I'm stressed, overwhelmed, hungry, angry, lonely, or tired.	Agitation	3	1	bdisen
+5	It used to bother me, but I started feeling more rested after I accepted it as normal for me at this point in my life.	Agitation	3	1	bdisen
+5	The more I check the time, the more anxious I get and the harder it is to sleep.	Agitation	3	1	bdisen
+5	I snap at people or sometimes hit myself in the middle of a panic attack.	Agitation	3	1	bdisen
+5	Sometimes I still relapse, but I don't beat myself up over it and I don't feel trapped anymore.	Agitation	3	1	bdisen
+5	Since childhood, I've been sad, anxious, or sick.	Agitation	3	1	bdisen
+6	I dont take naps, but every morning I feel sick with stress Im not even sure why.	Agitation	1	1	bdisen
+6	My instant reaction is to cry out of frustration during tests, which is so frivolous and annoying.	Agitation	1	1	bdisen
+6	I mean my emotions are much more strong than usual.	Agitation	1	1	bdisen
+6	Also i dont feel anxious when i meditate.	Agitation	1	1	bdisen
+6	My body convulses so much that it looks like I'm seizing.	Agitation	1	1	bdisen
+6	Its actually starting to get really frustrating, and I just feel really stupid.	Agitation	2	1	bdisen
+6	I think I have depression. Stream of consciousness rant	Agitation	2	1	bdisen
+6	Im not suicidal or homicidal or anything like that, but I'm just sick and tired of feeling this way.	Agitation	2	1	bdisen
+6	"I have never been diagnosed with anxiety or anything, but I am a fairly ""high-strung"" person, however I didn't notice anything out of the ordinary in regards to my mental health."	Agitation	2	1	bdisen
+6	I can't sleep bc it beats so hard and then it's all I can focus on.	Agitation	3	1	bdisen
+6	I know my thoughts get louder when I'm stressed, overwhelmed, hungry, angry, lonely, or tired.	Agitation	3	1	bdisen
+6	It used to bother me, but I started feeling more rested after I accepted it as normal for me at this point in my life.	Agitation	3	1	bdisen
+6	The more I check the time, the more anxious I get and the harder it is to sleep.	Agitation	3	1	bdisen
+6	I snap at people or sometimes hit myself in the middle of a panic attack.	Agitation	3	1	bdisen
+6	Sometimes I still relapse, but I don't beat myself up over it and I don't feel trapped anymore.	Agitation	3	1	bdisen
+6	Since childhood, I've been sad, anxious, or sick.	Agitation	3	1	bdisen
+7	All I do is eat, sleep, and look at my phone because thats all I have the energy to do.	Loss_of_energy	2	1	bdisen
+7	i burnt out and i still am unmotivated and feeling like shit.	Loss_of_energy	2	1	bdisen
+7	I'm so tired, and being tired only makes it worse.	Loss_of_energy	2	1	bdisen
+7	Like maybe I'm just not exerting enough energy to sleep through the night.	Loss_of_energy	2	1	bdisen
+7	I thought it was hopeless and I was exhausted.	Loss_of_energy	2	1	bdisen
+7	Since childhood, I've been sad, anxious, or sick.	Loss_of_energy	2	1	bdisen
+7	Omfg I feel enlightened	Loss_of_energy	2	1	bdisen
+7	I have sleeping problems and thats why i usually skip school(thats why im stressed all the time).	Tiredness_or_fatigue	1	1	bdisen
+7	Also i started smoking because i coudnt handle the stress that i had every day.	Tiredness_or_fatigue	1	1	bdisen
+7	i burnt out and i still am unmotivated and feeling like shit.	Tiredness_or_fatigue	1	1	bdisen
+7	Unmotivated, lazy, over emotional, feeling like shit, i over eat or eat too little, nothing is enjoyable or interesting.	Tiredness_or_fatigue	1	1	bdisen
+7	If i have a good night sleep, I love to wake up early and do my own projects or something but if i dont get a good night sleep(more likely to happen) im unmotivated an lazy and feeling like shit.	Tiredness_or_fatigue	1	1	bdisen
+7	I know my thoughts get louder when I'm stressed, overwhelmed, hungry, angry, lonely, or tired.	Tiredness_or_fatigue	1	1	bdisen
+7	I get more urges when I'm hungry, angry, lonely, overwhelmed, or tired.	Tiredness_or_fatigue	1	1	bdisen
+7	I didn't gain any weight, but I was pretty drowsy (But I welcomed that because otherwise I wasn't getting any sleep).	Tiredness_or_fatigue	1	1	bdisen
+7	I thought it was hopeless and I was exhausted.	Tiredness_or_fatigue	1	1	bdisen
+7	I'd be back on my feet in 20 minutes, often exhausted from the whole ordeal.	Tiredness_or_fatigue	1	1	bdisen
+7	Now I'm trying to sleep for more than two hours and I'm about to give up again.	Tiredness_or_fatigue	1	1	bdisen
+7	In those days I usually feel lazier and don't want to do anything the whole day.	Tiredness_or_fatigue	1	1	bdisen
+7	I usually had only 5 hours of sleep a day and felt good, but recently I just can't sleep no matter how tired I am or how many hours of sleep I had the other night.	Tiredness_or_fatigue	1	1	bdisen
+7	"""today I don't feel like doing anything..."""	Tiredness_or_fatigue	1	1	bdisen
+7	Can't sleep even when I'm super tired	Tiredness_or_fatigue	1	1	bdisen
+7	I'm sorry this is so badly written i just pulled an all nighter and now I'm tired lol	Tiredness_or_fatigue	1	1	bdisen
+7	I feel lightheaded and sick constantly, and even the smallest chores make me tired.	Tiredness_or_fatigue	2	1	bdisen
+7	For the past few days, I have been completely exhausted.	Tiredness_or_fatigue	2	1	bdisen
+7	All I do is eat, sleep, and look at my phone because thats all I have the energy to do.	Tiredness_or_fatigue	3	1	bdisen
+7	Everything makes me tired.	Tiredness_or_fatigue	3	1	bdisen
+7	Yeah, mainly because Im tired all the time, no matter how much sleep I get.	Tiredness_or_fatigue	3	1	bdisen
+7	I have sleeping problems and thats why i usually skip school(thats why im stressed all the time).	Change_of_sleep	1	1	bdisen
+7	I always had problems to sleep, but in the last two months it's getting worse day after day.	Change_of_sleep	2	1	bdisen
+7	Last week I had less than two hours of sleep for three days in a row.	Change_of_sleep	2	1	bdisen
+7	Can't sleep even when I'm super tired	Change_of_sleep	2	1	bdisen
+7	I didn't gain any weight, but I was pretty drowsy (But I welcomed that because otherwise I wasn't getting any sleep).	Change_of_sleep	3	1	bdisen
+7	All I do is eat, sleep, and look at my phone because thats all I have the energy to do.	Change_of_sleep	3	1	bdisen
+7	Yeah, mainly because Im tired all the time, no matter how much sleep I get.	Change_of_sleep	3	1	bdisen
+8	i burnt out and i still am unmotivated and feeling like shit.	Concentration_difficulty	1	1	bdisen
+8	I try to pay attention, I really do, but I just naturally zone out in conversations a lot or forget to do things.	Concentration_difficulty	1	1	bdisen
+8	I have a terrible attention span.	Concentration_difficulty	1	1	bdisen
+8	I feel lightheaded and sick constantly, and even the smallest chores make me tired.	Concentration_difficulty	2	1	bdisen
+8	I barely know what to do anymore.	Concentration_difficulty	2	1	bdisen
+8	This is a great idea, but I could never do this because my memory sucks.	Concentration_difficulty	3	1	bdisen
+9	i burnt out and i still am unmotivated and feeling like shit.	Concentration_difficulty	1	1	bdisen
+9	I try to pay attention, I really do, but I just naturally zone out in conversations a lot or forget to do things.	Concentration_difficulty	1	1	bdisen
+9	I have a terrible attention span.	Concentration_difficulty	1	1	bdisen
+9	I feel lightheaded and sick constantly, and even the smallest chores make me tired.	Concentration_difficulty	2	1	bdisen
+9	I barely know what to do anymore.	Concentration_difficulty	2	1	bdisen
+9	This is a great idea, but I could never do this because my memory sucks.	Concentration_difficulty	3	1	bdisen
+10	i burnt out and i still am unmotivated and feeling like shit.	Concentration_difficulty	1	1	bdisen
+10	I try to pay attention, I really do, but I just naturally zone out in conversations a lot or forget to do things.	Concentration_difficulty	1	1	bdisen
+10	I have a terrible attention span.	Concentration_difficulty	1	1	bdisen
+10	I feel lightheaded and sick constantly, and even the smallest chores make me tired.	Concentration_difficulty	2	1	bdisen
+10	I barely know what to do anymore.	Concentration_difficulty	2	1	bdisen
+10	This is a great idea, but I could never do this because my memory sucks.	Concentration_difficulty	3	1	bdisen
+11	i burnt out and i still am unmotivated and feeling like shit.	Concentration_difficulty	1	1	bdisen
+11	I try to pay attention, I really do, but I just naturally zone out in conversations a lot or forget to do things.	Concentration_difficulty	1	1	bdisen
+11	I have a terrible attention span.	Concentration_difficulty	1	1	bdisen
+11	I feel lightheaded and sick constantly, and even the smallest chores make me tired.	Concentration_difficulty	2	1	bdisen
+11	I barely know what to do anymore.	Concentration_difficulty	2	1	bdisen
+11	This is a great idea, but I could never do this because my memory sucks.	Concentration_difficulty	3	1	bdisen
+12	I dont take naps, but every morning I feel sick with stress Im not even sure why.	Agitation	1	1	bdisen
+12	My instant reaction is to cry out of frustration during tests, which is so frivolous and annoying.	Agitation	1	1	bdisen
+12	I mean my emotions are much more strong than usual.	Agitation	1	1	bdisen
+12	Also i dont feel anxious when i meditate.	Agitation	1	1	bdisen
+12	My body convulses so much that it looks like I'm seizing.	Agitation	1	1	bdisen
+12	Its actually starting to get really frustrating, and I just feel really stupid.	Agitation	2	1	bdisen
+12	I think I have depression. Stream of consciousness rant	Agitation	2	1	bdisen
+12	Im not suicidal or homicidal or anything like that, but I'm just sick and tired of feeling this way.	Agitation	2	1	bdisen
+12	"I have never been diagnosed with anxiety or anything, but I am a fairly ""high-strung"" person, however I didn't notice anything out of the ordinary in regards to my mental health."	Agitation	2	1	bdisen
+12	I can't sleep bc it beats so hard and then it's all I can focus on.	Agitation	3	1	bdisen
+12	I know my thoughts get louder when I'm stressed, overwhelmed, hungry, angry, lonely, or tired.	Agitation	3	1	bdisen
+12	It used to bother me, but I started feeling more rested after I accepted it as normal for me at this point in my life.	Agitation	3	1	bdisen
+12	The more I check the time, the more anxious I get and the harder it is to sleep.	Agitation	3	1	bdisen
+12	I snap at people or sometimes hit myself in the middle of a panic attack.	Agitation	3	1	bdisen
+12	Sometimes I still relapse, but I don't beat myself up over it and I don't feel trapped anymore.	Agitation	3	1	bdisen
+12	Since childhood, I've been sad, anxious, or sick.	Agitation	3	1	bdisen
+13	I dont take naps, but every morning I feel sick with stress Im not even sure why.	Agitation	1	1	bdisen
+13	My instant reaction is to cry out of frustration during tests, which is so frivolous and annoying.	Agitation	1	1	bdisen
+13	I mean my emotions are much more strong than usual.	Agitation	1	1	bdisen
+13	Also i dont feel anxious when i meditate.	Agitation	1	1	bdisen
+13	My body convulses so much that it looks like I'm seizing.	Agitation	1	1	bdisen
+13	Its actually starting to get really frustrating, and I just feel really stupid.	Agitation	2	1	bdisen
+13	I think I have depression. Stream of consciousness rant	Agitation	2	1	bdisen
+13	Im not suicidal or homicidal or anything like that, but I'm just sick and tired of feeling this way.	Agitation	2	1	bdisen
+13	"I have never been diagnosed with anxiety or anything, but I am a fairly ""high-strung"" person, however I didn't notice anything out of the ordinary in regards to my mental health."	Agitation	2	1	bdisen
+13	I can't sleep bc it beats so hard and then it's all I can focus on.	Agitation	3	1	bdisen
+13	I know my thoughts get louder when I'm stressed, overwhelmed, hungry, angry, lonely, or tired.	Agitation	3	1	bdisen
+13	It used to bother me, but I started feeling more rested after I accepted it as normal for me at this point in my life.	Agitation	3	1	bdisen
+13	The more I check the time, the more anxious I get and the harder it is to sleep.	Agitation	3	1	bdisen
+13	I snap at people or sometimes hit myself in the middle of a panic attack.	Agitation	3	1	bdisen
+13	Sometimes I still relapse, but I don't beat myself up over it and I don't feel trapped anymore.	Agitation	3	1	bdisen
+13	Since childhood, I've been sad, anxious, or sick.	Agitation	3	1	bdisen

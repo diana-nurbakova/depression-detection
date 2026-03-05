@@ -1,0 +1,324 @@
+{
+  "asrs_item_7": {
+    "symptom": "difficulty with attention to detail",
+    "depression_confounders": {
+      "phrases": [
+        "suffering",
+        "depression",
+        "life",
+        "happy",
+        "quit",
+        "myself",
+        "feel",
+        "lost",
+        "mentally",
+        "me",
+        "always",
+        "problems",
+        "pessimistic",
+        "why",
+        "hope"
+      ],
+      "dsm5_categories": [
+        "COGNITIVE_ISSUES",
+        "FATIGUE",
+        "SLEEP_ISSUES"
+      ],
+      "source_topics": [
+        "Topic 8",
+        "Topic 6",
+        "Topic 23",
+        "Topic 11",
+        "Topic 5",
+        "Topic 18",
+        "Topic 20",
+        "Topic 13"
+      ],
+      "source_topic_count": 10
+    }
+  },
+  "asrs_item_8": {
+    "symptom": "difficulty concentrating on what people say",
+    "depression_confounders": {
+      "phrases": [
+        "suffering",
+        "depression",
+        "life",
+        "happy",
+        "quit",
+        "myself",
+        "feel",
+        "lost",
+        "mentally",
+        "me",
+        "always",
+        "problems",
+        "pessimistic",
+        "why",
+        "hope"
+      ],
+      "dsm5_categories": [
+        "COGNITIVE_ISSUES"
+      ],
+      "source_topics": [
+        "Topic 18",
+        "Topic 8"
+      ],
+      "source_topic_count": 2
+    }
+  },
+  "asrs_item_9": {
+    "symptom": "difficulty remembering appointments or obligations",
+    "depression_confounders": {
+      "phrases": [
+        "suffering",
+        "depression",
+        "life",
+        "happy",
+        "quit",
+        "myself",
+        "feel",
+        "lost",
+        "mentally",
+        "me",
+        "always",
+        "problems",
+        "pessimistic",
+        "why",
+        "hope"
+      ],
+      "dsm5_categories": [
+        "COGNITIVE_ISSUES"
+      ],
+      "source_topics": [
+        "Topic 18",
+        "Topic 8"
+      ],
+      "source_topic_count": 2
+    }
+  },
+  "asrs_item_10": {
+    "symptom": "difficulty concentrating on boring tasks",
+    "depression_confounders": {
+      "phrases": [
+        "suffering",
+        "depression",
+        "life",
+        "happy",
+        "quit",
+        "myself",
+        "feel",
+        "lost",
+        "mentally",
+        "me",
+        "always",
+        "problems",
+        "pessimistic",
+        "why",
+        "hope"
+      ],
+      "dsm5_categories": [
+        "COGNITIVE_ISSUES",
+        "ANHEDONIA"
+      ],
+      "source_topics": [
+        "Topic 22",
+        "Topic 3",
+        "Topic 4",
+        "Topic 18",
+        "Topic 8",
+        "Topic 9"
+      ],
+      "source_topic_count": 6
+    }
+  },
+  "asrs_item_11": {
+    "symptom": "difficulty keeping attention on repetitive tasks",
+    "depression_confounders": {
+      "phrases": [
+        "suffering",
+        "depression",
+        "life",
+        "happy",
+        "quit",
+        "myself",
+        "feel",
+        "lost",
+        "mentally",
+        "me",
+        "always",
+        "problems",
+        "pessimistic",
+        "why",
+        "hope"
+      ],
+      "dsm5_categories": [
+        "COGNITIVE_ISSUES",
+        "ANHEDONIA"
+      ],
+      "source_topics": [
+        "Topic 22",
+        "Topic 3",
+        "Topic 4",
+        "Topic 18",
+        "Topic 8",
+        "Topic 9"
+      ],
+      "source_topic_count": 6
+    }
+  },
+  "asrs_item_4": {
+    "symptom": "avoiding or delaying getting started on tasks",
+    "depression_confounders": {
+      "phrases": [
+        "tired",
+        "depression",
+        "anxious",
+        "depressed",
+        "depressive",
+        "bipolar",
+        "anxiety",
+        "felt",
+        "life",
+        "disorder",
+        "emotional",
+        "psychosis",
+        "caffeine",
+        "bloating",
+        "feeling"
+      ],
+      "dsm5_categories": [
+        "FATIGUE",
+        "ANHEDONIA"
+      ],
+      "source_topics": [
+        "Topic 22",
+        "Topic 8",
+        "Topic 6",
+        "Topic 11",
+        "Topic 3",
+        "Topic 4",
+        "Topic 20",
+        "Topic 13",
+        "Topic 9"
+      ],
+      "source_topic_count": 9
+    }
+  },
+  "asrs_item_5": {
+    "symptom": "fidgeting or squirming",
+    "depression_confounders": {
+      "phrases": [
+        "anxiety",
+        "disorder",
+        "sleep",
+        "myself",
+        "feel",
+        "life",
+        "help",
+        "me",
+        "night",
+        "am",
+        "felt",
+        "be",
+        "going",
+        "panic",
+        "weed"
+      ],
+      "dsm5_categories": [
+        "PSYCHOMOTOR"
+      ],
+      "source_topics": [
+        "Topic 10"
+      ],
+      "source_topic_count": 1
+    }
+  },
+  "asrs_item_6": {
+    "symptom": "feeling overly active or compelled to do things",
+    "depression_confounders": {
+      "phrases": [
+        "anxiety",
+        "disorder",
+        "sleep",
+        "myself",
+        "feel",
+        "life",
+        "help",
+        "me",
+        "night",
+        "am",
+        "felt",
+        "be",
+        "going",
+        "panic",
+        "weed"
+      ],
+      "dsm5_categories": [
+        "PSYCHOMOTOR"
+      ],
+      "source_topics": [
+        "Topic 10"
+      ],
+      "source_topic_count": 1
+    }
+  },
+  "asrs_item_12": {
+    "symptom": "leaving seat in situations where remaining seated is expected",
+    "depression_confounders": {
+      "phrases": [
+        "anxiety",
+        "disorder",
+        "sleep",
+        "myself",
+        "feel",
+        "life",
+        "help",
+        "me",
+        "night",
+        "am",
+        "felt",
+        "be",
+        "going",
+        "panic",
+        "weed"
+      ],
+      "dsm5_categories": [
+        "PSYCHOMOTOR"
+      ],
+      "source_topics": [
+        "Topic 10"
+      ],
+      "source_topic_count": 1
+    }
+  },
+  "asrs_item_13": {
+    "symptom": "feeling restless or fidgety",
+    "depression_confounders": {
+      "phrases": [
+        "anxiety",
+        "disorder",
+        "sleep",
+        "myself",
+        "feel",
+        "life",
+        "help",
+        "me",
+        "night",
+        "am",
+        "felt",
+        "be",
+        "going",
+        "panic",
+        "weed"
+      ],
+      "dsm5_categories": [
+        "PSYCHOMOTOR"
+      ],
+      "source_topics": [
+        "Topic 10"
+      ],
+      "source_topic_count": 1
+    }
+  }
+}

@@ -299,7 +299,7 @@ def create_annotation_templates(
     """
     annotations_dir.mkdir(parents=True, exist_ok=True)
 
-    # Per-symptom template files
+    # Per-symptom template files (v2: includes source_detail for provenance)
     for item_num, symptom in sorted(symptoms.items()):
         template = {
             "symptom_id": item_num,
@@ -311,11 +311,12 @@ def create_annotation_templates(
                 {
                     "score": score,
                     "docno": "",
+                    "source": "",
+                    "source_detail": None,
+                    "synthetic": False,
                     "pre": "",
                     "text": "",
                     "post": "",
-                    "source": "",
-                    "synthetic": False,
                     "annotation": {
                         "symptom_match": "",
                         "self_reference": "",
@@ -334,15 +335,15 @@ def create_annotation_templates(
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(template, f, indent=2, ensure_ascii=False)
 
-    # Annotation summary template
+    # Annotation summary template (v2: includes source and confounder tracking)
     summary_path = annotations_dir / "annotation_summary.tsv"
     with open(summary_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(
             f,
             fieldnames=[
-                "symptom_id", "score_0_docno", "score_1_docno",
-                "score_2_docno", "score_3_docno",
-                "synthetic_count", "notes",
+                "symptom_id", "score_0_source", "score_1_source",
+                "score_2_source", "score_3_source",
+                "synthetic_count", "score_1_confounder", "notes",
             ],
             delimiter="\t",
         )
@@ -350,11 +351,12 @@ def create_annotation_templates(
         for item_num in sorted(symptoms.keys()):
             writer.writerow({
                 "symptom_id": item_num,
-                "score_0_docno": "",
-                "score_1_docno": "",
-                "score_2_docno": "",
-                "score_3_docno": "",
+                "score_0_source": "",
+                "score_1_source": "",
+                "score_2_source": "",
+                "score_3_source": "",
                 "synthetic_count": 0,
+                "score_1_confounder": "",
                 "notes": "",
             })
 
@@ -362,6 +364,15 @@ def create_annotation_templates(
     synthetic_path = annotations_dir / "synthetic_examples.json"
     with open(synthetic_path, "w", encoding="utf-8") as f:
         json.dump([], f, indent=2)
+
+    # RedSM5 provenance log skeleton (v2)
+    redsm5_log_path = annotations_dir / "redsm5_sourced_examples.json"
+    with open(redsm5_log_path, "w", encoding="utf-8") as f:
+        json.dump({
+            "total_redsm5_examples": 0,
+            "by_dsm5_category": {},
+            "examples": [],
+        }, f, indent=2)
 
     # Shared score-0 pool tracking file
     pool_path = annotations_dir / "score0_shared_pool.json"

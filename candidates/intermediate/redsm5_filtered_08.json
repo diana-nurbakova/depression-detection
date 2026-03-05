@@ -1,0 +1,490 @@
+[
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_993_1060_4",
+    "sentence_text": "I can't concentrate at all now.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Many people with problems to concentrate ant thinking, or your reasoning is impaired, might be a similar symptom like is mentioned in criterio eight of major depressive disorder in DSM-5, which could be a signal alert.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1997_963_1",
+    "sentence_text": "I'm so indecisive, if I was in your boots I'd never be able to decide.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The indecisiveness is characterized by problems in the thought. If this problem es recurrent and is a new situation in the person that make a personal, social or laboral impairment, could be relate to criteria nine in the major depressive disorder in DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2886_101_3",
+    "sentence_text": "I've come out of a major depressive episode that lasted about a year and I still have some problems with focus.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The concentration difficulty is common in people with depression symptomatology or diagnostic previously like this. In this post is possible detect that inn this person the previously depressive episodic es is a risk factor to develop a new potential depressive symptoms.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2401_6_1",
+    "sentence_text": "I have really important exams coming in less then 20 days and i can concentrate at all.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post can suggest that this person has concentration difficulty produced by an eventual situation. Although concentration problems are widespread in depression, and in this person it seems to be a specific episode, this can be a risk factor if the concentration problem becomes widespread and affects other areas of life without there being a situation that causes it.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1265_353_3",
+    "sentence_text": "When I was forced to make decisions I had such anxiety before during and after.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "In this post you can see an indecisive character to make decisions, people with anxiety and depression can have this pattern of behavior. If this indecision generates a sadness for the consequences caused by not taking them at the right time, it can possibly trigger symptoms related with problems  to make decisions and difficulty thinking as described in the seventh diagnostic criterion of major depression of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_3008_185_4",
+    "sentence_text": "I'm fighting with myself to not make a stupid decision, and it's tearing me apart.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "According to this post, this person is overwhelmed by feelings of indecision and doubt about making decisions. These symptoms are recurrent in people with depressive symptomatology. If these feelings are recurrent and clinically significant could be depressive symptoms. In this context, is important to pay attention to this kind of emotional problem because it can last over time and facilitate the appearance of other cognitive distortions.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_632_560_1",
+    "sentence_text": "I've literally made the best financial decision of my life!!",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "In this sentence is true that this sentence indicates indecisiveness, however, these feelings are normal and appropriate to the situation. For this reason, there are no significant elements to affirm that this indecisiveness is a depressive symptom as is mentioned in DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2974_110_5",
+    "sentence_text": "I work a lot and make decisions all day.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post suggests that this person is making daily decisions, which can generate persistent emotional tiredness. However, these sentences are not enough to confirm that this indecisiveness is a symptom similar to that included in a major depressive disorder diagnosis.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1404_715_5",
+    "sentence_text": "I simply can't focus.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post might suggest that the person is experiencing concentration difficulty. These cognitive changes could be related to symptom eight the diminished ability to think \"diminished ability to think or concentrate, or indecisiveness, nearly every day\". These symptoms could be a possible depressive episode or a  risk factor to develop it.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1580_37_2",
+    "sentence_text": "I became lethargic, couldn't focus and constantly tired.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post expresses problems with the ability to think. Many people with depression have concentration problems like this, and it affects their cognitive functions. The DSM-5 has described decreased thinking ability as a diagnostic criterion for major depressive disorder. In this context, an important symptom is the ability to concentrate, as it can be a consequence of sadness and negative moods.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_993_839_16",
+    "sentence_text": "I can't concentrate...at least less than usual.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post may suggest that this person is experiencing cognitive changes, such as difficulty concentrating. These symptoms are associated with the eighth symptom of criterion A of major depressive disorder of DSM-5, which describes the diminished ability to think.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1404_640_4",
+    "sentence_text": "I think that's why I can't focus on study.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This sentence can indicate concentration difficulties that affect the study areas. If this issue results in changes in other areas like job, family, and personal functionality, this person can develop depressive symptomatology. Many times, depression brings emotional problems that affect thinking and cognitive function. Thus, this person is developing depressive symptomatology as major depressive disorder, precisely the symptom eight of criterion A.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2448_219_5",
+    "sentence_text": "I just don't know what to do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post can suggest indecisiveness symptoms that could be related to depressive symptomatology. This clinical disorder presents a persistent pattern of depressive mood. Indecisiveness is a symptom of concentration issues and is a signal of diminished ability to think of symptom eight of the major depressive disorder criterion.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1692_39_15",
+    "sentence_text": "I also find it easier to concentrate when I *have* to make an effort to zone people out.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "When a person reports feeling sad or hopeless and begins to have difficulty concentrating, they may develop concentration difficulties as a result of a possible depressed mood. Thus, this person could be bringing this emotional difficulty that involves thinking problems mentioned in symptom eight of criterion A for the diagnosis of major depressive disorder of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1160_93_13",
+    "sentence_text": "Overall I just don't know what should i do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "In the previous comment, this person expresses a general feeling of indecision. This difficulty in making decisions can be a way of manifesting depressive symptoms if this problem is due to an emotional issue, such as sadness. According to the DSM-5, people with major depressive disorder may develop difficulties in thinking, such as slowness or decision-making, as mentioned in symptom eight of criterion A for the diagnosis of this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1404_629_9",
+    "sentence_text": "Where 3 years ago I could study many hour per day without getting tired, now I cannot even focus ONE MINUTE without getting distracted.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post may indicate possible difficulties concentrating, such as those mentioned in DSM-5 major depressive disorder, which refers to slowed thinking due to depressed moods. This problem relates to symptom eight of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1151_536_1",
+    "sentence_text": "I like that I can make decisions that affect only me -- I've made good and bad, but the bad ones only hurt myself.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post can suggest the thinking issues as indecisiveness. This symptom is a signal to develop a clinical pattern of diminished ability to think, which mentions this problem in symptom eight of criterion A for major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1551_232_1",
+    "sentence_text": "I try forcing myself but when I do the focus isnt there.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "From the emotions that this person relates in the previous post, it is possible to infer that this person has difficulty concentrating. This symptomatology may be caused by a depressed mood. These feelings can be part of a clinical picture to develop depressive symptoms such as those mentioned in symptom eight of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1551_30_9",
+    "sentence_text": "Wish I didnt but I did, I was alone and incapable of making the right decisions.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although that person expresses indecisiveness in the personal situation, these feelings are common in similar situations in other people, and the symptoms are not significant to develop a depressive mood. for this reason, it is not successful enough to relate this indecisiveness with a diminished ability to think of major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_706_197_1",
+    "sentence_text": "I can only get things into focus if they are extremely close, is it my fault?",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The above post indicates difficulties in concentrating and that it is generating emotional discomfort and feelings of guilt. These moods and cognitive difficulties are characteristic symptoms of major depression and are present in the eighth symptom of DSM-5 criterion A for the diagnosis of major depression. This symptom describes a diminished ability to think and mood the person's optimal functioning.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_984_874_1",
+    "sentence_text": "I couldn't really focus on anything.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although the previous publication reports a difficulty in maintaining concentration, the information is not enough to affirm that this difficulty is caused by a possible depressive symptomatology and that it implies the development of major depressive disorder as mentioned in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1831_20_59",
+    "sentence_text": "I can't concentrate, and my addiction to Smash Bros. and it's world has become destructive.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Constant and abusive use of video games can affect cognitive functioning and emotional stability. Many people may experience a loss of the ability to think and process information and produce emotional distress that leads to depressive symptoms. To this end, this person may develop symptoms of the eighth symptom of DSM-5 criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1831_20_76",
+    "sentence_text": "I don't know what to do with myself anymore.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "When someone has problems knowing what to do, and this problem is generalized, it could be a symptom of indecisiveness that is present in major depressive disorder. This symptom is the ninth symptom of criterion A for diagnoses of this disorder and consists of a diminished ability to t. The DSM-5 mentioned this disorder as a mood disorder, and this symptom is important to diagnose.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2958_25_7",
+    "sentence_text": "I had problems with concentration, but that was probably a mix of dissociation and stress.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The previous publication gives an account of a malaise caused by difficulties in concentration and thinking that may be related to depressive symptoms. This is due to many people with depressive symptoms developing issues in the ability to concentrate due to the intense thoughts and emotions that are present in depression. According to the DSM-5, this person may develop the eighth symptom of criterion A for the diagnosis of major depressive disorder, which refers to \"slowness of thought, ability to concentrate.\"",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2257_110_30",
+    "sentence_text": "I cannot concentrate on projects and have trouble sitting in one place for long.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although in this post, this person is expressing problems with concentration, there are not enough elements to affirm that this person has depressive symptoms that explain or are related to cognitive issues. In depression, attention and thinking problems are caused by a depressed mood.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1404_729_2",
+    "sentence_text": "I cant focus and i have no energy.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "According to the DSM-5, the person writing this post is developing a significant loss of energy and pleasure that is related to the sixth symptom of criterion A for the diagnosis of major depressive disorder. The manual mentions that this symptom is characterized by the generalized presence of fatigue and energy loss that this symptom is characterized by the generalized presence of fatigue and loss of energy for more than two weeks. This aspect may be present in the person writing this publication.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1738_101_3",
+    "sentence_text": "I'm still able to churn out stuff, I'm just not as consistent and focused.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The previous person is manifesting a possible concentration problem with a depressed mood. According to the depressive symptomatology mentioned in major depressive disorder, this person would meet symptom eight of criterion A for the diagnosis of this disorder. This symptom describes a marked decrease in thinking ability that can result in concentration loss, memory problems, indecisiveness, slowness of thought, and other cognitive problems.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1542_38_21",
+    "sentence_text": "I don't always make the best decisions when I'm tired.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This person's indecision is due to possible physical or mental fatigue. If this tiredness is a consequence of a depressed emotional state, this person may develop a decreased ability to think, which is a symptom of major depressive disorder. According to the DSM-5, people with major depressive disorder can develop slow thinking that can cause problems making decisions.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_282_58_7",
+    "sentence_text": "I still feel tired and I don't know, I think I just get distracted to quickly.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Consistent with the symptoms in criterion A for the diagnosis of major depressive disorder, this person may meet symptom eight of decreased ability to think due to the presence of emotions associated with sadness that affect the ability to think. Many people with major depressive disorder have slow thinking because of depression. This diminished ability to think can affect decision-making, thinking, reasoning, and the processing of information.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1899_123_14",
+    "sentence_text": "I can't concentrate on homework at all.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The concentration issues that many people have by depressive mood could be symptomatology related to the ninth symptom of criterion A for the diagnosis of major depressive disorder. According to the DSM-5, this person could develop depressive symptoms related to this disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_993_798_3",
+    "sentence_text": "So that's makes me question my decisions a lot.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The difficulty in making decisions that this person claims to have is a symptom associated with a decreased capacity and ability to think. Many people with depressive symptoms have a decrease in thinking ability due to generalized depressed mood. For this reason, this person would meet the eighth symptom of DSM-5 criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_993_1080_5",
+    "sentence_text": "Each day I dreaded if I am making the right choice.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although this publication expresses a feeling of discomfort for not knowing how to decide, this problem responds to a specific situation that does not clinically affect the person who feels it. For this reason, this person would not meet symptom eight on difficulty in the ability to think according to the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2401_0_28",
+    "sentence_text": "I cant concentrate in any think for more than a minute.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The concentration problems this person describes may be associated with symptom eight of DSM-5 criterion A for the diagnosis of major depression, which refers to thinking difficulties caused by depression. A depressed mood can cause mental sluggishness, issues in memory and concentration, or trouble making decisions.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1738_394_3",
+    "sentence_text": "I constantly lose things, can't manage time, can't focus because I'm in a bad mood much of the time, everything is harder to do because I lack the energy.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Following the behavioral and mood problems mentioned in the previous post, it is possible to identify issues in the ability to concentrate and organize, which are associated with an emotional state of sadness and disagreement that generates discomfort. If these changes are a consequence of a depressed mood, this person could be developing depressive symptoms as symptom eight of criterion A for the diagnosis of Major pressure disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1190_10_0",
+    "sentence_text": "How indecisive I am about important things.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This comment suggests difficulty in making decisions about different tasks and situations of quotidian life. Given the DSM-5 criteria for the diagnosis of major depressive disorder, this comment relates to the eighth symptom of criterion A of major depressive disorder. According to this symptom, people with MDD have a marked slowness in thinking that can manifest itself with difficulty in making decisions.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2993_474_3",
+    "sentence_text": "Hope you don't have a hard time making decisions like me lol but I'm open and willing to try for you",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although the above statement expresses indecisive behavior, the above post is not sufficient to affirm that the indecision this person manifests to have is related to a depressive episode such as the one mentioned in DSM-5 major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1856_49_2",
+    "sentence_text": "Insecurities are getting to me and I don't know what to do anymore",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The previous post shows the appearance of feelings of generalized cloudiness and mental doubts that cause depressed moods. The indecision, doubt, and discomfort caused by these in the person may be a problem that would be related to the eighth symptom of criterion A for the diagnosis of major depressive disorder of the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2993_443_1",
+    "sentence_text": "My brain is so fucked it's so hard to do anything or focus for long.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Depression can affect mental faculties, including thinking and concentration. Many people have problems concentrating or attending due to the sadness and instructive thoughts that suddenly appear, which generates significant discomfort. If this problem persists for more than two weeks, this person could be developing the eighth symptom of criterion A for the diagnosis of DSM-5 major depression disorder. This symptom refers to a decrease in thinking skills for more than two weeks.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2661_399_2",
+    "sentence_text": "I just need to spend some time and make decisions",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This phrase suggests the issue of making decisions, and that it could be related to depressive symptomatology following DSM-5. This manual included the diminished ability to think and indecisiveness as symptom eight of major depressive disorder. If this issue is maintained for two weeks or more and is the cause of emotional changes, this indecisiveness could be a behavior to major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2401_11_1",
+    "sentence_text": "I cant concentrate at anything.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although this sentence expresses difficulty in concentrating, the tone and context of the sentence suggest that this difficulty results from a depressed mood. The DSM-5 mentions some issues in thinking resulting from depression in the eighth symptom of criterion A for the diagnosis of major depressive disorder. It is important to assess the intensity and deterioration this symptom causes in the person and their environment.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2139_45_5",
+    "sentence_text": "Like I cant concentrate well, am either unfocused or so focused I dont see whats around me.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Depression can cause difficulties in thinking and cognitive skills, such as memory, attention, and concentration, due to the depressed mood. According to the DSM-5, this person could meet the eighth symptom of criterion A for the diagnosis of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_257_579_1",
+    "sentence_text": "I think I might have low dopamine levels because my concentration and motivation levels are extremely low.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "In line with the symptoms of major depressive disorder, this person would meet the eighth symptom of major depressive disorder of the DSM-5, which refers to concentration difficulties.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_151_12_8",
+    "sentence_text": "I sadly could go on and on of the terrible decisions I made.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This person claims to make poor decisions and evaluates his or her decision-making ability negatively, which could be an indicator of a thinking issue and the ability to think appropriately due to a depressed mood. More specifically, the behavior of thinking issue is manifested by people who develop the eighth symptom of criterion A for the diagnosis of major depression and could be the cause of this statement.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1933_177_2",
+    "sentence_text": "I'm so indecisive.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This phrase may be a manifestation of a problem in thinking derived from a depressed mood. Thus, according to the DSM-5, people with major depressive disorder develop issues in the mental capacity to make decisions, concentrate, or the ability to think. Therefore, it is possible to infer the presence of a possible depressive symptom of decreased ability to think from the previous phrase.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2130_209_1",
+    "sentence_text": "I just don't know what to do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This statement may be related to the indecisiveness or slowness of thought that causes depression in many people. This problem may be associated with the eighth symptom of criterion A of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2855_5_2",
+    "sentence_text": "I don't have the attention span to sit there for hours and constantly read words.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The sentence above mentions concentration difficulties, but it does not reflect the type of concentration issues typically seen in individuals with depression, as there is no underlying mood disturbance explaining the impairment. Therefore, this post is not indicative of a possible depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_976_910_3",
+    "sentence_text": "I also issues with concentration and motivation when I'm not getting any, and tried mindfulness, but I wasn't very good at that.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post is an emotional expression of concentration difficulty. However, this issue is not an emotional problem related to depression or emotional changes. Thus, the information in the previous post does not correspond to depressive symptomatology in line with the Major depressive disorder of DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_3040_931_1",
+    "sentence_text": "So, long story short, I make really idiotic decisions when it comes to boys.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This message could be associated with a feeling of worthlessness or failure due to the bad decisions that the person has made in his/her life. Following the symptoms of major depressive disorder, this person could manifest difficulty in making decisions, and that is generating a feeling of failure after evaluating its consequences. This difficulty in making decisions can be an indicator of the presence of the eighth symptom of depressed mood on difficulty in concentration and decision making.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2492_1_46",
+    "sentence_text": "This is probably one of the toughest decisions I've had to make thus far in my life, and I am so lost as to what to do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "This post seems to be a manifestation of an ethical conflict and not a symptom of a depressed mood. To this end, it is not possible to affirm that this statement manifests a symptom of slowness in thinking or difficulty in making decisions, symptoms typical of major depressive disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2662_0_0",
+    "sentence_text": "Awkward Request - I can't concentrate at work at all.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although this statement is not very exact, the problems with concentration could be associated with a depressed mood, and the change in thinking ability in this post may have an affective component. For this reason, it is necessary to accurately assess whether this cognitive problem is derived from a depressed mood since it may be associated with the eighth symptom of criterion A for the diagnosis of major depression in the DSM-5 manual.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2662_0_4",
+    "sentence_text": "But now-a-days I can not even focus for five minutes.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Though the statement lacks precision, difficulties with concentration may be linked to a depressed mood, suggesting a potential affective component. It is important to carefully evaluate whether this cognitive issue stems from a depressive state, as it could correspond to the eighth symptom of Criterion A for Major Depressive Disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2662_0_8",
+    "sentence_text": "I have been doing so for the last two months and I am exhausted, unable to focus and I feel plain dumb.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although the statement is somewhat vague, concentration difficulties may be related to a depressed mood, indicating a possible emotional influence. It is crucial to assess whether this cognitive issue arises from a depressive state, as it may align with the eighth symptom of Criterion A for Major Depressive Disorder according to the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1404_316_7",
+    "sentence_text": "I can't focus on my homework 7.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The loss of the ability to concentrate is a possible consequence of a depressed mood that causes a problem with the ability to think. According to the DSM-5, people with depressive symptoms may develop difficulty concentrating for several weeks, and this could also be associated with the eighth symptom of criterion A for the diagnosis of major depression.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2401_23_0",
+    "sentence_text": "I'm lacking concentration and having trouble remembering my lessons",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The previous sentence does not offer any information about this behavior. Following the criteria of possible mental disorders, it is important to evaluate the origin, intensity, and frequency of this cognitive problem to establish possible etiologies and clinical classification in the case that there is some mental disorder.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2402_339_8",
+    "sentence_text": "I can't concentrate enough in College.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Constant negative feelings, such as sadness, hopelessness, or physical problems derived from these feelings, can generate difficulty in thinking skills, such as concentration or slowness of thought. For this reason, the problem mentioned in the sentence can provide information about a possible deterioration in the ability to think typical of a depressed mood. These types of alterations are present in the eighth symptom of criterion A for the diagnosis of major depression in the DSM5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_759_88_0",
+    "sentence_text": "I have a very hardtime making decisions.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The emotional tone of this sentence suggests a possible change in the ability to think, make decisions, and respond appropriately to daily demands due to the presence of a depressed mood. This cognitive problem corresponds with the eighth symptom of criterion A of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1601_1053_15",
+    "sentence_text": "I lose my focus and my memory as well.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The loss of concentration, as well as the other symptoms that are present in the publication, allow us to infer the presence of a cognitive alteration caused by a depressed mood that would be causing intense discomfort. For this reason, this comment could be associated with the ninth symptom of depression in the DSM-5, which refers to an alteration of consciousness and thought and causes problems with concentration, response time, or mental emptiness.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_2401_22_5",
+    "sentence_text": "I just don't know what to do.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Although the phrase does not clearly illustrate the feelings and changes in mood, it is possible to affirm that this person is developing an alteration in thinking that is related to the feelings of sadness, anxiety, and difficulty concentrating that this person also presents. These symptoms together may indicate a possible depressive episode, and the previous phrase could be associated with the eighth symptom of major depressive disorder included in the DSM-5 manual.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_134_349_3",
+    "sentence_text": "I can't concentrate, I don't care about getting good grades, I don't go to class b/c I can't get out of bed, I feel sick when I get a bad grade or don't know something, I feel alone in the classroom, or i won't be able to complete a class so then i start thinking about my future and how i won't graduate because i can't complete the coursework, so i won't get a job, won't get a house, be broke, no one will want to marry me, can't provide for family, friends hate me, etc, the list goes and on and on it goes.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "Given the emotional tone of the sentence and the problems described in the post, it is possible to infer the presence of a possible concentration problem typical of a depressed mood. In this context, the above sentence may be a marker of the eighth symptom of major depressive disorder in the DSM-5.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1404_105_18",
+    "sentence_text": "Where in the past I could easily study for hours without getting distracted, now I cannot effectively study more than a few minutes per day.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The comment \"Where in the past I could easily study for hours without getting distracted, now I cannot effectively study more than a few minutes per day\" may indicate difficulty concentrating, which is a key symptom of major depressive disorder, according to the DSM-5. Difficulty sustaining attention, focus, or making decisions is often associated with depression, particularly when it impacts daily activities such as studying or work. If this concentration difficulty persists and is accompanied by other symptoms, it could be a manifestation of a depressive episode.",
+    "source": "redsm5"
+  },
+  {
+    "symptom_id": 8,
+    "sentence_id": "s_1404_105_21",
+    "sentence_text": "I just cant focus anymore.",
+    "dsm5_symptom": "COGNITIVE_ISSUES",
+    "explanation": "The sentence may reflect difficulty concentrating, a core symptom of major depressive disorder (MDD) as outlined in the DSM-5. Problems with attention, focus, or decision-making are commonly associated with depression, especially when they interfere with essential tasks like studying or work. If this concentration issue persists and is accompanied by other depressive symptoms, it could indicate the presence of a depressive episode.",
+    "source": "redsm5"
+  }
+]

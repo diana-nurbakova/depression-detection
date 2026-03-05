@@ -1,0 +1,5 @@
+{
+  "description": "Shared score-0 sentences reusable within the same factor",
+  "constraint": "Do NOT reuse score-0 across factors",
+  "sentences": []
+}

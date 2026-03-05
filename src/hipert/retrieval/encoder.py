@@ -64,7 +64,7 @@ class BiEncoderRetriever:
         safe_name = self.model_name.replace("/", "_")
         embeddings_path = self.cache_dir / f"embeddings_{safe_name}.npy"
         docnos_path = self.cache_dir / f"docnos_{safe_name}.npy"
-        partial_path = self.cache_dir / f"embeddings_{safe_name}.partial.npy"
+        chunks_dir = self.cache_dir / f"chunks_{safe_name}"
         progress_path = self.cache_dir / f"embeddings_{safe_name}.progress"
 
         self.cache_dir.mkdir(parents=True, exist_ok=True)
@@ -76,7 +76,7 @@ class BiEncoderRetriever:
             and docnos_path.exists()
         ):
             logger.info("Loading cached embeddings from %s", embeddings_path)
-            self._embeddings = np.load(str(embeddings_path))
+            self._embeddings = np.load(str(embeddings_path), mmap_mode="r")
             self._docnos = np.load(str(docnos_path), allow_pickle=True).tolist()
             logger.info(
                 "Loaded %d embeddings (dim=%d)",
@@ -88,50 +88,48 @@ class BiEncoderRetriever:
         texts = [s.text for s in sentences]
         self._docnos = [s.docno for s in sentences]
         total = len(texts)
+        chunk_size = self.batch_size * checkpoint_every
 
         # Check for partial checkpoint to resume from
-        start_idx = 0
-        partial_embeddings: list[np.ndarray] = []
+        completed_chunks = 0
+        chunks_dir.mkdir(parents=True, exist_ok=True)
 
         if (
             not force_recompute
-            and partial_path.exists()
             and progress_path.exists()
         ):
-            start_idx = int(progress_path.read_text().strip())
-            if 0 < start_idx <= total:
-                partial_data = np.load(str(partial_path))
-                # Verify the partial data matches expected size
-                if partial_data.shape[0] == start_idx:
-                    partial_embeddings.append(partial_data)
-                    logger.info(
-                        "Resuming encoding from sentence %d/%d (%.1f%% done)",
-                        start_idx, total, 100 * start_idx / total,
-                    )
-                else:
+            completed_chunks = int(progress_path.read_text().strip())
+            # Verify all chunk files exist
+            for i in range(completed_chunks):
+                chunk_path = chunks_dir / f"chunk_{i:04d}.npy"
+                if not chunk_path.exists():
                     logger.warning(
-                        "Partial checkpoint size mismatch (%d vs %d), restarting",
-                        partial_data.shape[0], start_idx,
+                        "Missing chunk file %s, restarting from scratch",
+                        chunk_path,
                     )
-                    start_idx = 0
-                    partial_embeddings = []
-            else:
-                start_idx = 0
+                    completed_chunks = 0
+                    break
 
-        if start_idx == 0:
+        start_idx = completed_chunks * chunk_size
+
+        if start_idx > 0 and start_idx < total:
+            logger.info(
+                "Resuming encoding from sentence %d/%d (%.1f%% done, %d chunks cached)",
+                start_idx, total, 100 * start_idx / total, completed_chunks,
+            )
+        elif start_idx == 0:
             logger.info(
                 "Encoding %d sentences with %s (batch_size=%d, checkpoint every %d batches)",
                 total, self.model_name, self.batch_size, checkpoint_every,
             )
 
+        # Encode remaining chunks
         remaining_texts = texts[start_idx:]
         n_remaining = len(remaining_texts)
+        total_chunks = (total + chunk_size - 1) // chunk_size
+        current_chunk = completed_chunks
 
         if n_remaining > 0:
-            # Encode in chunks with intermediate checkpoints
-            chunk_size = self.batch_size * checkpoint_every
-            encoded_so_far = start_idx
-
             for chunk_start in tqdm(
                 range(0, n_remaining, chunk_size),
                 desc="Encoding chunks",
@@ -147,29 +145,50 @@ class BiEncoderRetriever:
                     show_progress_bar=True,
                     normalize_embeddings=True,
                 )
-                partial_embeddings.append(chunk_embeddings)
-                encoded_so_far += len(chunk_texts)
 
-                # Save intermediate checkpoint
-                if encoded_so_far < total:
-                    combined = np.concatenate(partial_embeddings, axis=0)
-                    np.save(str(partial_path), combined)
-                    progress_path.write_text(str(encoded_so_far))
-                    logger.info(
-                        "Checkpoint saved: %d/%d sentences (%.1f%%)",
-                        encoded_so_far, total, 100 * encoded_so_far / total,
-                    )
+                # Save this chunk to its own file
+                chunk_path = chunks_dir / f"chunk_{current_chunk:04d}.npy"
+                np.save(str(chunk_path), chunk_embeddings)
+                current_chunk += 1
 
-        # Combine all embeddings
-        self._embeddings = np.concatenate(partial_embeddings, axis=0)
+                # Update progress
+                progress_path.write_text(str(current_chunk))
+                encoded_so_far = min(current_chunk * chunk_size, total)
+                logger.info(
+                    "Chunk %d/%d saved (%d/%d sentences, %.1f%%)",
+                    current_chunk, total_chunks,
+                    encoded_so_far, total, 100 * encoded_so_far / total,
+                )
 
-        # Save final cache
-        np.save(str(embeddings_path), self._embeddings)
+        # Assemble chunks directly into a memory-mapped .npy file
+        # (avoids Windows 2 GB single-write limit and keeps RAM low)
+        logger.info("Assembling %d chunks into final embeddings...", current_chunk)
+        first_chunk = np.load(str(chunks_dir / "chunk_0000.npy"))
+        embed_dim = first_chunk.shape[1]
+
+        mmap_out = np.lib.format.open_memmap(
+            str(embeddings_path), mode="w+",
+            dtype=np.float32, shape=(total, embed_dim),
+        )
+        mmap_out[: first_chunk.shape[0]] = first_chunk
+        del first_chunk
+        offset = chunk_size
+        for i in range(1, current_chunk):
+            chunk = np.load(str(chunks_dir / f"chunk_{i:04d}.npy"))
+            end = offset + chunk.shape[0]
+            mmap_out[offset:end] = chunk
+            del chunk
+            offset = end
+        mmap_out.flush()
+        del mmap_out
+
+        # Reload as regular array for in-memory queries
+        self._embeddings = np.load(str(embeddings_path), mmap_mode="r")
         np.save(str(docnos_path), np.array(self._docnos, dtype=object))
 
-        # Clean up partial checkpoint files
-        if partial_path.exists():
-            partial_path.unlink()
+        # Clean up chunk files and progress
+        import shutil
+        shutil.rmtree(str(chunks_dir), ignore_errors=True)
         if progress_path.exists():
             progress_path.unlink()
 

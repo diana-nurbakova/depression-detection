@@ -1,0 +1,130 @@
+[
+  {
+    "symptom_id": 6,
+    "sentence_text": "I dont take naps, but every morning I feel sick with stress Im not even sure why.",
+    "bdisen_symptom": "Agitation",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "My instant reaction is to cry out of frustration during tests, which is so frivolous and annoying.",
+    "bdisen_symptom": "Agitation",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "I mean my emotions are much more strong than usual.",
+    "bdisen_symptom": "Agitation",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "Also i dont feel anxious when i meditate.",
+    "bdisen_symptom": "Agitation",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "My body convulses so much that it looks like I'm seizing.",
+    "bdisen_symptom": "Agitation",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "Its actually starting to get really frustrating, and I just feel really stupid.",
+    "bdisen_symptom": "Agitation",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "I think I have depression. Stream of consciousness rant",
+    "bdisen_symptom": "Agitation",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "Im not suicidal or homicidal or anything like that, but I'm just sick and tired of feeling this way.",
+    "bdisen_symptom": "Agitation",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "I have never been diagnosed with anxiety or anything, but I am a fairly \"high-strung\" person, however I didn't notice anything out of the ordinary in regards to my mental health.",
+    "bdisen_symptom": "Agitation",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "I can't sleep bc it beats so hard and then it's all I can focus on.",
+    "bdisen_symptom": "Agitation",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "I know my thoughts get louder when I'm stressed, overwhelmed, hungry, angry, lonely, or tired.",
+    "bdisen_symptom": "Agitation",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "It used to bother me, but I started feeling more rested after I accepted it as normal for me at this point in my life.",
+    "bdisen_symptom": "Agitation",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "The more I check the time, the more anxious I get and the harder it is to sleep.",
+    "bdisen_symptom": "Agitation",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "I snap at people or sometimes hit myself in the middle of a panic attack.",
+    "bdisen_symptom": "Agitation",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "Sometimes I still relapse, but I don't beat myself up over it and I don't feel trapped anymore.",
+    "bdisen_symptom": "Agitation",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 6,
+    "sentence_text": "Since childhood, I've been sad, anxious, or sick.",
+    "bdisen_symptom": "Agitation",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  }
+]

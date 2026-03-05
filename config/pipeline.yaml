@@ -2,6 +2,14 @@ data:
   corpus_dir: "data/eRisk-2026/task3-adhd-symptom-ranking-20260204T094934Z-3-001/task3-adhd-symptom-ranking/output_trec_files/output_trec_files"
   output_dir: "output"
   checkpoint_dir: "output/checkpoints"
+  # External datasets for annotation protocol v3
+  redsm5_dir: "data/RedSM5"
+  erisk2023_dir: "data/eRisk2023_T1"
+  erisk2023_trec_dir: "data/eRisk2023_T1/new_data"
+  bdisen_dir: "data/BDI-Sen/full_dataset"
+  erisk2025_dir: "data/eRisk-2025/eRisk25-datasets/t1-depression-symptom-ranking"
+  erisk2025_trec_dir: "data/eRisk-2025/eRisk25-datasets/t1-depression-symptom-ranking/erisk25-t1-dataset/erisk25-t1-dataset"
+  candidates_dir: "candidates"
 
 retrieval:
   models:

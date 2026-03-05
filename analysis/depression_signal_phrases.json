@@ -1,0 +1,86 @@
+{
+  "depression_only_signals": {
+    "strong": [
+      "go",
+      "going",
+      "into",
+      "get",
+      "room",
+      "over",
+      "me",
+      "time",
+      "man",
+      "my",
+      "happy",
+      "life",
+      "feel",
+      "talk",
+      "alone",
+      "always",
+      "been",
+      "friends",
+      "bad",
+      "exercise"
+    ],
+    "moderate": [
+      "depressed",
+      "suicidal",
+      "suicide",
+      "myself",
+      "life",
+      "felt",
+      "didn",
+      "feel",
+      "cry",
+      "hormones",
+      "feelings",
+      "me",
+      "feeling",
+      "insomnia",
+      "tired"
+    ],
+    "source_topics": {
+      "low_overlap": [
+        1,
+        4,
+        11,
+        12,
+        17
+      ],
+      "moderate_overlap": [
+        0,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        14,
+        15,
+        16,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ]
+    }
+  },
+  "adhd_only_signals": {
+    "note": "From Kang et al. / Layer 3 definitions - not extracted here",
+    "examples": [
+      "hyperfocus",
+      "fidget",
+      "time blindness",
+      "doom scrolling",
+      "wall of awful",
+      "executive dysfunction",
+      "stimming",
+      "body doubling",
+      "interest-based nervous system"
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "total": 2058,
+  "categories": {
+    "SLEEP_ISSUES": {
+      "total": 166,
+      "status_1": 112,
+      "first_person_and_status_1": 111
+    },
+    "WORTHLESSNESS": {
+      "total": 459,
+      "status_1": 389,
+      "first_person_and_status_1": 372
+    },
+    "FATIGUE": {
+      "total": 194,
+      "status_1": 162,
+      "first_person_and_status_1": 145
+    },
+    "COGNITIVE_ISSUES": {
+      "total": 119,
+      "status_1": 63,
+      "first_person_and_status_1": 61
+    },
+    "DEPRESSED_MOOD": {
+      "total": 491,
+      "status_1": 377,
+      "first_person_and_status_1": 355
+    },
+    "ANHEDONIA": {
+      "total": 209,
+      "status_1": 159,
+      "first_person_and_status_1": 153
+    },
+    "SUICIDAL_THOUGHTS": {
+      "total": 206,
+      "status_1": 194,
+      "first_person_and_status_1": 185
+    },
+    "APPETITE_CHANGE": {
+      "total": 70,
+      "status_1": 48,
+      "first_person_and_status_1": 48
+    },
+    "PSYCHOMOTOR": {
+      "total": 52,
+      "status_1": 35,
+      "first_person_and_status_1": 35
+    },
+    "SPECIAL_CASE": {
+      "total": 92,
+      "status_1": 92,
+      "first_person_and_status_1": 84
+    }
+  }
+}

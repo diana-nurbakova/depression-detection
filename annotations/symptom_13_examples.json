@@ -1,0 +1,85 @@
+{
+  "symptom_id": 13,
+  "symptom_text": "How often do you feel restless or fidgety?",
+  "symptom_factor": "Motor_HI",
+  "annotator": "",
+  "annotation_date": "",
+  "examples": [
+    {
+      "score": 0,
+      "docno": "",
+      "source": "",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "",
+      "text": "",
+      "post": "",
+      "annotation": {
+        "symptom_match": "",
+        "self_reference": "",
+        "detail_level": "",
+        "confounders": "",
+        "score": 0,
+        "confidence": 0,
+        "reasoning": ""
+      }
+    },
+    {
+      "score": 1,
+      "docno": "",
+      "source": "",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "",
+      "text": "",
+      "post": "",
+      "annotation": {
+        "symptom_match": "",
+        "self_reference": "",
+        "detail_level": "",
+        "confounders": "",
+        "score": 1,
+        "confidence": 0,
+        "reasoning": ""
+      }
+    },
+    {
+      "score": 2,
+      "docno": "",
+      "source": "",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "",
+      "text": "",
+      "post": "",
+      "annotation": {
+        "symptom_match": "",
+        "self_reference": "",
+        "detail_level": "",
+        "confounders": "",
+        "score": 2,
+        "confidence": 0,
+        "reasoning": ""
+      }
+    },
+    {
+      "score": 3,
+      "docno": "",
+      "source": "",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "",
+      "text": "",
+      "post": "",
+      "annotation": {
+        "symptom_match": "",
+        "self_reference": "",
+        "detail_level": "",
+        "confounders": "",
+        "score": 3,
+        "confidence": 0,
+        "reasoning": ""
+      }
+    }
+  ]
+}

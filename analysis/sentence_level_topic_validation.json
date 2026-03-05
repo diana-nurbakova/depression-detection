@@ -1,0 +1,1412 @@
+{
+  "n_sentences": 2052,
+  "n_topics": 61,
+  "n_outliers": 296,
+  "topics": {
+    "0": {
+      "size": 165,
+      "dominant_dsm5": "SLEEP_ISSUES",
+      "purity": 0.891,
+      "label_distribution": {
+        "SLEEP_ISSUES": 147,
+        "FATIGUE": 7,
+        "SPECIAL_CASE": 3,
+        "PSYCHOMOTOR": 2,
+        "WORTHLESSNESS": 2,
+        "COGNITIVE_ISSUES": 2,
+        "DEPRESSED_MOOD": 2
+      },
+      "keywords": [
+        "insomnia",
+        "sleep",
+        "sleeping",
+        "slept",
+        "tired",
+        "asleep",
+        "waking",
+        "awake",
+        "nights",
+        "groggy"
+      ]
+    },
+    "1": {
+      "size": 121,
+      "dominant_dsm5": "ANHEDONIA",
+      "purity": 0.868,
+      "label_distribution": {
+        "ANHEDONIA": 105,
+        "DEPRESSED_MOOD": 8,
+        "COGNITIVE_ISSUES": 3,
+        "SPECIAL_CASE": 3,
+        "FATIGUE": 1,
+        "PSYCHOMOTOR": 1
+      },
+      "keywords": [
+        "depression",
+        "boring",
+        "hobbies",
+        "illness",
+        "me",
+        "life",
+        "empty",
+        "that",
+        "nothing",
+        "but"
+      ]
+    },
+    "2": {
+      "size": 71,
+      "dominant_dsm5": "ANHEDONIA",
+      "purity": 0.901,
+      "label_distribution": {
+        "ANHEDONIA": 64,
+        "SPECIAL_CASE": 4,
+        "WORTHLESSNESS": 3
+      },
+      "keywords": [
+        "therapy",
+        "addict",
+        "strong",
+        "medication",
+        "arousal",
+        "girlfriend",
+        "lack",
+        "me",
+        "husband",
+        "disgusted"
+      ]
+    },
+    "3": {
+      "size": 71,
+      "dominant_dsm5": "APPETITE_CHANGE",
+      "purity": 0.873,
+      "label_distribution": {
+        "APPETITE_CHANGE": 62,
+        "SLEEP_ISSUES": 4,
+        "SPECIAL_CASE": 2,
+        "ANHEDONIA": 2,
+        "FATIGUE": 1
+      },
+      "keywords": [
+        "sleep",
+        "same",
+        "cravings",
+        "me",
+        "past",
+        "am",
+        "binge",
+        "im",
+        "hunger",
+        "anorexic"
+      ]
+    },
+    "4": {
+      "size": 64,
+      "dominant_dsm5": "COGNITIVE_ISSUES",
+      "purity": 0.922,
+      "label_distribution": {
+        "COGNITIVE_ISSUES": 59,
+        "PSYCHOMOTOR": 4,
+        "SPECIAL_CASE": 1
+      },
+      "keywords": [
+        "distracted",
+        "concentrate",
+        "go",
+        "struggle",
+        "meditation",
+        "sit",
+        "try",
+        "hard",
+        "become",
+        "lose"
+      ]
+    },
+    "5": {
+      "size": 63,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 0.857,
+      "label_distribution": {
+        "WORTHLESSNESS": 54,
+        "SUICIDAL_THOUGHTS": 6,
+        "APPETITE_CHANGE": 1,
+        "SPECIAL_CASE": 1,
+        "DEPRESSED_MOOD": 1
+      },
+      "keywords": [
+        "drinking",
+        "myself",
+        "smoking",
+        "me",
+        "everyday",
+        "daily",
+        "completely",
+        "enough",
+        "when",
+        "reminds"
+      ]
+    },
+    "6": {
+      "size": 51,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 0.804,
+      "label_distribution": {
+        "WORTHLESSNESS": 41,
+        "ANHEDONIA": 6,
+        "SPECIAL_CASE": 2,
+        "DEPRESSED_MOOD": 1,
+        "COGNITIVE_ISSUES": 1
+      },
+      "keywords": [
+        "feeling",
+        "feel",
+        "struggling",
+        "be",
+        "myself",
+        "being",
+        "talk",
+        "me",
+        "go",
+        "fuck"
+      ]
+    },
+    "7": {
+      "size": 47,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 0.957,
+      "label_distribution": {
+        "WORTHLESSNESS": 45,
+        "DEPRESSED_MOOD": 2
+      },
+      "keywords": [
+        "worried",
+        "feeling",
+        "terrified",
+        "always",
+        "felt",
+        "feel",
+        "be",
+        "counseling",
+        "quit",
+        "confidence"
+      ]
+    },
+    "8": {
+      "size": 43,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 1.0,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 43
+      },
+      "keywords": [
+        "sometimes",
+        "nights",
+        "night",
+        "intense",
+        "today",
+        "easy",
+        "boyfriend",
+        "just",
+        "cry",
+        "easier"
+      ]
+    },
+    "9": {
+      "size": 40,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 1.0,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 40
+      },
+      "keywords": [
+        "cried",
+        "cry",
+        "felt",
+        "crying",
+        "tears",
+        "feeling",
+        "sob",
+        "anger",
+        "uncontrollably",
+        "heart"
+      ]
+    },
+    "10": {
+      "size": 40,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 0.95,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 38,
+        "PSYCHOMOTOR": 1,
+        "WORTHLESSNESS": 1
+      },
+      "keywords": [
+        "angrier",
+        "moody",
+        "upset",
+        "irritability",
+        "emotions",
+        "agitation",
+        "rage",
+        "frustrated",
+        "angry",
+        "anger"
+      ]
+    },
+    "11": {
+      "size": 36,
+      "dominant_dsm5": "SPECIAL_CASE",
+      "purity": 0.639,
+      "label_distribution": {
+        "SPECIAL_CASE": 23,
+        "WORTHLESSNESS": 6,
+        "DEPRESSED_MOOD": 3,
+        "APPETITE_CHANGE": 2,
+        "PSYCHOMOTOR": 1,
+        "ANHEDONIA": 1
+      },
+      "keywords": [
+        "depression",
+        "depressed",
+        "depressive",
+        "suffer",
+        "agoraphobia",
+        "anxiety",
+        "ptsd",
+        "disorder",
+        "numb",
+        "suffered"
+      ]
+    },
+    "12": {
+      "size": 36,
+      "dominant_dsm5": "COGNITIVE_ISSUES",
+      "purity": 0.75,
+      "label_distribution": {
+        "COGNITIVE_ISSUES": 27,
+        "WORTHLESSNESS": 6,
+        "SPECIAL_CASE": 2,
+        "DEPRESSED_MOOD": 1
+      },
+      "keywords": [
+        "poor",
+        "sadly",
+        "me",
+        "life",
+        "im",
+        "hurt",
+        "knew",
+        "affect",
+        "you",
+        "incapable"
+      ]
+    },
+    "13": {
+      "size": 36,
+      "dominant_dsm5": "SUICIDAL_THOUGHTS",
+      "purity": 0.917,
+      "label_distribution": {
+        "SUICIDAL_THOUGHTS": 33,
+        "SPECIAL_CASE": 2,
+        "WORTHLESSNESS": 1
+      },
+      "keywords": [
+        "suicidal",
+        "adrenaline",
+        "suicide",
+        "be",
+        "not",
+        "cheerfully",
+        "caring",
+        "like",
+        "although",
+        "didn"
+      ]
+    },
+    "14": {
+      "size": 35,
+      "dominant_dsm5": "FATIGUE",
+      "purity": 1.0,
+      "label_distribution": {
+        "FATIGUE": 35
+      },
+      "keywords": [
+        "feel",
+        "help",
+        "suffering",
+        "bored",
+        "morning",
+        "lost",
+        "stuck",
+        "dont",
+        "mentally",
+        "get"
+      ]
+    },
+    "15": {
+      "size": 35,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 0.971,
+      "label_distribution": {
+        "WORTHLESSNESS": 34,
+        "SPECIAL_CASE": 1
+      },
+      "keywords": [
+        "relate",
+        "guilt",
+        "ocd",
+        "feelings",
+        "help",
+        "me",
+        "feeling",
+        "remorse",
+        "feel",
+        "bad"
+      ]
+    },
+    "16": {
+      "size": 34,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 0.971,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 33,
+        "WORTHLESSNESS": 1
+      },
+      "keywords": [
+        "same",
+        "deeply",
+        "myself",
+        "me",
+        "am",
+        "im",
+        "cry",
+        "feel",
+        "relieved",
+        "how"
+      ]
+    },
+    "17": {
+      "size": 31,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 0.806,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 25,
+        "ANHEDONIA": 3,
+        "WORTHLESSNESS": 2,
+        "SPECIAL_CASE": 1
+      },
+      "keywords": [
+        "depressed",
+        "symptoms",
+        "calmed",
+        "happiness",
+        "numb",
+        "happy",
+        "neither",
+        "dont",
+        "overwhelming",
+        "miserable"
+      ]
+    },
+    "18": {
+      "size": 27,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 0.963,
+      "label_distribution": {
+        "WORTHLESSNESS": 26,
+        "DEPRESSED_MOOD": 1
+      },
+      "keywords": [
+        "me",
+        "myself",
+        "im",
+        "cold",
+        "dont",
+        "alone",
+        "be",
+        "happy",
+        "pathetic",
+        "do"
+      ]
+    },
+    "19": {
+      "size": 27,
+      "dominant_dsm5": "FATIGUE",
+      "purity": 0.852,
+      "label_distribution": {
+        "FATIGUE": 23,
+        "SLEEP_ISSUES": 3,
+        "PSYCHOMOTOR": 1
+      },
+      "keywords": [
+        "fatigue",
+        "fatigued",
+        "tired",
+        "exhausted",
+        "stress",
+        "restless",
+        "always",
+        "sleep",
+        "exercise",
+        "feel"
+      ]
+    },
+    "20": {
+      "size": 26,
+      "dominant_dsm5": "FATIGUE",
+      "purity": 0.962,
+      "label_distribution": {
+        "FATIGUE": 25,
+        "DEPRESSED_MOOD": 1
+      },
+      "keywords": [
+        "cry",
+        "emotionally",
+        "sleep",
+        "feeling",
+        "tired",
+        "feel",
+        "exhausted",
+        "today",
+        "am",
+        "mentally"
+      ]
+    },
+    "21": {
+      "size": 26,
+      "dominant_dsm5": "SUICIDAL_THOUGHTS",
+      "purity": 0.962,
+      "label_distribution": {
+        "SUICIDAL_THOUGHTS": 25,
+        "DEPRESSED_MOOD": 1
+      },
+      "keywords": [
+        "suicidal",
+        "feeling",
+        "suicide",
+        "been",
+        "struggle",
+        "harm",
+        "me",
+        "painfull",
+        "urge",
+        "nor"
+      ]
+    },
+    "22": {
+      "size": 25,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 0.72,
+      "label_distribution": {
+        "WORTHLESSNESS": 18,
+        "DEPRESSED_MOOD": 6,
+        "FATIGUE": 1
+      },
+      "keywords": [
+        "depressed",
+        "tired",
+        "miserable",
+        "feeling",
+        "lonely",
+        "feel",
+        "felt",
+        "feelings",
+        "been",
+        "sad"
+      ]
+    },
+    "23": {
+      "size": 25,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 0.6,
+      "label_distribution": {
+        "WORTHLESSNESS": 15,
+        "DEPRESSED_MOOD": 6,
+        "ANHEDONIA": 2,
+        "SPECIAL_CASE": 1,
+        "COGNITIVE_ISSUES": 1
+      },
+      "keywords": [
+        "depressed",
+        "life",
+        "hopeless",
+        "joy",
+        "feel",
+        "myself",
+        "wasted",
+        "dont",
+        "me",
+        "harmful"
+      ]
+    },
+    "24": {
+      "size": 25,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 0.92,
+      "label_distribution": {
+        "WORTHLESSNESS": 23,
+        "SPECIAL_CASE": 1,
+        "SUICIDAL_THOUGHTS": 1
+      },
+      "keywords": [
+        "myself",
+        "messed",
+        "fuck",
+        "love",
+        "killing",
+        "hate",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    "25": {
+      "size": 24,
+      "dominant_dsm5": "PSYCHOMOTOR",
+      "purity": 0.625,
+      "label_distribution": {
+        "PSYCHOMOTOR": 15,
+        "SPECIAL_CASE": 2,
+        "SUICIDAL_THOUGHTS": 2,
+        "FATIGUE": 2,
+        "COGNITIVE_ISSUES": 1,
+        "DEPRESSED_MOOD": 1,
+        "WORTHLESSNESS": 1
+      },
+      "keywords": [
+        "suicidal",
+        "woke",
+        "go",
+        "drink",
+        "panic",
+        "stressed",
+        "leave",
+        "me",
+        "upset",
+        "quitting"
+      ]
+    },
+    "26": {
+      "size": 23,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 1.0,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 23
+      },
+      "keywords": [
+        "rest",
+        "why",
+        "cry",
+        "feel",
+        "crying",
+        "happy",
+        "stop",
+        "keep",
+        "my",
+        "im"
+      ]
+    },
+    "27": {
+      "size": 23,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 0.783,
+      "label_distribution": {
+        "WORTHLESSNESS": 18,
+        "SPECIAL_CASE": 4,
+        "DEPRESSED_MOOD": 1
+      },
+      "keywords": [
+        "myself",
+        "feel",
+        "life",
+        "but",
+        "me",
+        "happy",
+        "be",
+        "feeling",
+        "unhappy",
+        "im"
+      ]
+    },
+    "28": {
+      "size": 22,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 0.955,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 21,
+        "PSYCHOMOTOR": 1
+      },
+      "keywords": [
+        "depressed",
+        "angrier",
+        "emotion",
+        "becoming",
+        "feel",
+        "agitated",
+        "mood",
+        "frustrated",
+        "crying",
+        "outbursts"
+      ]
+    },
+    "29": {
+      "size": 22,
+      "dominant_dsm5": "PSYCHOMOTOR",
+      "purity": 0.273,
+      "label_distribution": {
+        "PSYCHOMOTOR": 6,
+        "SPECIAL_CASE": 5,
+        "FATIGUE": 4,
+        "DEPRESSED_MOOD": 4,
+        "SUICIDAL_THOUGHTS": 1,
+        "COGNITIVE_ISSUES": 1,
+        "APPETITE_CHANGE": 1
+      },
+      "keywords": [
+        "anxious",
+        "anxiety",
+        "relaxed",
+        "sleeping",
+        "calm",
+        "mood",
+        "felt",
+        "happy",
+        "happier",
+        "worries"
+      ]
+    },
+    "30": {
+      "size": 22,
+      "dominant_dsm5": "SUICIDAL_THOUGHTS",
+      "purity": 0.955,
+      "label_distribution": {
+        "SUICIDAL_THOUGHTS": 21,
+        "WORTHLESSNESS": 1
+      },
+      "keywords": [
+        "life",
+        "myself",
+        "suffering",
+        "peace",
+        "feel",
+        "be",
+        "being",
+        "crave",
+        "me",
+        "guilt"
+      ]
+    },
+    "31": {
+      "size": 22,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 1.0,
+      "label_distribution": {
+        "WORTHLESSNESS": 22
+      },
+      "keywords": [
+        "always",
+        "responsibility",
+        "myself",
+        "me",
+        "bad",
+        "why",
+        "that",
+        "problem",
+        "but",
+        "do"
+      ]
+    },
+    "32": {
+      "size": 21,
+      "dominant_dsm5": "SUICIDAL_THOUGHTS",
+      "purity": 0.952,
+      "label_distribution": {
+        "SUICIDAL_THOUGHTS": 20,
+        "WORTHLESSNESS": 1
+      },
+      "keywords": [
+        "myself",
+        "this",
+        "fucking",
+        "but",
+        "that",
+        "am",
+        "really",
+        "im",
+        "thinking",
+        "why"
+      ]
+    },
+    "33": {
+      "size": 21,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 0.905,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 19,
+        "WORTHLESSNESS": 1,
+        "SPECIAL_CASE": 1
+      },
+      "keywords": [
+        "depressive",
+        "despair",
+        "life",
+        "hopeless",
+        "hope",
+        "feelings",
+        "completely",
+        "dont",
+        "anymore",
+        "be"
+      ]
+    },
+    "34": {
+      "size": 19,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 0.421,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 8,
+        "WORTHLESSNESS": 4,
+        "ANHEDONIA": 3,
+        "FATIGUE": 3,
+        "SUICIDAL_THOUGHTS": 1
+      },
+      "keywords": [
+        "depressed",
+        "miserable",
+        "sad",
+        "depression",
+        "feeling",
+        "fuck",
+        "im",
+        "why",
+        "hard",
+        "alone"
+      ]
+    },
+    "35": {
+      "size": 18,
+      "dominant_dsm5": "FATIGUE",
+      "purity": 0.833,
+      "label_distribution": {
+        "FATIGUE": 15,
+        "PSYCHOMOTOR": 2,
+        "ANHEDONIA": 1
+      },
+      "keywords": [
+        "improve",
+        "feel",
+        "fatigued",
+        "feeling",
+        "exhausted",
+        "mentally",
+        "frustrated",
+        "tired",
+        "change",
+        "survive"
+      ]
+    },
+    "36": {
+      "size": 18,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 0.944,
+      "label_distribution": {
+        "WORTHLESSNESS": 17,
+        "SUICIDAL_THOUGHTS": 1
+      },
+      "keywords": [
+        "admit",
+        "life",
+        "miserably",
+        "succeed",
+        "failing",
+        "help",
+        "failed",
+        "failure",
+        "seem",
+        "fail"
+      ]
+    },
+    "37": {
+      "size": 17,
+      "dominant_dsm5": "SPECIAL_CASE",
+      "purity": 0.647,
+      "label_distribution": {
+        "SPECIAL_CASE": 11,
+        "SLEEP_ISSUES": 2,
+        "APPETITE_CHANGE": 2,
+        "DEPRESSED_MOOD": 1,
+        "PSYCHOMOTOR": 1
+      },
+      "keywords": [
+        "sleep",
+        "depression",
+        "seriously",
+        "antidepressants",
+        "change",
+        "paroxetine",
+        "antidepressant",
+        "weened",
+        "help",
+        "my"
+      ]
+    },
+    "38": {
+      "size": 17,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 1.0,
+      "label_distribution": {
+        "WORTHLESSNESS": 17
+      },
+      "keywords": [
+        "felt",
+        "myself",
+        "me",
+        "feel",
+        "am",
+        "did",
+        "die",
+        "painful",
+        "you",
+        "death"
+      ]
+    },
+    "39": {
+      "size": 16,
+      "dominant_dsm5": "SUICIDAL_THOUGHTS",
+      "purity": 0.812,
+      "label_distribution": {
+        "SUICIDAL_THOUGHTS": 13,
+        "DEPRESSED_MOOD": 2,
+        "WORTHLESSNESS": 1
+      },
+      "keywords": [
+        "suicide",
+        "die",
+        "loneliness",
+        "becoming",
+        "life",
+        "myself",
+        "painful",
+        "dont",
+        "kill",
+        "hurt"
+      ]
+    },
+    "40": {
+      "size": 16,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 0.812,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 13,
+        "SPECIAL_CASE": 2,
+        "WORTHLESSNESS": 1
+      },
+      "keywords": [
+        "depressed",
+        "miserable",
+        "or",
+        "angry",
+        "feel",
+        "sad",
+        "but",
+        "not",
+        "feeling",
+        "anyway"
+      ]
+    },
+    "41": {
+      "size": 15,
+      "dominant_dsm5": "SUICIDAL_THOUGHTS",
+      "purity": 0.867,
+      "label_distribution": {
+        "SUICIDAL_THOUGHTS": 13,
+        "WORTHLESSNESS": 2
+      },
+      "keywords": [
+        "myself",
+        "self",
+        "suicide",
+        "kill",
+        "tried",
+        "being",
+        "failed",
+        "more",
+        "honestly",
+        "but"
+      ]
+    },
+    "42": {
+      "size": 15,
+      "dominant_dsm5": "SUICIDAL_THOUGHTS",
+      "purity": 0.733,
+      "label_distribution": {
+        "SUICIDAL_THOUGHTS": 11,
+        "DEPRESSED_MOOD": 3,
+        "ANHEDONIA": 1
+      },
+      "keywords": [
+        "living",
+        "life",
+        "dying",
+        "suffering",
+        "quitting",
+        "die",
+        "be",
+        "feel",
+        "being",
+        "personally"
+      ]
+    },
+    "43": {
+      "size": 14,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 0.571,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 8,
+        "WORTHLESSNESS": 6
+      },
+      "keywords": [
+        "sad",
+        "happy",
+        "unhappy",
+        "upset",
+        "myself",
+        "angry",
+        "im",
+        "just",
+        "am",
+        "quite"
+      ]
+    },
+    "44": {
+      "size": 14,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 1.0,
+      "label_distribution": {
+        "WORTHLESSNESS": 14
+      },
+      "keywords": [
+        "sadness",
+        "me",
+        "feeling",
+        "feel",
+        "guilt",
+        "guilty",
+        "powerless",
+        "envy",
+        "bad",
+        "felt"
+      ]
+    },
+    "45": {
+      "size": 12,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 0.917,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 11,
+        "FATIGUE": 1
+      },
+      "keywords": [
+        "myself",
+        "im",
+        "do",
+        "cry",
+        "sadness",
+        "work",
+        "nothing",
+        "energy",
+        "am",
+        "cant"
+      ]
+    },
+    "46": {
+      "size": 12,
+      "dominant_dsm5": "ANHEDONIA",
+      "purity": 0.583,
+      "label_distribution": {
+        "ANHEDONIA": 7,
+        "WORTHLESSNESS": 2,
+        "FATIGUE": 1,
+        "COGNITIVE_ISSUES": 1,
+        "DEPRESSED_MOOD": 1
+      },
+      "keywords": [
+        "myself",
+        "same",
+        "motivation",
+        "depression",
+        "tired",
+        "unhappy",
+        "me",
+        "bored",
+        "trying",
+        "feel"
+      ]
+    },
+    "47": {
+      "size": 12,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 0.5,
+      "label_distribution": {
+        "WORTHLESSNESS": 6,
+        "DEPRESSED_MOOD": 4,
+        "ANHEDONIA": 1,
+        "COGNITIVE_ISSUES": 1
+      },
+      "keywords": [
+        "myself",
+        "anxiety",
+        "me",
+        "helpless",
+        "lonely",
+        "hopeless",
+        "help",
+        "motivation",
+        "always",
+        "harm"
+      ]
+    },
+    "48": {
+      "size": 12,
+      "dominant_dsm5": "FATIGUE",
+      "purity": 0.583,
+      "label_distribution": {
+        "FATIGUE": 7,
+        "COGNITIVE_ISSUES": 3,
+        "ANHEDONIA": 2
+      },
+      "keywords": [
+        "same",
+        "depression",
+        "felt",
+        "feelings",
+        "struggled",
+        "motivation",
+        "always",
+        "upset",
+        "been",
+        "pain"
+      ]
+    },
+    "49": {
+      "size": 12,
+      "dominant_dsm5": "COGNITIVE_ISSUES",
+      "purity": 1.0,
+      "label_distribution": {
+        "COGNITIVE_ISSUES": 12
+      },
+      "keywords": [
+        "loss",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    "50": {
+      "size": 12,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 0.833,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 10,
+        "SPECIAL_CASE": 1,
+        "FATIGUE": 1
+      },
+      "keywords": [
+        "quite",
+        "feeling",
+        "daily",
+        "myself",
+        "very",
+        "positive",
+        "pessimistic",
+        "becoming",
+        "just",
+        "me"
+      ]
+    },
+    "51": {
+      "size": 11,
+      "dominant_dsm5": "PSYCHOMOTOR",
+      "purity": 0.455,
+      "label_distribution": {
+        "PSYCHOMOTOR": 5,
+        "FATIGUE": 4,
+        "COGNITIVE_ISSUES": 1,
+        "SLEEP_ISSUES": 1
+      },
+      "keywords": [
+        "fatigued",
+        "agitated",
+        "feel",
+        "tired",
+        "restless",
+        "same",
+        "been",
+        "sleep",
+        "increasingly",
+        "before"
+      ]
+    },
+    "52": {
+      "size": 11,
+      "dominant_dsm5": "FATIGUE",
+      "purity": 1.0,
+      "label_distribution": {
+        "FATIGUE": 11
+      },
+      "keywords": [
+        "exhaustion",
+        "suffer",
+        "feeling",
+        "fatigue",
+        "feel",
+        "im",
+        "sleeping",
+        "tired",
+        "become",
+        "always"
+      ]
+    },
+    "53": {
+      "size": 11,
+      "dominant_dsm5": "FATIGUE",
+      "purity": 0.636,
+      "label_distribution": {
+        "FATIGUE": 7,
+        "SLEEP_ISSUES": 2,
+        "SPECIAL_CASE": 1,
+        "DEPRESSED_MOOD": 1
+      },
+      "keywords": [
+        "depressed",
+        "feel",
+        "depression",
+        "feeling",
+        "stressed",
+        "be",
+        "me",
+        "sleepy",
+        "always",
+        "im"
+      ]
+    },
+    "54": {
+      "size": 11,
+      "dominant_dsm5": "SUICIDAL_THOUGHTS",
+      "purity": 0.909,
+      "label_distribution": {
+        "SUICIDAL_THOUGHTS": 10,
+        "DEPRESSED_MOOD": 1
+      },
+      "keywords": [
+        "suicide",
+        "cry",
+        "myself",
+        "kill",
+        "me",
+        "helped",
+        "why",
+        "godless",
+        "am",
+        "been"
+      ]
+    },
+    "55": {
+      "size": 11,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 1.0,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 11
+      },
+      "keywords": [
+        "be",
+        "me",
+        "worried",
+        "fear",
+        "boring",
+        "try",
+        "don",
+        "dead",
+        "whatever",
+        "get"
+      ]
+    },
+    "56": {
+      "size": 10,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 0.6,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 6,
+        "WORTHLESSNESS": 2,
+        "SUICIDAL_THOUGHTS": 1,
+        "ANHEDONIA": 1
+      },
+      "keywords": [
+        "myself",
+        "failure",
+        "self",
+        "life",
+        "feel",
+        "becoming",
+        "disappointment",
+        "feeling",
+        "killing",
+        "anxiety"
+      ]
+    },
+    "57": {
+      "size": 10,
+      "dominant_dsm5": "DEPRESSED_MOOD",
+      "purity": 1.0,
+      "label_distribution": {
+        "DEPRESSED_MOOD": 10
+      },
+      "keywords": [
+        "sad",
+        "crying",
+        "me",
+        "cry",
+        "but",
+        "mean",
+        "well",
+        "cried",
+        "this",
+        "didn"
+      ]
+    },
+    "58": {
+      "size": 10,
+      "dominant_dsm5": "SUICIDAL_THOUGHTS",
+      "purity": 0.7,
+      "label_distribution": {
+        "SUICIDAL_THOUGHTS": 7,
+        "WORTHLESSNESS": 2,
+        "DEPRESSED_MOOD": 1
+      },
+      "keywords": [
+        "despair",
+        "suicidal",
+        "suicide",
+        "stressed",
+        "life",
+        "disorder",
+        "hating",
+        "me",
+        "having",
+        "getting"
+      ]
+    },
+    "59": {
+      "size": 10,
+      "dominant_dsm5": "FATIGUE",
+      "purity": 0.9,
+      "label_distribution": {
+        "FATIGUE": 9,
+        "COGNITIVE_ISSUES": 1
+      },
+      "keywords": [
+        "myself",
+        "stressed",
+        "care",
+        "24",
+        "dont",
+        "help",
+        "food",
+        "get",
+        "low",
+        "anymore"
+      ]
+    },
+    "60": {
+      "size": 10,
+      "dominant_dsm5": "WORTHLESSNESS",
+      "purity": 0.6,
+      "label_distribution": {
+        "WORTHLESSNESS": 6,
+        "DEPRESSED_MOOD": 3,
+        "SPECIAL_CASE": 1
+      },
+      "keywords": [
+        "happy",
+        "hopeless",
+        "life",
+        "feeling",
+        "awful",
+        "horrible",
+        "waking",
+        "bad",
+        "ashamed",
+        "myself"
+      ]
+    }
+  },
+  "dsm5_category_summary": {
+    "SLEEP_ISSUES": {
+      "n_topics": 1,
+      "mean_purity": 0.891,
+      "max_purity": 0.891,
+      "min_purity": 0.891
+    },
+    "ANHEDONIA": {
+      "n_topics": 3,
+      "mean_purity": 0.784,
+      "max_purity": 0.901,
+      "min_purity": 0.583
+    },
+    "APPETITE_CHANGE": {
+      "n_topics": 1,
+      "mean_purity": 0.873,
+      "max_purity": 0.873,
+      "min_purity": 0.873
+    },
+    "COGNITIVE_ISSUES": {
+      "n_topics": 3,
+      "mean_purity": 0.891,
+      "max_purity": 1.0,
+      "min_purity": 0.75
+    },
+    "WORTHLESSNESS": {
+      "n_topics": 15,
+      "mean_purity": 0.841,
+      "max_purity": 1.0,
+      "min_purity": 0.5
+    },
+    "DEPRESSED_MOOD": {
+      "n_topics": 16,
+      "mean_purity": 0.859,
+      "max_purity": 1.0,
+      "min_purity": 0.421
+    },
+    "SPECIAL_CASE": {
+      "n_topics": 2,
+      "mean_purity": 0.643,
+      "max_purity": 0.647,
+      "min_purity": 0.639
+    },
+    "SUICIDAL_THOUGHTS": {
+      "n_topics": 9,
+      "mean_purity": 0.867,
+      "max_purity": 0.962,
+      "min_purity": 0.7
+    },
+    "FATIGUE": {
+      "n_topics": 8,
+      "mean_purity": 0.846,
+      "max_purity": 1.0,
+      "min_purity": 0.583
+    },
+    "PSYCHOMOTOR": {
+      "n_topics": 3,
+      "mean_purity": 0.451,
+      "max_purity": 0.625,
+      "min_purity": 0.273
+    }
+  }
+}

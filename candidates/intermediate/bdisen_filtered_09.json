@@ -1,0 +1,50 @@
+[
+  {
+    "symptom_id": 9,
+    "sentence_text": "i burnt out and i still am unmotivated and feeling like shit.",
+    "bdisen_symptom": "Concentration_difficulty",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 9,
+    "sentence_text": "I try to pay attention, I really do, but I just naturally zone out in conversations a lot or forget to do things.",
+    "bdisen_symptom": "Concentration_difficulty",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 9,
+    "sentence_text": "I have a terrible attention span.",
+    "bdisen_symptom": "Concentration_difficulty",
+    "severity": 1,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 9,
+    "sentence_text": "I feel lightheaded and sick constantly, and even the smallest chores make me tired.",
+    "bdisen_symptom": "Concentration_difficulty",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 9,
+    "sentence_text": "I barely know what to do anymore.",
+    "bdisen_symptom": "Concentration_difficulty",
+    "severity": 2,
+    "label": 1,
+    "source": "bdisen"
+  },
+  {
+    "symptom_id": 9,
+    "sentence_text": "This is a great idea, but I could never do this because my memory sucks.",
+    "bdisen_symptom": "Concentration_difficulty",
+    "severity": 3,
+    "label": 1,
+    "source": "bdisen"
+  }
+]
