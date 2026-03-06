@@ -105,6 +105,16 @@ class LLMClient:
                     "num_predict": mtok,
                 },
             }
+        elif is_reasoning:
+            # Reasoning models: disable streaming — reasoning tokens
+            # are not emitted as content chunks, so streaming would
+            # yield an empty content string.
+            payload = {
+                "model": self.model,
+                "messages": messages,
+                "stream": False,
+                "max_completion_tokens": mtok,
+            }
         else:
             payload = {
                 "model": self.model,
@@ -124,15 +134,20 @@ class LLMClient:
             try:
                 t0 = time.monotonic()
                 read_timeout = max(self.timeout, 300)
+                use_stream = payload.get("stream", True)
                 response = requests.post(
                     url,
                     headers=headers,
                     json=payload,
                     timeout=(30, read_timeout),
-                    stream=True,
+                    stream=use_stream,
                 )
                 response.raise_for_status()
-                result = self._consume_stream(response, use_native_ollama)
+
+                if not use_stream:
+                    result = response.json()
+                else:
+                    result = self._consume_stream(response, use_native_ollama)
                 elapsed = time.monotonic() - t0
 
                 # Track usage
@@ -149,7 +164,7 @@ class LLMClient:
 
                 content = ""
                 try:
-                    content = result["choices"][0]["message"]["content"]
+                    content = result["choices"][0]["message"]["content"] or ""
                 except (KeyError, IndexError, TypeError):
                     pass
 
@@ -202,7 +217,7 @@ class LLMClient:
     def get_content(self, response: dict) -> str:
         """Extract the assistant message content from a chat completion response."""
         try:
-            return response["choices"][0]["message"]["content"]
+            return response["choices"][0]["message"]["content"] or ""
         except (KeyError, IndexError, TypeError):
             logger.error("Unexpected response structure: %s", json.dumps(response)[:500])
             return ""
