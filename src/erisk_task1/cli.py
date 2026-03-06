@@ -196,6 +196,70 @@ def train(base_model: str, epochs: int, batch_size: int, lr: float, loss: str, o
 
 
 @cli.command()
+@click.option("--config", "config_path", default="config/task1.yaml", help="Config YAML path")
+@click.option("--talkdep", default="data/TalkDep", help="Path to TalkDep repo")
+@click.option("--configs", default=None, help="Comma-separated ablation configs (default: all A0-A7)")
+@click.option("--personas", default=None, help="Comma-separated persona names (e.g., Maria,Noah)")
+@click.option("--output", default="runs/ablation", help="Output directory")
+@click.option("--log-level", default="INFO", help="Log level")
+def ablation(config_path: str, talkdep: str, configs: str | None, personas: str | None, output: str, log_level: str):
+    """Run the ablation study against TalkDep conversations.
+
+    Tests pipeline components incrementally (A0-A7) against 12 personas
+    with golden BDI-II scores. Requires Together AI API key.
+
+    Example:
+      python -m erisk_task1.cli ablation --configs A0,A1,A4
+      python -m erisk_task1.cli ablation --personas Maria,Noah,Ethan
+      python -m erisk_task1.cli ablation  # runs all A0-A7 on all 12 personas
+    """
+    log_file = str(Path(output) / "ablation.log")
+    setup_logging(log_level, log_file)
+
+    config = load_config(config_path)
+
+    config_list = None
+    if configs:
+        config_list = [c.strip() for c in configs.split(",")]
+
+    persona_list = None
+    if personas:
+        persona_list = [p.strip() for p in personas.split(",")]
+
+    from .ablation import ABLATION_CONFIGS, run_full_ablation_study
+    from .evaluation import format_comparison_table, format_error_analysis
+
+    valid_configs = config_list or list(ABLATION_CONFIGS.keys())
+    click.echo(f"Ablation study")
+    click.echo(f"  Configs: {valid_configs}")
+    click.echo(f"  TalkDep: {talkdep}")
+    click.echo(f"  Personas: {persona_list or 'all 12'}")
+    click.echo(f"  Assessor: {config.assessor.model} via {config.assessor.provider}")
+    click.echo(f"  Output: {output}")
+    click.echo()
+
+    results = run_full_ablation_study(
+        pipeline_cfg=config,
+        talkdep_dir=talkdep,
+        configs=config_list,
+        personas=persona_list,
+        output_dir=output,
+    )
+
+    # Print comparison table
+    click.echo()
+    click.echo(format_comparison_table(results))
+
+    # Print error analysis for full pipeline (A4)
+    for r in results:
+        if r.config_name == "A4_justificator":
+            click.echo()
+            click.echo(format_error_analysis(r))
+
+    click.echo(f"\nDetailed results saved to: {output}/")
+
+
+@cli.command()
 @click.argument("text")
 def features(text: str):
     """Extract linguistic features from a text sample."""

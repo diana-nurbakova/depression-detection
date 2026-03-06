@@ -1,5 +1,6 @@
-# eRisk 2026 Task 1 — Run 1: Primary (Colab + Together AI)
-# Strategy: full assessment every turn, 6-8 turns
+# eRisk 2026 Task 1 — Run 1 (Colab + Together AI)
+# Strategy: POST_A0 + minus_5 correction
+# Single DepreSym-calibrated assessor, 4-8 turns, flat -5 deflation
 hardware_scenario: "colab_t4"
 
 models:
@@ -46,7 +47,7 @@ execution:
   assess_every_n_turns: 1
   parallel_assessors: true
   max_turns: 8
-  min_turns: 5
+  min_turns: 4
   termination_confidence: 0.5
 
 sentence_transformer:
@@ -54,6 +55,9 @@ sentence_transformer:
   model_path: "models/symptom_transformer"
   device: "cuda"
   batch_size: 64
+
+correction:
+  run1: "minus_5"
 
 together:
   timeout_seconds: 120

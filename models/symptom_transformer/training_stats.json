@@ -1,0 +1,148 @@
+{
+  "best_macro_f1": 0.18497401889976628,
+  "per_symptom_f1": {
+    "Sadness": 0.2316258351893096,
+    "Pessimism": 0.043645699614890884,
+    "Past failure": 0.08695652173913045,
+    "Loss of pleasure": 0.1909814323607427,
+    "Guilty feelings": 0.16828478964401294,
+    "Punishment feelings": 0.1444866920152091,
+    "Self-dislike": 0.21212121212121213,
+    "Self-criticalness": 0.14426229508196722,
+    "Suicidal thoughts or wishes": 0.47222222222222227,
+    "Crying": 0.44247787610619466,
+    "Agitation": 0.061946902654867256,
+    "Loss of interest": 0.18113207547169813,
+    "Indecisiveness": 0.039525691699604744,
+    "Worthlessness": 0.17006802721088438,
+    "Loss of energy": 0.1753246753246753,
+    "Changes in sleeping pattern": 0.33777777777777784,
+    "Irritability": 0.27177700348432055,
+    "Changes in appetite": 0.15819209039548024,
+    "Concentration difficulty": 0.10788381742738588,
+    "Tiredness or fatigue": 0.17445482866043613,
+    "Loss of interest in sex": 0.0693069306930693
+  },
+  "dataset_stats": {
+    "total_samples": 20573,
+    "source_counts": {
+      "depresym": 16148,
+      "redsm5": 1896,
+      "bdisen": 2529
+    },
+    "per_symptom": {
+      "Sadness": {
+        "positive": 700,
+        "negative": 19873,
+        "ratio": 0.03402517863218782
+      },
+      "Pessimism": {
+        "positive": 176,
+        "negative": 20397,
+        "ratio": 0.008554902056092937
+      },
+      "Past failure": {
+        "positive": 222,
+        "negative": 20351,
+        "ratio": 0.010790842366208137
+      },
+      "Loss of pleasure": {
+        "positive": 376,
+        "negative": 20197,
+        "ratio": 0.018276381665289457
+      },
+      "Guilty feelings": {
+        "positive": 458,
+        "negative": 20115,
+        "ratio": 0.02226218830506003
+      },
+      "Punishment feelings": {
+        "positive": 387,
+        "negative": 20186,
+        "ratio": 0.018811063043795265
+      },
+      "Self-dislike": {
+        "positive": 566,
+        "negative": 20007,
+        "ratio": 0.02751178729402615
+      },
+      "Self-criticalness": {
+        "positive": 434,
+        "negative": 20139,
+        "ratio": 0.02109561075195645
+      },
+      "Suicidal thoughts or wishes": {
+        "positive": 498,
+        "negative": 20075,
+        "ratio": 0.024206484226899333
+      },
+      "Crying": {
+        "positive": 633,
+        "negative": 19940,
+        "ratio": 0.030768482963106986
+      },
+      "Agitation": {
+        "positive": 130,
+        "negative": 20443,
+        "ratio": 0.006318961745977738
+      },
+      "Loss of interest": {
+        "positive": 234,
+        "negative": 20339,
+        "ratio": 0.011374131142759928
+      },
+      "Indecisiveness": {
+        "positive": 146,
+        "negative": 20427,
+        "ratio": 0.007096680114713459
+      },
+      "Worthlessness": {
+        "positive": 447,
+        "negative": 20126,
+        "ratio": 0.021727506926554223
+      },
+      "Loss of energy": {
+        "positive": 291,
+        "negative": 20282,
+        "ratio": 0.014144752831380936
+      },
+      "Changes in sleeping pattern": {
+        "positive": 324,
+        "negative": 20249,
+        "ratio": 0.015748796966898362
+      },
+      "Irritability": {
+        "positive": 518,
+        "negative": 20055,
+        "ratio": 0.025178632187818985
+      },
+      "Changes in appetite": {
+        "positive": 159,
+        "negative": 20414,
+        "ratio": 0.007728576289311233
+      },
+      "Concentration difficulty": {
+        "positive": 159,
+        "negative": 20414,
+        "ratio": 0.007728576289311233
+      },
+      "Tiredness or fatigue": {
+        "positive": 297,
+        "negative": 20276,
+        "ratio": 0.014436397219656831
+      },
+      "Loss of interest in sex": {
+        "positive": 100,
+        "negative": 20473,
+        "ratio": 0.00486073980459826
+      }
+    }
+  },
+  "config": {
+    "base_model": "all-mpnet-base-v2",
+    "epochs": 10,
+    "batch_size": 64,
+    "learning_rate": 0.0002,
+    "loss": "weighted_bce"
+  }
+}

@@ -1,5 +1,6 @@
-# eRisk 2026 Task 1 — Run 2: Aggressive (Colab + Together AI)
-# Strategy: fewer turns, assess every 2 turns, lower confidence threshold
+# eRisk 2026 Task 1 — Run 2 (Colab + Together AI)
+# Strategy: POST_A0 + band_aware correction
+# Same base as Run 1 (independent conversation), band-aware deflation
 hardware_scenario: "colab_t4"
 
 models:
@@ -43,17 +44,20 @@ models:
     max_tokens: 3000
 
 execution:
-  assess_every_n_turns: 2
+  assess_every_n_turns: 1
   parallel_assessors: true
-  max_turns: 5
-  min_turns: 3
-  termination_confidence: 0.4
+  max_turns: 8
+  min_turns: 4
+  termination_confidence: 0.5
 
 sentence_transformer:
   enabled: true
   model_path: "models/symptom_transformer"
   device: "cuda"
   batch_size: 64
+
+correction:
+  run2: "band_aware"
 
 together:
   timeout_seconds: 120

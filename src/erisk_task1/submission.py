@@ -102,6 +102,7 @@ def save_internal_results(result: PersonaResult, output_dir: Path, suffix: str =
             "final_total": result.final_total,
             "conversation_turns": len(result.conversation),
         },
+        "correction": result.correction_result,
     }
 
     # Add justificator output if available

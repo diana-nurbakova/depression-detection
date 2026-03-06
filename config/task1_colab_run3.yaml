@@ -1,5 +1,7 @@
-# eRisk 2026 Task 1 — Run 3: Conservative (Colab + Together AI)
-# Strategy: more turns, assess every turn, higher confidence threshold
+# eRisk 2026 Task 1 — Run 3 (Colab + Together AI)
+# Strategy: PRE_A7 + progressive correction
+# Diversity run: different assessor base (specialised, no DepreSym calibration),
+# justificator for symptom ranking only, progressive deflation
 hardware_scenario: "colab_t4"
 
 models:
@@ -45,15 +47,18 @@ models:
 execution:
   assess_every_n_turns: 1
   parallel_assessors: true
-  max_turns: 12
-  min_turns: 7
-  termination_confidence: 0.6
+  max_turns: 8
+  min_turns: 4
+  termination_confidence: 0.5
 
 sentence_transformer:
   enabled: true
   model_path: "models/symptom_transformer"
   device: "cuda"
   batch_size: 64
+
+correction:
+  run3: "progressive"
 
 together:
   timeout_seconds: 120

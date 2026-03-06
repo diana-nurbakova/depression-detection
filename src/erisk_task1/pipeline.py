@@ -25,7 +25,8 @@ from .models import (
 )
 from .orchestrator import Orchestrator
 from .persona import PersonaModel
-from .scoring import run_scoring_pipeline
+from .post_hoc_correction import apply_correction, get_strategy_for_run
+from .scoring import run_scoring_pipeline, select_top4_mechanical
 from .submission import format_interactions, format_results, save_internal_results
 
 logger = logging.getLogger(__name__)
@@ -134,37 +135,50 @@ def run_persona_conversation(
     if turn_number % config.execution.assess_every_n_turns != 0:
         orch.process_turn_assessment(turn_number)
 
-    # 2-pass scoring
+    # Scoring pipeline
     scoring_result = run_scoring_pipeline(
         orch.assessor_outputs, orch.features_history
     )
 
-    # Justificator
-    justificator_output = run_justificator(
-        client=clients["justificator"],
-        persona_id=persona_str,
-        transcript=orch.get_transcript(),
-        assessor_outputs=orch.assessor_outputs,
-        item_scores=scoring_result["item_scores"],
-        pass2_total=scoring_result["pass2_total"],
-        pass2_band=scoring_result["pass2_band"],
-        features_history=orch.features_history,
-    )
+    # Determine correction strategy for this run
+    correction_override = getattr(config.correction, f"run{config.run_id}", None)
+    strategy = get_strategy_for_run(config.run_id, correction_override)
 
-    # Final scores
-    final_total = justificator_output.final_total
-    final_band = justificator_output.final_band
+    # Apply post-hoc correction to raw total (Pass 1 sum only, no Bayesian prior)
+    raw_total = scoring_result["pass1_total"]
+    correction_result = apply_correction(raw_total, strategy)
+    final_total = correction_result["corrected_total"]
+    final_band = score_to_band(final_total)
 
-    # Top-4 symptoms (canonical names)
-    top4_names = []
-    for sym in justificator_output.top_4_symptoms:
-        name = sym.get("item_name", "")
-        item_id = sym.get("item_id")
-        # Use canonical name
-        if item_id and item_id in BDI_ITEMS:
-            name = BDI_ITEMS[item_id]
-        if name:
-            top4_names.append(name)
+    # Top-4 symptoms from uncorrected assessor confidence
+    # Run 3 uses Justificator for symptom ranking; Runs 1-2 use mechanical selection
+    justificator_output = None
+    if config.run_id == 3:
+        justificator_output = run_justificator(
+            client=clients["justificator"],
+            persona_id=persona_str,
+            transcript=orch.get_transcript(),
+            assessor_outputs=orch.assessor_outputs,
+            item_scores=scoring_result["item_scores"],
+            pass2_total=raw_total,
+            pass2_band=score_to_band(raw_total),
+            features_history=orch.features_history,
+        )
+        top4_names = []
+        for sym in justificator_output.top_4_symptoms:
+            name = sym.get("item_name", "")
+            item_id = sym.get("item_id")
+            if item_id and item_id in BDI_ITEMS:
+                name = BDI_ITEMS[item_id]
+            if name:
+                top4_names.append(name)
+    else:
+        top4_items = select_top4_mechanical(scoring_result["item_scores"])
+        top4_names = [
+            BDI_ITEMS.get(item.item_id, item.item_name)
+            for item in top4_items
+            if item.item_id in BDI_ITEMS or item.item_name
+        ]
 
     elapsed = time.monotonic() - t_start
     logger.info(
@@ -185,6 +199,7 @@ def run_persona_conversation(
         top_4_symptoms=top4_names,
         justificator_output=justificator_output,
         item_scores=scoring_result["item_scores"],
+        correction_result=correction_result,
     )
 
 

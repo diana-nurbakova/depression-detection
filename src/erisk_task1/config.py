@@ -80,6 +80,14 @@ class SentenceTransformerConfig:
 
 
 @dataclass
+class CorrectionConfig:
+    """Post-hoc score correction config per run."""
+    run1: str = "minus_5"
+    run2: str = "band_aware"
+    run3: str = "progressive"
+
+
+@dataclass
 class LoggingConfig:
     output_dir: str = "./runs/task1"
     log_level: str = "INFO"
@@ -132,6 +140,7 @@ class PipelineConfig:
     openai: OpenAIConfig = field(default_factory=OpenAIConfig)
     together: TogetherConfig = field(default_factory=TogetherConfig)
     logging: LoggingConfig = field(default_factory=LoggingConfig)
+    correction: CorrectionConfig = field(default_factory=CorrectionConfig)
 
     # Run configuration
     run_id: int = 1
@@ -234,6 +243,13 @@ def load_config(config_path: str | Path = "config/task1.yaml") -> PipelineConfig
             cfg.sentence_transformer.batch_size = st.get(
                 "batch_size", cfg.sentence_transformer.batch_size
             )
+
+        # Correction
+        if "correction" in raw:
+            c = raw["correction"]
+            cfg.correction.run1 = c.get("run1", cfg.correction.run1)
+            cfg.correction.run2 = c.get("run2", cfg.correction.run2)
+            cfg.correction.run3 = c.get("run3", cfg.correction.run3)
 
         # Logging
         if "logging" in raw:

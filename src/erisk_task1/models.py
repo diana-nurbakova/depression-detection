@@ -193,3 +193,4 @@ class PersonaResult:
     top_4_symptoms: list[str] = field(default_factory=list)
     justificator_output: Optional[JustificatorOutput] = None
     item_scores: dict[int, ItemScore] = field(default_factory=dict)
+    correction_result: Optional[dict] = None

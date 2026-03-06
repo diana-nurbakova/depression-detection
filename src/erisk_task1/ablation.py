@@ -33,6 +33,7 @@ from .models import (
     SeverityBand,
     score_to_band,
 )
+from .post_hoc_correction import CorrectionStrategy, apply_correction
 from .prompts import ASSESSOR_SHARED_PREAMBLE, get_assessor_prompt
 from .scoring import (
     collect_item_scores,
@@ -66,6 +67,9 @@ class AblationConfig:
 
     # Scoring configuration
     prior_confidence: float = 0.3
+
+    # Post-hoc correction
+    correction_strategy: str = "none"  # "none", "minus_5", "band_aware", "progressive"
 
     # Feature thresholds (absolutist density)
     absolutist_thresholds: tuple[float, float, float] = (0.005, 0.012, 0.025)
@@ -138,6 +142,34 @@ ABLATION_CONFIGS: dict[str, AblationConfig] = {
         use_linguistic_features=True,
         use_bayesian_prior=False,
         use_justificator=True,
+    ),
+    # --- Post-hoc correction variants (matching 3-run strategy) ---
+    "A0_minus5": AblationConfig(
+        name="A0_minus5",
+        description="POST_A0 + minus_5 correction (Run 1 strategy)",
+        use_specialized_assessors=False,
+        use_linguistic_features=False,
+        use_bayesian_prior=False,
+        use_justificator=False,
+        correction_strategy="minus_5",
+    ),
+    "A0_band_aware": AblationConfig(
+        name="A0_band_aware",
+        description="POST_A0 + band_aware correction (Run 2 strategy)",
+        use_specialized_assessors=False,
+        use_linguistic_features=False,
+        use_bayesian_prior=False,
+        use_justificator=False,
+        correction_strategy="band_aware",
+    ),
+    "A7_progressive": AblationConfig(
+        name="A7_progressive",
+        description="PRE_A7 + progressive correction (Run 3 strategy)",
+        use_specialized_assessors=True,
+        use_linguistic_features=True,
+        use_bayesian_prior=False,
+        use_justificator=True,
+        correction_strategy="progressive",
     ),
 }
 
@@ -371,6 +403,14 @@ def run_ablation_single(
                     e,
                 )
 
+    # Post-hoc correction
+    correction_result = None
+    if ablation_cfg.correction_strategy != "none":
+        strategy = CorrectionStrategy(ablation_cfg.correction_strategy)
+        correction_result = apply_correction(final_total, strategy)
+        final_total = correction_result["corrected_total"]
+        final_band = score_to_band(final_total)
+
     elapsed = time.monotonic() - t0
 
     return {
@@ -380,6 +420,7 @@ def run_ablation_single(
         "item_scores": item_scores,
         "pass1_total": p1_total,
         "pass2_total": p2_total,
+        "correction": correction_result,
         "timing_s": round(elapsed, 1),
     }
 
@@ -459,6 +500,7 @@ def run_ablation(
                     "predicted_band": result["predicted_band"].value,
                     "pass1_total": result["pass1_total"],
                     "pass2_total": result["pass2_total"],
+                    "correction": result.get("correction"),
                     "band_correct": eval_result.band_correct,
                     "deviation": eval_result.absolute_deviation,
                     "top4": result["top4"],

@@ -64,6 +64,13 @@ openai:
   timeout_seconds: 60
   retry_attempts: 3
 
+# ── Post-hoc score correction ──
+# See specs/posthoc_correction_spec.md for details
+correction:
+  run1: "minus_5"       # POST_A0 base — flat -5 deflation
+  run2: "band_aware"    # POST_A0 base — band-dependent deflation
+  run3: "progressive"   # PRE_A7 base — progressive deflation
+
 # ── Logging ──
 logging:
   output_dir: "./runs/task1"
