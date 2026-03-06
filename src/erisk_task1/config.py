@@ -103,7 +103,7 @@ class PipelineConfig:
     persona: PersonaModelConfig = field(default_factory=PersonaModelConfig)
     interviewer: ModelConfig = field(
         default_factory=lambda: ModelConfig(
-            provider="openai", model="gpt-5-nano", temperature=0.7, max_tokens=300
+            provider="openai", model="gpt-5-nano", temperature=0.7, max_tokens=1000
         )
     )
     assessor: ModelConfig = field(

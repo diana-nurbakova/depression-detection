@@ -70,22 +70,30 @@ for _name, _rate_str in _RELEVANCE_RATES.items():
         _STRICTNESS[_name] = "CLEARER"
 
 
+_calibration_warned = False
+
+
 def _load_calibration() -> None:
     """Load calibration_for_prompts.json if available."""
-    global _CALIBRATION
+    global _CALIBRATION, _calibration_warned
     if _CALIBRATION:
+        return
+    if _calibration_warned:
         return
     candidates = [
         Path(__file__).parent / "data" / "calibration_for_prompts.json",
         Path(__file__).parent.parent.parent / "specs" / "task-1" / "calibration_for_prompts.json",
+        Path.cwd() / "src" / "erisk_task1" / "data" / "calibration_for_prompts.json",
+        Path.cwd() / "specs" / "task-1" / "calibration_for_prompts.json",
     ]
     for path in candidates:
         if path.exists():
             with open(path, encoding="utf-8") as f:
                 _CALIBRATION = json.load(f)
-            logger.debug("Loaded calibration data from %s", path)
+            logger.info("Loaded calibration data from %s", path)
             return
     logger.warning("calibration_for_prompts.json not found — prompts will lack examples")
+    _calibration_warned = True
 
 
 def _build_calibration_section(item_name: str) -> str:

@@ -56,8 +56,8 @@ def format_results(results: list[PersonaResult]) -> list[dict]:
     """
     erisk_results = []
     for result in results:
-        # Only include symptoms if depression is present
-        symptoms = result.top_4_symptoms if result.final_total >= 14 else []
+        # Include symptoms if any depression indicators are present (BDI >= 10)
+        symptoms = result.top_4_symptoms if result.final_total >= 10 else []
 
         erisk_results.append({
             "LLM": str(result.persona_number + 1),
