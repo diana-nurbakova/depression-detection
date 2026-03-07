@@ -17,7 +17,8 @@
       "Bash(uv run pytest -v)",
       "Bash(uv run python -c \"import bertopic; print\\(''bertopic'', bertopic.__version__\\)\")",
       "Bash(uv add bertopic umap-learn hdbscan)",
-      "Bash(uv run python scripts/extract_redsm5_topics.py)"
+      "Bash(uv run python scripts/extract_redsm5_topics.py)",
+      "Bash(pip install --upgrade torch torchvision)"
     ]
   }
 }
