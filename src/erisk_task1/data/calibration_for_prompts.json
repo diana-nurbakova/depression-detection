@@ -1,0 +1,401 @@
+{
+  "Sadness": {
+    "relevant": [
+      "Also me, because I am a sad man.",
+      "But I usually am just depressed.",
+      "I am sad and I don't know why :(",
+      "I just am depressed because I am.",
+      "Not finding happiness in my life."
+    ],
+    "not_relevant": [
+      "I can't help if I'm sad for fucks sake.",
+      "I feel the same way when I'm depressed.",
+      "When people are sad or having a bad day.",
+      "Stop thinking about being sad, simple :)",
+      "I find that sad, but I can live with it."
+    ],
+    "total_relevant": 179,
+    "total_judged": 1110,
+    "rate": "16.1%"
+  },
+  "Pessimism": {
+    "relevant": [
+      "For me things feel more hopeless as I get older.",
+      "But for now I'm cautiously optimistic and happy.",
+      "No details but my future really has no hope now.",
+      "I have no motivation/energy to work on my future.",
+      "I really don't look forward to life after quitting"
+    ],
+    "not_relevant": [
+      "I sympathize, but my problem's a bit worse than that.",
+      "**ALL GAMES IN THE TABLE ARE TRADEABLE, ROW COPIES!**",
+      "It has great future and it will be succeed in future.",
+      "Why am I so tired, tired of this world and this life?",
+      "It has great future and it will be succeed in future."
+    ],
+    "total_relevant": 104,
+    "total_judged": 1150,
+    "rate": "9.0%"
+  },
+  "Past failure": {
+    "relevant": [
+      "And I *did* feel like I failed myself.",
+      "why do so many things fail in my life.",
+      "Sometimes I succeed, sometimes I fail.",
+      "And now I feel very alone and useless.",
+      "I have failed all my previous attempts."
+    ],
+    "not_relevant": [
+      "Feeling worthless as can't do basic things.",
+      "And, in fact, their first attempt failed. (",
+      "Sometimes I'm successful, sometimes I'm not.",
+      "I'm really not sure it was a failure at all.",
+      "I disagree with the decision to send Gordon."
+    ],
+    "total_relevant": 160,
+    "total_judged": 973,
+    "rate": "16.4%"
+  },
+  "Loss of pleasure": {
+    "relevant": [
+      "I like Netflix but not as much as I used to.",
+      "I have lost interest in everything it seems.",
+      "I always loved gaming but I grew tired of it.",
+      "I have been unable to enjoy anything in life.",
+      "Every hobby that i have has lost all meaning."
+    ],
+    "not_relevant": [
+      "Maybe the guys at CB will have a suggestion.",
+      "What have you lost your ability to tolerate?",
+      "I don't enjoy it, but I still want to do it.",
+      "We're too sensitive to have any fun anymore.",
+      "Encouraging unchecked power is a fools game."
+    ],
+    "total_relevant": 97,
+    "total_judged": 1013,
+    "rate": "9.6%"
+  },
+  "Guilty feelings": {
+    "relevant": [
+      "I don't experience guilt but only shame.",
+      "I feel guilty about it every damn second",
+      "I've never felt so guilty in my entire life",
+      "As with everything, I feel guilty about it :p",
+      "As a teenager, I was guilty of this same behavior."
+    ],
+    "not_relevant": [
+      "Right now, I enjoy it 98% of the time.",
+      "A person who is mute most of the time.",
+      "And now you don't have to feel guilty!",
+      "Do you feel guilty for having a phone?",
+      "Is your gut feeling of guilt accurate?"
+    ],
+    "total_relevant": 83,
+    "total_judged": 829,
+    "rate": "10.0%"
+  },
+  "Punishment feelings": {
+    "relevant": [
+      "Our punishment is far worse than that.",
+      "I deserve to die a very painful death.",
+      "Why must be punish ourselves like this?",
+      "Should I face harsh punishment for this?",
+      "What have I done to be punished like this?"
+    ],
+    "not_relevant": [
+      "That I can't do what I should be doing.",
+      "Keep moving forward\nOne step at a time.",
+      "I doubt there will be criminal charges.",
+      "Experience any sort of sadness or pain?",
+      "It sounds like you think you deserve it."
+    ],
+    "total_relevant": 21,
+    "total_judged": 1079,
+    "rate": "1.9%"
+  },
+  "Self-dislike": {
+    "relevant": [
+      "Very dissappointed with myself.",
+      "A lot of the time I hate myself.",
+      "I hate myself every single time.",
+      "I hate myself and I wish to die.",
+      "I do hate myself but not that much"
+    ],
+    "not_relevant": [
+      "I just feel like I am living life shallowly.",
+      "What a pathetic, loathsome excuse for a man.",
+      "I have understood that I have to enjoy life.",
+      "I don't feel confident in doing that either.",
+      "They were feelings I had not felt in a while."
+    ],
+    "total_relevant": 158,
+    "total_judged": 1005,
+    "rate": "15.7%"
+  },
+  "Self-criticalness": {
+    "relevant": [
+      "I often feel a lot of resentment to my past self.",
+      "I feel proud of myself and I love myself for that.",
+      "It is partly my fault that this is happening to me.",
+      "I blamed myself for saying what I did that morning.",
+      "I probably am hard on myself, but its hard not to be."
+    ],
+    "not_relevant": [
+      "There will be no judgements on questions posted here.",
+      "It will ALWAYS be someone else's(usually your) fault.",
+      "By blaming you for his actions he is gaslighting you.",
+      "I was only speaking in a physical-appearance context.",
+      "It will ALWAYS be someone else's(usually your) fault."
+    ],
+    "total_relevant": 76,
+    "total_judged": 1072,
+    "rate": "7.1%"
+  },
+  "Suicidal thoughts or wishes": {
+    "relevant": [
+      "I am not suicidal and I would never be'",
+      "I just feel like I don't want to exist.",
+      "It's not like I'm suicidal or anything.",
+      "I wanted to kill myself then and there.",
+      "I want my cause of death to be suicide."
+    ],
+    "not_relevant": [
+      "Need advice on how to decrease suicidal thoughts",
+      "It helped with my suicidal thoughts and anxiety.",
+      "I forced myself to calm down and collect myself.",
+      "Would you rather kill yourself or commit suicide?",
+      "But i don't plan on doing it I have no reason to."
+    ],
+    "total_relevant": 260,
+    "total_judged": 953,
+    "rate": "27.3%"
+  },
+  "Crying": {
+    "relevant": [
+      "I remember sobbing uncontrollably. \"",
+      "I didnt think I would cry, but I did.",
+      "Man I am not crying I am emotionless.",
+      "Cross my heart, I would cry sometimes.",
+      "I cried more than I ever will I think."
+    ],
+    "not_relevant": [
+      "I cant believe I spent years feeling sad.",
+      "Not like wailing, uncontrollable, crying.",
+      "Eventually I got to weak from crying, etc.",
+      "What was the last thing that made you cry?",
+      "I'm so tired of being so sad all the time."
+    ],
+    "total_relevant": 230,
+    "total_judged": 983,
+    "rate": "23.4%"
+  },
+  "Agitation": {
+    "relevant": [
+      "But right now I just feel restless and weird.",
+      "I'm still really, really nervous all the time.",
+      "I can start calm, but rarely can I maintain it.",
+      "I wake up feeling depressed, upset, and anxious.",
+      "I cant sleep I feel so anxious about leaving him."
+    ],
+    "not_relevant": [
+      "I can't sleep and the sound don't go away f!ck",
+      "Im Todd, and I have sex with helpless animals.",
+      "I feel better now that I'm off, not AS anxious.",
+      "All I want is to go back to my job but I can't.",
+      "I asked, hearing the edge of panic in my voice."
+    ],
+    "total_relevant": 69,
+    "total_judged": 1080,
+    "rate": "6.4%"
+  },
+  "Loss of interest": {
+    "relevant": [
+      "I dont do the things that I used to love either.",
+      "I have hardly any motivation to do stuff anymore.",
+      "I can't do anything because I feel empty no pleasure",
+      "And suddenly I just lose all interest in it or them.",
+      "I hate that it's starting not to interest me anymore."
+    ],
+    "not_relevant": [
+      "2) You can't kill yourself if the procedure fails.",
+      "I just lose interest if I don't check immediately.",
+      "I've lost all interest in a project I'm working on",
+      "It just means I'm not interested in racing my car.",
+      "That is when you completely give up on your life.\""
+    ],
+    "total_relevant": 70,
+    "total_judged": 1077,
+    "rate": "6.5%"
+  },
+  "Indecisiveness": {
+    "relevant": [
+      "I just don't know what to do.",
+      "Greatest decision I ever made.",
+      "I don't really know what to do.",
+      "I do not make the best choices.",
+      "Im still questioning my decision"
+    ],
+    "not_relevant": [
+      "I feel my life is directionless and I feel lost.",
+      "The decision just didn't seem to make any sense.",
+      "Pupil Signals Uncertainty During Decision Making",
+      "I made all the wrong choices when I was younger.",
+      "I don't really know what to do myself, honestly."
+    ],
+    "total_relevant": 61,
+    "total_judged": 1110,
+    "rate": "5.5%"
+  },
+  "Worthlessness": {
+    "relevant": [
+      "i feel even more worthless for living.",
+      "Feeling worthless and miserable sucks.",
+      "I feel inferior and hate myself for it.",
+      "I feel depressed, worthless and pathetic.",
+      "I am just contemplating my worthlessness."
+    ],
+    "not_relevant": [
+      "What worthless advice people keep giving you?",
+      "I may be stressed, but at least I look great.",
+      "Appeal to emotion is a valid form of argument",
+      "I don't feel guilty for the US being powerful.",
+      "I am also tired of fighting suicidal feelings."
+    ],
+    "total_relevant": 71,
+    "total_judged": 1067,
+    "rate": "6.7%"
+  },
+  "Loss of energy": {
+    "relevant": [
+      "But then again I might not have the energy.",
+      "I guess lately i just dont have the energy.",
+      "I still don't have the energy I wish I had.",
+      "I can do better but I'm lacking some energy.",
+      "i just ran out of energy to fight it anymore."
+    ],
+    "not_relevant": [
+      "You can eat less of exactly what you eat now.",
+      "Too tired to run, I could only turn and look.",
+      "Food costs a lot - take your own food/snacks.",
+      "I cant even bother to cook or clean anything.",
+      "I can't even enjoy my own life at this point."
+    ],
+    "total_relevant": 129,
+    "total_judged": 1082,
+    "rate": "11.9%"
+  },
+  "Changes in sleeping pattern": {
+    "relevant": [
+      "I just can't sleep more than 45 minutes at a time.",
+      "Mainly, my sleep schedule has really been affected.",
+      "Last night I was having my usual night of insomnia.",
+      "Sleep doesnt work because Im a light sleeper (whee!)",
+      "Thank you, I hope so but I usually don't sleep well."
+    ],
+    "not_relevant": [
+      "It's getting to the point where I'm loosing A LOT of sleep.",
+      "I'm tired all of the time even when I get 8 hours of sleep.",
+      "However recently I am having a very hard time staying awake.",
+      "I wake up way too early, while I still can't move or breath.",
+      "My baby never catches the colds or flus my husband and I get"
+    ],
+    "total_relevant": 203,
+    "total_judged": 938,
+    "rate": "21.6%"
+  },
+  "Irritability": {
+    "relevant": [
+      "I feel constantly pissed off and depressed.",
+      "I see this all the time and it irritates me.",
+      "I'm the one getting angry and defensive lol.",
+      "When i'm pretty much angry a lot of the time.",
+      "I hate myself...hate feeling so angry and alone"
+    ],
+    "not_relevant": [
+      "I've been in a bad mood for the past month.",
+      "I have no words to describe how angry I am.",
+      "I have been under a lot of stress recently.",
+      "Mother hopeless and slightly irresponsible.",
+      "Feeling worthless as can't do basic things."
+    ],
+    "total_relevant": 94,
+    "total_judged": 1047,
+    "rate": "9.0%"
+  },
+  "Changes in appetite": {
+    "relevant": [
+      "I use my natural medicine and I'm happy and hungry.",
+      "I am wired, having eaten almost NOTHING for 2 days!",
+      "In the past year, my appetite's gotten a lot larger.",
+      "My appetite has been terrible ever since I was a kid.",
+      "My eating has always been off, but it's gotten worse."
+    ],
+    "not_relevant": [
+      "Why not just increase what you're already eating?",
+      "I am coming concerned that I'm not eating enough.",
+      "Sorry, wish I could give you more than 1 up vote.",
+      "ill try i just dont feel like eating when im sick",
+      "I eat often in small amounts to fight off hunger."
+    ],
+    "total_relevant": 103,
+    "total_judged": 984,
+    "rate": "10.5%"
+  },
+  "Concentration difficulty": {
+    "relevant": [
+      "I can focus on more than one thing at a time.",
+      "I can't concentrate...at least less than usual.",
+      "I can concentrate, I feel sane and normal again.",
+      "But now-a-days I can not even focus for five minutes.",
+      "I really had to concentrate but it worked in the end."
+    ],
+    "not_relevant": [
+      "That's where I think I need to concentrate from now on.",
+      "I just don't care when I'm trying to find entertainment.",
+      "I'm tired of trying to give it a meaning and I'm fed up.",
+      "If the student isn't silent I can't concentrate dumbass.",
+      "Its even difficult for me to do a puzzle I'm working on."
+    ],
+    "total_relevant": 83,
+    "total_judged": 1024,
+    "rate": "8.1%"
+  },
+  "Tiredness or fatigue": {
+    "relevant": [
+      "I can't find the energy to do anything anymore.",
+      "I can't find the energy to do anything anymore.",
+      "Not only im physically tired but also mentally.",
+      "I can't find the energy to do anything anymore.",
+      "I don't exercise because of my extreme fatigue."
+    ],
+    "not_relevant": [
+      "Relaxed sometimes and super stressed other times.",
+      "It sounds like you have chronic fatigue syndrome.",
+      "Don't ask me why I made it, I'm tired of studying.",
+      "No kidding, all I want to do is sleep but I can't.",
+      "I worry and I feel overwhelmed and paranoid often."
+    ],
+    "total_relevant": 123,
+    "total_judged": 1033,
+    "rate": "11.9%"
+  },
+  "Loss of interest in sex": {
+    "relevant": [
+      "I didnt say I have no interest in sexual activity at all.",
+      "Its definitely not lowering my libido, quite the opposite.",
+      "My eyes have been so dry and Ive had no libido whatsoever.",
+      "I told her I was only interested in sex, guns, and collateral.",
+      "However my sex drive went crazy and I was not so modest amymore"
+    ],
+    "not_relevant": [
+      "I'm restless, can't sit still, can't concentrate, etc.",
+      "Have you noticed your sex life on a standstill lately?",
+      "Promiscuous as in having sex with a new man every day.",
+      "I only want to have sex with someone I'm in love with.",
+      "When I don't think about sex, I wonder about that too."
+    ],
+    "total_relevant": 97,
+    "total_judged": 971,
+    "rate": "10.0%"
+  }
+}

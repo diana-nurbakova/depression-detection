@@ -5,7 +5,9 @@ __pycache__/
 *.pyc
 
 # Data (too large for git)
-data/
+/data/
+# Keep source code data modules
+!src/*/data/
 output/
 *.npy
 

@@ -87,69 +87,50 @@
     },
     {
       "score": 2,
-      "docno": "Y0xPnR_642_5",
+      "docno": "oJ7SeW_609_2",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "I am usually forgetful when it comes to eating and peeing.",
-      "text": "I sit weird and sometimes I won't even notice that my limbs have fallen asleep until I try to move.",
-      "post": "I'm guessing that would be inferior Se.",
-      "annotation": {
-        "symptom_match": "YES",
-        "self_reference": "DIRECT",
-        "detail_level": "MEDIUM",
-        "confounders": "NONE",
-        "score": 2,
-        "confidence": 4,
-        "reasoning": "The sentence clearly addresses the symptom of fidgeting or squirming by mentioning sitting weirdly and not noticing limbs falling asleep, indicating a personal experience. However, it lacks specific situational detail that would enhance the clarity of the symptom manifestation."
-      }
-    },
-    {
-      "score": 2,
-      "docno": "a1MZzK_577_8",
-      "source": "retrieval",
-      "source_detail": null,
-      "synthetic": false,
-      "pre": "edit1: Also I should probably mention that one of the biggest areas I need to work on are tight hamstrings/hips.",
-      "text": "I sit down a lot.",
+      "pre": "I gotta admit, it's a bit frustrating at times because it feels like it's a constant game of snapping back into focus.",
+      "text": "I'm a rather fidgety person as it is, so I'm sure that doesn't help.",
       "post": "",
       "annotation": {
-        "symptom_match": "PARTIAL",
+        "symptom_match": "YES",
         "self_reference": "DIRECT",
         "detail_level": "LOW",
         "confounders": "NONE",
         "score": 2,
-        "confidence": 3,
-        "reasoning": "The sentence indicates a direct experience of sitting frequently, which relates to the symptom of fidgeting or squirming due to prolonged sitting. However, it lacks specific situational detail about the fidgeting behavior itself."
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of fidgeting and conveys the writer's personal experience. However, it lacks specific situational detail about when or where this fidgeting occurs."
       }
     },
     {
-      "score": 3,
-      "docno": "qmVXSK_308_0",
+      "score": 2,
+      "docno": "2qHuSe_125_1",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "I really hate it when i am seated next to a person and they keep fidgeting aaaaaaggghhhhhh !!!!!",
-      "post": "that really gets me.",
+      "pre": "Yes.",
+      "text": "But now that I think about it, I don't usually sit still when talking to someone face-to-face, either.",
+      "post": "",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
-        "detail_level": "HIGH",
+        "detail_level": "LOW",
         "confounders": "NONE",
-        "score": 3,
-        "confidence": 5,
-        "reasoning": "The sentence explicitly describes the writer's frustration with another person's fidgeting while seated, providing a clear behavioral example of the symptom. The use of strong emotional language ('really hate it') and the context of being seated next to someone who fidgets adds concrete detail to the experience."
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly indicates the writer's experience of not sitting still during face-to-face conversations, addressing the symptom of fidgeting. However, it lacks specific situational details that would enhance the understanding of the behavior."
       }
     },
     {
       "score": 3,
-      "docno": "fyO2tv_489_2",
+      "docno": "PKPzP7_463_1",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "When I’m in the midst of what is about to be a panic attack I find something in the room and list five things about that item, and then I move to the next item and so on and so forth.",
-      "text": "I also fidget a lot.",
+      "pre": "I'm literally doing this with my foot as I type this.",
+      "text": "I'm pretty sure I'm physically incapable of sitting still.",
       "post": "",
       "annotation": {
         "symptom_match": "YES",
@@ -158,7 +139,26 @@
         "confounders": "NONE",
         "score": 3,
         "confidence": 5,
-        "reasoning": "The sentence explicitly describes the writer's own experience of fidgeting, which is a direct manifestation of the symptom. The use of 'I also fidget a lot' provides a clear and personal account of the behavior, meeting the criteria for a high detail level."
+        "reasoning": "The sentence explicitly describes the writer's own experience of fidgeting while typing, providing a concrete example of their inability to sit still."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "ArFWtw_166_16",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I don't know if it helps, but all of us are high energy people.",
+      "text": "I hate sitting down, hate standing still, and even as an adult I constantly fidget, etc.",
+      "post": "So there may be a connection there.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's own experience with fidgeting and restlessness, providing concrete details about their dislike for sitting still and their constant fidgeting."
       }
     }
   ]
