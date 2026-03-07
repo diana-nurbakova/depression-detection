@@ -43,6 +43,14 @@ DEFAULT_TOPIC_ORDER = [
     TopicArea.DECISION_MAKING,
 ]
 
+# BDI domain categories for coverage checking
+BDI_DOMAIN_ITEMS = {
+    "COGNITIVE": {2, 3, 5, 6, 7, 8, 9, 14},  # self-worth, guilt, pessimism, etc.
+    "AFFECTIVE": {1, 4, 10, 12, 13, 17},      # sadness, pleasure, interest, crying, etc.
+    "SOMATIC": {15, 16, 18, 20, 21},           # energy, sleep, appetite, fatigue, sex
+    "FUNCTIONAL": {11, 13, 19},                # agitation, concentration, activity
+}
+
 
 class Orchestrator:
     """Manages the conversation loop between interviewer and persona."""
@@ -157,6 +165,25 @@ class Orchestrator:
             self.assessor_client, transcript, ling_summary, self.parallel_assessors
         )
 
+    def check_domain_coverage(self) -> dict[str, bool]:
+        """Check which BDI domains have received evidence so far.
+
+        Returns a dict mapping domain name to whether it has any coverage.
+        """
+        covered_items = {
+            item_id for item_id, score in self.item_scores.items()
+            if score.state != ItemState.NO_EVIDENCE
+        }
+
+        coverage = {}
+        for domain, items in BDI_DOMAIN_ITEMS.items():
+            coverage[domain] = bool(covered_items & items)
+        return coverage
+
+    def get_uncovered_domains(self) -> list[str]:
+        """Return list of domain names with zero coverage."""
+        return [d for d, covered in self.check_domain_coverage().items() if not covered]
+
     def run_orchestrator_reasoning(self, turn_number: int) -> OrchestratorGuidance:
         """Run the LLM reasoning module to decide next action."""
         # Build item state map
@@ -184,6 +211,9 @@ class Orchestrator:
 
         cum = compute_cumulative_features(self.features_history)
 
+        # Domain coverage check — identify gaps
+        uncovered_domains = self.get_uncovered_domains()
+
         input_data = json.dumps({
             "turn_number": turn_number,
             "remaining_turns": self.max_turns - turn_number,
@@ -199,6 +229,7 @@ class Orchestrator:
             },
             "topics_covered": [t.value for t in self.topics_covered],
             "topics_remaining": [t.value for t in self.topics_remaining],
+            "uncovered_bdi_domains": uncovered_domains,
         }, indent=2)
 
         messages = [
@@ -225,11 +256,30 @@ class Orchestrator:
         except ValueError:
             next_topic = self.topics_remaining[0] if self.topics_remaining else TopicArea.ADAPTIVE_FOLLOWUP
 
+        suggested_angle = parsed.get("suggested_angle", "")
+        exploration_gaps = parsed.get("exploration_gaps", [])
+
+        # Domain coverage override: if somatic has zero coverage after turn 3,
+        # force a daily routine question targeting sleep/energy/appetite
+        if turn_number >= 3 and "SOMATIC" in uncovered_domains and decision == "CONTINUE":
+            logger.info(
+                "Domain coverage override: SOMATIC has zero coverage at turn %d, "
+                "forcing DAILY_ROUTINE probe", turn_number
+            )
+            next_topic = TopicArea.DAILY_ROUTINE
+            suggested_angle = (
+                "Ask about a typical day lately — specifically how sleep, "
+                "energy, and meals have been. Use: 'Could you walk me through "
+                "a typical day lately — how have your sleep, energy, and meals been?'"
+            )
+            if "SOMATIC (sleep, appetite, energy, fatigue)" not in exploration_gaps:
+                exploration_gaps.insert(0, "SOMATIC (sleep, appetite, energy, fatigue)")
+
         return OrchestratorGuidance(
             decision=decision,
             next_topic=next_topic,
-            suggested_angle=parsed.get("suggested_angle", ""),
-            exploration_gaps=parsed.get("exploration_gaps", []),
+            suggested_angle=suggested_angle,
+            exploration_gaps=exploration_gaps,
             priority_reasoning=parsed.get("priority_reasoning", ""),
             conflict_notes=parsed.get("conflict_notes", ""),
             interviewer_adaptation=parsed.get("interviewer_adaptation", ""),

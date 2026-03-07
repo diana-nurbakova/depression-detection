@@ -1,6 +1,5 @@
 # eRisk 2026 Task 1 — Run 2 (Colab + Together AI)
-# Strategy: POST_A0 + band_aware correction
-# Same base as Run 1 (independent conversation), band-aware deflation
+# Strategy: Flat -2 correction — hedges against residual overscoring
 hardware_scenario: "colab_t4"
 
 models:
@@ -47,7 +46,7 @@ execution:
   assess_every_n_turns: 1
   parallel_assessors: true
   max_turns: 8
-  min_turns: 4
+  min_turns: 5
   termination_confidence: 0.5
 
 sentence_transformer:
@@ -57,7 +56,7 @@ sentence_transformer:
   batch_size: 64
 
 correction:
-  run2: "band_aware"
+  run2: "flat_minus_2"
 
 together:
   timeout_seconds: 120

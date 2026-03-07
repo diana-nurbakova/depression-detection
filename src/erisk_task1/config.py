@@ -82,9 +82,9 @@ class SentenceTransformerConfig:
 @dataclass
 class CorrectionConfig:
     """Post-hoc score correction config per run."""
-    run1: str = "minus_5"
-    run2: str = "band_aware"
-    run3: str = "progressive"
+    run1: str = "none"
+    run2: str = "flat_minus_2"
+    run3: str = "proportional_085"
 
 
 @dataclass

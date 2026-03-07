@@ -69,7 +69,7 @@ class AblationConfig:
     prior_confidence: float = 0.3
 
     # Post-hoc correction
-    correction_strategy: str = "none"  # "none", "minus_5", "band_aware", "progressive"
+    correction_strategy: str = "none"  # "none", "flat_minus_2", "proportional_085", "minus_5", etc.
 
     # Feature thresholds (absolutist density)
     absolutist_thresholds: tuple[float, float, float] = (0.005, 0.012, 0.025)
@@ -144,9 +144,37 @@ ABLATION_CONFIGS: dict[str, AblationConfig] = {
         use_justificator=True,
     ),
     # --- Post-hoc correction variants (matching 3-run strategy) ---
+    "A0_none": AblationConfig(
+        name="A0_none",
+        description="POST_A0 + no correction (Run 1 strategy — assessor fixes only)",
+        use_specialized_assessors=False,
+        use_linguistic_features=False,
+        use_bayesian_prior=False,
+        use_justificator=False,
+        correction_strategy="none",
+    ),
+    "A0_flat_minus_2": AblationConfig(
+        name="A0_flat_minus_2",
+        description="POST_A0 + flat -2 correction (Run 2 strategy)",
+        use_specialized_assessors=False,
+        use_linguistic_features=False,
+        use_bayesian_prior=False,
+        use_justificator=False,
+        correction_strategy="flat_minus_2",
+    ),
+    "A7_proportional_085": AblationConfig(
+        name="A7_proportional_085",
+        description="PRE_A7 + proportional ×0.85 correction (Run 3 strategy)",
+        use_specialized_assessors=True,
+        use_linguistic_features=True,
+        use_bayesian_prior=False,
+        use_justificator=True,
+        correction_strategy="proportional_085",
+    ),
+    # --- Legacy correction variants (for comparison) ---
     "A0_minus5": AblationConfig(
         name="A0_minus5",
-        description="POST_A0 + minus_5 correction (Run 1 strategy)",
+        description="POST_A0 + minus_5 correction (legacy)",
         use_specialized_assessors=False,
         use_linguistic_features=False,
         use_bayesian_prior=False,
@@ -155,7 +183,7 @@ ABLATION_CONFIGS: dict[str, AblationConfig] = {
     ),
     "A0_band_aware": AblationConfig(
         name="A0_band_aware",
-        description="POST_A0 + band_aware correction (Run 2 strategy)",
+        description="POST_A0 + band_aware correction (legacy)",
         use_specialized_assessors=False,
         use_linguistic_features=False,
         use_bayesian_prior=False,
@@ -164,7 +192,7 @@ ABLATION_CONFIGS: dict[str, AblationConfig] = {
     ),
     "A7_progressive": AblationConfig(
         name="A7_progressive",
-        description="PRE_A7 + progressive correction (Run 3 strategy)",
+        description="PRE_A7 + progressive correction (legacy)",
         use_specialized_assessors=True,
         use_linguistic_features=True,
         use_bayesian_prior=False,

@@ -1,7 +1,5 @@
 # eRisk 2026 Task 1 — Run 3 (Local Ollama)
-# Strategy: PRE_A7 + progressive correction
-# Diversity run: different assessor base (specialised, no DepreSym calibration),
-# justificator for symptom ranking only, progressive deflation
+# Strategy: Proportional ×0.85 correction — preserves rank ordering
 hardware_scenario: "high_vram"
 
 models:
@@ -49,11 +47,11 @@ execution:
   assess_every_n_turns: 1
   parallel_assessors: true
   max_turns: 8
-  min_turns: 4
+  min_turns: 5
   termination_confidence: 0.5
 
 correction:
-  run3: "progressive"
+  run3: "proportional_085"
 
 ollama:
   timeout_seconds: 300

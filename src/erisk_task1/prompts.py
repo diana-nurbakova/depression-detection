@@ -313,9 +313,33 @@ related to mood, emotional reactivity, pleasure, and interest.
 2 = Sad all the time
 3 = So sad or unhappy they can't stand it
 
-Linguistic markers: sadness vocabulary (sad, unhappy, miserable, down, blue, low, empty, hopeless), absolutist temporal words for severity gradient. Score 1: "sometimes"/"much of the time". Score 2: "all the time"/"always". Score 3: unbearable framing.
+Linguistic markers: sadness vocabulary (sad, unhappy, miserable, down, blue, low), absolutist temporal words for severity gradient. Score 1: "sometimes"/"much of the time". Score 2: "all the time"/"always". Score 3: unbearable framing.
 
-IMPORTANT — Non-sadness depression: Depression can present WITHOUT overt sadness. When you observe persistent irritability (Item 17 >= 2), vague dysphoria ("feels a bit off"), emotional flatness, OR somatic complaints as primary presentation — consider scoring Item 1 at least 1.
+SCORING GUIDELINES FOR SADNESS (Item 1):
+
+This item measures the subjective experience of FEELING SAD or UNHAPPY.
+
+DO score as sadness:
+- Explicit statements: "I feel sad", "I'm unhappy", "I feel down"
+- Crying or tearfulness (supports sadness, also score Item 10 separately)
+- Descriptions of emotional pain, heartache, or grief
+- Feeling "blue", "low", or "miserable"
+
+DO NOT score as sadness (these map to OTHER BDI items):
+- Emotional numbness, flatness, or blunting ("I feel numb", "I feel flat",
+  "I feel nothing") — this maps to Item 4: Loss of Pleasure, or may indicate
+  emotional blunting/depersonalization. Numbness is the ABSENCE of emotion,
+  not the PRESENCE of sadness.
+- "Walking through a fog" or "watching myself from outside" — this is
+  depersonalization/dissociation, not sadness
+- Feeling "stuck" or "running on empty" — these map to pessimism (Item 2)
+  and fatigue (Items 15/20)
+- Frustration or anger — these map to irritability (Item 17)
+
+KEY DISTINCTION: A person can be deeply depressed and NOT feel sad — they may
+feel numb or empty instead. If the person describes numbness/flatness without
+any explicit sadness, score this item 0 and ensure the numbness is captured
+under Item 4 (Loss of Pleasure) instead.
 
 {{calibration_1}}
 
@@ -510,6 +534,13 @@ BIDIRECTIONAL.
 
 PHYSICAL SENSATION emphasis (vs motivational in Item 15).
 
+SCORE CALIBRATION FOR TIREDNESS/FATIGUE (Item 20):
+
+Score 3 requires evidence that the person is UNABLE to do most daily
+activities. If the person still works, maintains basic routines (cooking,
+cleaning, childcare), or goes out, score 2 maximum. Reserve score 3 for
+cases where the person is essentially housebound or bedbound due to fatigue.
+
 {{calibration_20}}
 
 ## Important: somatic-dominant presentations
@@ -533,6 +564,32 @@ cognitive functioning, decision-making, and libido.
 2 = Much greater difficulty
 3 = Trouble making any decisions
 
+SCORING GUIDELINES FOR INDECISIVENESS (Item 13):
+
+This item measures DIFFICULTY MAKING DECISIONS — the specific inability to
+choose between options or commit to a course of action.
+
+DO score as indecisiveness:
+- Explicit statements about difficulty choosing: "I can't decide",
+  "I keep going back and forth", "I struggle to make even simple choices"
+- Concrete examples of decision paralysis: can't decide what to eat,
+  what to wear, whether to go out, which task to do first
+- Deterioration from previous decision-making ability: "I used to be
+  decisive but now everything feels impossible to choose"
+
+DO NOT score as indecisiveness (these map to OTHER BDI items):
+- Saying "I don't know" in response to interview questions — this is
+  conversational hedging or avoidance, not decision-making difficulty
+- Feeling "stuck" or "in a rut" — this is hopelessness (Item 2: Pessimism)
+- Not seeing a future or feeling directionless — this is pessimism (Item 2)
+- "Making it up as I go" — this is uncertainty, not inability to decide
+- Feeling lost or aimless — this is loss of interest (Item 12) or
+  pessimism (Item 2)
+
+If the ONLY evidence is "I don't know" responses or vague statements about
+feeling stuck, score 0. Require concrete evidence of actual decision-making
+difficulty before scoring 1 or higher.
+
 {{calibration_13}}
 
 ### Item 19: Concentration Difficulty
@@ -541,7 +598,33 @@ cognitive functioning, decision-making, and libido.
 2 = Hard to keep mind on anything for long
 3 = Can't concentrate on anything
 
-Low specificity (appears in ADHD, anxiety, sleep deprivation).
+SCORING GUIDELINES FOR CONCENTRATION DIFFICULTY (Item 19):
+
+This item measures the ability to FOCUS ATTENTION on cognitive tasks — reading,
+working, following conversations, watching TV, completing a task without
+losing track.
+
+DO score as concentration difficulty:
+- "I can't focus on reading/work/TV anymore"
+- "My mind keeps wandering when I try to do things"
+- "I can't follow conversations like I used to"
+- "I read the same page three times and nothing sinks in"
+- "I start tasks but can't stay focused to finish them"
+
+DO NOT score as concentration difficulty (these map to OTHER BDI items):
+- Lying awake at night / sleep disruption — this is Item 16 (Sleep Changes)
+- Feeling numb, foggy, or disconnected — this is depersonalization or
+  Item 4 (Loss of Pleasure); fog is a FEELING, not a cognitive deficit
+- "Going through the motions" — this is anhedonia (Item 4/12), not a
+  focusing problem
+- Being overwhelmed by workload ("drowning in paperwork") — this is
+  situational stress, not an inability to concentrate
+- Sentence transformer signals WITHOUT supporting textual evidence —
+  do not score based on classifier signals alone. Require at least one
+  concrete statement from the person about difficulty focusing.
+
+If there is no explicit mention of difficulty focusing, reading, following
+conversations, or completing cognitive tasks, score 0.
 
 {{calibration_19}}
 
@@ -588,6 +671,18 @@ Respond ONLY with valid JSON:
   "conflict_notes": "<any conflicts detected>",
   "interviewer_adaptation": "<advice on adapting to persona style>"
 }
+
+## Domain coverage awareness
+
+The input includes `uncovered_bdi_domains` — a list of BDI domain categories
+(COGNITIVE, AFFECTIVE, SOMATIC, FUNCTIONAL) with zero evidence so far.
+
+If SOMATIC is uncovered by turn 3-4, you MUST prioritise a DAILY_ROUTINE
+question targeting sleep, energy, and appetite. Conversations that miss
+somatic items consistently produce incomplete assessments.
+
+If ANY domain still has zero coverage by turn 4-5, generate a targeted
+probe for that domain before the conversation ends.
 
 ## Key principles
 - NEVER recommend clinical or mental health language

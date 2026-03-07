@@ -65,11 +65,11 @@ openai:
   retry_attempts: 3
 
 # ── Post-hoc score correction ──
-# See specs/posthoc_correction_spec.md for details
+# See specs/task-1/pipeline_adjustments_spec.md for details
 correction:
-  run1: "minus_5"       # POST_A0 base — flat -5 deflation
-  run2: "band_aware"    # POST_A0 base — band-dependent deflation
-  run3: "progressive"   # PRE_A7 base — progressive deflation
+  run1: "none"                # No correction — assessor fixes handle overscoring
+  run2: "flat_minus_2"        # Flat -2 hedge against residual overscoring
+  run3: "proportional_085"    # Proportional ×0.85 — preserves rank ordering
 
 # ── Logging ──
 logging:

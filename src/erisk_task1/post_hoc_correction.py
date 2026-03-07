@@ -21,6 +21,8 @@ class CorrectionStrategy(Enum):
     MINUS_5 = "minus_5"
     BAND_AWARE = "band_aware"
     PROGRESSIVE = "progressive"
+    FLAT_MINUS_2 = "flat_minus_2"
+    PROPORTIONAL_085 = "proportional_085"
 
 
 CORRECTIONS: dict[CorrectionStrategy, Callable[[int], int]] = {
@@ -37,13 +39,15 @@ CORRECTIONS: dict[CorrectionStrategy, Callable[[int], int]] = {
               else (max(0, s - 4) if s <= 28
                     else max(0, s - 2)))
     ),
+    CorrectionStrategy.FLAT_MINUS_2: lambda s: max(0, s - 2),
+    CorrectionStrategy.PROPORTIONAL_085: lambda s: round(s * 0.85),
 }
 
 # Default strategy per run ID
 RUN_DEFAULTS: dict[int, CorrectionStrategy] = {
-    1: CorrectionStrategy.MINUS_5,
-    2: CorrectionStrategy.BAND_AWARE,
-    3: CorrectionStrategy.PROGRESSIVE,
+    1: CorrectionStrategy.NONE,
+    2: CorrectionStrategy.FLAT_MINUS_2,
+    3: CorrectionStrategy.PROPORTIONAL_085,
 }
 
 

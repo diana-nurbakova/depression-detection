@@ -1,6 +1,5 @@
 # eRisk 2026 Task 1 — Run 1 (Local Ollama)
-# Strategy: POST_A0 + minus_5 correction
-# Single DepreSym-calibrated assessor, 4-8 turns, flat -5 deflation
+# Strategy: No correction — assessor prompt fixes handle overscoring
 hardware_scenario: "high_vram"
 
 models:
@@ -48,11 +47,11 @@ execution:
   assess_every_n_turns: 1
   parallel_assessors: true
   max_turns: 8
-  min_turns: 4
+  min_turns: 5
   termination_confidence: 0.5
 
 correction:
-  run1: "minus_5"
+  run1: "none"
 
 ollama:
   timeout_seconds: 300

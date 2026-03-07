@@ -1,6 +1,5 @@
 # eRisk 2026 Task 1 — Run 2 (Local Ollama)
-# Strategy: POST_A0 + band_aware correction
-# Same base as Run 1 (independent conversation), band-aware deflation
+# Strategy: Flat -2 correction — hedges against residual overscoring
 hardware_scenario: "high_vram"
 
 models:
@@ -48,11 +47,11 @@ execution:
   assess_every_n_turns: 1
   parallel_assessors: true
   max_turns: 8
-  min_turns: 4
+  min_turns: 5
   termination_confidence: 0.5
 
 correction:
-  run2: "band_aware"
+  run2: "flat_minus_2"
 
 ollama:
   timeout_seconds: 300
