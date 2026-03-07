@@ -87,40 +87,40 @@
     },
     {
       "score": 2,
-      "docno": "GPUbkL_303_4",
+      "docno": "XMGG6T_108_2",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "Then they would tell me contradicting procedures.",
-      "text": "I was told I \"interrupted\" people often.",
-      "post": "When I asked a question, people would go about it a different route rather than answer my question and confuse me more.",
+      "pre": "I have some awful memory problems as well, and have to interrupt people RIGHT THEN and if I don't... I will forget what I was going to say.",
+      "text": "It's awful because I'm convinced everyone thinks I'm just a rude motherfucker, but really if I don't interrupt you I'm going to spend my whole day trying to remember what I was thinking.",
+      "post": "So either I look like the asshole for being the worst interrupter on the planet, or I get mad at myself and it lasts for hours if it happens repeatedly throughout the day.",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
-        "detail_level": "MEDIUM",
+        "detail_level": "HIGH",
         "confounders": "NONE",
         "score": 2,
-        "confidence": 4,
-        "reasoning": "The sentence clearly indicates the writer's experience of being labeled as someone who interrupts others, which aligns with the symptom of interrupting or intruding on others. However, it lacks specific situational details that would enhance the clarity of the experience."
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the behavior of interrupting others due to a fear of forgetting thoughts, which aligns with ADHD symptoms of impulsivity and difficulties with attention. The speaker's concern about being perceived as rude further emphasizes the impact of this behavior on their social interactions, providing moderate detail about the symptom's effects."
       }
     },
     {
       "score": 2,
-      "docno": "mxeE1J_75_1",
+      "docno": "YkA5tJ_437_0",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "People who understand me best and are generally compassionate allow me the room to not be interrupted.",
-      "text": "When I get the opportunity, I'll react to an interruption with a solemn look, a few seconds of pause (which I need to redirect my thoughts anyway) and then go on the next thread, perhaps betraying my annoyance in the process.",
-      "post": "This isn't diplomatic, nor does it win you friends, but it tends to drive a point home.",
+      "pre": "",
+      "text": "(33,F) I have a bad habit of interrupting someone speaking when I relate to something they've said.",
+      "post": "On the other hand, when I stay silent (it's what I'm working on) while they talk and try to keep a mental list of points they make to refer to when it's my turn to talk, all points evaporate.",
       "annotation": {
-        "symptom_match": "YES",
+        "symptom_match": "PARTIAL",
         "self_reference": "DIRECT",
         "detail_level": "MEDIUM",
-        "confounders": "NONE",
+        "confounders": "The individual acknowledges a habit of interrupting but does not specify frequency or context of interruptions.",
         "score": 2,
         "confidence": 4,
-        "reasoning": "The sentence clearly addresses the symptom of interrupting others and conveys the writer's personal experience with their reaction to interruptions. However, it lacks specific situational detail that would elevate it to a higher score."
+        "reasoning": "The sentence indicates a self-awareness of interrupting others, which aligns with the symptom of interrupting when others are busy. However, it lacks specific details about how often this occurs, leading to a partial match rather than a full confirmation of the symptom."
       }
     },
     {

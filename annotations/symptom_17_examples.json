@@ -45,23 +45,23 @@
     },
     {
       "score": 1,
-      "docno": "s_993_456_2",
+      "docno": "s_1551_121_7",
       "source": "redsm5",
       "source_detail": {
         "raw_source": "redsm5"
       },
       "synthetic": false,
       "pre": "",
-      "text": "I had restless legs for weeks.",
+      "text": "Its hard to explain, its like I feel restless and incapable of action at the same time.",
       "post": "",
       "annotation": {
         "symptom_match": "PARTIAL",
-        "self_reference": "NONE",
+        "self_reference": "INDIRECT",
         "detail_level": "LOW",
-        "confounders": "Depression symptom resembling ADHD symptom",
+        "confounders": "Depression psychomotor agitation resembling ADHD restlessness/impatience",
         "score": 1,
         "confidence": 4,
-        "reasoning": "The sentence touches on a symptom area related to restlessness, which can be associated with difficulty waiting one's turn, but it does not explicitly reference the ADHD symptom or the writer's personal experience with it."
+        "reasoning": "The sentence describes restlessness combined with inability to act, which overlaps with the feeling of difficulty waiting but stems from depressive psychomotor agitation rather than ADHD impulsivity. The vague description and lack of specific waiting context make the connection to the ADHD symptom indirect."
       }
     },
     {
@@ -106,32 +106,34 @@
     },
     {
       "score": 2,
-      "docno": "Ea8K9Y_437_1",
+      "docno": "ayBGQh_219_2",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "I always feel awkward being the first person in somewhere.",
-      "text": "I'll usually wait til I see someone else go in first then go in 5 minutes after.",
+      "pre": "i still had to wait a few minutes but it was more reasonable than the extra 20.",
+      "text": "to this day, i will call earlier if i know the person i'm picking up takes forever.",
       "post": "",
       "annotation": {
-        "symptom_match": "YES",
+        "symptom_match": "PARTIAL",
         "self_reference": "DIRECT",
         "detail_level": "MEDIUM",
         "confounders": "NONE",
         "score": 2,
         "confidence": 4,
-        "reasoning": "The sentence clearly addresses the difficulty in waiting one's turn by describing the writer's behavior of waiting for someone else to go in first. However, it lacks specific situational detail that would enhance the understanding of this experience."
+        "reasoning": "The sentence reflects a difficulty with waiting, which aligns with the ADHD symptom of impatience or difficulty waiting one's turn. The mention of calling earlier suggests a proactive approach to avoid waiting, indicating a moderate level of detail related to the symptom. However, it does not explicitly state a struggle with waiting itself, hence the partial match."
       }
     },
     {
       "score": 3,
-      "docno": "2xJICw_68_4",
-      "source": "retrieval",
-      "source_detail": null,
-      "synthetic": false,
-      "pre": "So yeah, it is holding me up.",
-      "text": "Especially when it's the last person in line and they take so long another person joins before I can run off to do the job I'm actually supposed to be doing.",
-      "post": "I have no problem with people handing me a bit of change.",
+      "docno": "synthetic_s17_waiting_01",
+      "source": "synthetic",
+      "source_detail": {
+        "generation_context": "Synthetic example for ADHD symptom 17 (difficulty waiting your turn)"
+      },
+      "synthetic": true,
+      "pre": "",
+      "text": "Waiting in line at the grocery store is actual torture for me \u2014 I start fidgeting, checking my phone, switching lanes, and half the time I just abandon my cart and leave because I physically cannot stand there doing nothing.",
+      "post": "",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
@@ -139,7 +141,7 @@
         "confounders": "NONE",
         "score": 3,
         "confidence": 5,
-        "reasoning": "The sentence explicitly describes the writer's frustration with waiting for the last person in line, providing a concrete example of how this difficulty impacts their ability to complete their job. The detail about another person joining the line adds specificity to the experience of waiting, aligning well with the symptom of difficulty waiting one's turn."
+        "reasoning": "The sentence explicitly describes the individual's struggle with waiting in line, highlighting physical symptoms like fidgeting and the inability to remain still. This aligns closely with the ADHD symptom of difficulty waiting one's turn, providing a detailed account of the emotional and physical distress experienced in such situations."
       }
     },
     {

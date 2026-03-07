@@ -1,0 +1,45 @@
+[
+  {
+    "score": 3,
+    "docno": "web_psychcentral_adhd_sit_still",
+    "source": "web",
+    "source_detail": {
+      "url": "https://psychcentral.com/blog/adhd-millennial/2018/01/why-cant-people-with-adhd-sit-still"
+    },
+    "synthetic": false,
+    "pre": "",
+    "text": "I remember sitting in class and feeling so bored and trapped into sitting still that I would go get a drink of water or go to the bathroom just because I couldn't stand sitting there anymore.",
+    "post": "",
+    "annotation": {
+      "symptom_match": "PARTIAL",
+      "self_reference": "DIRECT",
+      "detail_level": "HIGH",
+      "confounders": "The mention of feeling bored and trapped may indicate other underlying issues, but the behavior described aligns with the symptom.",
+      "score": 2,
+      "confidence": 4,
+      "reasoning": "The sentence describes a specific behavior of leaving a seat due to boredom, which aligns with the symptom of leaving one's seat in situations where remaining seated is expected. However, it does not explicitly mention meetings or similar formal situations, which slightly reduces the match. The self-reference is direct as the speaker recounts their own experience."
+    }
+  },
+  {
+    "score": 3,
+    "docno": "synthetic_s12_meeting_01",
+    "source": "synthetic",
+    "source_detail": {
+      "generator": "GPT-4o-mini",
+      "inspired_by": "web patterns"
+    },
+    "synthetic": true,
+    "pre": "",
+    "text": "I swear, I can't make it through a single team meeting without getting up to stretch or grab more coffee\u2014it's like my legs have a mind of their own!",
+    "post": "",
+    "annotation": {
+      "symptom_match": "YES",
+      "self_reference": "DIRECT",
+      "detail_level": "HIGH",
+      "confounders": "NONE",
+      "score": 3,
+      "confidence": 5,
+      "reasoning": "The sentence clearly expresses the individual's difficulty in remaining seated during meetings, directly addressing the symptom of leaving one's seat. The use of phrases like 'I can't make it through a single team meeting' and 'my legs have a mind of their own' indicates a strong personal experience with this behavior, which aligns well with the symptom being assessed."
+    }
+  }
+]

@@ -87,40 +87,40 @@
     },
     {
       "score": 2,
-      "docno": "XnmRA2_183_0",
+      "docno": "9Ytf0B_222_2",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "I talk too quietly too, but when people ask me what I said, I tend to repeat it at the same volume, despite trying to be louder.",
-      "post": "Aggravating for both of us.",
-      "annotation": {
-        "symptom_match": "YES",
-        "self_reference": "DIRECT",
-        "detail_level": "MEDIUM",
-        "confounders": "NONE",
-        "score": 2,
-        "confidence": 4,
-        "reasoning": "The sentence clearly addresses the symptom of talking excessively in social situations, as it reflects the writer's experience of repeating themselves despite trying to adjust their volume. However, it lacks specific situational detail that would enhance the clarity of the experience."
-      }
-    },
-    {
-      "score": 2,
-      "docno": "sUTXt3_386_11",
-      "source": "retrieval",
-      "source_detail": null,
-      "synthetic": false,
-      "pre": "I'm a pretty lopsided personality, and this stupid thing hit all my character traits and it's a little disturbing.",
-      "text": "I talk a lot, but it's a learned skill; if you talk you control the flow of ideas and others' impressions of you.",
+      "pre": "Going out to eat with people always makes me self conscious if its not close family/friends.",
+      "text": "I always get SUPER chatty, which also means I always forget to finish eating my food.",
       "post": "",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly indicates that the individual becomes very talkative in social situations, which aligns directly with the symptom of talking too much. The use of 'SUPER chatty' emphasizes the intensity of the behavior, and the mention of forgetting to finish eating due to this behavior provides a specific example that enhances the detail level."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "lC5ENm_57_38",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "People who are wasteful during natural disasters get punished by local communities and they all agree to it, but I'm not part of that community and wasn't there, but they all agree to it and do seemingly crazy things to me.",
+      "text": "I also talk way too much, so I'll try to pull back on that on any future responses!",
+      "post": "Sorry if it was a long read or if it didn't answer your question in all aspects.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
         "detail_level": "MEDIUM",
         "confounders": "NONE",
         "score": 2,
         "confidence": 4,
-        "reasoning": "The sentence clearly addresses the symptom of talking a lot in social situations and reflects the writer's personal experience. However, it lacks specific situational details that would enhance the clarity of the experience."
+        "reasoning": "The sentence explicitly states 'I also talk way too much,' which directly addresses the symptom of talking excessively in social situations. The self-reference is clear and direct, indicating an awareness of the behavior. The detail level is medium as it acknowledges the behavior but does not provide specific examples or contexts."
       }
     },
     {
@@ -144,13 +144,13 @@
     },
     {
       "score": 3,
-      "docno": "RCnnw3_408_1",
+      "docno": "PyEB2k_276_4",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "When I'm reflecting back on embarrassing events that  happened to me I'll unconsciously begin to say things out loud.",
-      "text": "It's never been noticable to others because it mostly happens when I'm alone, but I'll have moments where I'm like \"Why the fuck am I talking?\"",
-      "post": "",
+      "pre": "So rarely does it occur to me to say to myself, \"I don't owe anyone an explanation for anything.\"",
+      "text": "I don't know about you, but I tend to overshare.",
+      "post": "On my first date with my ex I told him my whole life story, and since he's an abusive alcoholic he had no problem saying \"wow, why are you telling me all of this awful stuff about yourself?\"",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
@@ -158,7 +158,7 @@
         "confounders": "NONE",
         "score": 3,
         "confidence": 5,
-        "reasoning": "The sentence explicitly describes the writer's own experience of talking excessively, particularly in moments of reflection, and includes a clear behavioral example of questioning their own verbal output. The detail about it being noticeable to others only when alone adds context to the symptom's manifestation."
+        "reasoning": "The sentence 'I tend to overshare' directly addresses the symptom of talking too much in social situations. The context provided supports this by illustrating a specific instance where the individual shared excessive personal information on a date, which aligns with the symptom of verbal hyperactivity. The detail level is high as it includes a personal anecdote that exemplifies the behavior clearly."
       }
     }
   ]

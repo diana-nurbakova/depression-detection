@@ -87,70 +87,53 @@
     },
     {
       "score": 2,
-      "docno": "KqRSrd_0_2",
+      "docno": "qtS5a2_42_7",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "How much of an issue is this?",
-      "text": "I spend a lot of time at a desk - both at work and at home.",
-      "post": "I could, of course, just be active.",
+      "pre": "Unfortunately I am in a very visible location now so I can't just sit around on the internet or do my own work.",
+      "text": "I do take little discrete breaks though or take walks a lot when I need a break from sitting at the desk.",
+      "post": "",
       "annotation": {
         "symptom_match": "PARTIAL",
         "self_reference": "DIRECT",
         "detail_level": "MEDIUM",
-        "confounders": "NONE",
+        "confounders": "The individual mentions taking breaks and walks, which could indicate restlessness but does not directly confirm leaving their seat in meetings.",
         "score": 2,
         "confidence": 4,
-        "reasoning": "The sentence indicates the writer's experience of spending a lot of time at a desk, which suggests a context where remaining seated is expected. However, it lacks specific situational details about leaving the seat, which would enhance the clarity of the symptom experience."
+        "reasoning": "The sentence indicates that the individual takes breaks and walks frequently, which aligns with the symptom of leaving one's seat in situations where remaining seated is expected. However, it does not explicitly mention leaving their seat during meetings, making the match partial rather than full."
       }
     },
     {
       "score": 2,
-      "docno": "ud2Wfj_953_2",
+      "docno": "6mD5qO_58_1",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "Standing is much better for your vascular system.",
-      "text": "Also when I was at school and I worked on the checkouts at a large electronics retailer, once I sat down I couldn't be arsed to get back up again.",
-      "post": "That might be just me though, I am a lazy fucker.",
+      "pre": "I mean, I just desired to stand on the table.",
+      "text": "I will stand on things (table, chair, curb/ledge) from time to time.",
+      "post": "I do so more than my other friends, so I consider that just a thing I do.",
       "annotation": {
-        "symptom_match": "YES",
+        "symptom_match": "PARTIAL",
         "self_reference": "DIRECT",
         "detail_level": "MEDIUM",
-        "confounders": "NONE",
+        "confounders": "The mention of standing on things may indicate impulsivity, but it does not directly address leaving a seat in meetings.",
         "score": 2,
         "confidence": 4,
-        "reasoning": "The sentence clearly addresses the symptom of leaving one's seat in a situation where remaining seated is expected, as it reflects the writer's experience in a work setting. However, it lacks specific situational detail about the context of leaving the seat, which prevents it from reaching a higher score."
+        "reasoning": "The sentence reflects a tendency to stand on various objects, which suggests a level of restlessness or impulsivity. However, it does not explicitly confirm the behavior of leaving a seat during meetings, making the match partial rather than complete. The self-reference is direct, as the speaker discusses their own behavior."
       }
     },
     {
       "score": 3,
-      "docno": "D0V24N_496_0",
-      "source": "retrieval",
-      "source_detail": null,
+      "docno": "web_psychcentral_adhd_sit_still",
+      "source": "web",
+      "source_detail": {
+        "url": "https://psychcentral.com/blog/adhd-millennial/2018/01/why-cant-people-with-adhd-sit-still"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "In general, while I find standing all day to be problematic, I know that sitting at my desk is generally considered a health issue.",
-      "post": "In that vein, I've been looking at standing desks - or at least desks that can easily raise and lower to accommodate both sitting and standing as is desired.",
-      "annotation": {
-        "symptom_match": "NO",
-        "self_reference": "NONE",
-        "detail_level": "NONE",
-        "confounders": "NONE",
-        "score": 3,
-        "confidence": 3,
-        "reasoning": "The sentence does not address the symptom of leaving one's seat in meetings or situations where remaining seated is expected. It discusses preferences for standing desks without any reference to the behavior of leaving a seat."
-      }
-    },
-    {
-      "score": 3,
-      "docno": "zkkowx_158_0",
-      "source": "retrieval",
-      "source_detail": null,
-      "synthetic": false,
-      "pre": "",
-      "text": "I usually do end up standing because it's just as easy for me and I really don't mind, I'm young and relatively healthy, but sometimes if my hands are full with textbooks or whatever I might take a seat so I don't drop them.",
-      "post": "On those occasions, as I said, if I see someone that wants to sit down, I stand up and let them through.",
+      "text": "I remember sitting in class and feeling so bored and trapped into sitting still that I would go get a drink of water or go to the bathroom just because I couldn't stand sitting there anymore.",
+      "post": "",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
@@ -158,7 +141,29 @@
         "confounders": "NONE",
         "score": 3,
         "confidence": 5,
-        "reasoning": "The sentence explicitly describes the writer's experience of leaving their seat in social situations, providing concrete details about their behavior and the context in which it occurs. The mention of standing up to let someone through further illustrates the symptom of leaving one's seat when expected to remain seated."
+        "reasoning": "The sentence explicitly describes leaving one's seat in class — a situation where remaining seated is expected — providing concrete detail about the excuses used (water, bathroom) and the emotional experience (bored, trapped). This is a direct self-report with high specificity matching the symptom."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "synthetic_s12_meeting_01",
+      "source": "synthetic",
+      "source_detail": {
+        "generator": "GPT-4o-mini",
+        "inspired_by": "web patterns"
+      },
+      "synthetic": true,
+      "pre": "",
+      "text": "I swear, I can't make it through a single team meeting without getting up to stretch or grab more coffee — it's like my legs have a mind of their own!",
+      "post": "",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence clearly expresses the individual's difficulty in remaining seated during meetings, directly addressing the symptom of leaving one's seat. The use of phrases like 'I can't make it through a single team meeting' and 'my legs have a mind of their own' indicates a strong personal experience with this behavior."
       }
     }
   ]

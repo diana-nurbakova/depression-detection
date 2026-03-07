@@ -7,13 +7,13 @@
   "examples": [
     {
       "score": 0,
-      "docno": "Mkf7k5_90_2",
-      "source": "retrieval",
+      "docno": "NqRoXm_433_2",
+      "source": "score0_random",
       "source_detail": null,
       "synthetic": false,
-      "pre": "I dont find ritalin to be very speedy, although if I drink caffeine I get pretty damn restless and I sometimes start slightly tweaking.",
-      "text": "When doing only ritalin by itself though, I can sit still and focus on stuff without getting restless.",
-      "post": "When I snort it, I tend to get a bit more restless and amped up, but when taken orally I feel pretty much like I always do physically, just mentally more \"on\".",
+      "pre": "Well done with ketchup.",
+      "text": "I can't stand Barack Obama but I bet he knows not to eat a steak well done and then kill it with ketchup.",
+      "post": "",
       "annotation": {
         "symptom_match": "NO",
         "self_reference": "NONE",
@@ -21,7 +21,7 @@
         "confounders": "NONE",
         "score": 0,
         "confidence": 5,
-        "reasoning": "The sentence does not address the symptom of restlessness or fidgetiness at all. It discusses the effects of Ritalin and caffeine but does not provide any indication of experiencing restlessness."
+        "reasoning": "The sentence is about food preferences and a political opinion, completely unrelated to restlessness or fidgetiness."
       }
     },
     {
@@ -125,13 +125,13 @@
     },
     {
       "score": 3,
-      "docno": "n16Fv9_220_1",
+      "docno": "Mkf7k5_90_2",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "I whistle or sing to myself all the time and it's rare for me to be doing nothing.",
-      "text": "I am as fidgety as a squirrel monkey.",
-      "post": "",
+      "pre": "I dont find ritalin to be very speedy, although if I drink caffeine I get pretty damn restless and I sometimes start slightly tweaking.",
+      "text": "When doing only ritalin by itself though, I can sit still and focus on stuff without getting restless.",
+      "post": "When I snort it, I tend to get a bit more restless and amped up, but when taken orally I feel pretty much like I always do physically, just mentally more \"on\".",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
@@ -139,7 +139,7 @@
         "confounders": "NONE",
         "score": 3,
         "confidence": 5,
-        "reasoning": "The sentence explicitly describes the writer's experience of being fidgety, using a vivid comparison to a squirrel monkey, which conveys a strong sense of restlessness. The detail provided indicates a clear behavioral example of the symptom."
+        "reasoning": "The sentence describes restlessness as the writer's baseline state that requires ADHD medication (Ritalin) to manage. The surrounding context ('I get pretty damn restless', 'more restless and amped up') provides rich detail about the severity and pervasiveness of their fidgetiness. The negated framing ('can sit still... without getting restless') implies this is normally impossible without medication."
       }
     },
     {

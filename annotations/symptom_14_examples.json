@@ -106,21 +106,21 @@
     },
     {
       "score": 2,
-      "docno": "L11x9n_118_1",
+      "docno": "0xoLb1_23_2",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "I tried that a couple of different times and I never seem to open the door.",
-      "text": "It's like, I get distracted by something else or forget and one time didn't even make it all the way to the door before I got on some other shit.",
-      "post": "I'll definitely be trying that some more, but I probably mainly just need to continue getting more used to even being lucid on the level I've reached lately.",
+      "pre": "Using it while testing is not a *bad* thing (and if you studied on Adderall, you should test on Adderall) but be sure to watch your time.",
+      "text": "I sometimes run out of time because I'm sitting there plugging away at 1 problem.",
+      "post": "",
       "annotation": {
-        "symptom_match": "YES",
+        "symptom_match": "PARTIAL",
         "self_reference": "DIRECT",
         "detail_level": "MEDIUM",
-        "confounders": "NONE",
+        "confounders": "The mention of time management issues may relate to external factors rather than solely to ADHD symptoms.",
         "score": 2,
         "confidence": 4,
-        "reasoning": "The sentence clearly addresses the difficulty in stopping an activity, as the writer describes getting distracted and not completing the action of opening the door. However, it lacks specific situational detail that would elevate it to a higher score."
+        "reasoning": "The sentence indicates a difficulty in stopping an activity (solving a problem) due to being engrossed in it, which aligns with the symptom of having trouble stopping when supposed to. However, the context suggests a potential confounder related to time management, which may not be exclusively tied to ADHD symptoms."
       }
     },
     {
@@ -144,13 +144,13 @@
     },
     {
       "score": 3,
-      "docno": "QTbpt5_185_2",
+      "docno": "RQppth_166_1",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "Focus focus focus.\"",
-      "text": "Then I go to get back on the task, get distracted, and realize I've spend 45 fucking minutes not doing what I was actually supposed to be doing.",
-      "post": "My short term memory is garbage too.",
+      "pre": "Programming is the only thing that can keep my attention for 9 hours straight.",
+      "text": "I hyperfocus on it so hard that I forget that my body needs to eat, rest, etc.",
+      "post": "I feel lucky that I can hyperfocus on programming instead of something like twiddling my thumbs or tapping my fingers.",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
@@ -158,7 +158,7 @@
         "confounders": "NONE",
         "score": 3,
         "confidence": 5,
-        "reasoning": "The sentence explicitly describes the writer's experience of getting distracted and losing track of time while trying to return to a task, providing concrete detail about the duration of the distraction. This aligns well with the symptom of difficulty stopping an activity when supposed to."
+        "reasoning": "The sentence clearly describes a difficulty in stopping an activity (programming) due to hyperfocus, which directly relates to the symptom of having trouble stopping an activity when supposed to. The detail provided about forgetting basic needs like eating and resting further emphasizes the intensity of the hyperfocus and the resulting difficulty in disengaging from the task."
       }
     }
   ]
