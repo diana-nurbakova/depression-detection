@@ -109,11 +109,15 @@ class LLMClient:
             # Reasoning models: disable streaming — reasoning tokens
             # are not emitted as content chunks, so streaming would
             # yield an empty content string.
+            # Budget must cover reasoning (~500-1000 tok) PLUS visible
+            # output (~200-500 tok). Use at least 2500 to avoid the
+            # model exhausting its budget during reasoning.
+            reasoning_budget = max(mtok, 2500)
             payload = {
                 "model": self.model,
                 "messages": messages,
                 "stream": False,
-                "max_completion_tokens": mtok,
+                "max_completion_tokens": reasoning_budget,
             }
         else:
             payload = {
@@ -177,6 +181,20 @@ class LLMClient:
                     self._call_count, self.provider, self.model, elapsed,
                     prompt_tok, completion_tok, reasoning_tok, len(content),
                 )
+
+                # Reasoning models: if all tokens went to reasoning
+                # with no visible output, retry with a higher budget.
+                if is_reasoning and not content and reasoning_tok > 0:
+                    if attempt < self.max_retries:
+                        bigger = reasoning_tok + 1500
+                        logger.warning(
+                            "Reasoning model used %d tokens but produced "
+                            "no content — retrying with max_completion_tokens=%d",
+                            reasoning_tok, bigger,
+                        )
+                        payload["max_completion_tokens"] = bigger
+                        time.sleep(self.rate_limit_delay)
+                        continue
 
                 if self.rate_limit_delay > 0:
                     time.sleep(self.rate_limit_delay)

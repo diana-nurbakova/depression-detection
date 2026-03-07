@@ -1,139 +1,140 @@
 {
-  "best_macro_f1": 0.08889993214901638,
+  "best_macro_f1": 0.185180334002624,
   "per_symptom_f1": {
-    "Sadness": 0.07796101949025486,
-    "Pessimism": 0.05546995377503852,
-    "Past failure": 0.11510791366906473,
-    "Loss of pleasure": 0.0676818950930626,
-    "Guilty feelings": 0.05128205128205129,
-    "Punishment feelings": 0.015625,
-    "Self-dislike": 0.08258527827648116,
-    "Self-criticalness": 0.014513788098693758,
-    "Suicidal thoughts or wishes": 0.18930041152263374,
-    "Crying": 0.4081632653061224,
-    "Agitation": 0.03571428571428572,
-    "Loss of interest": 0.029079159935379646,
-    "Indecisiveness": 0.06432748538011696,
-    "Worthlessness": 0.030456852791878174,
-    "Loss of energy": 0.0916030534351145,
-    "Changes in sleeping pattern": 0.2058823529411765,
-    "Irritability": 0.054474708171206226,
-    "Changes in appetite": 0.05150214592274678,
-    "Concentration difficulty": 0.052631578947368425,
-    "Tiredness or fatigue": 0.11413043478260869,
-    "Loss of interest in sex": 0.05940594059405941
+    "Sadness": 0.23059866962305983,
+    "Pessimism": 0.045393858477970624,
+    "Past failure": 0.08682170542635659,
+    "Loss of pleasure": 0.1945945945945946,
+    "Guilty feelings": 0.16993464052287582,
+    "Punishment feelings": 0.14022140221402216,
+    "Self-dislike": 0.20958083832335328,
+    "Self-criticalness": 0.14093959731543623,
+    "Suicidal thoughts or wishes": 0.4700460829493087,
+    "Crying": 0.44247787610619466,
+    "Agitation": 0.058558558558558564,
+    "Loss of interest": 0.19305019305019303,
+    "Indecisiveness": 0.04,
+    "Worthlessness": 0.17006802721088438,
+    "Loss of energy": 0.17763157894736842,
+    "Changes in sleeping pattern": 0.33480176211453744,
+    "Irritability": 0.26804123711340205,
+    "Changes in appetite": 0.15730337078651685,
+    "Concentration difficulty": 0.11063829787234042,
+    "Tiredness or fatigue": 0.17665615141955834,
+    "Loss of interest in sex": 0.07142857142857142
   },
   "dataset_stats": {
-    "total_samples": 18677,
+    "total_samples": 20573,
     "source_counts": {
       "depresym": 16148,
+      "redsm5": 1896,
       "bdisen": 2529
     },
     "per_symptom": {
       "Sadness": {
-        "positive": 331,
-        "negative": 18346,
-        "ratio": 0.01772233228034481
+        "positive": 700,
+        "negative": 19873,
+        "ratio": 0.03402517863218782
       },
       "Pessimism": {
         "positive": 176,
-        "negative": 18501,
-        "ratio": 0.009423354928521711
+        "negative": 20397,
+        "ratio": 0.008554902056092937
       },
       "Past failure": {
         "positive": 222,
-        "negative": 18455,
-        "ratio": 0.01188627723938534
+        "negative": 20351,
+        "ratio": 0.010790842366208137
       },
       "Loss of pleasure": {
-        "positive": 237,
-        "negative": 18440,
-        "ratio": 0.01268940407988435
+        "positive": 376,
+        "negative": 20197,
+        "ratio": 0.018276381665289457
       },
       "Guilty feelings": {
-        "positive": 110,
-        "negative": 18567,
-        "ratio": 0.00588959683032607
+        "positive": 458,
+        "negative": 20115,
+        "ratio": 0.02226218830506003
       },
       "Punishment feelings": {
-        "positive": 39,
-        "negative": 18638,
-        "ratio": 0.0020881297852974245
+        "positive": 387,
+        "negative": 20186,
+        "ratio": 0.018811063043795265
       },
       "Self-dislike": {
-        "positive": 218,
-        "negative": 18459,
-        "ratio": 0.011672110081918938
+        "positive": 566,
+        "negative": 20007,
+        "ratio": 0.02751178729402615
       },
       "Self-criticalness": {
-        "positive": 86,
-        "negative": 18591,
-        "ratio": 0.004604593885527654
+        "positive": 434,
+        "negative": 20139,
+        "ratio": 0.02109561075195645
       },
       "Suicidal thoughts or wishes": {
-        "positive": 304,
-        "negative": 18373,
-        "ratio": 0.01627670396744659
+        "positive": 498,
+        "negative": 20075,
+        "ratio": 0.024206484226899333
       },
       "Crying": {
-        "positive": 264,
-        "negative": 18413,
-        "ratio": 0.014135032392782567
+        "positive": 633,
+        "negative": 19940,
+        "ratio": 0.030768482963106986
       },
       "Agitation": {
-        "positive": 95,
-        "negative": 18582,
-        "ratio": 0.00508646998982706
+        "positive": 130,
+        "negative": 20443,
+        "ratio": 0.006318961745977738
       },
       "Loss of interest": {
-        "positive": 95,
-        "negative": 18582,
-        "ratio": 0.00508646998982706
+        "positive": 234,
+        "negative": 20339,
+        "ratio": 0.011374131142759928
       },
       "Indecisiveness": {
-        "positive": 83,
-        "negative": 18594,
-        "ratio": 0.004443968517427853
+        "positive": 146,
+        "negative": 20427,
+        "ratio": 0.007096680114713459
       },
       "Worthlessness": {
-        "positive": 99,
-        "negative": 18578,
-        "ratio": 0.0053006371472934626
+        "positive": 447,
+        "negative": 20126,
+        "ratio": 0.021727506926554223
       },
       "Loss of energy": {
-        "positive": 145,
-        "negative": 18532,
-        "ratio": 0.007763559458157092
+        "positive": 291,
+        "negative": 20282,
+        "ratio": 0.014144752831380936
       },
       "Changes in sleeping pattern": {
-        "positive": 212,
-        "negative": 18465,
-        "ratio": 0.011350859345719335
+        "positive": 324,
+        "negative": 20249,
+        "ratio": 0.015748796966898362
       },
       "Irritability": {
-        "positive": 149,
-        "negative": 18528,
-        "ratio": 0.007977726615623494
+        "positive": 518,
+        "negative": 20055,
+        "ratio": 0.025178632187818985
       },
       "Changes in appetite": {
-        "positive": 111,
-        "negative": 18566,
-        "ratio": 0.00594313861969267
+        "positive": 159,
+        "negative": 20414,
+        "ratio": 0.007728576289311233
       },
       "Concentration difficulty": {
-        "positive": 96,
-        "negative": 18581,
-        "ratio": 0.005140011779193661
+        "positive": 159,
+        "negative": 20414,
+        "ratio": 0.007728576289311233
       },
       "Tiredness or fatigue": {
-        "positive": 151,
-        "negative": 18526,
-        "ratio": 0.008084810194356695
+        "positive": 297,
+        "negative": 20276,
+        "ratio": 0.014436397219656831
       },
       "Loss of interest in sex": {
         "positive": 100,
-        "negative": 18577,
-        "ratio": 0.005354178936660063
+        "negative": 20473,
+        "ratio": 0.00486073980459826
       }
     }
   },

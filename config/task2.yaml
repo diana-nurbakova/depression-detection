@@ -1,0 +1,74 @@
+# eRisk 2026 Task 2: Contextualized Early Detection of Depression
+# Pipeline configuration
+
+training_data_dir: "data/eRisk-2025/eRisk25-datasets/t2-early-contextualized-depression/final-eriskt2-dataset-with-ground-truth/final-eriskt2-dataset-with-ground-truth/all_combined"
+labels_path: "data/eRisk-2025/eRisk25-datasets/t2-early-contextualized-depression/final-eriskt2-dataset-with-ground-truth/final-eriskt2-dataset-with-ground-truth/shuffled_ground_truth_labels.txt"
+
+embedding:
+  models:
+    - "all-mpnet-base-v2"
+    - "all-MiniLM-L12-v2"
+    - "all-distilroberta-v1"
+  decay_lambda: 0.95
+  device: "cpu"
+  batch_size: 64
+
+symptom:
+  variant: "C"
+  use_depresym_embeddings: true
+  activation_threshold: 0.3
+
+bertopic:
+  n_topics: 40
+  n_neighbors: 15
+  n_components: 5
+  min_cluster_size: 50
+  min_samples: 10
+  rolling_buffer_size: 5
+
+emotion:
+  model: "j-hartmann/emotion-english-distilroberta-base"
+  min_words: 10
+
+wasserstein:
+  short_window: 5
+  medium_window: 25
+  n_projections: 50
+
+mahalanobis:
+  n_pca_components: 50
+  regularization: "ledoit_wolf"
+
+tom:
+  enabled: true
+  method: "option_c"
+  chained: false
+
+ollama:
+  base_url: "http://localhost:11434"
+  model: "llama3.3:70b"
+  num_ctx: 8192
+  keep_alive: "24h"
+  temperature: 0.1
+  timeout_seconds: 120
+
+server:
+  base_url: "https://erisk.irlab.org/challenge-t2"
+  max_retries: 5
+  initial_delay: 2.0
+  backoff_factor: 2.0
+  timeout: 60
+
+logging:
+  output_dir: "./runs/task2"
+  log_level: "INFO"
+
+thread_format:
+  max_tokens: 2000
+  truncate_length: 100
+
+cv_folds: 5
+xgboost_params:
+  max_depth: 6
+  n_estimators: 300
+  learning_rate: 0.1
