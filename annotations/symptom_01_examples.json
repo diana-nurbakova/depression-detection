@@ -2,83 +2,163 @@
   "symptom_id": 1,
   "symptom_text": "How often do you have trouble wrapping up the final details of a project, once the challenging parts have been done?",
   "symptom_factor": "Inattention",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "5FX8Wi_305_2",
+      "source": "score0_random",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
+      "pre": "Touchdown.",
+      "text": "I never even thought of going to Foxboro and running 100 yards from 11 Super mutants and turning around to spike a mini nuke in their faces.",
+      "post": "Jesus god the hype.",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of inattention or the difficulty in completing final details of a project. It appears to be a non-related expression of excitement or hype without any connection to ADHD symptoms."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "b1ayp8_83_2",
+      "source": "score0_random",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Tested and it works fine for all situations.",
+      "text": "I'd say go with that.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of inattention related to completing final details of a project. It is a general statement about testing and does not provide any relevant information regarding ADHD symptoms."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "bdisen_Indecision",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I'm really conflicted about this.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Mild depression relevance makes it an ambiguous confounder for ADHD.",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 3,
+        "reasoning": "The sentence expresses a feeling of conflict but does not explicitly relate to the symptom of trouble completing projects. It is vague and lacks specific situational detail, making the connection to ADHD symptoms indirect."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "bdisen_Indecision",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "i have no idea what to do.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Depression-related ambiguity",
+        "score": 1,
+        "confidence": 3,
+        "reasoning": "The sentence expresses uncertainty about what to do, which could relate to inattention in completing tasks, but it lacks specific reference to project details or personal experience, making the connection vague and indirect."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "c9Q4NH_1052_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I usually get this way with projects that I actually started or decided to do myself because I either wanted the outcome or the journey.",
+      "post": "For example starting and getting halfway through building a be large complicated Lego set, getting bored, distracted, or confused partway through.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of inattention related to completing projects, as it describes the writer's experience with starting a Lego set and losing interest. However, it lacks specific situational detail about the challenges faced during the project completion."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "1sTsJs_77_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I focus on one big project, but I'll also work on short stories for a week or two here and there to break up the routine.",
+      "text": "I also tend to keep going back to 'finished' projects as well because nothing is ever done.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of difficulty completing projects by indicating a tendency to revisit 'finished' projects, which reflects inattention. However, it lacks specific situational detail that would enhance the clarity of the experience."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "5XyRpo_356_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "So it must be a recurring theme on this subreddit, but due to an appalling amount of discipline I very easily give up on projects after just a few days of starting.",
+      "post": "I have three projects on the go at the moment, which are easily manageable together as two are being outsourced to developers, whilst the other one needs my own work and attention.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience of managing multiple projects and highlights the challenge of maintaining focus on the one that requires their attention, demonstrating a clear connection to the symptom of inattention in completing tasks."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "S4wDMl_206_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Haha.",
+      "text": "I have a hard time finishing stuff, too.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's own experience with difficulty finishing tasks, which aligns directly with the ADHD symptom of inattention related to completing projects. The use of 'hard time finishing stuff' conveys a clear behavioral example of this symptom."
       }
     }
   ]

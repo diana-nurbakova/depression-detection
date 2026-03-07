@@ -1,0 +1,205 @@
+{
+  "total_pairs": 21580,
+  "unique_sentences": 16148,
+  "symptoms": 21,
+  "overlapping_symptoms_analyzed": [
+    11,
+    13,
+    15,
+    16,
+    19
+  ],
+  "global_agreement": {
+    "human_consensus_vs_human_majority": {
+      "kappa": 0.6546,
+      "agreement_rate": 0.9045
+    },
+    "human_consensus_vs_gpt4": {
+      "kappa": 0.3765,
+      "agreement_rate": 0.7715
+    },
+    "human_consensus_vs_chatgpt": {
+      "kappa": 0.1793,
+      "agreement_rate": 0.5649
+    },
+    "human_majority_vs_gpt4": {
+      "kappa": 0.565,
+      "agreement_rate": 0.8262
+    },
+    "human_majority_vs_chatgpt": {
+      "kappa": 0.3188,
+      "agreement_rate": 0.6439
+    },
+    "gpt4_vs_chatgpt": {
+      "kappa": 0.4918,
+      "agreement_rate": 0.739
+    }
+  },
+  "overlapping_overestimation_summary": {
+    "11": {
+      "name": "Agitation",
+      "gpt4_overest_ratio": 3.3768,
+      "gpt4_fpr": 0.184,
+      "chatgpt_overest_ratio": 7.4058,
+      "chatgpt_fpr": 0.4392,
+      "gpt4_fp_count": 186,
+      "shared_fp_count": 160,
+      "correction_rate": 0.639,
+      "verdict": "Escalation well-motivated"
+    },
+    "13": {
+      "name": "Indecisiveness",
+      "gpt4_overest_ratio": 4.623,
+      "gpt4_fpr": 0.2154,
+      "chatgpt_overest_ratio": 9.8197,
+      "chatgpt_fpr": 0.5138,
+      "gpt4_fp_count": 226,
+      "shared_fp_count": 208,
+      "correction_rate": 0.6148,
+      "verdict": "Escalation well-motivated"
+    },
+    "15": {
+      "name": "Loss of Energy",
+      "gpt4_overest_ratio": 2.8062,
+      "gpt4_fpr": 0.2455,
+      "chatgpt_overest_ratio": 4.0388,
+      "chatgpt_fpr": 0.4145,
+      "gpt4_fp_count": 234,
+      "shared_fp_count": 205,
+      "correction_rate": 0.4849,
+      "verdict": "Escalation has moderate value"
+    },
+    "16": {
+      "name": "Sleep Changes",
+      "gpt4_overest_ratio": 2.7438,
+      "gpt4_fpr": 0.483,
+      "chatgpt_overest_ratio": 3.3892,
+      "chatgpt_fpr": 0.6639,
+      "gpt4_fp_count": 355,
+      "shared_fp_count": 327,
+      "correction_rate": 0.334,
+      "verdict": "Escalation has limited value \u2014 invest in prompt improvement"
+    },
+    "19": {
+      "name": "Concentration Difficulty",
+      "gpt4_overest_ratio": 2.8675,
+      "gpt4_fpr": 0.17,
+      "chatgpt_overest_ratio": 4.8916,
+      "chatgpt_fpr": 0.3454,
+      "gpt4_fp_count": 160,
+      "shared_fp_count": 149,
+      "correction_rate": 0.5443,
+      "verdict": "Escalation has moderate value"
+    }
+  },
+  "asrs_weight_adjustments": {
+    "5": {
+      "source_bdi_symptom": 11,
+      "source_name": "Agitation",
+      "gpt4_fpr": 0.184,
+      "chatgpt_fpr": 0.4392,
+      "overestimation_correction": 0.092,
+      "recommended_symptom_weight": 0.908,
+      "escalation_priority": "HIGH"
+    },
+    "6": {
+      "source_bdi_symptom": 11,
+      "source_name": "Agitation",
+      "gpt4_fpr": 0.184,
+      "chatgpt_fpr": 0.4392,
+      "overestimation_correction": 0.092,
+      "recommended_symptom_weight": 0.908,
+      "escalation_priority": "HIGH"
+    },
+    "12": {
+      "source_bdi_symptom": 11,
+      "source_name": "Agitation",
+      "gpt4_fpr": 0.184,
+      "chatgpt_fpr": 0.4392,
+      "overestimation_correction": 0.092,
+      "recommended_symptom_weight": 0.908,
+      "escalation_priority": "HIGH"
+    },
+    "13": {
+      "source_bdi_symptom": 11,
+      "source_name": "Agitation",
+      "gpt4_fpr": 0.184,
+      "chatgpt_fpr": 0.4392,
+      "overestimation_correction": 0.092,
+      "recommended_symptom_weight": 0.908,
+      "escalation_priority": "HIGH"
+    },
+    "1": {
+      "source_bdi_symptom": 13,
+      "source_name": "Indecisiveness",
+      "gpt4_fpr": 0.2154,
+      "chatgpt_fpr": 0.5138,
+      "overestimation_correction": 0.1077,
+      "recommended_symptom_weight": 0.8923,
+      "escalation_priority": "HIGH"
+    },
+    "2": {
+      "source_bdi_symptom": 13,
+      "source_name": "Indecisiveness",
+      "gpt4_fpr": 0.2154,
+      "chatgpt_fpr": 0.5138,
+      "overestimation_correction": 0.1077,
+      "recommended_symptom_weight": 0.8923,
+      "escalation_priority": "HIGH"
+    },
+    "4": {
+      "source_bdi_symptom": 15,
+      "source_name": "Loss of Energy",
+      "gpt4_fpr": 0.2455,
+      "chatgpt_fpr": 0.4145,
+      "overestimation_correction": 0.1227,
+      "recommended_symptom_weight": 0.8772,
+      "escalation_priority": "HIGH"
+    },
+    "7": {
+      "source_bdi_symptom": 16,
+      "source_name": "Sleep Changes",
+      "gpt4_fpr": 0.483,
+      "chatgpt_fpr": 0.6639,
+      "overestimation_correction": 0.2415,
+      "recommended_symptom_weight": 0.7585,
+      "escalation_priority": "HIGH"
+    },
+    "8": {
+      "source_bdi_symptom": 19,
+      "source_name": "Concentration Difficulty",
+      "gpt4_fpr": 0.17,
+      "chatgpt_fpr": 0.3454,
+      "overestimation_correction": 0.085,
+      "recommended_symptom_weight": 0.915,
+      "escalation_priority": "HIGH"
+    },
+    "9": {
+      "source_bdi_symptom": 19,
+      "source_name": "Concentration Difficulty",
+      "gpt4_fpr": 0.17,
+      "chatgpt_fpr": 0.3454,
+      "overestimation_correction": 0.085,
+      "recommended_symptom_weight": 0.915,
+      "escalation_priority": "HIGH"
+    },
+    "10": {
+      "source_bdi_symptom": 19,
+      "source_name": "Concentration Difficulty",
+      "gpt4_fpr": 0.17,
+      "chatgpt_fpr": 0.3454,
+      "overestimation_correction": 0.085,
+      "recommended_symptom_weight": 0.915,
+      "escalation_priority": "HIGH"
+    },
+    "11": {
+      "source_bdi_symptom": 19,
+      "source_name": "Concentration Difficulty",
+      "gpt4_fpr": 0.17,
+      "chatgpt_fpr": 0.3454,
+      "overestimation_correction": 0.085,
+      "recommended_symptom_weight": 0.915,
+      "escalation_priority": "HIGH"
+    }
+  }
+}

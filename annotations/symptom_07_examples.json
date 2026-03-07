@@ -2,83 +2,163 @@
   "symptom_id": 7,
   "symptom_text": "How often do you have difficulty unwinding and relaxing when you have time to yourself?",
   "symptom_factor": "Inattention",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "weTf2T_207_0",
+      "source": "score0_random",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "We want to make our lord and savior MaryJ acceptable in the eyes of the masses, but I see this as a tiny step backward,",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of difficulty unwinding and relaxing during unstructured time at all. It focuses on a different topic unrelated to ADHD symptoms."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "3HGS13_170_1",
+      "source": "score0_random",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Local laws prohibit them on ANY public property.",
+      "text": "So, I always yank 'em during elections whenever I see them on public land.",
+      "post": "It's great for shooting AND it pisses the people who put them there off.",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of difficulty unwinding and relaxing at all. It discusses a completely unrelated topic about local laws and personal actions during elections."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "bdisen_Tiredness_or_fatigue",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "i burnt out and i still am unmotivated and feeling like shit.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "INDIRECT",
+        "detail_level": "LOW",
+        "confounders": "Depression relevance indicated by feelings of burnout and lack of motivation.",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 3,
+        "reasoning": "The sentence suggests a struggle with motivation and feelings of being overwhelmed, which can relate to difficulty unwinding. However, it lacks explicit reference to the symptom of difficulty relaxing and is more indicative of depressive symptoms."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "bdisen_Tiredness_or_fatigue",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "Unmotivated, lazy, over emotional, feeling like shit, i over eat or eat too little, nothing is enjoyable or interesting.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "INDIRECT",
+        "detail_level": "LOW",
+        "confounders": "Depression-related symptoms such as feeling unmotivated and experiencing a lack of enjoyment.",
+        "score": 1,
+        "confidence": 3,
+        "reasoning": "The sentence touches on feelings of being unmotivated and not enjoying activities, which can relate to difficulty unwinding. However, it lacks explicit reference to the symptom of difficulty relaxing and is vague in its connection to ADHD."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "GchF7P_508_26",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
+      "pre": "Now that I'm working and finally have a car, I try to write, but my mind is like mush when I get home, so I play video games to 'unwind.'",
+      "text": "Once I'm relaxed I can than switch to writing, or whatever chores I need to get done.",
+      "post": "Lately though, I've had to do long hours, so the time needed for relaxing and unwinding has really cut into the time I'd spend writing.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the difficulty in unwinding and relaxing, indicating the writer's personal experience with this symptom. However, it lacks specific situational detail about how this affects their ability to relax or engage in writing."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "jzPaaD_73_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I love the idea of a workout partner and have had a few people go with me.",
+      "text": "I always end up wanting to put my earphones in and just do my thing.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of difficulty unwinding and relaxing by expressing a preference for solitude during workouts. However, it lacks specific situational detail about the context in which this occurs."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "NLNahy_253_2",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
+      "pre": "I make sure my life always has something new to learn or do.",
+      "text": "I try to make sure that I am always busy and when I do have time to relax, I make sure my relaxation time is something I enjoy but also I get bored of relaxing quite easily so I guess I'm lucky there.",
+      "post": "I recently quit alcohol for my 20th birthday, after having quit drugs for a year, so temptation wasn't an issue.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience with difficulty relaxing, noting that they get bored easily during relaxation time. It provides concrete details about their approach to relaxation and how they manage their time, aligning well with the symptom of inattention."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "U3u5vc_559_2",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I'm an introvert.",
+      "text": "I unwind when I'm alone.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience of unwinding when alone, which directly relates to the difficulty of disengaging during unstructured time. The detail provided indicates a clear understanding of the symptom."
       }
     }
   ]

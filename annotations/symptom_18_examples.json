@@ -2,83 +2,163 @@
   "symptom_id": 18,
   "symptom_text": "How often do you interrupt others when they are busy?",
   "symptom_factor": "Verbal_HI",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "RKcMOR_340_1",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
-      "post": "",
+      "pre": "The most annoying thing about this is that some people don't seem to understand that they can google words for themselves.",
+      "text": "I do it all the time, just so I don't have to derail the conversation!",
+      "post": "It's fine with me if I'm talking to someone in person and they ask me, but I get kind of mad when people ask me the definition of something when we're talking online.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of interrupting others at all. It discusses frustration with others not looking up definitions but does not indicate any behavior of interrupting or intruding on conversations."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "CkAzwt_82_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I also talk to myself to calm down.",
+      "text": "Sometimes when I'm working through a project there are too many thoughts running through my head, so I talk my way through it to stay focused.",
+      "post": "It's also really helpful to take breaks.",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of interrupting others at all. It focuses on self-talk as a strategy for managing thoughts, which is unrelated to the behavior of interrupting or intruding on others."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "s_2706_670_0",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I've got so much anxiety right now lol.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Depression symptom resembling ADHD symptom",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 3,
+        "reasoning": "The sentence expresses a feeling of anxiety, which may relate to impulsivity or urgency in communication, but it does not explicitly mention interrupting others or provide a personal experience related to the symptom."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "s_1907_9_14",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "I have have such high anxiety levels at the minute, little things keep getting to me.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "INDIRECT",
+        "detail_level": "LOW",
+        "confounders": "Depression symptoms related to anxiety",
+        "score": 1,
+        "confidence": 3,
+        "reasoning": "The sentence indicates high anxiety levels which could lead to interruptions, but it does not explicitly connect to the behavior of interrupting others. The reference to anxiety suggests a potential link to ADHD symptoms, but it remains vague and indirect."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "GPUbkL_303_4",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
-      "post": "",
+      "pre": "Then they would tell me contradicting procedures.",
+      "text": "I was told I \"interrupted\" people often.",
+      "post": "When I asked a question, people would go about it a different route rather than answer my question and confuse me more.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence clearly indicates the writer's experience of being labeled as someone who interrupts others, which aligns with the symptom of interrupting or intruding on others. However, it lacks specific situational details that would enhance the clarity of the experience."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "mxeE1J_75_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "People who understand me best and are generally compassionate allow me the room to not be interrupted.",
+      "text": "When I get the opportunity, I'll react to an interruption with a solemn look, a few seconds of pause (which I need to redirect my thoughts anyway) and then go on the next thread, perhaps betraying my annoyance in the process.",
+      "post": "This isn't diplomatic, nor does it win you friends, but it tends to drive a point home.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of interrupting others and conveys the writer's personal experience with their reaction to interruptions. However, it lacks specific situational detail that would elevate it to a higher score."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "jP0CQM_67_4",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
+      "pre": "I think I definitely interrupt and talk too long.",
+      "text": "I'm a notorious interrupter... I've gotten better at that though... Through years of effort.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's own experience of interrupting others, using the term 'notorious interrupter' which conveys a strong self-awareness of the behavior. Additionally, the mention of improvement through effort provides concrete detail about their journey with this symptom."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "6mD5qO_2_12",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "But I'm afraid that they do.",
+      "text": "I often interrupt/butt in without even realizing that I did something wrong.",
+      "post": "If nobody tells me, I don't always connect people's responses to I did something wrong.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience of interrupting others without realizing it, providing concrete detail about their lack of awareness regarding the impact of their behavior on others. This aligns closely with the ADHD symptom of interrupting or intruding on others."
       }
     }
   ]

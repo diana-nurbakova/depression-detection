@@ -2,83 +2,163 @@
   "symptom_id": 2,
   "symptom_text": "How often do you have difficulty getting things organized?",
   "symptom_factor": "Inattention",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "QZdHvI_304_0",
+      "source": "score0_random",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
-      "post": "",
+      "text": "Developer, and usually I play while waiting for things to load/compile because my stuff is slow enough that it takes minutes.",
+      "post": "Just enough time to load up some Zelda and explore a little bit.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of difficulty getting organized at all. It focuses on a gaming activity while waiting, which is unrelated to task organization or inattention."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "ddhxPI_29_0",
+      "source": "score0_random",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "",
+      "text": "So, i'm rewatching buffy, and was wondering if anyone knows which episode it is where buffy is running over the rooftops while the buildings are collapsing ?",
+      "post": "I think it was a season finale ?",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of difficulty getting organized at all. It is focused on a question about a specific episode of a TV show, which is unrelated to the symptom of inattention or organizational difficulties."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "bdisen_Indecision",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I dont know what to do either.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Depression relevance makes it ambiguous for ADHD assessment.",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence suggests a lack of direction or organization but does not explicitly connect to the symptom of difficulty getting things organized. Its vague nature and the presence of depression as a confounder limit its clarity regarding ADHD symptoms."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "1xwBvT_2942_1",
+      "source": "erisk2025_disagreement",
+      "source_detail": {
+        "raw_source": "erisk2025_disagreement"
+      },
+      "synthetic": false,
+      "pre": "Dude, I had the same problem last week and I just ended up giving up after 5 pairs and telling my sister to buy some underwear.",
+      "text": "It was basically I CAN'T MAKE ANY MORE DECISIONS!",
+      "post": "YOU BUY UNDERWEAR!",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "INDIRECT",
+        "detail_level": "LOW",
+        "confounders": "Frustration or indecision may resemble symptoms of depression.",
+        "score": 1,
+        "confidence": 4,
+        "reasoning": "The sentence indicates a struggle with decision-making, which relates to organization difficulties, but it does so in a vague manner without specific examples of disorganization."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "eH643D_136_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
-      "post": "",
+      "text": "I'm the definition of disorganization and I really want to change for the better... How do I go about becoming generally organized?",
+      "post": "Should I play more tetris and do tasks everyday that involve organization?",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of disorganization and expresses the writer's desire to improve their organizational skills. However, it lacks specific situational details or examples of their disorganization."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "72kWgR_360_4",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I must say that typing notes and scenes and the whole structure of how I work has changed for the better.",
+      "text": "I am still getting around the organizing part.",
+      "post": "Any tips and suggestions to keep things organized and neat?",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the difficulty with organization, indicating the writer's ongoing struggle with this aspect. However, it lacks specific situational detail that would enhance the understanding of their experience."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "qTvCID_47_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I tend to organize things but then they get quickly disorganized and then I become too lazy to reorganize them.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience with organizing and disorganizing tasks, providing concrete details about their struggle with maintaining organization and the resulting feelings of laziness, which aligns well with the symptom of inattention."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "eH643D_136_3",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Should I do one task a day?",
+      "text": "How do I go about moving from being disorganized to organized?",
+      "post": "I really wanna hammer this habit ...",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's desire to change their disorganized habits and includes a clear intention to improve their organizational skills, demonstrating a personal experience with the symptom of difficulty getting organized."
       }
     }
   ]

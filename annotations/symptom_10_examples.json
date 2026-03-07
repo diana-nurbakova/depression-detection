@@ -2,83 +2,163 @@
   "symptom_id": 10,
   "symptom_text": "How often are you distracted by activity or noise around you?",
   "symptom_factor": "Inattention",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "20s5O3_436_9",
+      "source": "score0_random",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Taking serious inquiries only.",
+      "text": "I have a Nin leveled as well with a genji weapon and I will eventually learn the class but am not good enough to call it an alt spec yet.",
+      "post": "I am looking for a group that: - has 01-04 on farm - enjoys optimizing and speedrunning competitively - is confident in their ability to tackle super savage in the future - has a good time doing the above",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of being distracted by activity or noise at all. It focuses on gaming preferences and group requirements, which are unrelated to the ADHD symptom in question."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "GIO9uS_485_0",
+      "source": "score0_random",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
-      "post": "",
+      "text": "I can put myself in your position if I read 'get busy' with the tone you took it as having.",
+      "post": "You're imagining an intention which I did not have, however.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of being distracted by activity or noise at all. It focuses on a misunderstanding of intention rather than any experience related to distraction."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "bdisen_Concentration_difficulty",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "This is a great idea, but I could never do this because my memory sucks.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "INDIRECT",
+        "detail_level": "LOW",
+        "confounders": "Mild depression relevance, making it an ambiguous confounder for ADHD.",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 3,
+        "reasoning": "The sentence suggests a struggle with memory, which could imply distraction, but it does not explicitly address the symptom of being easily distracted by external stimuli. The connection to ADHD is vague and indirect."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "s_2886_101_3",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "I've come out of a major depressive episode that lasted about a year and I still have some problems with focus.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "INDIRECT",
+        "detail_level": "LOW",
+        "confounders": "Depression may contribute to focus issues, resembling inattention symptoms.",
+        "score": 1,
+        "confidence": 4,
+        "reasoning": "The sentence indicates problems with focus, which relates to inattention, but it does not explicitly mention distractions from external stimuli. The mention of a depressive episode suggests that the focus issues may be confounded by depression."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "wjMfOa_827_1",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
+      "pre": "Podcasts.",
+      "text": "I work for myself and am always on the computer with headphones in, always listening to podcasts.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of being distracted by external stimuli, as the writer mentions listening to podcasts while working. However, it lacks specific situational detail about how this distraction affects their work or focus."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "7LPStu_15_2",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I almost always have music playing.",
+      "text": "On the bus to and from work, while at work, when I'm walking around town, even when I went a few hundred metres down the street today to get my haircut I had headphones in.",
+      "post": "Any moment without music and I get lost in my thoughts which isn't always a good thing!",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of being distracted by noise, as the writer describes their reliance on music to avoid getting lost in thoughts. However, it lacks specific situational details about how this distraction manifests in various contexts."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "r9JvjV_241_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "From the other side, I'm dealing with this problem myself, I do an insanely boring job and they've recently banned earphones while working.",
+      "post": "The boredom is unbearable, productivity is down and it's actually making me extremely stressed having to deal with the boredom all the time, makes it hard to get out of bed in a morning.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience of being distracted by boredom in their job, which is compounded by the ban on earphones. This concrete detail about their work environment and the resulting stress clearly illustrates the symptom of inattention due to external stimuli."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "ZA08H3_362_3",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "No one dares take my spot of course but I'm not allowed to leave things on it regardless so the 598cs are a decent portable solution.",
+      "text": "But yeah, the office gets loud and annoying and that's why I need headphones.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience of being distracted by noise in the office, indicating a clear need for headphones to manage this distraction. The detail about the office environment and the specific solution of using headphones provides concrete situational context."
       }
     }
   ]

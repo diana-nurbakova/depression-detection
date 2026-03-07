@@ -111,6 +111,10 @@ def retrieve(ctx: click.Context, symptoms: str | None, top_k: int | None) -> Non
     "--resume/--no-resume", default=True,
     help="Resume from checkpoint (default: resume).",
 )
+@click.option(
+    "--workers", type=int, default=None,
+    help="Parallel symptom workers (default: config num_workers).",
+)
 @click.pass_context
 def score(
     ctx: click.Context,
@@ -118,6 +122,7 @@ def score(
     limit: int | None,
     dry_run: bool,
     resume: bool,
+    workers: int | None,
 ) -> None:
     """Run LLM scoring cascade on candidates."""
     config = load_config(ctx.obj["config_path"], ctx.obj["symptoms_path"])
@@ -132,6 +137,7 @@ def score(
             limit=limit,
             dry_run=dry_run,
             resume=resume,
+            max_workers=workers,
         )
     finally:
         runner.close()

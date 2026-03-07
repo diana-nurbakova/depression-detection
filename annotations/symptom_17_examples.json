@@ -2,83 +2,163 @@
   "symptom_id": 17,
   "symptom_text": "How often do you have difficulty waiting your turn?",
   "symptom_factor": "Verbal_HI",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "GGLIi5_359_3",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
+      "pre": "Another checkout opens and I wait so other people can go in.",
+      "text": "After a few moments I say to the people in front, 'Do you guys wanna go in this checkout?'",
+      "post": "The people look to one another, figuring what the fuck they should do with this golden opportunity.",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of having difficulty waiting one's turn at all. It describes a situation where the speaker is waiting but does not indicate any difficulty or impatience related to waiting."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "kJauVg_52_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Unless I like you, I will wait forever, and I mean forever to respond to your text to me.",
+      "text": "When it's a serious question or an emergency, then that drives me to wait even longer...",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of difficulty waiting one's turn at all. It discusses a personal preference for responding to texts based on the relationship with the sender, which is unrelated to the ADHD symptom in question."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "s_993_456_2",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I had restless legs for weeks.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Depression symptom resembling ADHD symptom",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence touches on a symptom area related to restlessness, which can be associated with difficulty waiting one's turn, but it does not explicitly reference the ADHD symptom or the writer's personal experience with it."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "s_2958_51_8",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "When I'm feeling good and energized I'm usually pretty quick on my feet and friendly, but being even a little tired makes me dull and anxious.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Depression symptoms resembling ADHD symptoms",
+        "score": 1,
+        "confidence": 3,
+        "reasoning": "The sentence touches on emotional states that could relate to difficulties in social interactions, but it does not explicitly address the symptom of waiting one's turn. The connection to ADHD is vague and overshadowed by the mention of depression."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "Ea8K9Y_479_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I can't stand waiting in line.",
+      "post": "I live in a state where cans and bottles have a deposit.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly expresses the writer's difficulty with waiting, which aligns with the ADHD symptom of having trouble waiting their turn. However, it lacks specific situational detail that would enhance the understanding of their experience."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "Ea8K9Y_437_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I always feel awkward being the first person in somewhere.",
+      "text": "I'll usually wait til I see someone else go in first then go in 5 minutes after.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the difficulty in waiting one's turn by describing the writer's behavior of waiting for someone else to go in first. However, it lacks specific situational detail that would enhance the understanding of this experience."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "2xJICw_68_4",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "So yeah, it is holding me up.",
+      "text": "Especially when it's the last person in line and they take so long another person joins before I can run off to do the job I'm actually supposed to be doing.",
+      "post": "I have no problem with people handing me a bit of change.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's frustration with waiting for the last person in line, providing a concrete example of how this difficulty impacts their ability to complete their job. The detail about another person joining the line adds specificity to the experience of waiting, aligning well with the symptom of difficulty waiting one's turn."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "uijJIh_97_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "The one thing that pisses me off more is when someone is in line, then when it gets to them, and they give you the 'one minute' gesture without looking up and walk back to get something.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's frustration with waiting their turn in a specific situation, providing concrete detail about the behavior of the person in line and how it affects them. This aligns well with the ADHD symptom of difficulty waiting one's turn."
       }
     }
   ]

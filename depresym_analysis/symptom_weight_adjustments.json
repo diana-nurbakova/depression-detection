@@ -1,0 +1,110 @@
+{
+  "5": {
+    "source_bdi_symptom": 11,
+    "source_name": "Agitation",
+    "gpt4_fpr": 0.184,
+    "chatgpt_fpr": 0.4392,
+    "overestimation_correction": 0.092,
+    "recommended_symptom_weight": 0.908,
+    "escalation_priority": "HIGH"
+  },
+  "6": {
+    "source_bdi_symptom": 11,
+    "source_name": "Agitation",
+    "gpt4_fpr": 0.184,
+    "chatgpt_fpr": 0.4392,
+    "overestimation_correction": 0.092,
+    "recommended_symptom_weight": 0.908,
+    "escalation_priority": "HIGH"
+  },
+  "12": {
+    "source_bdi_symptom": 11,
+    "source_name": "Agitation",
+    "gpt4_fpr": 0.184,
+    "chatgpt_fpr": 0.4392,
+    "overestimation_correction": 0.092,
+    "recommended_symptom_weight": 0.908,
+    "escalation_priority": "HIGH"
+  },
+  "13": {
+    "source_bdi_symptom": 11,
+    "source_name": "Agitation",
+    "gpt4_fpr": 0.184,
+    "chatgpt_fpr": 0.4392,
+    "overestimation_correction": 0.092,
+    "recommended_symptom_weight": 0.908,
+    "escalation_priority": "HIGH"
+  },
+  "1": {
+    "source_bdi_symptom": 13,
+    "source_name": "Indecisiveness",
+    "gpt4_fpr": 0.2154,
+    "chatgpt_fpr": 0.5138,
+    "overestimation_correction": 0.1077,
+    "recommended_symptom_weight": 0.8923,
+    "escalation_priority": "HIGH"
+  },
+  "2": {
+    "source_bdi_symptom": 13,
+    "source_name": "Indecisiveness",
+    "gpt4_fpr": 0.2154,
+    "chatgpt_fpr": 0.5138,
+    "overestimation_correction": 0.1077,
+    "recommended_symptom_weight": 0.8923,
+    "escalation_priority": "HIGH"
+  },
+  "4": {
+    "source_bdi_symptom": 15,
+    "source_name": "Loss of Energy",
+    "gpt4_fpr": 0.2455,
+    "chatgpt_fpr": 0.4145,
+    "overestimation_correction": 0.1227,
+    "recommended_symptom_weight": 0.8772,
+    "escalation_priority": "HIGH"
+  },
+  "7": {
+    "source_bdi_symptom": 16,
+    "source_name": "Sleep Changes",
+    "gpt4_fpr": 0.483,
+    "chatgpt_fpr": 0.6639,
+    "overestimation_correction": 0.2415,
+    "recommended_symptom_weight": 0.7585,
+    "escalation_priority": "HIGH"
+  },
+  "8": {
+    "source_bdi_symptom": 19,
+    "source_name": "Concentration Difficulty",
+    "gpt4_fpr": 0.17,
+    "chatgpt_fpr": 0.3454,
+    "overestimation_correction": 0.085,
+    "recommended_symptom_weight": 0.915,
+    "escalation_priority": "HIGH"
+  },
+  "9": {
+    "source_bdi_symptom": 19,
+    "source_name": "Concentration Difficulty",
+    "gpt4_fpr": 0.17,
+    "chatgpt_fpr": 0.3454,
+    "overestimation_correction": 0.085,
+    "recommended_symptom_weight": 0.915,
+    "escalation_priority": "HIGH"
+  },
+  "10": {
+    "source_bdi_symptom": 19,
+    "source_name": "Concentration Difficulty",
+    "gpt4_fpr": 0.17,
+    "chatgpt_fpr": 0.3454,
+    "overestimation_correction": 0.085,
+    "recommended_symptom_weight": 0.915,
+    "escalation_priority": "HIGH"
+  },
+  "11": {
+    "source_bdi_symptom": 19,
+    "source_name": "Concentration Difficulty",
+    "gpt4_fpr": 0.17,
+    "chatgpt_fpr": 0.3454,
+    "overestimation_correction": 0.085,
+    "recommended_symptom_weight": 0.915,
+    "escalation_priority": "HIGH"
+  }
+}

@@ -2,83 +2,163 @@
   "symptom_id": 14,
   "symptom_text": "How often do you have difficulty stopping your activity or what you are doing when you're supposed to?",
   "symptom_factor": "Motor_HI",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "79K8fl_238_1",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
-      "post": "",
+      "pre": "Props on day board.",
+      "text": "I'm a tab whore and every time I open a new tab I get reminded of what I need yo get done.",
+      "post": "Great idea!",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of difficulty stopping an activity or task termination in any way. It appears to be a comment on organization rather than a reflection of the symptom in question."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "Np9yqL_318_25",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Never done it, not even in the early, inexperienced days.",
+      "text": "There are times when I become a bit overwhelmed but a brief time-out is all it takes.",
+      "post": "Always thoroughly enjoyed my rolls.",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of difficulty stopping an activity or task termination at all. It does not provide any relevant information related to the ADHD symptom in question."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "s_1208_181_0",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I can start calm, but rarely can I maintain it.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "INDIRECT",
+        "detail_level": "LOW",
+        "confounders": "Depression symptom resembling ADHD symptom",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence suggests a struggle with maintaining calmness, which could relate to difficulty stopping an activity, but it is vague and does not explicitly reference task termination or behavioral inhibition. The connection to ADHD is indirect and could also be influenced by depressive symptoms."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "s_1551_330_1",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "Ive tried meditation but I just become restless as hell",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "INDIRECT",
+        "detail_level": "LOW",
+        "confounders": "Depression symptoms resembling restlessness and difficulty with task termination.",
+        "score": 1,
+        "confidence": 4,
+        "reasoning": "The sentence indicates a struggle with restlessness, which can relate to difficulty stopping an activity, but it does not explicitly connect to the symptom of task termination. The reference to meditation suggests an attempt to manage this restlessness, but lacks direct self-reference to the ADHD symptom."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "P4snm9_53_14",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
-      "post": "",
+      "pre": "Those tendencies affected every aspect of my life and while it's gotten a bit better in some areas, it's still a big problem in others.",
+      "text": "Part of it comes from having to drop what I'm doing all of the time because something more important came up, and the other is my brain's dreadful processing.",
+      "post": "Understandably, these habits really piss my partner off and even if it's something \"I can't help,\" it isn't fair on people who have to deal with me.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of difficulty stopping an activity when something more important arises, reflecting the writer's personal experience. However, it lacks specific situational detail that would elevate it to a score of 3."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "L11x9n_118_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I tried that a couple of different times and I never seem to open the door.",
+      "text": "It's like, I get distracted by something else or forget and one time didn't even make it all the way to the door before I got on some other shit.",
+      "post": "I'll definitely be trying that some more, but I probably mainly just need to continue getting more used to even being lucid on the level I've reached lately.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the difficulty in stopping an activity, as the writer describes getting distracted and not completing the action of opening the door. However, it lacks specific situational detail that would elevate it to a higher score."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "GxMiSv_515_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
-      "post": "",
+      "text": "Same, I'll get hyper focused on stuff that I don't need, and neglect tasks that need to get done.",
+      "post": "For example I'd sit down to write a 10 page paper, end up 4 hours with an excel spreadsheet workout/muscle growth tracker.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience of becoming hyper-focused on an irrelevant task (the excel spreadsheet) instead of completing a necessary one (the 10-page paper). This clear behavioral example illustrates difficulty with task termination and prioritization."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "QTbpt5_185_2",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Focus focus focus.\"",
+      "text": "Then I go to get back on the task, get distracted, and realize I've spend 45 fucking minutes not doing what I was actually supposed to be doing.",
+      "post": "My short term memory is garbage too.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience of getting distracted and losing track of time while trying to return to a task, providing concrete detail about the duration of the distraction. This aligns well with the symptom of difficulty stopping an activity when supposed to."
       }
     }
   ]

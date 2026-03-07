@@ -1,0 +1,506 @@
+{
+  "1": {
+    "gpt4": {
+      "n": 1110,
+      "human_positive_rate": 0.1613,
+      "llm_positive_rate": 0.3775,
+      "overestimation_ratio": 2.3408,
+      "false_positive_rate": 0.2922,
+      "false_negative_rate": 0.1788,
+      "net_bias": 0.2162,
+      "false_positives": 272,
+      "false_negatives": 32
+    },
+    "chatgpt": {
+      "n": 1110,
+      "human_positive_rate": 0.1613,
+      "llm_positive_rate": 0.7234,
+      "overestimation_ratio": 4.486,
+      "false_positive_rate": 0.6821,
+      "false_negative_rate": 0.0615,
+      "net_bias": 0.5622,
+      "false_positives": 635,
+      "false_negatives": 11
+    }
+  },
+  "2": {
+    "gpt4": {
+      "n": 1150,
+      "human_positive_rate": 0.0904,
+      "llm_positive_rate": 0.2939,
+      "overestimation_ratio": 3.25,
+      "false_positive_rate": 0.2457,
+      "false_negative_rate": 0.2212,
+      "net_bias": 0.2035,
+      "false_positives": 257,
+      "false_negatives": 23
+    },
+    "chatgpt": {
+      "n": 1150,
+      "human_positive_rate": 0.0904,
+      "llm_positive_rate": 0.6026,
+      "overestimation_ratio": 6.6635,
+      "false_positive_rate": 0.5717,
+      "false_negative_rate": 0.0865,
+      "net_bias": 0.5122,
+      "false_positives": 598,
+      "false_negatives": 9
+    }
+  },
+  "3": {
+    "gpt4": {
+      "n": 973,
+      "human_positive_rate": 0.1644,
+      "llm_positive_rate": 0.3422,
+      "overestimation_ratio": 2.0812,
+      "false_positive_rate": 0.2645,
+      "false_negative_rate": 0.2625,
+      "net_bias": 0.1778,
+      "false_positives": 215,
+      "false_negatives": 42
+    },
+    "chatgpt": {
+      "n": 973,
+      "human_positive_rate": 0.1644,
+      "llm_positive_rate": 0.6064,
+      "overestimation_ratio": 3.6875,
+      "false_positive_rate": 0.5486,
+      "false_negative_rate": 0.1,
+      "net_bias": 0.4419,
+      "false_positives": 446,
+      "false_negatives": 16
+    }
+  },
+  "4": {
+    "gpt4": {
+      "n": 1013,
+      "human_positive_rate": 0.0958,
+      "llm_positive_rate": 0.3416,
+      "overestimation_ratio": 3.567,
+      "false_positive_rate": 0.2762,
+      "false_negative_rate": 0.0412,
+      "net_bias": 0.2458,
+      "false_positives": 253,
+      "false_negatives": 4
+    },
+    "chatgpt": {
+      "n": 1013,
+      "human_positive_rate": 0.0958,
+      "llm_positive_rate": 0.5548,
+      "overestimation_ratio": 5.7938,
+      "false_positive_rate": 0.512,
+      "false_negative_rate": 0.0412,
+      "net_bias": 0.459,
+      "false_positives": 469,
+      "false_negatives": 4
+    }
+  },
+  "5": {
+    "gpt4": {
+      "n": 829,
+      "human_positive_rate": 0.1001,
+      "llm_positive_rate": 0.3438,
+      "overestimation_ratio": 3.4337,
+      "false_positive_rate": 0.2708,
+      "false_negative_rate": 0.0,
+      "net_bias": 0.2437,
+      "false_positives": 202,
+      "false_negatives": 0
+    },
+    "chatgpt": {
+      "n": 829,
+      "human_positive_rate": 0.1001,
+      "llm_positive_rate": 0.4897,
+      "overestimation_ratio": 4.8916,
+      "false_positive_rate": 0.4397,
+      "false_negative_rate": 0.0602,
+      "net_bias": 0.3896,
+      "false_positives": 328,
+      "false_negatives": 5
+    }
+  },
+  "6": {
+    "gpt4": {
+      "n": 1079,
+      "human_positive_rate": 0.0195,
+      "llm_positive_rate": 0.1335,
+      "overestimation_ratio": 6.8571,
+      "false_positive_rate": 0.1181,
+      "false_negative_rate": 0.0952,
+      "net_bias": 0.114,
+      "false_positives": 125,
+      "false_negatives": 2
+    },
+    "chatgpt": {
+      "n": 1079,
+      "human_positive_rate": 0.0195,
+      "llm_positive_rate": 0.418,
+      "overestimation_ratio": 21.4762,
+      "false_positive_rate": 0.4093,
+      "false_negative_rate": 0.1429,
+      "net_bias": 0.3985,
+      "false_positives": 433,
+      "false_negatives": 3
+    }
+  },
+  "7": {
+    "gpt4": {
+      "n": 1005,
+      "human_positive_rate": 0.1572,
+      "llm_positive_rate": 0.4249,
+      "overestimation_ratio": 2.7025,
+      "false_positive_rate": 0.3247,
+      "false_negative_rate": 0.038,
+      "net_bias": 0.2677,
+      "false_positives": 275,
+      "false_negatives": 6
+    },
+    "chatgpt": {
+      "n": 1005,
+      "human_positive_rate": 0.1572,
+      "llm_positive_rate": 0.6269,
+      "overestimation_ratio": 3.9873,
+      "false_positive_rate": 0.575,
+      "false_negative_rate": 0.0949,
+      "net_bias": 0.4697,
+      "false_positives": 487,
+      "false_negatives": 15
+    }
+  },
+  "8": {
+    "gpt4": {
+      "n": 1072,
+      "human_positive_rate": 0.0709,
+      "llm_positive_rate": 0.3116,
+      "overestimation_ratio": 4.3947,
+      "false_positive_rate": 0.261,
+      "false_negative_rate": 0.0263,
+      "net_bias": 0.2407,
+      "false_positives": 260,
+      "false_negatives": 2
+    },
+    "chatgpt": {
+      "n": 1072,
+      "human_positive_rate": 0.0709,
+      "llm_positive_rate": 0.6073,
+      "overestimation_ratio": 8.5658,
+      "false_positive_rate": 0.5783,
+      "false_negative_rate": 0.0132,
+      "net_bias": 0.5364,
+      "false_positives": 576,
+      "false_negatives": 1
+    }
+  },
+  "9": {
+    "gpt4": {
+      "n": 953,
+      "human_positive_rate": 0.2728,
+      "llm_positive_rate": 0.4984,
+      "overestimation_ratio": 1.8269,
+      "false_positive_rate": 0.3117,
+      "false_negative_rate": 0.0038,
+      "net_bias": 0.2256,
+      "false_positives": 216,
+      "false_negatives": 1
+    },
+    "chatgpt": {
+      "n": 953,
+      "human_positive_rate": 0.2728,
+      "llm_positive_rate": 0.5971,
+      "overestimation_ratio": 2.1885,
+      "false_positive_rate": 0.4618,
+      "false_negative_rate": 0.0423,
+      "net_bias": 0.3242,
+      "false_positives": 320,
+      "false_negatives": 11
+    }
+  },
+  "10": {
+    "gpt4": {
+      "n": 983,
+      "human_positive_rate": 0.234,
+      "llm_positive_rate": 0.4344,
+      "overestimation_ratio": 1.8565,
+      "false_positive_rate": 0.2629,
+      "false_negative_rate": 0.0043,
+      "net_bias": 0.2004,
+      "false_positives": 198,
+      "false_negatives": 1
+    },
+    "chatgpt": {
+      "n": 983,
+      "human_positive_rate": 0.234,
+      "llm_positive_rate": 0.6053,
+      "overestimation_ratio": 2.587,
+      "false_positive_rate": 0.4861,
+      "false_negative_rate": 0.0043,
+      "net_bias": 0.3713,
+      "false_positives": 366,
+      "false_negatives": 1
+    }
+  },
+  "11": {
+    "gpt4": {
+      "n": 1080,
+      "human_positive_rate": 0.0639,
+      "llm_positive_rate": 0.2157,
+      "overestimation_ratio": 3.3768,
+      "false_positive_rate": 0.184,
+      "false_negative_rate": 0.3188,
+      "net_bias": 0.1519,
+      "false_positives": 186,
+      "false_negatives": 22
+    },
+    "chatgpt": {
+      "n": 1080,
+      "human_positive_rate": 0.0639,
+      "llm_positive_rate": 0.4731,
+      "overestimation_ratio": 7.4058,
+      "false_positive_rate": 0.4392,
+      "false_negative_rate": 0.029,
+      "net_bias": 0.4093,
+      "false_positives": 444,
+      "false_negatives": 2
+    }
+  },
+  "12": {
+    "gpt4": {
+      "n": 1077,
+      "human_positive_rate": 0.065,
+      "llm_positive_rate": 0.3008,
+      "overestimation_ratio": 4.6286,
+      "false_positive_rate": 0.2552,
+      "false_negative_rate": 0.0429,
+      "net_bias": 0.2358,
+      "false_positives": 257,
+      "false_negatives": 3
+    },
+    "chatgpt": {
+      "n": 1077,
+      "human_positive_rate": 0.065,
+      "llm_positive_rate": 0.5357,
+      "overestimation_ratio": 8.2429,
+      "false_positive_rate": 0.5055,
+      "false_negative_rate": 0.0286,
+      "net_bias": 0.4708,
+      "false_positives": 509,
+      "false_negatives": 2
+    }
+  },
+  "13": {
+    "gpt4": {
+      "n": 1110,
+      "human_positive_rate": 0.055,
+      "llm_positive_rate": 0.2541,
+      "overestimation_ratio": 4.623,
+      "false_positive_rate": 0.2154,
+      "false_negative_rate": 0.082,
+      "net_bias": 0.1991,
+      "false_positives": 226,
+      "false_negatives": 5
+    },
+    "chatgpt": {
+      "n": 1110,
+      "human_positive_rate": 0.055,
+      "llm_positive_rate": 0.5396,
+      "overestimation_ratio": 9.8197,
+      "false_positive_rate": 0.5138,
+      "false_negative_rate": 0.0164,
+      "net_bias": 0.4847,
+      "false_positives": 539,
+      "false_negatives": 1
+    }
+  },
+  "14": {
+    "gpt4": {
+      "n": 1067,
+      "human_positive_rate": 0.0665,
+      "llm_positive_rate": 0.2465,
+      "overestimation_ratio": 3.7042,
+      "false_positive_rate": 0.1988,
+      "false_negative_rate": 0.0845,
+      "net_bias": 0.1799,
+      "false_positives": 198,
+      "false_negatives": 6
+    },
+    "chatgpt": {
+      "n": 1067,
+      "human_positive_rate": 0.0665,
+      "llm_positive_rate": 0.523,
+      "overestimation_ratio": 7.8592,
+      "false_positive_rate": 0.492,
+      "false_negative_rate": 0.0423,
+      "net_bias": 0.4564,
+      "false_positives": 490,
+      "false_negatives": 3
+    }
+  },
+  "15": {
+    "gpt4": {
+      "n": 1082,
+      "human_positive_rate": 0.1192,
+      "llm_positive_rate": 0.3346,
+      "overestimation_ratio": 2.8062,
+      "false_positive_rate": 0.2455,
+      "false_negative_rate": 0.0078,
+      "net_bias": 0.2153,
+      "false_positives": 234,
+      "false_negatives": 1
+    },
+    "chatgpt": {
+      "n": 1082,
+      "human_positive_rate": 0.1192,
+      "llm_positive_rate": 0.4815,
+      "overestimation_ratio": 4.0388,
+      "false_positive_rate": 0.4145,
+      "false_negative_rate": 0.0233,
+      "net_bias": 0.3623,
+      "false_positives": 395,
+      "false_negatives": 3
+    }
+  },
+  "16": {
+    "gpt4": {
+      "n": 938,
+      "human_positive_rate": 0.2164,
+      "llm_positive_rate": 0.5938,
+      "overestimation_ratio": 2.7438,
+      "false_positive_rate": 0.483,
+      "false_negative_rate": 0.0049,
+      "net_bias": 0.3774,
+      "false_positives": 355,
+      "false_negatives": 1
+    },
+    "chatgpt": {
+      "n": 938,
+      "human_positive_rate": 0.2164,
+      "llm_positive_rate": 0.7335,
+      "overestimation_ratio": 3.3892,
+      "false_positive_rate": 0.6639,
+      "false_negative_rate": 0.0148,
+      "net_bias": 0.5171,
+      "false_positives": 488,
+      "false_negatives": 3
+    }
+  },
+  "17": {
+    "gpt4": {
+      "n": 1047,
+      "human_positive_rate": 0.0898,
+      "llm_positive_rate": 0.2474,
+      "overestimation_ratio": 2.7553,
+      "false_positive_rate": 0.1742,
+      "false_negative_rate": 0.0106,
+      "net_bias": 0.1576,
+      "false_positives": 166,
+      "false_negatives": 1
+    },
+    "chatgpt": {
+      "n": 1047,
+      "human_positive_rate": 0.0898,
+      "llm_positive_rate": 0.3343,
+      "overestimation_ratio": 3.7234,
+      "false_positive_rate": 0.2728,
+      "false_negative_rate": 0.0426,
+      "net_bias": 0.2445,
+      "false_positives": 260,
+      "false_negatives": 4
+    }
+  },
+  "18": {
+    "gpt4": {
+      "n": 984,
+      "human_positive_rate": 0.1047,
+      "llm_positive_rate": 0.3862,
+      "overestimation_ratio": 3.6893,
+      "false_positive_rate": 0.3156,
+      "false_negative_rate": 0.0097,
+      "net_bias": 0.2815,
+      "false_positives": 278,
+      "false_negatives": 1
+    },
+    "chatgpt": {
+      "n": 984,
+      "human_positive_rate": 0.1047,
+      "llm_positive_rate": 0.562,
+      "overestimation_ratio": 5.3689,
+      "false_positive_rate": 0.5153,
+      "false_negative_rate": 0.0388,
+      "net_bias": 0.4573,
+      "false_positives": 454,
+      "false_negatives": 4
+    }
+  },
+  "19": {
+    "gpt4": {
+      "n": 1024,
+      "human_positive_rate": 0.0811,
+      "llm_positive_rate": 0.2324,
+      "overestimation_ratio": 2.8675,
+      "false_positive_rate": 0.17,
+      "false_negative_rate": 0.0602,
+      "net_bias": 0.1514,
+      "false_positives": 160,
+      "false_negatives": 5
+    },
+    "chatgpt": {
+      "n": 1024,
+      "human_positive_rate": 0.0811,
+      "llm_positive_rate": 0.3965,
+      "overestimation_ratio": 4.8916,
+      "false_positive_rate": 0.3454,
+      "false_negative_rate": 0.0241,
+      "net_bias": 0.3154,
+      "false_positives": 325,
+      "false_negatives": 2
+    }
+  },
+  "20": {
+    "gpt4": {
+      "n": 1033,
+      "human_positive_rate": 0.1191,
+      "llm_positive_rate": 0.3688,
+      "overestimation_ratio": 3.0976,
+      "false_positive_rate": 0.2846,
+      "false_negative_rate": 0.0081,
+      "net_bias": 0.2498,
+      "false_positives": 259,
+      "false_negatives": 1
+    },
+    "chatgpt": {
+      "n": 1033,
+      "human_positive_rate": 0.1191,
+      "llm_positive_rate": 0.4608,
+      "overestimation_ratio": 3.8699,
+      "false_positive_rate": 0.3989,
+      "false_negative_rate": 0.0813,
+      "net_bias": 0.3417,
+      "false_positives": 363,
+      "false_negatives": 10
+    }
+  },
+  "21": {
+    "gpt4": {
+      "n": 971,
+      "human_positive_rate": 0.0999,
+      "llm_positive_rate": 0.2513,
+      "overestimation_ratio": 2.5155,
+      "false_positive_rate": 0.1865,
+      "false_negative_rate": 0.1649,
+      "net_bias": 0.1514,
+      "false_positives": 163,
+      "false_negatives": 16
+    },
+    "chatgpt": {
+      "n": 971,
+      "human_positive_rate": 0.0999,
+      "llm_positive_rate": 0.4593,
+      "overestimation_ratio": 4.5979,
+      "false_positive_rate": 0.4027,
+      "false_negative_rate": 0.0309,
+      "net_bias": 0.3594,
+      "false_positives": 352,
+      "false_negatives": 3
+    }
+  }
+}

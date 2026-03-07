@@ -7,6 +7,7 @@ Supports resumption from checkpoints.
 from __future__ import annotations
 
 import logging
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Optional
 
@@ -112,12 +113,41 @@ class PipelineRunner:
 
         return results
 
+    def _make_cascade(self) -> ScoringCascade:
+        """Create a fresh ScoringCascade with its own LLM clients."""
+        llama_client = make_llm_client(self.config.primary_provider)
+        llama_client.max_retries = self.config.llm_max_retries
+        llama_client.rate_limit_delay = self.config.llm_rate_limit_delay
+        llama_client.timeout = self.config.llm_read_timeout
+
+        gpt_client: Optional[LLMClient] = None
+        if (
+            self.config.escalation_provider.base_url
+            and self.config.escalation_max_rate > 0
+        ):
+            gpt_client = make_llm_client(self.config.escalation_provider)
+            gpt_client.max_retries = self.config.llm_max_retries
+
+        prompt_builder = PromptBuilder(
+            symptoms=self.symptoms,
+            examples=self.config.fewshot_examples,
+        )
+
+        return ScoringCascade(
+            llama_client=llama_client,
+            gpt_client=gpt_client,
+            prompt_builder=prompt_builder,
+            llm_logger=self.llm_logger,
+            escalation_max_rate=self.config.escalation_max_rate,
+        )
+
     def run_score(
         self,
         symptom_ids: list[int] | None = None,
         limit: int | None = None,
         dry_run: bool = False,
         resume: bool = True,
+        max_workers: int | None = None,
     ) -> None:
         """Run LLM scoring cascade on candidates.
 
@@ -126,9 +156,13 @@ class PipelineRunner:
             limit: Max sentences to score per symptom (for testing).
             dry_run: Build prompts but don't call LLM.
             resume: Resume from checkpoint.
+            max_workers: Number of parallel symptom workers (default: config.num_workers).
         """
         if symptom_ids is None:
             symptom_ids = sorted(self.symptoms.keys())
+
+        if max_workers is None:
+            max_workers = self.config.num_workers
 
         self.pipeline_logger.log(
             "score_start",
@@ -136,50 +170,76 @@ class PipelineRunner:
             limit=limit,
             dry_run=dry_run,
             resume=resume,
+            max_workers=max_workers,
         )
 
-        # Create LLM clients
-        llama_client = make_llm_client(self.config.primary_provider)
-        llama_client.max_retries = self.config.llm_max_retries
-        llama_client.rate_limit_delay = self.config.llm_rate_limit_delay
-        llama_client.timeout = self.config.llm_read_timeout
-
-        gpt_client: Optional[LLMClient] = None
-        if self.config.escalation_provider.base_url:
-            gpt_client = make_llm_client(self.config.escalation_provider)
-            gpt_client.max_retries = self.config.llm_max_retries
-
-        # Create prompt builder
-        prompt_builder = PromptBuilder(
-            symptoms=self.symptoms,
-            examples={},  # TODO: load few-shot examples
-        )
-
-        # Create scoring cascade
-        cascade = ScoringCascade(
-            llama_client=llama_client,
-            gpt_client=gpt_client,
-            prompt_builder=prompt_builder,
-            llm_logger=self.llm_logger,
-            escalation_max_rate=self.config.escalation_max_rate,
-        )
-
-        # Score each symptom
-        for symptom_id in symptom_ids:
-            self._score_symptom(
-                cascade=cascade,
-                symptom_id=symptom_id,
-                limit=limit,
-                dry_run=dry_run,
-                resume=resume,
+        if dry_run or max_workers <= 1:
+            # Sequential mode: single cascade
+            cascade = self._make_cascade()
+            for symptom_id in symptom_ids:
+                self._score_symptom(
+                    cascade=cascade,
+                    symptom_id=symptom_id,
+                    limit=limit,
+                    dry_run=dry_run,
+                    resume=resume,
+                )
+            self.pipeline_logger.log(
+                "score_complete",
+                cascade_stats=cascade.stats,
             )
+            logger.info("Scoring complete. Stats: %s", cascade.stats)
+        else:
+            # Parallel mode: one cascade per worker thread
+            logger.info(
+                "Parallel scoring: %d symptoms across %d workers",
+                len(symptom_ids), max_workers,
+            )
+            all_stats: list[dict] = []
 
-        self.pipeline_logger.log(
-            "score_complete",
-            cascade_stats=cascade.stats,
-        )
+            def _worker(sid: int) -> dict:
+                cascade = self._make_cascade()
+                self._score_symptom(
+                    cascade=cascade,
+                    symptom_id=sid,
+                    limit=limit,
+                    dry_run=False,
+                    resume=resume,
+                )
+                return {"symptom_id": sid, **cascade.stats}
 
-        logger.info("Scoring complete. Stats: %s", cascade.stats)
+            with ThreadPoolExecutor(max_workers=max_workers) as pool:
+                futures = {
+                    pool.submit(_worker, sid): sid for sid in symptom_ids
+                }
+                for future in as_completed(futures):
+                    sid = futures[future]
+                    try:
+                        stats = future.result()
+                        all_stats.append(stats)
+                        logger.info(
+                            "Symptom %d finished — scored %d",
+                            sid, stats["total_scored"],
+                        )
+                    except Exception:
+                        logger.exception(
+                            "Symptom %d worker failed", sid,
+                        )
+
+            # Aggregate stats
+            total_scored = sum(s["total_scored"] for s in all_stats)
+            total_escalated = sum(s["total_escalated"] for s in all_stats)
+            agg = {
+                "total_scored": total_scored,
+                "total_escalated": total_escalated,
+                "escalation_rate": (
+                    round(total_escalated / total_scored, 4)
+                    if total_scored > 0 else 0.0
+                ),
+                "workers": len(all_stats),
+            }
+            self.pipeline_logger.log("score_complete", cascade_stats=agg)
+            logger.info("Scoring complete. Stats: %s", agg)
 
     def _score_symptom(
         self,

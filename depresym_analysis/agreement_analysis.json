@@ -1,0 +1,556 @@
+{
+  "global": {
+    "human_consensus_vs_human_majority": {
+      "kappa": 0.6546,
+      "agreement_rate": 0.9045,
+      "n": 21580,
+      "confusion_matrix": [
+        [
+          17049,
+          2060
+        ],
+        [
+          0,
+          2471
+        ]
+      ]
+    },
+    "human_consensus_vs_gpt4": {
+      "kappa": 0.3765,
+      "agreement_rate": 0.7715,
+      "n": 21580,
+      "confusion_matrix": [
+        [
+          14354,
+          4755
+        ],
+        [
+          175,
+          2296
+        ]
+      ]
+    },
+    "human_consensus_vs_chatgpt": {
+      "kappa": 0.1793,
+      "agreement_rate": 0.5649,
+      "n": 21580,
+      "confusion_matrix": [
+        [
+          9832,
+          9277
+        ],
+        [
+          113,
+          2358
+        ]
+      ]
+    },
+    "human_majority_vs_gpt4": {
+      "kappa": 0.565,
+      "agreement_rate": 0.8262,
+      "n": 21580,
+      "confusion_matrix": [
+        [
+          13914,
+          3135
+        ],
+        [
+          615,
+          3916
+        ]
+      ]
+    },
+    "human_majority_vs_chatgpt": {
+      "kappa": 0.3188,
+      "agreement_rate": 0.6439,
+      "n": 21580,
+      "confusion_matrix": [
+        [
+          9655,
+          7394
+        ],
+        [
+          290,
+          4241
+        ]
+      ]
+    },
+    "gpt4_vs_chatgpt": {
+      "kappa": 0.4918,
+      "agreement_rate": 0.739,
+      "n": 21580,
+      "confusion_matrix": [
+        [
+          9421,
+          5108
+        ],
+        [
+          524,
+          6527
+        ]
+      ]
+    }
+  },
+  "per_symptom_overlapping": {
+    "11": {
+      "human_consensus_vs_human_majority": {
+        "kappa": 0.5819,
+        "agreement_rate": 0.9213,
+        "n": 1080,
+        "confusion_matrix": [
+          [
+            926,
+            85
+          ],
+          [
+            0,
+            69
+          ]
+        ]
+      },
+      "human_consensus_vs_chatgpt": {
+        "kappa": 0.1335,
+        "agreement_rate": 0.587,
+        "n": 1080,
+        "confusion_matrix": [
+          [
+            567,
+            444
+          ],
+          [
+            2,
+            67
+          ]
+        ]
+      },
+      "human_consensus_vs_gpt4": {
+        "kappa": 0.2359,
+        "agreement_rate": 0.8074,
+        "n": 1080,
+        "confusion_matrix": [
+          [
+            825,
+            186
+          ],
+          [
+            22,
+            47
+          ]
+        ]
+      },
+      "human_majority_vs_chatgpt": {
+        "kappa": 0.2663,
+        "agreement_rate": 0.6472,
+        "n": 1080,
+        "confusion_matrix": [
+          [
+            557,
+            369
+          ],
+          [
+            12,
+            142
+          ]
+        ]
+      },
+      "human_majority_vs_gpt4": {
+        "kappa": 0.348,
+        "agreement_rate": 0.8065,
+        "n": 1080,
+        "confusion_matrix": [
+          [
+            782,
+            144
+          ],
+          [
+            65,
+            89
+          ]
+        ]
+      },
+      "chatgpt_vs_gpt4": {
+        "kappa": 0.3658,
+        "agreement_rate": 0.6926,
+        "n": 1080,
+        "confusion_matrix": [
+          [
+            542,
+            27
+          ],
+          [
+            305,
+            206
+          ]
+        ]
+      }
+    },
+    "13": {
+      "human_consensus_vs_human_majority": {
+        "kappa": 0.5711,
+        "agreement_rate": 0.9279,
+        "n": 1110,
+        "confusion_matrix": [
+          [
+            969,
+            80
+          ],
+          [
+            0,
+            61
+          ]
+        ]
+      },
+      "human_consensus_vs_chatgpt": {
+        "kappa": 0.0912,
+        "agreement_rate": 0.5135,
+        "n": 1110,
+        "confusion_matrix": [
+          [
+            510,
+            539
+          ],
+          [
+            1,
+            60
+          ]
+        ]
+      },
+      "human_consensus_vs_gpt4": {
+        "kappa": 0.2596,
+        "agreement_rate": 0.7919,
+        "n": 1110,
+        "confusion_matrix": [
+          [
+            823,
+            226
+          ],
+          [
+            5,
+            56
+          ]
+        ]
+      },
+      "human_majority_vs_chatgpt": {
+        "kappa": 0.1902,
+        "agreement_rate": 0.5712,
+        "n": 1110,
+        "confusion_matrix": [
+          [
+            502,
+            467
+          ],
+          [
+            9,
+            132
+          ]
+        ]
+      },
+      "human_majority_vs_gpt4": {
+        "kappa": 0.4735,
+        "agreement_rate": 0.8333,
+        "n": 1110,
+        "confusion_matrix": [
+          [
+            806,
+            163
+          ],
+          [
+            22,
+            119
+          ]
+        ]
+      },
+      "chatgpt_vs_gpt4": {
+        "kappa": 0.3844,
+        "agreement_rate": 0.6802,
+        "n": 1110,
+        "confusion_matrix": [
+          [
+            492,
+            19
+          ],
+          [
+            336,
+            263
+          ]
+        ]
+      }
+    },
+    "15": {
+      "human_consensus_vs_human_majority": {
+        "kappa": 0.7362,
+        "agreement_rate": 0.9307,
+        "n": 1082,
+        "confusion_matrix": [
+          [
+            878,
+            75
+          ],
+          [
+            0,
+            129
+          ]
+        ]
+      },
+      "human_consensus_vs_chatgpt": {
+        "kappa": 0.243,
+        "agreement_rate": 0.6322,
+        "n": 1082,
+        "confusion_matrix": [
+          [
+            558,
+            395
+          ],
+          [
+            3,
+            126
+          ]
+        ]
+      },
+      "human_consensus_vs_gpt4": {
+        "kappa": 0.4193,
+        "agreement_rate": 0.7828,
+        "n": 1082,
+        "confusion_matrix": [
+          [
+            719,
+            234
+          ],
+          [
+            1,
+            128
+          ]
+        ]
+      },
+      "human_majority_vs_chatgpt": {
+        "kappa": 0.3737,
+        "agreement_rate": 0.6941,
+        "n": 1082,
+        "confusion_matrix": [
+          [
+            554,
+            324
+          ],
+          [
+            7,
+            197
+          ]
+        ]
+      },
+      "human_majority_vs_gpt4": {
+        "kappa": 0.6088,
+        "agreement_rate": 0.8447,
+        "n": 1082,
+        "confusion_matrix": [
+          [
+            715,
+            163
+          ],
+          [
+            5,
+            199
+          ]
+        ]
+      },
+      "chatgpt_vs_gpt4": {
+        "kappa": 0.5827,
+        "agreement_rate": 0.7939,
+        "n": 1082,
+        "confusion_matrix": [
+          [
+            529,
+            32
+          ],
+          [
+            191,
+            330
+          ]
+        ]
+      }
+    },
+    "16": {
+      "human_consensus_vs_human_majority": {
+        "kappa": 0.6339,
+        "agreement_rate": 0.8433,
+        "n": 938,
+        "confusion_matrix": [
+          [
+            588,
+            147
+          ],
+          [
+            0,
+            203
+          ]
+        ]
+      },
+      "human_consensus_vs_chatgpt": {
+        "kappa": 0.1723,
+        "agreement_rate": 0.4765,
+        "n": 938,
+        "confusion_matrix": [
+          [
+            247,
+            488
+          ],
+          [
+            3,
+            200
+          ]
+        ]
+      },
+      "human_consensus_vs_gpt4": {
+        "kappa": 0.3139,
+        "agreement_rate": 0.6205,
+        "n": 938,
+        "confusion_matrix": [
+          [
+            380,
+            355
+          ],
+          [
+            1,
+            202
+          ]
+        ]
+      },
+      "human_majority_vs_chatgpt": {
+        "kappa": 0.3099,
+        "agreement_rate": 0.6141,
+        "n": 938,
+        "confusion_matrix": [
+          [
+            238,
+            350
+          ],
+          [
+            12,
+            338
+          ]
+        ]
+      },
+      "human_majority_vs_gpt4": {
+        "kappa": 0.5502,
+        "agreement_rate": 0.7644,
+        "n": 938,
+        "confusion_matrix": [
+          [
+            374,
+            214
+          ],
+          [
+            7,
+            343
+          ]
+        ]
+      },
+      "chatgpt_vs_gpt4": {
+        "kappa": 0.549,
+        "agreement_rate": 0.7942,
+        "n": 938,
+        "confusion_matrix": [
+          [
+            219,
+            31
+          ],
+          [
+            162,
+            526
+          ]
+        ]
+      }
+    },
+    "19": {
+      "human_consensus_vs_human_majority": {
+        "kappa": 0.7116,
+        "agreement_rate": 0.9434,
+        "n": 1024,
+        "confusion_matrix": [
+          [
+            883,
+            58
+          ],
+          [
+            0,
+            83
+          ]
+        ]
+      },
+      "human_consensus_vs_chatgpt": {
+        "kappa": 0.2273,
+        "agreement_rate": 0.6807,
+        "n": 1024,
+        "confusion_matrix": [
+          [
+            616,
+            325
+          ],
+          [
+            2,
+            81
+          ]
+        ]
+      },
+      "human_consensus_vs_gpt4": {
+        "kappa": 0.4158,
+        "agreement_rate": 0.8389,
+        "n": 1024,
+        "confusion_matrix": [
+          [
+            781,
+            160
+          ],
+          [
+            5,
+            78
+          ]
+        ]
+      },
+      "human_majority_vs_chatgpt": {
+        "kappa": 0.3819,
+        "agreement_rate": 0.7373,
+        "n": 1024,
+        "confusion_matrix": [
+          [
+            616,
+            267
+          ],
+          [
+            2,
+            139
+          ]
+        ]
+      },
+      "human_majority_vs_gpt4": {
+        "kappa": 0.614,
+        "agreement_rate": 0.8818,
+        "n": 1024,
+        "confusion_matrix": [
+          [
+            774,
+            109
+          ],
+          [
+            12,
+            129
+          ]
+        ]
+      },
+      "chatgpt_vs_gpt4": {
+        "kappa": 0.5739,
+        "agreement_rate": 0.8105,
+        "n": 1024,
+        "confusion_matrix": [
+          [
+            605,
+            13
+          ],
+          [
+            181,
+            225
+          ]
+        ]
+      }
+    }
+  }
+}

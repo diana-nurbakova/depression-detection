@@ -1,0 +1,52 @@
+{
+  "11": {
+    "symptom_name": "Agitation",
+    "chatgpt_errors": 446,
+    "gpt4_corrects": 285,
+    "correction_rate": 0.639,
+    "gpt4_errors": 208,
+    "chatgpt_corrects_gpt4": 47,
+    "reverse_correction_rate": 0.226,
+    "verdict": "Escalation well-motivated"
+  },
+  "13": {
+    "symptom_name": "Indecisiveness",
+    "chatgpt_errors": 540,
+    "gpt4_corrects": 332,
+    "correction_rate": 0.6148,
+    "gpt4_errors": 231,
+    "chatgpt_corrects_gpt4": 23,
+    "reverse_correction_rate": 0.0996,
+    "verdict": "Escalation well-motivated"
+  },
+  "15": {
+    "symptom_name": "Loss of Energy",
+    "chatgpt_errors": 398,
+    "gpt4_corrects": 193,
+    "correction_rate": 0.4849,
+    "gpt4_errors": 235,
+    "chatgpt_corrects_gpt4": 30,
+    "reverse_correction_rate": 0.1277,
+    "verdict": "Escalation has moderate value"
+  },
+  "16": {
+    "symptom_name": "Sleep Changes",
+    "chatgpt_errors": 491,
+    "gpt4_corrects": 164,
+    "correction_rate": 0.334,
+    "gpt4_errors": 356,
+    "chatgpt_corrects_gpt4": 29,
+    "reverse_correction_rate": 0.0815,
+    "verdict": "Escalation has limited value \u2014 invest in prompt improvement"
+  },
+  "19": {
+    "symptom_name": "Concentration Difficulty",
+    "chatgpt_errors": 327,
+    "gpt4_corrects": 178,
+    "correction_rate": 0.5443,
+    "gpt4_errors": 165,
+    "chatgpt_corrects_gpt4": 16,
+    "reverse_correction_rate": 0.097,
+    "verdict": "Escalation has moderate value"
+  }
+}

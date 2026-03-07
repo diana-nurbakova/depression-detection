@@ -2,83 +2,163 @@
   "symptom_id": 5,
   "symptom_text": "How often do you fidget or squirm with your hands or feet when you have to sit for a long time?",
   "symptom_factor": "Motor_HI",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "woagy1_59_0",
+      "source": "score0_random",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "My first 2 packs I ever bought... I'll never forget that day.",
+      "post": "Computer search in the 1st pack and a Charizard in the 2nd.",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of fidgeting or squirming at all, as it discusses a personal memory related to purchasing packs without any mention of motor activity or restlessness."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "dRqts8_511_2",
+      "source": "score0_random",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I played with it when I got home last night, and everything is working great.",
+      "text": "I have a Roku 3 in my living room set as the default player, but was able to initiate commands to other rooms by saying \"Alexa, tell Plex to play Reservoir Dogs on my [Roku Stick]...[iPhone]...[PlayStation 4]\" Pretty impressive.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of fidgeting or squirming at all. It focuses on a technical achievement related to using devices, which is unrelated to the ADHD symptom in question."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "bdisen_Agitation",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I dont take naps, but every morning I feel sick with stress Im not even sure why.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Mild depression relevance, making it an ambiguous confounder for ADHD.",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 3,
+        "reasoning": "The sentence touches on feelings of stress, which could relate to fidgeting or restlessness, but it does not explicitly mention any behaviors associated with the symptom. The connection to ADHD is vague and indirect."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "bdisen_Agitation",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "My instant reaction is to cry out of frustration during tests, which is so frivolous and annoying.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "INDIRECT",
+        "detail_level": "LOW",
+        "confounders": "Depression relevance due to expression of frustration",
+        "score": 1,
+        "confidence": 3,
+        "reasoning": "The sentence touches on feelings of frustration during tests, which could relate to fidgeting or squirming, but it does not explicitly mention any physical behaviors associated with the symptom. The connection to ADHD is vague and overshadowed by the expression of frustration, indicating a potential confounder related to depression."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "Y0xPnR_642_5",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
+      "pre": "I am usually forgetful when it comes to eating and peeing.",
+      "text": "I sit weird and sometimes I won't even notice that my limbs have fallen asleep until I try to move.",
+      "post": "I'm guessing that would be inferior Se.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of fidgeting or squirming by mentioning sitting weirdly and not noticing limbs falling asleep, indicating a personal experience. However, it lacks specific situational detail that would enhance the clarity of the symptom manifestation."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "a1MZzK_577_8",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "edit1: Also I should probably mention that one of the biggest areas I need to work on are tight hamstrings/hips.",
+      "text": "I sit down a lot.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "DIRECT",
+        "detail_level": "LOW",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 3,
+        "reasoning": "The sentence indicates a direct experience of sitting frequently, which relates to the symptom of fidgeting or squirming due to prolonged sitting. However, it lacks specific situational detail about the fidgeting behavior itself."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "qmVXSK_308_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I really hate it when i am seated next to a person and they keep fidgeting aaaaaaggghhhhhh !!!!!",
+      "post": "that really gets me.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's frustration with another person's fidgeting while seated, providing a clear behavioral example of the symptom. The use of strong emotional language ('really hate it') and the context of being seated next to someone who fidgets adds concrete detail to the experience."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "fyO2tv_489_2",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "When I’m in the midst of what is about to be a panic attack I find something in the room and list five things about that item, and then I move to the next item and so on and so forth.",
+      "text": "I also fidget a lot.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's own experience of fidgeting, which is a direct manifestation of the symptom. The use of 'I also fidget a lot' provides a clear and personal account of the behavior, meeting the criteria for a high detail level."
       }
     }
   ]

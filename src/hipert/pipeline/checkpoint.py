@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import logging
+import threading
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -48,6 +49,7 @@ class CheckpointManager:
         silver_labels_dir.mkdir(parents=True, exist_ok=True)
 
         self._state_path = checkpoint_dir / "state.json"
+        self._write_lock = threading.Lock()
 
     def load_state(self) -> PipelineState:
         """Load pipeline state from disk, or return fresh state."""
@@ -133,14 +135,13 @@ class CheckpointManager:
         symptom_id: int,
         result: ScoringResult,
     ) -> None:
-        """Append a single scoring result to the JSONL file."""
+        """Append a single scoring result to the JSONL file (thread-safe)."""
         filepath = self.silver_labels_dir / f"symptom_{symptom_id}.jsonl"
+        line = json.dumps(result.to_dict(), ensure_ascii=False, default=str) + "\n"
 
-        with open(filepath, "a", encoding="utf-8") as f:
-            f.write(
-                json.dumps(result.to_dict(), ensure_ascii=False, default=str)
-                + "\n",
-            )
+        with self._write_lock:
+            with open(filepath, "a", encoding="utf-8") as f:
+                f.write(line)
 
     def load_results(self, symptom_id: int) -> list[dict]:
         """Load all scored results for a symptom."""

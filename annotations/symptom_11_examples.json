@@ -2,83 +2,163 @@
   "symptom_id": 11,
   "symptom_text": "How often do you have difficulty keeping your attention when you are doing boring or repetitive work?",
   "symptom_factor": "Inattention",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "bxEj5V_236_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
-      "post": "",
+      "text": "Not even once I have concentration issues as in i don't very well.",
+      "post": "The book just isn't all that interesting at least of what I did read.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of difficulty sustaining attention in boring or repetitive work. It lacks any reference to attention issues or personal experience related to the symptom."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "HZuyMA_215_12",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "My mind is blank most the time, and usually distracting my self with food and tv.",
+      "text": "There has been times where I don't have distractions available, I could easily blankly stare a wall for an hour.",
+      "post": "Identities have been very interchangeable in my mind.",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of difficulty sustaining attention during boring or repetitive work. It discusses a lack of distractions and a blank mind, but does not relate to attention regulation in the context of specific tasks."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "s_2401_6_1",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I have really important exams coming in less then 20 days and i can concentrate at all.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "INDIRECT",
+        "detail_level": "LOW",
+        "confounders": "Depression symptoms resembling attention difficulties",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence indicates a struggle with concentration, which relates to the ADHD symptom of inattention, but it does not explicitly connect to the context of boring or repetitive work. The mention of important exams suggests pressure but lacks specific details about the nature of the tasks causing the attention difficulties."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "s_1265_353_3",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "When I was forced to make decisions I had such anxiety before during and after.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "INDIRECT",
+        "detail_level": "LOW",
+        "confounders": "Describes anxiety related to decision-making, which may resemble inattention but is more indicative of depression.",
+        "score": 1,
+        "confidence": 3,
+        "reasoning": "The sentence touches on the experience of anxiety during decision-making, which can relate to difficulties in sustaining attention, but it does not explicitly address the symptom of inattention in boring or repetitive tasks. The connection is vague and indirect, aligning with the characteristics of depression."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "hUARHG_139_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
-      "post": "",
+      "text": "I pretty much had to quit my job (I'm an office admin) because I couldn't focus for an entire work day.",
+      "post": "I'm trying to not get too frustrated and overwhelmed, so I focus on what I CAN do, like getting lots of sleep and eating well.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of difficulty sustaining attention in a work setting, reflecting the writer's personal experience of struggling to focus during an entire workday. However, it lacks specific situational details about the tasks that contributed to this difficulty."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "ewofdX_112_2",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I have the inattentive type and I have never experienced hyperfocus, and drugs do very little for me in the way of helping me channel my thoughts.",
+      "text": "If I find a topic or activity interesting, I'll stay with it for a short while, but I'll then lose any desire or focus I had for that topic and will move onto something else.",
+      "post": "I've never maintained any interest or hobby for very long and I struggle to do my assignments and exams or any activity that isn't recreational.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of inattention by describing the writer's experience of losing focus on topics of interest. However, it lacks specific situational detail that would elevate it to a higher score."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "0f249b_416_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
-      "post": "",
+      "text": "Sometimes I get stuck in hyper focus and will not cease til it's done.",
+      "post": "I know it's silly but it doesn't feel silly while I'm doing it.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience of hyperfocus, which relates to the difficulty in sustaining attention on boring tasks. The detail about feeling silly while engaged in the task adds a personal touch, illustrating the writer's internal experience and the nature of their attention regulation."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "YurhHv_537_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Do you think there's any benefit to reading an article all at once?",
+      "text": "I lose my focus quite quickly but find I can focus on one section of an 8 page article (for example) really well and lose the focus by the time I can get to the next one.",
+      "post": "Anybody else do this?",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience of losing focus while reading a lengthy article, providing concrete details about their ability to focus on individual sections but losing attention when transitioning to the next. This aligns well with the symptom of difficulty sustaining attention in low-stimulation tasks."
       }
     }
   ]

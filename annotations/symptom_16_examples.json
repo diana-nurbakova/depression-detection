@@ -2,83 +2,163 @@
   "symptom_id": 16,
   "symptom_text": "When you're in a conversation, how often do you find yourself finishing the sentences of the people you are talking to, before they can finish them themselves?",
   "symptom_factor": "Verbal_HI",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "7zcB1M_165_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "When I think to myself, \"I just thought this\" then going on to \"I just thought about thinking about that\" and so on...",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of finishing others' sentences at all. It focuses on internal thoughts rather than verbal interactions with others."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "6mD5qO_4_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "How long did it take to become natural?",
+      "text": "I ask myself \"is this appropriate to say\" whenever I remember (which tends to be when I'm NOT excitedly and enthusiastically socializing).",
+      "post": "I still think it sounds right, and say it.",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of finishing others' sentences or any related verbal impulsivity. It focuses on self-reflection about appropriateness in conversation without any indication of the specific ADHD symptom."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "s_3008_185_4",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I'm fighting with myself to not make a stupid decision, and it's tearing me apart.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Depression symptom resembling ADHD symptom",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence reflects an internal struggle that could relate to impulsivity or verbal inhibition, but it does not explicitly mention finishing others' sentences or provide a clear personal experience related to the symptom."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "s_632_560_1",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "I've literally made the best financial decision of my life!!",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Depression symptom resembling ADHD symptom",
+        "score": 1,
+        "confidence": 3,
+        "reasoning": "The sentence expresses a positive outcome but does not explicitly relate to the ADHD symptom of finishing others' sentences. It touches on a relevant area but lacks direct connection or personal experience related to the symptom."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "MrTbtb_312_5",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
+      "pre": "Is there a way I could break the ice without those routine stuff or at least find a way to make it interesting?",
+      "text": "Also, once I'm done with those, I don't usually know how to go on and I usually avoid awkward silences by dragging on with something that I've mentioned before.",
+      "post": "With guys, its kind of easy to change subjects.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of finishing others' sentences by discussing the writer's tendency to avoid awkward silences and drag on conversations. However, it lacks specific situational detail that would enhance the clarity of the experience."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "tIg8Wo_619_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I know the feeling.",
+      "text": "It's hard to keep up a conversation sometimes, because by the time I've planned out my response and considered all their possible responses in turn, the moment has passed.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of finishing others' sentences by describing the challenge of keeping up in conversations. However, it lacks specific situational detail that would enhance the clarity of the experience."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "HjkvoI_46_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
-      "post": "",
+      "text": "After I finish talking to someone I will repeat the last thing I said to them under my breath 3-5 times to make sure I said it correctly.",
+      "post": "Sometimes I don't make it until they're out of earshot and it seriously weirds people out.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 3,
+        "reasoning": "The sentence does not address the symptom of finishing others' sentences at all; it focuses on repeating one's own words instead. Therefore, it does not meet the criteria for relevance to the specified ADHD symptom."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "jP0CQM_67_3",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Ha!",
+      "text": "I think I definitely interrupt and talk too long.",
+      "post": "I'm a notorious interrupter... I've gotten better at that though... Through years of effort.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience with interrupting and talking too long, providing a clear behavioral example. The mention of improvement through effort adds depth to the self-reflection on this ADHD symptom."
       }
     }
   ]

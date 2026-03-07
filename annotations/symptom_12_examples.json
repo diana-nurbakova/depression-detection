@@ -2,83 +2,163 @@
   "symptom_id": 12,
   "symptom_text": "How often do you leave your seat in meetings or other situations in which you are expected to remain seated?",
   "symptom_factor": "Motor_HI",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "2zJcEn_200_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
-      "post": "",
+      "text": "thinking of getting one and i know i can also benefit from standing, but my biggest issue with desks and comfort is that i'm relatively short, 5'8 and for most desks I have to either raise the chair and then my legs hurt from not having my feet flat on the ground - or i lower the chair to comfort position but then end up having to raise my arms at a 45 degree angle to use the keyboard and mouse which starts to hurt very quickly.",
+      "post": "Currently have a steelcase leap chair and I'm wondering if I get the autonomos smart desk and lower it to my perfect height where my hands go straight off the arm rest to the mouse/keyboard like [this](https://steelcase-res.cloudinary.com/image/upload/c_fill,dpr_auto,q_70,h_656,w_1166/v1468355939/www.steelcase.com/2016/07/12/16-0042466.jpg) will it nice and comfortable?",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence discusses ergonomic concerns related to desk height and comfort but does not address the symptom of leaving one's seat in meetings or situations where remaining seated is expected. There is no reference to behavior related to the symptom in question."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "Eo7R44_109_0",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "",
+      "text": "When working retail I used to sit to pee as a break from work.",
+      "post": "I was only allowed two 15 minute breaks for 7 1/2 hours so I found my rear where I could.",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of leaving one's seat in meetings or situations where remaining seated is expected. It discusses a personal break during work but does not relate to the specific ADHD symptom in question."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "bdisen_Agitation",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "My body convulses so much that it looks like I'm seizing.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Depression-related symptoms may resemble ADHD symptoms.",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 3,
+        "reasoning": "The sentence suggests a physical manifestation that could relate to hyperactivity but does not explicitly connect to the symptom of leaving one's seat. The reference to convulsions is vague and lacks direct self-reference to the ADHD symptom."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "bdisen_Agitation",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "Its actually starting to get really frustrating, and I just feel really stupid.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Depression relevance makes it an ambiguous confounder for ADHD.",
+        "score": 1,
+        "confidence": 3,
+        "reasoning": "The sentence expresses frustration and feelings of inadequacy, which may relate to difficulties in maintaining focus or remaining seated, but it does not explicitly reference the behavior of leaving one's seat in specific situations."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "KqRSrd_0_2",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
-      "post": "",
+      "pre": "How much of an issue is this?",
+      "text": "I spend a lot of time at a desk - both at work and at home.",
+      "post": "I could, of course, just be active.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence indicates the writer's experience of spending a lot of time at a desk, which suggests a context where remaining seated is expected. However, it lacks specific situational details about leaving the seat, which would enhance the clarity of the symptom experience."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "ud2Wfj_953_2",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Standing is much better for your vascular system.",
+      "text": "Also when I was at school and I worked on the checkouts at a large electronics retailer, once I sat down I couldn't be arsed to get back up again.",
+      "post": "That might be just me though, I am a lazy fucker.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of leaving one's seat in a situation where remaining seated is expected, as it reflects the writer's experience in a work setting. However, it lacks specific situational detail about the context of leaving the seat, which prevents it from reaching a higher score."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "D0V24N_496_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
-      "post": "",
+      "text": "In general, while I find standing all day to be problematic, I know that sitting at my desk is generally considered a health issue.",
+      "post": "In that vein, I've been looking at standing desks - or at least desks that can easily raise and lower to accommodate both sitting and standing as is desired.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 3,
+        "reasoning": "The sentence does not address the symptom of leaving one's seat in meetings or situations where remaining seated is expected. It discusses preferences for standing desks without any reference to the behavior of leaving a seat."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "zkkowx_158_0",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "",
+      "text": "I usually do end up standing because it's just as easy for me and I really don't mind, I'm young and relatively healthy, but sometimes if my hands are full with textbooks or whatever I might take a seat so I don't drop them.",
+      "post": "On those occasions, as I said, if I see someone that wants to sit down, I stand up and let them through.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience of leaving their seat in social situations, providing concrete details about their behavior and the context in which it occurs. The mention of standing up to let someone through further illustrates the symptom of leaving one's seat when expected to remain seated."
       }
     }
   ]

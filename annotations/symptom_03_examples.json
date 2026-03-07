@@ -2,83 +2,163 @@
   "symptom_id": 3,
   "symptom_text": "How often do you have problems remembering appointments or obligations?",
   "symptom_factor": "Inattention",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "TUM3wB_599_5",
+      "source": "score0_random",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I try to only get my carbs from veggies and fruits, but I do have rice every day (brown, multi-grain of course).",
+      "text": "Carbs are my weakness but atleast they don't make me break out!",
+      "post": "",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of forgetting appointments or obligations at all. It discusses dietary preferences, which are unrelated to the symptom of inattention."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "h6etl6_144_0",
+      "source": "score0_random",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "This is, by far, my favorite thing to tell my friends about this game.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of forgetting appointments or obligations in any way. It focuses on a personal enjoyment related to a game, which is unrelated to the symptom of inattention."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "s_993_1060_4",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I can't concentrate at all now.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "INDIRECT",
+        "detail_level": "LOW",
+        "confounders": "Depression symptoms may resemble inattention issues.",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 3,
+        "reasoning": "The sentence indicates a lack of concentration, which can relate to inattention and memory issues, but it does not explicitly mention forgetting appointments or obligations. The connection to ADHD is vague and could also be attributed to depression."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "s_1997_963_1",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "I'm so indecisive, if I was in your boots I'd never be able to decide.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Depression symptoms may resemble ADHD symptoms.",
+        "score": 1,
+        "confidence": 3,
+        "reasoning": "The sentence touches on indecisiveness, which can relate to inattention and memory issues, but it does not explicitly mention forgetting appointments or obligations. The connection to ADHD is vague and could also be attributed to depression."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "qNUBqp_24_5",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
-      "post": "",
+      "pre": "Otherwise, it alerts me that morning when I am most likely to check email.",
+      "text": "I also have alarms set on my phone if there is a daily expectation, like lunch or switching classes.",
+      "post": "Hope this helps.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of forgetting appointments or obligations by mentioning the use of alarms for daily expectations. However, it lacks specific situational detail that would enhance the clarity of the experience."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "aGmUz3_162_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I do monthly pages and the daily pages.",
+      "text": "My phone calendar works much better for reminders and appointments.",
+      "post": "I can set a reminder about an email in a couple mouse clicks.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of forgetting appointments by discussing the use of a phone calendar for reminders, indicating a personal experience with this issue. However, it lacks specific situational detail about missed appointments or obligations."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "pmU8VS_37_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I have reminders on my phone for everything that's important, keep my meds in my car so I don't forget them, but I like to plan for things and the reminders just don't do it.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience with forgetting important tasks despite using reminders, providing concrete examples of how they manage their medications and planning. This aligns well with the symptom of inattention related to forgetting appointments or obligations."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "hxnPGC_895_3",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Little things, like pieces of conversations I have.",
+      "text": "I've been forgetting appointments which is something I've never dealt with before.",
+      "post": "Apparently it's pretty common, several friend who have taken it said the same thing, that their memory suffered greatly while on it.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's own experience of forgetting appointments, which is a clear manifestation of the inattention symptom associated with ADHD. It provides concrete detail about the change in their memory, indicating a significant impact on their daily functioning."
       }
     }
   ]

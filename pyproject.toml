@@ -36,6 +36,9 @@ erisk-task2 = "erisk_task2.cli:cli"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build]
+sources = ["src"]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/hipert", "src/erisk_task1", "src/erisk_task2"]
 

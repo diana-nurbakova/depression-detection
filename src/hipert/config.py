@@ -13,7 +13,7 @@ from typing import Any
 import yaml
 from dotenv import load_dotenv
 
-from hipert.models import SymptomDefinition, SymptomFactor, SymptomSubcluster
+from hipert.models import FewShotExample, SymptomDefinition, SymptomFactor, SymptomSubcluster
 
 # Map string names to enums
 _FACTOR_MAP = {
@@ -99,6 +99,9 @@ class PipelineConfig:
     # Hierarchy metadata
     hierarchy: dict = field(default_factory=dict)
     keyword_clusters: dict[str, list[str]] = field(default_factory=dict)
+
+    # Few-shot examples
+    fewshot_examples: dict[int, list[FewShotExample]] = field(default_factory=dict)
 
 
 def _resolve_provider(
@@ -242,6 +245,10 @@ def load_config(
         hierarchy = symptoms_raw.get("hierarchy", {})
         keyword_clusters = symptoms_raw.get("keyword_clusters", {})
 
+    # Load few-shot examples from annotations directory
+    annotations_dir = project_root / "annotations"
+    fewshot_examples = _load_fewshot_examples(annotations_dir)
+
     return PipelineConfig(
         project_root=project_root,
         corpus_dir=corpus_dir,
@@ -274,4 +281,72 @@ def load_config(
         symptoms=symptoms,
         hierarchy=hierarchy,
         keyword_clusters=keyword_clusters,
+        fewshot_examples=fewshot_examples,
     )
+
+
+def _load_fewshot_examples(
+    annotations_dir: Path,
+) -> dict[int, list[FewShotExample]]:
+    """Load few-shot examples from annotation JSON files.
+
+    Reads annotations/symptom_{id}_examples.json and converts to
+    FewShotExample dataclasses. Skips examples with empty text.
+    """
+    import json
+    import logging
+
+    logger = logging.getLogger(__name__)
+    examples: dict[int, list[FewShotExample]] = {}
+
+    if not annotations_dir.exists():
+        return examples
+
+    for path in sorted(annotations_dir.glob("symptom_*_examples.json")):
+        try:
+            with open(path, encoding="utf-8") as f:
+                data = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            continue
+
+        symptom_id = data.get("symptom_id")
+        if symptom_id is None:
+            continue
+
+        symptom_examples = []
+        for ex in data.get("examples", []):
+            text = ex.get("text", "").strip()
+            if not text:
+                continue
+
+            ann = ex.get("annotation", {})
+            if not ann.get("reasoning"):
+                continue
+
+            symptom_examples.append(FewShotExample(
+                score=ann.get("score", ex.get("score", 0)),
+                pre=ex.get("pre", "") or "",
+                text=text,
+                post=ex.get("post", "") or "",
+                symptom_match=ann.get("symptom_match", ""),
+                self_reference=ann.get("self_reference", ""),
+                detail_level=ann.get("detail_level", ""),
+                confounders=ann.get("confounders", "NONE"),
+                confidence=ann.get("confidence", 3),
+                reasoning=ann.get("reasoning", ""),
+            ))
+
+        if symptom_examples:
+            examples[symptom_id] = symptom_examples
+            logger.debug(
+                "Loaded %d examples for symptom %d",
+                len(symptom_examples), symptom_id,
+            )
+
+    if examples:
+        logger.info(
+            "Loaded few-shot examples for %d symptoms (%d total)",
+            len(examples), sum(len(v) for v in examples.values()),
+        )
+
+    return examples

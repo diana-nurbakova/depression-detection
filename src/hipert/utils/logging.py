@@ -11,6 +11,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import threading
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -50,17 +51,20 @@ class PipelineEventLogger:
         self.filepath = log_dir / f"pipeline_{self.run_id}.jsonl"
         self.filepath.parent.mkdir(parents=True, exist_ok=True)
         self._file = open(self.filepath, "a", encoding="utf-8")
+        self._lock = threading.Lock()
 
     def log(self, event_type: str, **kwargs: Any) -> None:
-        """Write a structured event record."""
+        """Write a structured event record (thread-safe)."""
         record = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "run_id": self.run_id,
             "event_type": event_type,
             **kwargs,
         }
-        self._file.write(json.dumps(record, ensure_ascii=False, default=str) + "\n")
-        self._file.flush()
+        line = json.dumps(record, ensure_ascii=False, default=str) + "\n"
+        with self._lock:
+            self._file.write(line)
+            self._file.flush()
 
     def close(self) -> None:
         self._file.close()
@@ -81,23 +85,25 @@ class LLMCallLogger:
         self._file = open(self.filepath, "a", encoding="utf-8")
         self._system_prompt_hashes: dict[str, bool] = {}
         self._call_count = 0
+        self._lock = threading.Lock()
 
     def log_system_prompt(self, prompt_text: str) -> str:
-        """Log the full system prompt once and return its hash."""
+        """Log the full system prompt once and return its hash (thread-safe)."""
         h = hashlib.sha256(prompt_text.encode()).hexdigest()[:16]
-        if h not in self._system_prompt_hashes:
-            self._system_prompt_hashes[h] = True
-            record = {
-                "timestamp": datetime.now(timezone.utc).isoformat(),
-                "run_id": self.run_id,
-                "event_type": "system_prompt",
-                "prompt_hash": h,
-                "prompt_text": prompt_text,
-            }
-            self._file.write(
-                json.dumps(record, ensure_ascii=False, default=str) + "\n",
-            )
-            self._file.flush()
+        with self._lock:
+            if h not in self._system_prompt_hashes:
+                self._system_prompt_hashes[h] = True
+                record = {
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "run_id": self.run_id,
+                    "event_type": "system_prompt",
+                    "prompt_hash": h,
+                    "prompt_text": prompt_text,
+                }
+                self._file.write(
+                    json.dumps(record, ensure_ascii=False, default=str) + "\n",
+                )
+                self._file.flush()
         return h
 
     def log_call(
@@ -195,10 +201,10 @@ class LLMCallLogger:
         if is_escalation and llama_output_for_escalation is not None:
             record["llama_context"] = llama_output_for_escalation
 
-        self._file.write(
-            json.dumps(record, ensure_ascii=False, default=str) + "\n",
-        )
-        self._file.flush()
+        line = json.dumps(record, ensure_ascii=False, default=str) + "\n"
+        with self._lock:
+            self._file.write(line)
+            self._file.flush()
         return call_id
 
     @property

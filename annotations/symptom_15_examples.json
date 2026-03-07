@@ -2,83 +2,163 @@
   "symptom_id": 15,
   "symptom_text": "How often do you talk too much when in social situations?",
   "symptom_factor": "Verbal_HI",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "nFBJ0j_435_2",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
+      "pre": "I also get excited really really easy.",
+      "text": "I solve the problem by just not talking at all in quiet places.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of excessive talking in social situations at all. It focuses on excitement and not talking in quiet places, which is unrelated to the symptom in question."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "tmfEST_578_2",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "People would I ask a lot of questions or that I'm annoying or that I don't let things go.",
+      "text": "I've learned to tone it down when I first meet someone and I try to take note of people's body language as I'm discussing things with them.",
+      "post": "If it starts to bother them, and it's not worth talking about further, I'll just drop it and try to talk about something they'd enjoy.",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of talking too much in social situations at all. It focuses on asking questions and being considerate of others' reactions, which does not relate to excessive talking."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "s_2625_161_0",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I've dealt with anxiety for most of my life, including panic attacks.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Depression symptoms may resemble ADHD symptoms.",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 3,
+        "reasoning": "The sentence mentions anxiety but does not explicitly connect to excessive talking in social situations, making the link to the ADHD symptom vague and indirect."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "s_708_315_0",
+      "source": "redsm5",
+      "source_detail": {
+        "raw_source": "redsm5"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "My dog is trained to comfort me when I have anxiety, be a physical barrier between me and people when I get panicky, and provide an excuse to leave a situation i.e. he needs to go potty/eat/drink.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "depression",
+        "score": 1,
+        "confidence": 3,
+        "reasoning": "The sentence touches on social situations and the need to leave them, which could relate to excessive talking or discomfort in social contexts. However, it does not explicitly address the symptom of talking too much and lacks personal experience or detail."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "XnmRA2_183_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I talk too quietly too, but when people ask me what I said, I tend to repeat it at the same volume, despite trying to be louder.",
+      "post": "Aggravating for both of us.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of talking excessively in social situations, as it reflects the writer's experience of repeating themselves despite trying to adjust their volume. However, it lacks specific situational detail that would enhance the clarity of the experience."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "sUTXt3_386_11",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I'm a pretty lopsided personality, and this stupid thing hit all my character traits and it's a little disturbing.",
+      "text": "I talk a lot, but it's a learned skill; if you talk you control the flow of ideas and others' impressions of you.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of talking a lot in social situations and reflects the writer's personal experience. However, it lacks specific situational details that would enhance the clarity of the experience."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "CAm8mr_145_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "How much and how loud I talk, occasionally interrupting people as well.",
+      "post": "I'm a pretty self aware and open person, so those who really know me know I am aware of the tendency.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's awareness of their tendency to talk a lot and interrupt others, providing concrete detail about their self-awareness and social interactions, which aligns well with the symptom of verbal hyperactivity."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "RCnnw3_408_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "When I'm reflecting back on embarrassing events that  happened to me I'll unconsciously begin to say things out loud.",
+      "text": "It's never been noticable to others because it mostly happens when I'm alone, but I'll have moments where I'm like \"Why the fuck am I talking?\"",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's own experience of talking excessively, particularly in moments of reflection, and includes a clear behavioral example of questioning their own verbal output. The detail about it being noticeable to others only when alone adds context to the symptom's manifestation."
       }
     }
   ]

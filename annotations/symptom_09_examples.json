@@ -2,83 +2,163 @@
   "symptom_id": 9,
   "symptom_text": "How often do you misplace or have difficulty finding things at home or at work?",
   "symptom_factor": "Inattention",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "HkQAFU_226_1",
+      "source": "score0_random",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Thats actually a really good Idea.",
+      "text": "I think they could make it like the same way they did it with the Stats bar.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of misplacing or having difficulty finding things at home or work. It is unrelated to the context of inattention or losing necessary items."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "etBLvk_435_0",
+      "source": "score0_random",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
-      "post": "",
+      "text": "I once was able to lick my dick, it wasn't that great, had to sort of ouch my dick up and force my head down with my other hand.",
+      "post": "Wouldn't recommend.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of misplacing or having difficulty finding things at home or work. It is unrelated to the context of inattention or losing necessary items."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "bdisen_Concentration_difficulty",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I feel lightheaded and sick constantly, and even the smallest chores make me tired.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Mild depression relevance, making it an ambiguous confounder for ADHD.",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 3,
+        "reasoning": "The sentence touches on feelings of fatigue and difficulty with chores, which could relate to inattention, but it does not explicitly mention misplacing items or losing things. The connection to the ADHD symptom is vague and indirect."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "bdisen_Concentration_difficulty",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "I barely know what to do anymore.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Mild depression relevance, making it an ambiguous confounder for ADHD.",
+        "score": 1,
+        "confidence": 3,
+        "reasoning": "The sentence expresses a sense of confusion and lack of direction, which can relate to inattention, but it does not explicitly mention misplacing items or provide a personal experience related to the symptom."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "CxSiFB_161_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "Even though it's a hassle taking off my shoes and standing in the scanner, I'm impressed by my experiences with the TSA.",
+      "text": "One time I forgot my fairly large pocketknife in a side pocket of my computer bag.",
+      "post": "TSA immediately found it and made me dispose of it.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of misplacing items by describing a specific instance of forgetting a pocketknife in a bag. However, it lacks additional situational detail about the context or frequency of such occurrences."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "weTf2T_775_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
-      "post": "",
+      "text": "One time I lost my phone, then spent a good 15 minutes looking for it.",
+      "post": "It was dark, so I used my phone as a flashlight.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of misplacing items by describing a personal experience of losing a phone. However, it lacks specific situational detail about the context of the loss or the impact it had on the individual, which prevents it from reaching a higher score."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "DCNR2N_106_2",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
+      "pre": "I haven't really had any problems with it besides a loss of concentration.",
+      "text": "I forget where I put things all the time.",
+      "post": "I always have to have a set space to put things to make it consistent, otherwise I'll spend forever trying to find something.",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's own experience of misplacing items and provides concrete detail about needing a designated space for organization, which directly relates to the symptom of inattention."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "fIU2YN_387_3",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I need to do this to my vanity.",
+      "text": "I'm constantly searching for things because I use something then just throw it into a random drawer.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's own experience of misplacing items by detailing the behavior of throwing things into a random drawer, which directly relates to the symptom of inattention and losing necessary items."
       }
     }
   ]

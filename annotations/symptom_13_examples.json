@@ -2,83 +2,163 @@
   "symptom_id": 13,
   "symptom_text": "How often do you feel restless or fidgety?",
   "symptom_factor": "Motor_HI",
-  "annotator": "",
-  "annotation_date": "",
+  "annotator": "GPT-4o-mini (auto-generated, requires human review)",
+  "annotation_date": "2026-03-07",
   "examples": [
     {
       "score": 0,
-      "docno": "",
-      "source": "",
+      "docno": "Mkf7k5_90_2",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
+      "pre": "I dont find ritalin to be very speedy, although if I drink caffeine I get pretty damn restless and I sometimes start slightly tweaking.",
+      "text": "When doing only ritalin by itself though, I can sit still and focus on stuff without getting restless.",
+      "post": "When I snort it, I tend to get a bit more restless and amped up, but when taken orally I feel pretty much like I always do physically, just mentally more \"on\".",
+      "annotation": {
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
+        "score": 0,
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of restlessness or fidgetiness at all. It discusses the effects of Ritalin and caffeine but does not provide any indication of experiencing restlessness."
+      }
+    },
+    {
+      "score": 0,
+      "docno": "WGgCdr_107_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I agree to a large extent, but I just want to say that commitment on both ends is often an issue when the INFP over-commits to a relationship (e.g. incessant messaging etc.).",
+      "text": "I often have to take a step back to work out if I'm being annoying/pestering.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "NO",
+        "self_reference": "NONE",
+        "detail_level": "NONE",
+        "confounders": "NONE",
         "score": 0,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence does not address the symptom of restlessness or fidgetiness at all. It discusses commitment issues in relationships without any reference to motor activity or feelings of restlessness."
       }
     },
     {
       "score": 1,
-      "docno": "",
-      "source": "",
-      "source_detail": null,
+      "docno": "bdisen_Agitation",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
       "synthetic": false,
       "pre": "",
-      "text": "",
+      "text": "I think I have depression. Stream of consciousness rant",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "PARTIAL",
+        "self_reference": "NONE",
+        "detail_level": "LOW",
+        "confounders": "Depression relevance makes it an ambiguous confounder for ADHD.",
         "score": 1,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 3,
+        "reasoning": "The sentence suggests a feeling of restlessness or fidgetiness indirectly through the mention of depression, but it does not explicitly reference the ADHD symptom. The connection is vague and lacks personal experience or specific details."
+      }
+    },
+    {
+      "score": 1,
+      "docno": "bdisen_Agitation",
+      "source": "bdisen",
+      "source_detail": {
+        "raw_source": "bdisen"
+      },
+      "synthetic": false,
+      "pre": "",
+      "text": "Im not suicidal or homicidal or anything like that, but I'm just sick and tired of feeling this way.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "PARTIAL",
+        "self_reference": "INDIRECT",
+        "detail_level": "LOW",
+        "confounders": "Depression-related feelings of being sick and tired, which may resemble restlessness.",
+        "score": 1,
+        "confidence": 4,
+        "reasoning": "The sentence expresses a general feeling of being tired of a certain state, which could imply restlessness, but it does not explicitly mention restlessness or fidgetiness. The connection to the ADHD symptom is vague and indirect, and the mention of being 'sick and tired' suggests a possible depression confounder."
       }
     },
     {
       "score": 2,
-      "docno": "",
-      "source": "",
+      "docno": "oJ7SeW_609_2",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "",
+      "pre": "I gotta admit, it's a bit frustrating at times because it feels like it's a constant game of snapping back into focus.",
+      "text": "I'm a rather fidgety person as it is, so I'm sure that doesn't help.",
       "post": "",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
         "score": 2,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of fidgetiness and conveys the writer's personal experience. However, it lacks specific situational detail that would elevate it to a higher score."
+      }
+    },
+    {
+      "score": 2,
+      "docno": "buGzBu_508_3",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "My hyperactive tendancies however have actually gotten worse as I have aged.",
+      "text": "I find myself pacing back and forth just to read a recipe, bouncing on an exercise ball while I watch tv, not because I feel the need to excercise, but because it is practically impossible for me to sit still any length of time.",
+      "post": "Do you have any suggestions on how to improve on this?",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "MEDIUM",
+        "confounders": "NONE",
+        "score": 2,
+        "confidence": 4,
+        "reasoning": "The sentence clearly addresses the symptom of restlessness and fidgetiness by describing specific behaviors like pacing and bouncing on an exercise ball. However, it lacks detailed situational context that would elevate it to a higher score."
       }
     },
     {
       "score": 3,
-      "docno": "",
-      "source": "",
+      "docno": "n16Fv9_220_1",
+      "source": "retrieval",
+      "source_detail": null,
+      "synthetic": false,
+      "pre": "I whistle or sing to myself all the time and it's rare for me to be doing nothing.",
+      "text": "I am as fidgety as a squirrel monkey.",
+      "post": "",
+      "annotation": {
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
+        "score": 3,
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's experience of being fidgety, using a vivid comparison to a squirrel monkey, which conveys a strong sense of restlessness. The detail provided indicates a clear behavioral example of the symptom."
+      }
+    },
+    {
+      "score": 3,
+      "docno": "yymUlT_822_0",
+      "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "",
-      "post": "",
+      "text": "I fidget a lot, rub my arms, rock in my chair.",
+      "post": "It helps.",
       "annotation": {
-        "symptom_match": "",
-        "self_reference": "",
-        "detail_level": "",
-        "confounders": "",
+        "symptom_match": "YES",
+        "self_reference": "DIRECT",
+        "detail_level": "HIGH",
+        "confounders": "NONE",
         "score": 3,
-        "confidence": 0,
-        "reasoning": ""
+        "confidence": 5,
+        "reasoning": "The sentence explicitly describes the writer's own experience of fidgeting and includes specific behaviors such as rubbing arms and rocking in a chair, which are clear examples of restlessness and fidgetiness."
       }
     }
   ]

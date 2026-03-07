@@ -29,18 +29,18 @@ llm:
     openai:
       base_url: "https://api.openai.com/v1"
       api_key_env: "OPENAI_API_KEY"
-      model: "gpt-5-nano"
-      temperature: 0.0
+      model: "gpt-4o-mini"
+      temperature: 0.1
       max_tokens: 512
   max_retries: 5
-  rate_limit_delay: 0.5
-  read_timeout: 300
+  rate_limit_delay: 0.1
+  read_timeout: 120
 
 scoring:
-  primary_provider: "ollama"
+  primary_provider: "openai"
   escalation_provider: "openai"
   escalation_confidence_threshold: 2
-  escalation_max_rate: 0.40
+  escalation_max_rate: 0.0
 
 processing:
   batch_size: 50
