@@ -87,3 +87,47 @@ def write_trec_rankings(
         "TREC rankings written: %d lines to %s",
         len(all_lines), output_path,
     )
+
+
+def write_trec_from_rankings(
+    rankings: dict[int, list[tuple[str, float]]],
+    output_path: Path,
+    system_name: str,
+    top_n: int = 1000,
+) -> None:
+    """Write TREC-format output from pre-computed rankings.
+
+    Args:
+        rankings: dict mapping symptom_id -> list of (docno, score) tuples,
+                  sorted by score descending.
+        output_path: Path to the output .trec file.
+        system_name: System identifier for the TREC format.
+        top_n: Maximum sentences per symptom (default: 1000).
+    """
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    all_lines: list[str] = []
+
+    for symptom_id in range(1, 19):
+        if symptom_id not in rankings:
+            continue
+
+        for rank, (docno, score) in enumerate(
+            rankings[symptom_id][:top_n], 1,
+        ):
+            position = f"{rank:04d}"
+            line = (
+                f"{symptom_id}\tQ0\t{docno}\t{position}"
+                f"\t{score:.4f}\t{system_name}"
+            )
+            all_lines.append(line)
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(all_lines) + "\n")
+
+    total = len(all_lines)
+    symptoms = len(rankings)
+    logger.info(
+        "TREC run written: %d lines (%d symptoms) to %s [%s]",
+        total, symptoms, output_path, system_name,
+    )

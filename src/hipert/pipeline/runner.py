@@ -22,6 +22,7 @@ from hipert.retrieval.candidate_selector import CandidateSelector, load_candidat
 from hipert.retrieval.encoder import BiEncoderRetriever
 from hipert.scoring.llm_client import LLMClient, make_llm_client
 from hipert.scoring.prompt_builder import PromptBuilder
+from hipert.scoring.resolution import apply_depresym_bias_correction
 from hipert.scoring.scorer import ScoringCascade
 from hipert.utils.logging import LLMCallLogger, PipelineEventLogger, setup_logging
 
@@ -50,10 +51,18 @@ class PipelineRunner:
             s.item_number: s for s in config.symptoms
         }
 
+        # Apply DepreSym bias correction if enabled
+        if config.depresym_bias_correction:
+            logger.info("DepreSym bias correction enabled — adjusting symptom weights...")
+            apply_depresym_bias_correction(config.project_root)
+        else:
+            logger.info("DepreSym bias correction disabled — using base symptom weights.")
+
         self.pipeline_logger.log(
             "pipeline_init",
             symptoms_count=len(self.symptoms),
             corpus_dir=str(config.corpus_dir),
+            depresym_bias_correction=config.depresym_bias_correction,
         )
 
     def run_parse(self, stats_only: bool = False) -> dict:

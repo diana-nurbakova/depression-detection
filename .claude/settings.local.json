@@ -18,7 +18,9 @@
       "Bash(uv run python -c \"import bertopic; print\\(''bertopic'', bertopic.__version__\\)\")",
       "Bash(uv add bertopic umap-learn hdbscan)",
       "Bash(uv run python scripts/extract_redsm5_topics.py)",
-      "Bash(pip install --upgrade torch torchvision)"
+      "Bash(pip install --upgrade torch torchvision)",
+      "Bash(uv pip install streamlit plotly)",
+      "Bash(uv run python -c \"import streamlit; import plotly; print\\(''OK: streamlit'', streamlit.__version__, ''plotly'', plotly.__version__\\)\")"
     ]
   }
 }

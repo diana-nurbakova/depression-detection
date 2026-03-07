@@ -5,13 +5,18 @@ Implements the resolution table from spec Section 4.5.
 
 from __future__ import annotations
 
+import json
+import logging
 import math
+from pathlib import Path
 from typing import Optional
 
 from hipert.models import LLMOutput
 
-# Symptom weights from spec Section 6.2
-_SYMPTOM_WEIGHTS = {
+logger = logging.getLogger(__name__)
+
+# Base symptom weights from spec Section 6.2
+_BASE_SYMPTOM_WEIGHTS = {
     # Motor H/I (items 5, 6, 12-14)
     5: 1.0, 6: 1.0, 12: 1.0, 13: 1.0, 14: 1.0,
     # Verbal H/I (items 15-18)
@@ -21,6 +26,48 @@ _SYMPTOM_WEIGHTS = {
     # Sustained Attention (items 7-11)
     7: 0.5, 8: 0.5, 9: 0.5, 10: 0.5, 11: 0.5,
 }
+
+# Active weights (may be adjusted by DepreSym bias correction)
+_SYMPTOM_WEIGHTS = dict(_BASE_SYMPTOM_WEIGHTS)
+
+
+def apply_depresym_bias_correction(project_root: Path) -> None:
+    """Apply DepreSym-derived weight adjustments to symptom weights.
+
+    Loads depresym_analysis/symptom_weight_adjustments.json and multiplies
+    base weights by the recommended correction factor for overlapping symptoms.
+    Formula: adjusted = base_weight * recommended_symptom_weight
+    """
+    adjustments_path = project_root / "depresym_analysis" / "symptom_weight_adjustments.json"
+    if not adjustments_path.exists():
+        logger.warning(
+            "DepreSym bias correction enabled but %s not found. "
+            "Run scripts/depresym_bias_profiling.py first. Using base weights.",
+            adjustments_path,
+        )
+        return
+
+    with open(adjustments_path, encoding="utf-8") as f:
+        adjustments = json.load(f)
+
+    for asrs_str, adj in adjustments.items():
+        asrs_id = int(asrs_str)
+        if asrs_id in _SYMPTOM_WEIGHTS:
+            base = _BASE_SYMPTOM_WEIGHTS[asrs_id]
+            correction_factor = adj["recommended_symptom_weight"]
+            _SYMPTOM_WEIGHTS[asrs_id] = round(base * correction_factor, 4)
+            logger.info(
+                "  ASRS %d: %.3f -> %.3f (BDI-%d %s, FPR=%.3f)",
+                asrs_id, base, _SYMPTOM_WEIGHTS[asrs_id],
+                adj["source_bdi_symptom"], adj["source_name"], adj["gpt4_fpr"],
+            )
+
+    logger.info("DepreSym bias correction applied to %d ASRS items.", len(adjustments))
+
+
+def reset_weights() -> None:
+    """Reset symptom weights to base values (for testing)."""
+    _SYMPTOM_WEIGHTS.update(_BASE_SYMPTOM_WEIGHTS)
 
 
 def resolve_label(

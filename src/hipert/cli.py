@@ -6,6 +6,9 @@ Usage:
     uv run hipert score --symptoms 5 --limit 5
     uv run hipert score --resume
     uv run hipert output --top-n 1000
+    uv run hipert output --run 2 --top-n 1000
+    uv run hipert output --run all
+    uv run hipert runs
     uv run hipert audit
     uv run hipert annotate-prep --symptoms 5
     uv run hipert run
@@ -148,19 +151,79 @@ def score(
     "--top-n", type=int, default=1000,
     help="Top-N sentences per symptom in output.",
 )
+@click.option(
+    "--run", "run_id", type=str, default=None,
+    help="Run ID (1-5) or 'all' to generate specific run(s). "
+         "Without this flag, uses legacy silver-label output.",
+)
 @click.pass_context
-def output(ctx: click.Context, top_n: int) -> None:
+def output(ctx: click.Context, top_n: int, run_id: str | None) -> None:
     """Generate TREC-format rankings from scored results."""
     config = load_config(ctx.obj["config_path"], ctx.obj["symptoms_path"])
 
-    from hipert.pipeline.runner import PipelineRunner
-    runner = PipelineRunner(config)
+    if run_id is not None:
+        # New run-based output
+        import logging
 
-    try:
-        runner.run_output(top_n=top_n)
-        click.echo(f"Rankings written to {config.output_dir / 'rankings'}")
-    finally:
-        runner.close()
+        from hipert.data.trec_writer import write_trec_from_rankings
+        from hipert.runs import generate_run, list_runs
+        from hipert.runs.registry import SYSTEM_NAMES
+
+        logging.basicConfig(
+            level=config.log_level,
+            format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        )
+
+        rankings_dir = config.output_dir / "rankings"
+
+        if run_id.lower() == "all":
+            run_ids = [1, 2, 3, 4, 5]
+        else:
+            run_ids = [int(r.strip()) for r in run_id.split(",")]
+
+        for rid in run_ids:
+            system_name = SYSTEM_NAMES.get(rid, f"HiPerTRun{rid}")
+            try:
+                rankings = generate_run(rid, config)
+                output_path = rankings_dir / f"{system_name}.trec"
+                write_trec_from_rankings(
+                    rankings, output_path, system_name, top_n=top_n,
+                )
+                total = sum(len(v) for v in rankings.values())
+                click.echo(
+                    f"  Run {rid} ({system_name}): {total} lines -> {output_path}"
+                )
+            except Exception as e:
+                click.echo(f"  Run {rid}: SKIPPED ({e})", err=True)
+
+        click.echo(f"\nRankings written to {rankings_dir}")
+    else:
+        # Legacy output from silver labels
+        from hipert.pipeline.runner import PipelineRunner
+        runner = PipelineRunner(config)
+
+        try:
+            runner.run_output(top_n=top_n)
+            click.echo(f"Rankings written to {config.output_dir / 'rankings'}")
+        finally:
+            runner.close()
+
+
+@cli.command()
+def runs() -> None:
+    """List available submission runs and their status."""
+    from hipert.runs import list_runs
+
+    available_runs = list_runs()
+
+    click.echo("\neRisk 2026 Task 3 — Submission Runs:\n")
+    for r in available_runs:
+        status = "READY" if r["available"] else "STUB"
+        click.echo(
+            f"  Run {r['id']}: [{status:5s}] {r['system_name']}"
+            f"\n         {r['description']}"
+        )
+    click.echo()
 
 
 @cli.command()
@@ -250,6 +313,171 @@ def annotate_prep(
     click.echo(f"  Shared score-0 pool: {result['score0_pool_size']} sentences")
     click.echo(f"\n  Candidates: {output_dir}/symptom_*_candidates.tsv")
     click.echo(f"  Templates:  {annotations_dir}/symptom_*_examples.json")
+
+
+@cli.command("train")
+@click.option(
+    "--stage", type=click.Choice(["a", "b", "ab"]), default="ab",
+    help="Training stage: a (depression), b (ADHD), ab (both).",
+)
+@click.option(
+    "--backbone", type=click.Choice(["mpnet", "mental-roberta", "clinical-bert", "all"]),
+    default="mpnet",
+    help="Backbone model to train (default: mpnet).",
+)
+@click.option("--epochs", type=int, default=None, help="Override max epochs.")
+@click.option("--batch-size", type=int, default=32, help="Training batch size.")
+@click.option("--lr", type=float, default=2e-5, help="Learning rate.")
+@click.option(
+    "--resume-from", type=str, default=None,
+    help="Path to checkpoint to resume from.",
+)
+@click.pass_context
+def train(
+    ctx: click.Context,
+    stage: str,
+    backbone: str,
+    epochs: int | None,
+    batch_size: int,
+    lr: float,
+    resume_from: str | None,
+) -> None:
+    """Train encoder models (Stage A: depression, Stage B: ADHD)."""
+    import logging
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
+
+    config = load_config(ctx.obj["config_path"], ctx.obj["symptoms_path"])
+    checkpoint_dir = config.output_dir / "training_checkpoints"
+
+    backbones = (
+        ["mpnet", "mental-roberta", "clinical-bert"]
+        if backbone == "all" else [backbone]
+    )
+
+    resume_path = Path(resume_from) if resume_from else None
+
+    for bb in backbones:
+        click.echo(f"\n{'='*60}")
+        click.echo(f"Training backbone: {bb}")
+        click.echo(f"{'='*60}")
+
+        if stage in ("a", "ab"):
+            from hipert.training.stage_a import train_stage_a
+
+            if config.bdisen_dir is None:
+                click.echo("ERROR: bdisen_dir not configured", err=True)
+                return
+
+            stage_a_ckpt = train_stage_a(
+                bdisen_dir=config.bdisen_dir,
+                erisk2025_dir=config.erisk2025_dir,
+                erisk2025_trec_dir=config.erisk2025_trec_dir,
+                backbone_name=bb,
+                checkpoint_dir=checkpoint_dir,
+                max_epochs_a1=epochs or 10,
+                batch_size=batch_size,
+                learning_rate=lr,
+                resume_from=resume_path,
+            )
+            click.echo(f"  Stage A best: {stage_a_ckpt}")
+
+        if stage in ("b", "ab"):
+            from hipert.training.stage_b import train_stage_b
+
+            silver_dir = config.output_dir / "silver_labels"
+            if stage == "b":
+                # Need explicit Stage A checkpoint
+                if resume_from:
+                    stage_a_ckpt = Path(resume_from)
+                else:
+                    stage_a_ckpt = (
+                        checkpoint_dir / "stage_a2" / bb
+                        / "stage_a2_best.pt"
+                    )
+                    if not stage_a_ckpt.exists():
+                        stage_a_ckpt = (
+                            checkpoint_dir / "stage_a1" / bb
+                            / "stage_a1_best.pt"
+                        )
+            # stage_a_ckpt set from Stage A run above when stage=="ab"
+
+            stage_b_ckpt = train_stage_b(
+                silver_labels_dir=silver_dir,
+                stage_a_checkpoint=stage_a_ckpt,
+                backbone_name=bb,
+                checkpoint_dir=checkpoint_dir,
+                max_epochs=epochs or 15,
+                batch_size=batch_size,
+                learning_rate=lr * 0.5,
+            )
+            click.echo(f"  Stage B best: {stage_b_ckpt}")
+
+    click.echo("\nTraining complete!")
+
+
+@cli.command("infer")
+@click.option(
+    "--backbone", type=click.Choice(["mpnet", "mental-roberta", "clinical-bert", "all"]),
+    default="all",
+    help="Backbone model(s) for inference.",
+)
+@click.option(
+    "--stage", type=click.Choice(["stage_a", "stage_b"]), default="stage_b",
+    help="Which training stage checkpoint to use.",
+)
+@click.option("--top-n", type=int, default=1000, help="Top-N per symptom.")
+@click.option(
+    "--output-subdir", default="encoder_scores",
+    help="Subdirectory under output/ for scores.",
+)
+@click.pass_context
+def infer(
+    ctx: click.Context,
+    backbone: str,
+    stage: str,
+    top_n: int,
+    output_subdir: str,
+) -> None:
+    """Run encoder inference to produce scored rankings."""
+    import logging
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
+
+    config = load_config(ctx.obj["config_path"], ctx.obj["symptoms_path"])
+    checkpoint_dir = config.output_dir / "training_checkpoints"
+    candidates_dir = config.output_dir / "candidates"
+    output_dir = config.output_dir / output_subdir
+
+    if backbone == "all":
+        from hipert.training.inference import run_ensemble_inference
+
+        run_ensemble_inference(
+            checkpoint_dir=checkpoint_dir,
+            candidates_dir=candidates_dir,
+            output_dir=output_dir,
+            stage=stage,
+            top_n=top_n,
+        )
+    else:
+        from hipert.training.inference import run_inference
+
+        run_inference(
+            checkpoint_dir=checkpoint_dir,
+            candidates_dir=candidates_dir,
+            output_dir=output_dir,
+            backbone_name=backbone,
+            stage=stage,
+            top_n=top_n,
+        )
+
+    click.echo(f"Encoder scores written to {output_dir}")
 
 
 @cli.command()

@@ -41,6 +41,7 @@ scoring:
   escalation_provider: "openai"
   escalation_confidence_threshold: 2
   escalation_max_rate: 0.0
+  depresym_bias_correction: false
 
 processing:
   batch_size: 50

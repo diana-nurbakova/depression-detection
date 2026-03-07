@@ -86,6 +86,9 @@ class PipelineConfig:
 
     # External datasets (annotation protocol v3)
     redsm5_dir: Path | None = None
+
+    # DepreSym bias correction (toggle for A/B testing)
+    depresym_bias_correction: bool = False
     erisk2023_dir: Path | None = None
     erisk2023_trec_dir: Path | None = None
     bdisen_dir: Path | None = None
@@ -274,6 +277,7 @@ def load_config(
             "escalation_confidence_threshold", 2,
         ),
         escalation_max_rate=scoring_cfg.get("escalation_max_rate", 0.40),
+        depresym_bias_correction=scoring_cfg.get("depresym_bias_correction", False),
         batch_size=processing_cfg.get("batch_size", 50),
         num_workers=processing_cfg.get("num_workers", 4),
         log_level=logging_cfg.get("level", "INFO"),
