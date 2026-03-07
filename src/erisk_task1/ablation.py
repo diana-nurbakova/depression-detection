@@ -224,6 +224,27 @@ Be conservative: only score items with clear conversational evidence.
 For Item 9 (Suicidal thoughts), require strong evidence before scoring above 0.
 For Item 21 (Sex), only score if explicitly discussed.
 
+ITEM-SPECIFIC SCORING GUIDELINES:
+
+Item 1 (Sadness): Measures FEELING SAD or UNHAPPY. DO NOT score emotional numbness,
+flatness, or "walking through a fog" as sadness — numbness is the ABSENCE of emotion
+(maps to Item 4: Loss of Pleasure). Only score with explicit sadness statements
+("I feel sad", "I'm unhappy", crying, feeling blue/low/miserable).
+
+Item 13 (Indecisiveness): Measures DIFFICULTY MAKING DECISIONS — the inability to
+choose between options. DO NOT score "I don't know" responses (conversational hedging),
+feeling "stuck" or "in a rut" (pessimism, Item 2), or feeling directionless. Require
+concrete evidence of decision paralysis before scoring 1+.
+
+Item 19 (Concentration Difficulty): Measures ability to FOCUS ATTENTION on cognitive
+tasks. DO NOT score sleep disruption (Item 16), feeling foggy/numb (Item 4), "going
+through the motions" (anhedonia), or workload overwhelm as concentration difficulty.
+Require explicit mention of difficulty focusing, reading, or following conversations.
+
+Item 20 (Tiredness/Fatigue): Score 3 requires the person is UNABLE to do most daily
+activities. If they still work, maintain basic routines, or go out, cap at score 2.
+Reserve 3 for housebound/bedbound due to fatigue.
+
 Respond ONLY with valid JSON:
 {"items": [{"id": N, "name": "...", "score": 0-3 or null, "confidence": 0.0-1.0,
 "state": "SCORED|NO_EVIDENCE|EVIDENCE_OF_ABSENCE", "evidence": "..."}]}"""

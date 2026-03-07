@@ -87,51 +87,51 @@
     },
     {
       "score": 2,
-      "docno": "wjMfOa_827_1",
+      "docno": "RIz2w6_54_1",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "Podcasts.",
-      "text": "I work for myself and am always on the computer with headphones in, always listening to podcasts.",
-      "post": "",
+      "pre": "I seriously might get the timex weekender or easy reader *because* they tick loud.",
+      "text": "I easily get distracted if their is a conversation going on in the background.",
+      "post": "Of course the ticking won't block out the sound,  but it might serve as a white noise of sorts.",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
-        "detail_level": "MEDIUM",
-        "confounders": "NONE",
+        "detail_level": "LOW",
+        "confounders": "None",
         "score": 2,
-        "confidence": 4,
-        "reasoning": "The sentence clearly addresses the symptom of being distracted by external stimuli, as the writer mentions listening to podcasts while working. However, it lacks specific situational detail about how this distraction affects their work or focus."
+        "confidence": 5,
+        "reasoning": "The sentence addresses the symptom of distraction by noise and reflects the writer's personal experience. However, it lacks specific situational details that would enhance the understanding of the distraction."
       }
     },
     {
       "score": 2,
-      "docno": "7LPStu_15_2",
+      "docno": "Hl3moM_4_28",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "I almost always have music playing.",
-      "text": "On the bus to and from work, while at work, when I'm walking around town, even when I went a few hundred metres down the street today to get my haircut I had headphones in.",
-      "post": "Any moment without music and I get lost in my thoughts which isn't always a good thing!",
+      "pre": "I get plenty now.",
+      "text": "Something I've noticed when trying to work in my home office inside is the number of distractions increase.",
+      "post": "I have a bunch of computers acting as servers and parts and it's hard to organize all of it.",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
         "detail_level": "MEDIUM",
-        "confounders": "NONE",
+        "confounders": "None",
         "score": 2,
         "confidence": 4,
-        "reasoning": "The sentence clearly addresses the symptom of being distracted by noise, as the writer describes their reliance on music to avoid getting lost in thoughts. However, it lacks specific situational details about how this distraction manifests in various contexts."
+        "reasoning": "The sentence addresses the symptom of distraction due to noise and activity, reflecting the writer's personal experience. However, it lacks specific examples of the distractions encountered."
       }
     },
     {
       "score": 3,
-      "docno": "r9JvjV_241_0",
+      "docno": "UcUf18_87_0",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
       "pre": "",
-      "text": "From the other side, I'm dealing with this problem myself, I do an insanely boring job and they've recently banned earphones while working.",
-      "post": "The boredom is unbearable, productivity is down and it's actually making me extremely stressed having to deal with the boredom all the time, makes it hard to get out of bed in a morning.",
+      "text": "Every time I do work with classical music in the background, it's very distracting because I frequently stop working to listen closer.",
+      "post": "Especially with Bach.",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
@@ -139,7 +139,7 @@
         "confounders": "NONE",
         "score": 3,
         "confidence": 5,
-        "reasoning": "The sentence explicitly describes the writer's experience of being distracted by boredom in their job, which is compounded by the ban on earphones. This concrete detail about their work environment and the resulting stress clearly illustrates the symptom of inattention due to external stimuli."
+        "reasoning": "The sentence explicitly describes the writer's experience of being distracted by classical music while working, providing a specific example with a clear behavioral response of stopping work to listen closer."
       }
     },
     {

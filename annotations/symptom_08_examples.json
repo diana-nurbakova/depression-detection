@@ -106,32 +106,32 @@
     },
     {
       "score": 2,
-      "docno": "RIz2w6_54_1",
+      "docno": "Z0y7D9_75_1",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "I seriously might get the timex weekender or easy reader *because* they tick loud.",
-      "text": "I easily get distracted if their is a conversation going on in the background.",
-      "post": "Of course the ticking won't block out the sound,  but it might serve as a white noise of sorts.",
+      "pre": "I hate this.",
+      "text": "I know that somebody is talking to me, I can hear what they're saying clearly, but **none** of it reaches my head.",
+      "post": "",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
-        "detail_level": "MEDIUM",
+        "detail_level": "LOW",
         "confounders": "NONE",
         "score": 2,
         "confidence": 4,
-        "reasoning": "The sentence clearly addresses the symptom of difficulty concentrating during conversations, indicating a personal experience with distraction. However, it lacks specific situational detail that would elevate it to a higher score."
+        "reasoning": "The sentence clearly addresses the symptom of difficulty concentrating on what others say and reflects the writer's personal experience. However, it lacks specific situational details that would provide more context."
       }
     },
     {
       "score": 3,
-      "docno": "Gxe4SQ_115_6",
+      "docno": "EArCEv_19_8",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "Yay steroids.",
-      "text": "When I speak the conversation stops to listen.",
-      "post": "I hear my name come up in conversations, and my advice and thoughts are given much more immediate consideration now (before being discarded when I say something dumb :b).",
+      "pre": "Help soon been really struggling with extreme lack of focus.",
+      "text": "Its too the point that I cant talk to someone for more than 10 seconds without completely missing what they are saying, no matter their importance.",
+      "post": "*Edit: I have not taken Vyvanse in ~9 days*",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
@@ -139,7 +139,7 @@
         "confounders": "NONE",
         "score": 3,
         "confidence": 5,
-        "reasoning": "The sentence explicitly describes the writer's experience of being more engaged in conversations and having their thoughts considered, which directly relates to the difficulty concentrating on what others say. The detail about hearing their name and the change in how their advice is received provides concrete situational context."
+        "reasoning": "The sentence explicitly describes the writer's personal experience with difficulty concentrating on conversations, providing a specific time frame (10 seconds) and emphasizing the impact of this symptom on their interactions."
       }
     },
     {

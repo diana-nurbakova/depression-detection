@@ -125,13 +125,13 @@
     },
     {
       "score": 3,
-      "docno": "0f249b_416_0",
+      "docno": "aNtiYu_5_14",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "",
-      "text": "Sometimes I get stuck in hyper focus and will not cease til it's done.",
-      "post": "I know it's silly but it doesn't feel silly while I'm doing it.",
+      "pre": "When I found that outlet for mental \"happy\", so to say, in something that pushed me hard and fast and finally gave me that little foothold on life, my feeling of being \"ADD\" completely vanished.",
+      "text": "Sure, I have a distinct lack of focus, in things that do not interest me, like spanish class, listening to my sociology teacher drone on about whatever the fuck he thinks society is.",
+      "post": "But talking in spanish, studying it on my own, applying the tools handed to me by the sociology textbook to my own world at my own capacity, is fascinating and full of joy and googly-eyes.",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
@@ -139,7 +139,7 @@
         "confounders": "NONE",
         "score": 3,
         "confidence": 5,
-        "reasoning": "The sentence explicitly describes the writer's experience of hyperfocus, which relates to the difficulty in sustaining attention on boring tasks. The detail about feeling silly while engaged in the task adds a personal touch, illustrating the writer's internal experience and the nature of their attention regulation."
+        "reasoning": "The sentence explicitly describes the writer's own experience with inattention in specific situations, such as Spanish class and sociology lectures, providing concrete examples of boredom and lack of focus."
       }
     },
     {

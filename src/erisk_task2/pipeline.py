@@ -209,12 +209,27 @@ def train_pipeline(config: Task2Config):
 
     thompson = ThompsonSampler(tau_active=config.symptom.activation_threshold)
 
-    # ---- Step 3: Process all users ----
+    # ---- Step 3: Process all users (with checkpointing) ----
     logger.info("Processing %d users...", len(users))
     profiles: dict[str, UserProfile] = {}
     user_ids = sorted(users.keys())
 
-    for uid in tqdm(user_ids, desc="Feature extraction"):
+    # Resume from checkpoint if available
+    profiles_checkpoint = output_dir / "profiles_checkpoint.pkl"
+    start_idx = 0
+    if profiles_checkpoint.exists():
+        import pickle
+        with open(profiles_checkpoint, "rb") as f:
+            ckpt = pickle.load(f)
+        profiles = ckpt["profiles"]
+        start_idx = ckpt["next_idx"]
+        logger.info("Resuming from checkpoint: %d/%d users done", start_idx, len(user_ids))
+
+    checkpoint_every = 50  # save every 50 users
+
+    for idx in tqdm(range(start_idx, len(user_ids)), desc="Feature extraction",
+                    initial=start_idx, total=len(user_ids)):
+        uid = user_ids[idx]
         threads = users[uid]
         profile = UserProfile(subject_id=uid)
 
@@ -229,6 +244,18 @@ def train_pipeline(config: Task2Config):
             process_thread(threads[i], profile, encoder, symptom_scorer, thompson, config)
 
         profiles[uid] = profile
+
+        # Periodic checkpoint
+        if (idx + 1) % checkpoint_every == 0:
+            import pickle
+            with open(profiles_checkpoint, "wb") as f:
+                pickle.dump({"profiles": profiles, "next_idx": idx + 1}, f,
+                            protocol=pickle.HIGHEST_PROTOCOL)
+            logger.info("Checkpoint saved: %d/%d users", idx + 1, len(user_ids))
+
+    # Remove checkpoint after successful completion
+    if profiles_checkpoint.exists():
+        profiles_checkpoint.unlink()
 
     logger.info("All users processed. Extracting feature vectors...")
 

@@ -125,13 +125,13 @@
     },
     {
       "score": 3,
-      "docno": "NLNahy_253_2",
+      "docno": "x5DDct_86_6",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "I make sure my life always has something new to learn or do.",
-      "text": "I try to make sure that I am always busy and when I do have time to relax, I make sure my relaxation time is something I enjoy but also I get bored of relaxing quite easily so I guess I'm lucky there.",
-      "post": "I recently quit alcohol for my 20th birthday, after having quit drugs for a year, so temptation wasn't an issue.",
+      "pre": "Please do not just tell me to stop making excuses.",
+      "text": "I know it's all my choices but I am struggling mentally to do anything to truly relax myself other than when I watch Netflix and eat.",
+      "post": "What do you guys do to unwind and satisfy your soul without food?",
       "annotation": {
         "symptom_match": "YES",
         "self_reference": "DIRECT",
@@ -139,17 +139,17 @@
         "confounders": "NONE",
         "score": 3,
         "confidence": 5,
-        "reasoning": "The sentence explicitly describes the writer's experience with difficulty relaxing, noting that they get bored easily during relaxation time. It provides concrete details about their approach to relaxation and how they manage their time, aligning well with the symptom of inattention."
+        "reasoning": "The sentence explicitly describes the writer's struggle to relax, providing concrete details about their reliance on Netflix and food as coping mechanisms. This directly aligns with the symptom of difficulty unwinding."
       }
     },
     {
       "score": 3,
-      "docno": "U3u5vc_559_2",
+      "docno": "IofpVn_45_2",
       "source": "retrieval",
       "source_detail": null,
       "synthetic": false,
-      "pre": "I'm an introvert.",
-      "text": "I unwind when I'm alone.",
+      "pre": "I get a trapped feeling when I look out the windows and stuff.",
+      "text": "Even when i'm at home, I can only stay still for a few hours before I need to go outside and do something.",
       "post": "",
       "annotation": {
         "symptom_match": "YES",
@@ -158,7 +158,7 @@
         "confounders": "NONE",
         "score": 3,
         "confidence": 5,
-        "reasoning": "The sentence explicitly describes the writer's experience of unwinding when alone, which directly relates to the difficulty of disengaging during unstructured time. The detail provided indicates a clear understanding of the symptom."
+        "reasoning": "The sentence clearly describes the writer's personal experience of having difficulty relaxing at home, providing specific details about their need to go outside and do something after a few hours."
       }
     }
   ]
