@@ -16,7 +16,7 @@ import torch
 from transformers import AutoTokenizer
 
 from hipert.data.bdisen_loader import load_annotations as load_bdisen
-from hipert.data.cross_dataset_mappings import BDISEN_TO_ASRS
+from hipert.data.cross_dataset_mappings import ALL_BDISEN_SYMPTOMS, BDISEN_TO_ASRS
 from hipert.data.erisk2025_loader import load_qrels as load_erisk2025_qrels
 from hipert.training.calibration import CalibrationPipeline
 from hipert.training.dataset import ScoringDataset, ScoringExample
@@ -33,16 +33,24 @@ def _load_bdisen_examples(bdisen_dir: Path) -> list[ScoringExample]:
         # Caller passed the file directly instead of the directory
         bdisen_file = Path(bdisen_dir)
     annotations = load_bdisen(bdisen_file)
-    examples = []
 
+    # Map symptom name -> 1-indexed BDI-II ID
+    symptom_to_id = {name: i + 1 for i, name in enumerate(ALL_BDISEN_SYMPTOMS)}
+
+    examples = []
     for ann in annotations:
-        # BDI-Sen uses 0-3 graded labels and BDI-II symptom IDs
+        sid = symptom_to_id.get(ann.symptom)
+        if sid is None:
+            logger.warning("Unknown BDI-Sen symptom: %s", ann.symptom)
+            continue
+        # Use severity (0-3) as graded label; fall back to binary label
+        label = ann.severity if ann.severity is not None else ann.label
         examples.append(ScoringExample(
             text=ann.sentence,
             pre="",
             post="",
-            symptom_id=ann.symptom_id,
-            label=ann.relevance,
+            symptom_id=sid,
+            label=label,
             weight=1.0,  # gold annotations
             difficulty=0.3,  # medium-easy (well-curated)
         ))
@@ -56,22 +64,51 @@ def _load_erisk2025_examples(
     trec_dir: Path,
 ) -> list[ScoringExample]:
     """Load eRisk 2025 T1 as ScoringExamples (binary, BDI-II IDs)."""
-    qrels = load_erisk2025_qrels(erisk2025_dir)
-    examples = []
+    from hipert.data.erisk2025_loader import build_sentence_lookup
 
-    # eRisk 2025 uses majority/consensus binary labels
-    for qrel in qrels:
-        label = min(qrel.relevance, 1)  # clamp to binary 0/1
+    erisk2025_dir = Path(erisk2025_dir)
+    trec_dir = Path(trec_dir)
+
+    # Load majority qrels (primary labels)
+    majority_csv = erisk2025_dir / "qrels_majority_merged.csv"
+    if not majority_csv.exists():
+        logger.warning("No majority qrels at %s", majority_csv)
+        return []
+    majority_qrels = load_erisk2025_qrels(majority_csv)
+
+    # Load consensus qrels for weighting (optional)
+    consensus_csv = erisk2025_dir / "qrels_consensus_merged.csv"
+    consensus_set: set[tuple[int, str]] = set()
+    if consensus_csv.exists():
+        for qrel in load_erisk2025_qrels(consensus_csv):
+            if qrel.relevant:
+                consensus_set.add((qrel.query, qrel.doc_id))
+
+    # Build sentence lookup from TREC files
+    all_docids = {q.doc_id for q in majority_qrels}
+    lookup = build_sentence_lookup(trec_dir, docids=all_docids)
+
+    examples = []
+    missing = 0
+    for qrel in majority_qrels:
+        sent = lookup.get(qrel.doc_id)
+        if sent is None:
+            missing += 1
+            continue
+        label = 1 if qrel.relevant else 0
+        has_consensus = (qrel.query, qrel.doc_id) in consensus_set
         examples.append(ScoringExample(
-            text=qrel.sentence_text or "",
-            pre=qrel.pre_text or "",
-            post=qrel.post_text or "",
-            symptom_id=qrel.query_id,
+            text=sent.text,
+            pre=sent.pre or "",
+            post=sent.post or "",
+            symptom_id=qrel.query,
             label=label,
-            weight=1.0 if qrel.consensus else 0.8,
+            weight=1.0 if has_consensus else 0.8,
             difficulty=0.4,
         ))
 
+    if missing:
+        logger.warning("%d of %d qrel doc_ids not found in TREC corpus", missing, len(majority_qrels))
     logger.info("Loaded %d eRisk 2025 T1 examples", len(examples))
     return examples
 
