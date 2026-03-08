@@ -35,12 +35,13 @@ def process_thread(
     symptom_scorer,
     thompson,
     config: Task2Config,
+    emotion_classifier=None,
+    topic_modeler=None,
 ):
     """Process one thread and update user profile in-place.
 
     Handles Layer 1 (embeddings, symptoms), Layer 2 (sentiment, concern, position),
-    and bandit updates. Heavy components (emotion, BERTopic, ToM LLM) are
-    computed separately.
+    Layer 3 (emotion, BERTopic), ToM Option A, and bandit updates.
     """
     from erisk_task2.features.layer1 import update_embedding_running_mean
     from erisk_task2.features.layer2 import compute_reply_sentiment, detect_concern
@@ -59,6 +60,16 @@ def process_thread(
         profile.concern_flags.append(False)
         profile.reply_depths.append(0)
         profile.thread_topic_sims.append(np.zeros(NUM_SYMPTOMS))
+        profile.emotion_distributions.append(np.ones(8) / 8)
+
+        # ToM Option A: observer-only view when target is silent
+        other_texts = [c.body for c in thread.other_comments if c.body]
+        if other_texts and encoder is not None:
+            obs_emb = encoder.encode(other_texts).mean(axis=0)
+            profile.observer_view_history.append({"embedding": obs_emb})
+        else:
+            profile.observer_view_history.append(None)
+        profile.self_view_history.append(None)
         return
 
     # -- Layer 1: Embeddings --
@@ -117,6 +128,42 @@ def process_thread(
     else:
         profile.thread_topic_sims.append(np.zeros(NUM_SYMPTOMS))
 
+    # -- Layer 3: Emotion --
+    if emotion_classifier is not None:
+        emo_dists = emotion_classifier.classify(target_texts, min_words=config.emotion.min_words)
+        if emo_dists:
+            emo_mean = np.stack(emo_dists).mean(axis=0)
+        else:
+            emo_mean = np.ones(8) / 8
+        profile.emotion_distributions.append(emo_mean)
+    else:
+        profile.emotion_distributions.append(np.ones(8) / 8)
+
+    # -- Layer 3: BERTopic (transform only, model fitted separately) --
+    if topic_modeler is not None and topic_modeler.model is not None:
+        combined_text = " ".join(profile.rolling_text_buffer)
+        if combined_text.strip():
+            topic_dist, topic_ent, dep_prop = topic_modeler.transform(combined_text)
+            profile.topic_distributions.append({
+                "distribution": topic_dist, "entropy": topic_ent,
+                "depression_proportion": dep_prop,
+            })
+        else:
+            profile.topic_distributions.append(None)
+    else:
+        profile.topic_distributions.append(None)
+
+    # -- ToM Option A: Embedding-based --
+    self_emb = round_mean  # already computed above
+    profile.self_view_history.append({"embedding": self_emb})
+
+    other_texts = [c.body for c in thread.other_comments if c.body]
+    if other_texts:
+        obs_emb = encoder.encode(other_texts).mean(axis=0)
+        profile.observer_view_history.append({"embedding": obs_emb})
+    else:
+        profile.observer_view_history.append(None)
+
     # -- Bandit update --
     if profile.bandit_alphas is None:
         profile.bandit_alphas, profile.bandit_betas = thompson.init_posteriors()
@@ -129,17 +176,69 @@ def compute_final_features(
     profile: UserProfile,
     thompson,
     feature_mask: Optional[list[str]] = None,
+    n_bertopic: int = 40,
 ) -> np.ndarray:
     """Compute full feature vector for a user after processing rounds."""
     from erisk_task2.classification.feature_assembler import assemble_feature_vector
     from erisk_task2.distances.wasserstein import compute_all_wasserstein
 
-    # Wasserstein on symptom activations
+    # -- Emotion features (9d: 8 emotions + entropy) --
+    emotion_features = None
+    if profile.emotion_distributions:
+        emo_arr = np.stack(profile.emotion_distributions)
+        emo_mean = emo_arr.mean(axis=0)
+        emo_total = emo_mean.sum()
+        if emo_total > 0:
+            emo_mean = emo_mean / emo_total
+        entropy = -np.sum(emo_mean * np.log(emo_mean + 1e-10))
+        emotion_features = np.concatenate([emo_mean, [entropy]])  # (9,)
+
+    # -- Topic features (41d: n_topics + entropy + depression proportion) --
+    topic_features = None
+    valid_topics = [t for t in profile.topic_distributions if t is not None]
+    if valid_topics:
+        last = valid_topics[-1]
+        dist = last["distribution"]
+        # Pad or truncate to n_bertopic
+        if len(dist) < n_bertopic:
+            dist = np.concatenate([dist, np.zeros(n_bertopic - len(dist))])
+        elif len(dist) > n_bertopic:
+            dist = dist[:n_bertopic]
+        # Mean entropy and depression proportion across all rounds
+        entropies = [t["entropy"] for t in valid_topics]
+        dep_props = [t["depression_proportion"] for t in valid_topics]
+        # 40d distribution + entropy
+        topic_features = np.zeros(41)
+        topic_features[:len(dist)] = dist
+        topic_features[n_bertopic] = float(np.mean(dep_props))  # slot 40
+
+    # -- ToM Option A features (47d) --
+    tom_features = None
+    if profile.self_view_history or profile.observer_view_history:
+        tom_features = _compute_tom_a_features(profile)
+
+    # -- Wasserstein on symptom activations --
+    emotion_entropies = []
+    for ed in profile.emotion_distributions:
+        e = -np.sum(ed * np.log(ed + 1e-10))
+        emotion_entropies.append(float(e))
+    if not emotion_entropies:
+        emotion_entropies = [0.0] * len(profile.symptom_activations)
+
+    topic_entropies = []
+    for t in profile.topic_distributions:
+        if t is not None:
+            topic_entropies.append(t["entropy"])
+        else:
+            topic_entropies.append(0.0)
+    if not topic_entropies:
+        topic_entropies = [0.0] * len(profile.symptom_activations)
+
     wasserstein_features = compute_all_wasserstein(
         symptom_activations=profile.symptom_activations,
-        emotion_entropies=[0.0] * len(profile.symptom_activations),
+        emotion_entropies=emotion_entropies,
         embedding_history=[],
-        topic_entropies=[0.0] * len(profile.symptom_activations),
+        topic_entropies=topic_entropies,
     )
 
     # Bandit features
@@ -154,12 +253,51 @@ def compute_final_features(
         profile,
         wasserstein_features=wasserstein_features,
         mahalanobis_features=None,
-        tom_features=None,
+        tom_features=tom_features,
         bandit_features=bandit_features,
-        emotion_features=None,
-        topic_features=None,
+        emotion_features=emotion_features,
+        topic_features=topic_features,
         feature_mask=feature_mask,
     )
+
+
+def _compute_tom_a_features(profile: UserProfile) -> np.ndarray:
+    """Extract ToM Option A features from embedding histories.
+
+    Uses 47d vector layout (same as LLM-based ToM for compatibility):
+    - [0:21]  self-view symptom proxy (zeros for Option A)
+    - [21:42] observer-view symptom proxy (zeros for Option A)
+    - [42]    self depression_probability proxy (self embedding norm)
+    - [43]    observer depression_probability proxy (observer embedding norm)
+    - [44]    insight_gap (cosine distance between self and observer views)
+    - [45]    observer_concern_level proxy (0)
+    - [46]    community_response_type proxy (0)
+    """
+    features = np.zeros(47)
+
+    # Collect valid embeddings
+    self_embs = [h["embedding"] for h in profile.self_view_history
+                 if h is not None and "embedding" in h]
+    obs_embs = [h["embedding"] for h in profile.observer_view_history
+                if h is not None and "embedding" in h]
+
+    if self_embs:
+        self_mean = np.stack(self_embs).mean(axis=0)
+        features[42] = float(np.linalg.norm(self_mean))
+
+    if obs_embs:
+        obs_mean = np.stack(obs_embs).mean(axis=0)
+        features[43] = float(np.linalg.norm(obs_mean))
+
+    # Cosine distance as insight gap
+    if self_embs and obs_embs:
+        norm_s = np.linalg.norm(self_mean)
+        norm_o = np.linalg.norm(obs_mean)
+        if norm_s > 1e-8 and norm_o > 1e-8:
+            cos_sim = float(np.dot(self_mean, obs_mean) / (norm_s * norm_o))
+            features[44] = 1.0 - cos_sim
+
+    return features
 
 
 # ---------------------------------------------------------------------------
@@ -184,6 +322,7 @@ def train_pipeline(config: Task2Config):
     from erisk_task2.decision.policy import compute_erde, compute_f_latency
     from erisk_task2.distances.mahalanobis import MahalanobisScorer
     from erisk_task2.features.layer1 import EmbeddingEncoder, SymptomScorer
+    from erisk_task2.features.layer3 import EmotionClassifier, TopicModeler
 
     logger.info("=== TRAINING PIPELINE ===")
 
@@ -208,6 +347,23 @@ def train_pipeline(config: Task2Config):
     logger.info("Symptom references built (21 x %dd)", encoder.total_dim)
 
     thompson = ThompsonSampler(tau_active=config.symptom.activation_threshold)
+
+    # Layer 3: Emotion classifier
+    emotion_classifier = EmotionClassifier(
+        model_name=config.emotion.model,
+        device=config.embedding.device,
+    )
+    emotion_classifier.load()
+    logger.info("Emotion classifier loaded")
+
+    # Layer 3: BERTopic — will be fitted after user processing
+    topic_modeler = TopicModeler(
+        n_topics=config.bertopic.n_topics,
+        n_neighbors=config.bertopic.n_neighbors,
+        n_components=config.bertopic.n_components,
+        min_cluster_size=config.bertopic.min_cluster_size,
+        min_samples=config.bertopic.min_samples,
+    )
 
     # ---- Step 3: Process all users (with checkpointing) ----
     logger.info("Processing %d users...", len(users))
@@ -241,7 +397,10 @@ def train_pipeline(config: Task2Config):
             indices = range(n)
 
         for i in indices:
-            process_thread(threads[i], profile, encoder, symptom_scorer, thompson, config)
+            process_thread(
+                threads[i], profile, encoder, symptom_scorer, thompson, config,
+                emotion_classifier=emotion_classifier,
+            )
 
         profiles[uid] = profile
 
@@ -256,6 +415,37 @@ def train_pipeline(config: Task2Config):
     # Remove checkpoint after successful completion
     if profiles_checkpoint.exists():
         profiles_checkpoint.unlink()
+
+    # ---- Step 3b: Fit BERTopic on all target texts ----
+    logger.info("Fitting BERTopic on training documents...")
+    all_docs = []
+    doc_labels = []
+    for uid in user_ids:
+        profile = profiles[uid]
+        label = labels.get(uid, 0)
+        for text in profile.all_target_texts:
+            if len(text.split()) >= 10:  # skip very short texts
+                all_docs.append(text)
+                doc_labels.append(label == 1)
+
+    if len(all_docs) >= 100:  # need enough docs for meaningful topics
+        topic_modeler.fit(all_docs, depression_labels=doc_labels)
+        topic_modeler.save(output_dir / "bertopic_model")
+        logger.info("BERTopic fitted on %d documents, saved", len(all_docs))
+
+        # Now transform each user's rolling buffer
+        for uid in user_ids:
+            profile = profiles[uid]
+            if profile.rolling_text_buffer:
+                combined = " ".join(profile.rolling_text_buffer)
+                if combined.strip():
+                    dist, ent, dep = topic_modeler.transform(combined)
+                    profile.topic_distributions = [{
+                        "distribution": dist, "entropy": ent,
+                        "depression_proportion": dep,
+                    }]
+    else:
+        logger.warning("Only %d docs, skipping BERTopic", len(all_docs))
 
     logger.info("All users processed. Extracting feature vectors...")
 
@@ -409,6 +599,7 @@ def evaluate_pipeline(config: Task2Config):
     from erisk_task2.decision.policy import apply_decision, compute_erde, compute_f_latency
     from erisk_task2.distances.mahalanobis import MahalanobisScorer
     from erisk_task2.features.layer1 import EmbeddingEncoder, SymptomScorer
+    from erisk_task2.features.layer3 import EmotionClassifier, TopicModeler
 
     logger.info("=== EVALUATION PIPELINE ===")
 
@@ -433,6 +624,20 @@ def evaluate_pipeline(config: Task2Config):
         symptom_scorer.build_references()
 
     thompson = ThompsonSampler(tau_active=config.symptom.activation_threshold)
+
+    # Layer 3: Emotion classifier
+    emotion_classifier = EmotionClassifier(
+        model_name=config.emotion.model,
+        device=config.embedding.device,
+    )
+    emotion_classifier.load()
+
+    # Layer 3: BERTopic
+    topic_modeler = TopicModeler()
+    bertopic_path = output_dir / "bertopic_model"
+    if bertopic_path.exists():
+        topic_modeler.load(bertopic_path)
+        logger.info("BERTopic model loaded")
 
     # Load classifiers
     classifiers = {}
@@ -483,6 +688,8 @@ def evaluate_pipeline(config: Task2Config):
             process_thread(
                 threads[round_num], profiles[uid],
                 encoder, symptom_scorer, thompson, config,
+                emotion_classifier=emotion_classifier,
+                topic_modeler=topic_modeler,
             )
 
         # Classification + decision for each run
@@ -575,6 +782,7 @@ def run_pipeline(config: Task2Config):
     from erisk_task2.decision.policy import apply_decision
     from erisk_task2.distances.mahalanobis import MahalanobisScorer
     from erisk_task2.features.layer1 import EmbeddingEncoder, SymptomScorer
+    from erisk_task2.features.layer3 import EmotionClassifier, TopicModeler
     from erisk_task2.server.client import ERiskClient
 
     logger.info("=== LIVE PIPELINE ===")
@@ -601,6 +809,20 @@ def run_pipeline(config: Task2Config):
         symptom_scorer.build_references()
 
     thompson = ThompsonSampler(tau_active=config.symptom.activation_threshold)
+
+    # Layer 3: Emotion classifier
+    emotion_classifier = EmotionClassifier(
+        model_name=config.emotion.model,
+        device=config.embedding.device,
+    )
+    emotion_classifier.load()
+
+    # Layer 3: BERTopic
+    topic_modeler = TopicModeler()
+    bertopic_path = output_dir / "bertopic_model"
+    if bertopic_path.exists():
+        topic_modeler.load(bertopic_path)
+        logger.info("BERTopic model loaded")
 
     # Load classifiers
     classifiers = {}
@@ -647,7 +869,11 @@ def run_pipeline(config: Task2Config):
             profile = client.profiles.get(uid)
             if profile is None:
                 continue
-            process_thread(thread, profile, encoder, symptom_scorer, thompson, config)
+            process_thread(
+                thread, profile, encoder, symptom_scorer, thompson, config,
+                emotion_classifier=emotion_classifier,
+                topic_modeler=topic_modeler,
+            )
 
         # 3. Classification + Decision per run
         for rc in DEFAULT_RUNS:
