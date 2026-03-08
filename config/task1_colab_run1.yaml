@@ -1,5 +1,5 @@
 # eRisk 2026 Task 1 — Run 1 (Colab + Together AI)
-# Strategy: No correction — assessor prompt fixes handle overscoring
+# Strategy: Band-aware correction (safety run — best ablation ADODL=0.950)
 hardware_scenario: "colab_t4"
 
 models:
@@ -56,7 +56,7 @@ sentence_transformer:
   batch_size: 64
 
 correction:
-  run1: "none"
+  run1: "band_aware"
 
 together:
   timeout_seconds: 120

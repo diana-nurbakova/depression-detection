@@ -1,5 +1,5 @@
 # eRisk 2026 Task 1 — Run 3 (Colab + Together AI)
-# Strategy: Proportional ×0.85 correction — preserves rank ordering
+# Strategy: Flat -3 correction (balanced hedge — best-centered estimate)
 hardware_scenario: "colab_t4"
 
 models:
@@ -56,7 +56,7 @@ sentence_transformer:
   batch_size: 64
 
 correction:
-  run3: "proportional_085"
+  run3: "flat_minus_3"
 
 together:
   timeout_seconds: 120

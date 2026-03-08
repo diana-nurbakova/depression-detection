@@ -1,5 +1,5 @@
 # eRisk 2026 Task 1 — Run 1 (Local Ollama)
-# Strategy: No correction — assessor prompt fixes handle overscoring
+# Strategy: Band-aware correction (safety run — best ablation ADODL=0.950)
 hardware_scenario: "high_vram"
 
 models:
@@ -51,7 +51,7 @@ execution:
   termination_confidence: 0.5
 
 correction:
-  run1: "none"
+  run1: "band_aware"
 
 ollama:
   timeout_seconds: 300

@@ -564,32 +564,6 @@ cognitive functioning, decision-making, and libido.
 2 = Much greater difficulty
 3 = Trouble making any decisions
 
-SCORING GUIDELINES FOR INDECISIVENESS (Item 13):
-
-This item measures DIFFICULTY MAKING DECISIONS — the specific inability to
-choose between options or commit to a course of action.
-
-DO score as indecisiveness:
-- Explicit statements about difficulty choosing: "I can't decide",
-  "I keep going back and forth", "I struggle to make even simple choices"
-- Concrete examples of decision paralysis: can't decide what to eat,
-  what to wear, whether to go out, which task to do first
-- Deterioration from previous decision-making ability: "I used to be
-  decisive but now everything feels impossible to choose"
-
-DO NOT score as indecisiveness (these map to OTHER BDI items):
-- Saying "I don't know" in response to interview questions — this is
-  conversational hedging or avoidance, not decision-making difficulty
-- Feeling "stuck" or "in a rut" — this is hopelessness (Item 2: Pessimism)
-- Not seeing a future or feeling directionless — this is pessimism (Item 2)
-- "Making it up as I go" — this is uncertainty, not inability to decide
-- Feeling lost or aimless — this is loss of interest (Item 12) or
-  pessimism (Item 2)
-
-If the ONLY evidence is "I don't know" responses or vague statements about
-feeling stuck, score 0. Require concrete evidence of actual decision-making
-difficulty before scoring 1 or higher.
-
 {{calibration_13}}
 
 ### Item 19: Concentration Difficulty

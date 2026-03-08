@@ -143,56 +143,65 @@ ABLATION_CONFIGS: dict[str, AblationConfig] = {
         use_bayesian_prior=False,
         use_justificator=True,
     ),
-    # --- Post-hoc correction variants (matching 3-run strategy) ---
-    "A0_none": AblationConfig(
-        name="A0_none",
-        description="POST_A0 + no correction (Run 1 strategy — assessor fixes only)",
-        use_specialized_assessors=False,
-        use_linguistic_features=False,
-        use_bayesian_prior=False,
-        use_justificator=False,
-        correction_strategy="none",
-    ),
-    "A0_flat_minus_2": AblationConfig(
-        name="A0_flat_minus_2",
-        description="POST_A0 + flat -2 correction (Run 2 strategy)",
-        use_specialized_assessors=False,
-        use_linguistic_features=False,
-        use_bayesian_prior=False,
-        use_justificator=False,
-        correction_strategy="flat_minus_2",
-    ),
-    "A7_proportional_085": AblationConfig(
-        name="A7_proportional_085",
-        description="PRE_A7 + proportional ×0.85 correction (Run 3 strategy)",
-        use_specialized_assessors=True,
-        use_linguistic_features=True,
-        use_bayesian_prior=False,
-        use_justificator=True,
-        correction_strategy="proportional_085",
-    ),
-    # --- Legacy correction variants (for comparison) ---
-    "A0_minus5": AblationConfig(
-        name="A0_minus5",
-        description="POST_A0 + minus_5 correction (legacy)",
-        use_specialized_assessors=False,
-        use_linguistic_features=False,
-        use_bayesian_prior=False,
-        use_justificator=False,
-        correction_strategy="minus_5",
-    ),
+    # --- Post-hoc correction variants (matching v2 3-run strategy) ---
     "A0_band_aware": AblationConfig(
         name="A0_band_aware",
-        description="POST_A0 + band_aware correction (legacy)",
+        description="POST_A0 + band_aware correction (Run 1 — safety run, ADODL=0.950)",
         use_specialized_assessors=False,
         use_linguistic_features=False,
         use_bayesian_prior=False,
         use_justificator=False,
         correction_strategy="band_aware",
     ),
+    "A0_flat_minus_2": AblationConfig(
+        name="A0_flat_minus_2",
+        description="POST_A0 + flat -2 correction (Run 2 — calibrated risk)",
+        use_specialized_assessors=False,
+        use_linguistic_features=False,
+        use_bayesian_prior=False,
+        use_justificator=False,
+        correction_strategy="flat_minus_2",
+    ),
+    "A0_flat_minus_3": AblationConfig(
+        name="A0_flat_minus_3",
+        description="POST_A0 + flat -3 correction (Run 3 — balanced hedge)",
+        use_specialized_assessors=False,
+        use_linguistic_features=False,
+        use_bayesian_prior=False,
+        use_justificator=False,
+        correction_strategy="flat_minus_3",
+    ),
+    # --- Other correction variants (for comparison) ---
+    "A0_none": AblationConfig(
+        name="A0_none",
+        description="POST_A0 + no correction (raw assessor output)",
+        use_specialized_assessors=False,
+        use_linguistic_features=False,
+        use_bayesian_prior=False,
+        use_justificator=False,
+        correction_strategy="none",
+    ),
+    "A0_minus5": AblationConfig(
+        name="A0_minus5",
+        description="POST_A0 + minus_5 correction",
+        use_specialized_assessors=False,
+        use_linguistic_features=False,
+        use_bayesian_prior=False,
+        use_justificator=False,
+        correction_strategy="minus_5",
+    ),
+    "A7_proportional_085": AblationConfig(
+        name="A7_proportional_085",
+        description="PRE_A7 + proportional ×0.85 correction",
+        use_specialized_assessors=True,
+        use_linguistic_features=True,
+        use_bayesian_prior=False,
+        use_justificator=True,
+        correction_strategy="proportional_085",
+    ),
     "A7_progressive": AblationConfig(
         name="A7_progressive",
-        description="PRE_A7 + progressive correction (legacy)",
+        description="PRE_A7 + progressive correction",
         use_specialized_assessors=True,
         use_linguistic_features=True,
         use_bayesian_prior=False,
@@ -230,11 +239,6 @@ Item 1 (Sadness): Measures FEELING SAD or UNHAPPY. DO NOT score emotional numbne
 flatness, or "walking through a fog" as sadness — numbness is the ABSENCE of emotion
 (maps to Item 4: Loss of Pleasure). Only score with explicit sadness statements
 ("I feel sad", "I'm unhappy", crying, feeling blue/low/miserable).
-
-Item 13 (Indecisiveness): Measures DIFFICULTY MAKING DECISIONS — the inability to
-choose between options. DO NOT score "I don't know" responses (conversational hedging),
-feeling "stuck" or "in a rut" (pessimism, Item 2), or feeling directionless. Require
-concrete evidence of decision paralysis before scoring 1+.
 
 Item 19 (Concentration Difficulty): Measures ability to FOCUS ATTENTION on cognitive
 tasks. DO NOT score sleep disruption (Item 16), feeling foggy/numb (Item 4), "going

@@ -65,11 +65,11 @@ openai:
   retry_attempts: 3
 
 # ── Post-hoc score correction ──
-# See specs/task-1/pipeline_adjustments_spec.md for details
+# See specs/task-1/pipeline_spec_v2.md for details
 correction:
-  run1: "none"                # No correction — assessor fixes handle overscoring
-  run2: "flat_minus_2"        # Flat -2 hedge against residual overscoring
-  run3: "proportional_085"    # Proportional ×0.85 — preserves rank ordering
+  run1: "band_aware"          # Safety run — best ablation performance (ADODL=0.950)
+  run2: "flat_minus_2"        # Calibrated risk — lighter correction + prompt fixes
+  run3: "flat_minus_3"        # Balanced hedge — centered estimate
 
 # ── Logging ──
 logging:

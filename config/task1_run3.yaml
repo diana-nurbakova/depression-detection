@@ -1,5 +1,5 @@
 # eRisk 2026 Task 1 — Run 3 (Local Ollama)
-# Strategy: Proportional ×0.85 correction — preserves rank ordering
+# Strategy: Flat -3 correction (balanced hedge — best-centered estimate)
 hardware_scenario: "high_vram"
 
 models:
@@ -51,7 +51,7 @@ execution:
   termination_confidence: 0.5
 
 correction:
-  run3: "proportional_085"
+  run3: "flat_minus_3"
 
 ollama:
   timeout_seconds: 300
