@@ -35,6 +35,7 @@ from .models import (
 )
 from .post_hoc_correction import CorrectionStrategy, apply_correction
 from .prompts import ASSESSOR_SHARED_PREAMBLE, get_assessor_prompt
+from .sdc import apply_sdc
 from .scoring import (
     collect_item_scores,
     compute_final_total,
@@ -67,6 +68,10 @@ class AblationConfig:
 
     # Scoring configuration
     prior_confidence: float = 0.3
+
+    # Score Distribution Constraint (SDC) — see specs/task-1/sdc_spec.md
+    use_sdc: bool = False
+    sdc_min_signals: int = 2  # Minimum moderate signals to trigger SDC
 
     # Post-hoc correction
     correction_strategy: str = "none"  # "none", "flat_minus_2", "proportional_085", "minus_5", etc.
@@ -207,6 +212,46 @@ ABLATION_CONFIGS: dict[str, AblationConfig] = {
         use_bayesian_prior=False,
         use_justificator=True,
         correction_strategy="progressive",
+    ),
+    # --- SDC variants ---
+    "A0_sdc": AblationConfig(
+        name="A0_sdc",
+        description="POST_A0 + SDC only (no post-hoc correction)",
+        use_specialized_assessors=False,
+        use_linguistic_features=False,
+        use_bayesian_prior=False,
+        use_justificator=False,
+        use_sdc=True,
+    ),
+    "A0_sdc_band_aware": AblationConfig(
+        name="A0_sdc_band_aware",
+        description="POST_A0 + SDC + band_aware correction",
+        use_specialized_assessors=False,
+        use_linguistic_features=False,
+        use_bayesian_prior=False,
+        use_justificator=False,
+        use_sdc=True,
+        correction_strategy="band_aware",
+    ),
+    "A0_sdc_minus5": AblationConfig(
+        name="A0_sdc_minus5",
+        description="POST_A0 + SDC + minus_5 correction",
+        use_specialized_assessors=False,
+        use_linguistic_features=False,
+        use_bayesian_prior=False,
+        use_justificator=False,
+        use_sdc=True,
+        correction_strategy="minus_5",
+    ),
+    "A0_sdc_flat_minus_3": AblationConfig(
+        name="A0_sdc_flat_minus_3",
+        description="POST_A0 + SDC + flat -3 correction",
+        use_specialized_assessors=False,
+        use_linguistic_features=False,
+        use_bayesian_prior=False,
+        use_justificator=False,
+        use_sdc=True,
+        correction_strategy="flat_minus_3",
     ),
 }
 
@@ -458,6 +503,19 @@ def run_ablation_single(
                     e,
                 )
 
+    # Score Distribution Constraint (SDC) — applied BEFORE post-hoc correction
+    sdc_result = None
+    if ablation_cfg.use_sdc:
+        item_scores, sdc_res = apply_sdc(
+            item_scores,
+            transcript,
+            min_signals=ablation_cfg.sdc_min_signals,
+        )
+        sdc_result = sdc_res.to_dict()
+        if sdc_res.applied:
+            final_total = sdc_res.adjusted_total
+            final_band = score_to_band(final_total)
+
     # Post-hoc correction
     correction_result = None
     if ablation_cfg.correction_strategy != "none":
@@ -475,6 +533,7 @@ def run_ablation_single(
         "item_scores": item_scores,
         "pass1_total": p1_total,
         "pass2_total": p2_total,
+        "sdc": sdc_result,
         "correction": correction_result,
         "timing_s": round(elapsed, 1),
         "assessor_outputs": {
@@ -581,6 +640,7 @@ def run_ablation(
                     "predicted_band": result["predicted_band"].value,
                     "pass1_total": result["pass1_total"],
                     "pass2_total": result["pass2_total"],
+                    "sdc": result.get("sdc"),
                     "correction": result.get("correction"),
                     "band_correct": eval_result.band_correct,
                     "deviation": eval_result.absolute_deviation,

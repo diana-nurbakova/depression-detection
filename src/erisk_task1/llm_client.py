@@ -18,7 +18,7 @@ from typing import Optional
 
 import requests
 
-from .config import ModelConfig, OllamaConfig, OpenAIConfig, TogetherConfig, PipelineConfig
+from .config import ModelConfig, OllamaConfig, OpenAIConfig, TogetherConfig, HuggingFaceConfig, PipelineConfig
 
 logger = logging.getLogger(__name__)
 
@@ -391,6 +391,18 @@ def make_clients(config: PipelineConfig) -> dict[str, LLMClient]:
                 max_tokens=mc.max_tokens,
                 max_retries=config.together.retry_attempts,
                 timeout=config.together.timeout_seconds,
+                rate_limit_delay=1.0,
+            )
+        elif mc.provider == "huggingface":
+            return LLMClient(
+                provider="huggingface",
+                base_url=config.huggingface.base_url,
+                api_key=config.huggingface.api_key,
+                model=mc.model,
+                temperature=mc.temperature,
+                max_tokens=mc.max_tokens,
+                max_retries=config.huggingface.retry_attempts,
+                timeout=config.huggingface.timeout_seconds,
                 rate_limit_delay=1.0,
             )
         else:

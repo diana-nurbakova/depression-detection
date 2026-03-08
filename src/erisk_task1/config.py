@@ -69,6 +69,14 @@ class TogetherConfig:
 
 
 @dataclass
+class HuggingFaceConfig:
+    base_url: str = "https://router.huggingface.co/v1"
+    api_key: str = ""
+    timeout_seconds: int = 120
+    retry_attempts: int = 3
+
+
+@dataclass
 class SentenceTransformerConfig:
     """Config for Tier 2 symptom sentence transformer."""
     enabled: bool = False
@@ -77,6 +85,13 @@ class SentenceTransformerConfig:
     max_seq_length: int = 128
     device: str = "cpu"
     batch_size: int = 32
+
+
+@dataclass
+class SDCConfig:
+    """Score Distribution Constraint config — see specs/task-1/sdc_spec.md."""
+    enabled: bool = False
+    min_signals: int = 2
 
 
 @dataclass
@@ -139,8 +154,10 @@ class PipelineConfig:
     ollama: OllamaConfig = field(default_factory=OllamaConfig)
     openai: OpenAIConfig = field(default_factory=OpenAIConfig)
     together: TogetherConfig = field(default_factory=TogetherConfig)
+    huggingface: HuggingFaceConfig = field(default_factory=HuggingFaceConfig)
     logging: LoggingConfig = field(default_factory=LoggingConfig)
     correction: CorrectionConfig = field(default_factory=CorrectionConfig)
+    sdc: SDCConfig = field(default_factory=SDCConfig)
 
     # Run configuration
     run_id: int = 1
@@ -275,5 +292,6 @@ def load_config(config_path: str | Path = "config/task1.yaml") -> PipelineConfig
     cfg.ollama.api_key = os.getenv("OLLAMA_API_KEY", cfg.ollama.api_key)
     cfg.openai.api_key = os.getenv("OPENAI_API_KEY", cfg.openai.api_key)
     cfg.together.api_key = os.getenv("TOGETHER_API_KEY", cfg.together.api_key)
+    cfg.huggingface.api_key = os.getenv("HF_TOKEN", cfg.huggingface.api_key)
 
     return cfg

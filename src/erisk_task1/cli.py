@@ -202,22 +202,31 @@ def train(base_model: str, epochs: int, batch_size: int, lr: float, loss: str, o
 @click.option("--personas", default=None, help="Comma-separated persona names (e.g., Maria,Noah)")
 @click.option("--output", default="runs/ablation", help="Output directory")
 @click.option("--save-conversations", is_flag=True, default=False, help="Save transcripts, raw LLM responses, and evidence in result JSONs")
+@click.option("--provider", default=None, type=click.Choice(["ollama", "together", "huggingface"]), help="Override LLM provider for assessor/orchestrator/justificator (default: from config)")
 @click.option("--log-level", default="INFO", help="Log level")
-def ablation(config_path: str, talkdep: str, configs: str | None, personas: str | None, output: str, save_conversations: bool, log_level: str):
+def ablation(config_path: str, talkdep: str, configs: str | None, personas: str | None, output: str, save_conversations: bool, provider: str | None, log_level: str):
     """Run the ablation study against TalkDep conversations.
 
     Tests pipeline components incrementally (A0-A7) against 12 personas
-    with golden BDI-II scores. Requires Together AI API key.
+    with golden BDI-II scores.
 
     Example:
       python -m erisk_task1.cli ablation --configs A0,A1,A4
       python -m erisk_task1.cli ablation --personas Maria,Noah,Ethan
+      python -m erisk_task1.cli ablation --provider together  # use Together AI (no VPN needed)
       python -m erisk_task1.cli ablation  # runs all A0-A7 on all 12 personas
     """
     log_file = str(Path(output) / "ablation.log")
     setup_logging(log_level, log_file)
 
     config = load_config(config_path)
+
+    # Override provider for assessor/orchestrator/justificator
+    if provider in ("together", "huggingface"):
+        model_name = "meta-llama/Llama-3.3-70B-Instruct-Turbo" if provider == "together" else "meta-llama/Llama-3.3-70B-Instruct"
+        for mc in (config.assessor, config.orchestrator_llm, config.justificator):
+            mc.provider = provider
+            mc.model = model_name
 
     config_list = None
     if configs:

@@ -27,6 +27,7 @@ from .orchestrator import Orchestrator
 from .persona import PersonaModel
 from .post_hoc_correction import apply_correction, get_strategy_for_run
 from .scoring import run_scoring_pipeline, select_top4_mechanical
+from .sdc import apply_sdc
 from .submission import format_interactions, format_results, save_internal_results
 
 logger = logging.getLogger(__name__)
@@ -140,12 +141,24 @@ def run_persona_conversation(
         orch.assessor_outputs, orch.features_history
     )
 
+    # SDC adjustment (before post-hoc correction)
+    raw_total = scoring_result["pass1_total"]
+    sdc_result = None
+    if config.sdc.enabled:
+        scoring_result["item_scores"], sdc_res = apply_sdc(
+            scoring_result["item_scores"],
+            orch.get_transcript(),
+            min_signals=config.sdc.min_signals,
+        )
+        sdc_result = sdc_res.to_dict()
+        if sdc_res.applied:
+            raw_total = sdc_res.adjusted_total
+
     # Determine correction strategy for this run
     correction_override = getattr(config.correction, f"run{config.run_id}", None)
     strategy = get_strategy_for_run(config.run_id, correction_override)
 
     # Apply post-hoc correction to raw total (Pass 1 sum only, no Bayesian prior)
-    raw_total = scoring_result["pass1_total"]
     correction_result = apply_correction(raw_total, strategy)
     final_total = correction_result["corrected_total"]
     final_band = score_to_band(final_total)

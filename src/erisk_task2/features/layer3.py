@@ -39,6 +39,8 @@ class EmotionClassifier:
             "text-classification",
             model=self.model_name,
             top_k=None,
+            truncation=True,
+            max_length=512,
             device=self.device if self.device != "cpu" else -1,
         )
 
@@ -56,7 +58,7 @@ class EmotionClassifier:
                 results.append(np.ones(NUM_EMOTIONS) / NUM_EMOTIONS)
                 continue
 
-            preds = self._pipeline(text[:512])[0]  # truncate for model
+            preds = self._pipeline(text)[0]
             dist = np.zeros(NUM_EMOTIONS)
             for p in preds:
                 label = p["label"].lower()
