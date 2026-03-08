@@ -208,8 +208,8 @@ def apply_sdc(
     adjusted_total = raw_total - n_downgrades
 
     logger.info(
-        "SDC applied: raw=%d → adjusted=%d (-%d), "
-        "n_score3=%d→%d, signals=%s, downgraded=%s",
+        "SDC applied: raw=%d -> adjusted=%d (-%d), "
+        "n_score3=%d->%d, signals=%s, downgraded=%s",
         raw_total, adjusted_total, n_downgrades,
         n_score3, n_score3 - n_downgrades,
         signals, downgraded_ids,
