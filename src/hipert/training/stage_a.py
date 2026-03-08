@@ -28,7 +28,11 @@ logger = logging.getLogger(__name__)
 
 def _load_bdisen_examples(bdisen_dir: Path) -> list[ScoringExample]:
     """Load BDI-Sen 2.0 as ScoringExamples (graded 0-3, BDI-II symptom IDs)."""
-    annotations = load_bdisen(bdisen_dir)
+    bdisen_file = Path(bdisen_dir) / "bdi_majority_vote.jsonl"
+    if not bdisen_file.exists():
+        # Caller passed the file directly instead of the directory
+        bdisen_file = Path(bdisen_dir)
+    annotations = load_bdisen(bdisen_file)
     examples = []
 
     for ann in annotations:
