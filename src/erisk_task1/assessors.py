@@ -126,6 +126,7 @@ def run_single_assessor(
 
     raw_json = parse_json_response(response_text)
     output = _parse_assessor_response(assessor_name, raw_json)
+    output.raw_response = response_text
 
     scored_count = sum(1 for i in output.items if i.state == ItemState.SCORED)
     logger.info(

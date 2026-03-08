@@ -329,7 +329,7 @@ def _run_general_assessor(
                     )
                 )
         outputs[assessor_name] = AssessorOutput(
-            assessor_name=assessor_name, items=items
+            assessor_name=assessor_name, items=items, raw_response=response_text
         )
 
     return outputs
@@ -340,10 +340,12 @@ def run_ablation_single(
     conversation: TalkDepConversation,
     clients: dict[str, LLMClient],
     pipeline_cfg: PipelineConfig,
+    save_conversation: bool = False,
 ) -> dict:
     """Run a single ablation configuration on a single persona.
 
     Returns a dict with predicted_total, predicted_band, top4, item_scores, timing.
+    If save_conversation is True, the transcript is included in the result.
     """
     t0 = time.monotonic()
     transcript = conversation.transcript
@@ -466,7 +468,7 @@ def run_ablation_single(
 
     elapsed = time.monotonic() - t0
 
-    return {
+    result = {
         "predicted_total": final_total,
         "predicted_band": final_band,
         "top4": top4_names,
@@ -475,7 +477,31 @@ def run_ablation_single(
         "pass2_total": p2_total,
         "correction": correction_result,
         "timing_s": round(elapsed, 1),
+        "assessor_outputs": {
+            name: {
+                "assessor_name": ao.assessor_name,
+                "raw_response": ao.raw_response,
+                "items": [
+                    {
+                        "item_id": item.item_id,
+                        "item_name": item.item_name,
+                        "score": item.score,
+                        "confidence": item.confidence,
+                        "state": item.state.value,
+                        "evidence": item.evidence,
+                    }
+                    for item in ao.items
+                ],
+            }
+            for name, ao in assessor_outputs.items()
+        },
+        "linguistic_summary": linguistic_summary or None,
     }
+
+    if save_conversation:
+        result["transcript"] = conversation.transcript
+
+    return result
 
 
 def run_ablation(
@@ -484,6 +510,7 @@ def run_ablation(
     pipeline_cfg: PipelineConfig,
     output_dir: Optional[Path] = None,
     personas: Optional[list[str]] = None,
+    save_conversations: bool = False,
 ) -> AblationResult:
     """Run an ablation configuration against all TalkDep personas.
 
@@ -493,6 +520,7 @@ def run_ablation(
         pipeline_cfg: Base pipeline configuration.
         output_dir: Optional directory to save per-persona results.
         personas: Optional list of persona names to evaluate (default: all).
+        save_conversations: If True, save transcripts and assessor outputs in result JSONs.
 
     Returns:
         AblationResult with aggregated metrics.
@@ -518,7 +546,7 @@ def run_ablation(
         )
 
         try:
-            result = run_ablation_single(ablation_cfg, conv, clients, pipeline_cfg)
+            result = run_ablation_single(ablation_cfg, conv, clients, pipeline_cfg, save_conversation=save_conversations)
 
             eval_result = evaluate_persona(
                 name=conv.name,
@@ -563,11 +591,16 @@ def run_ablation(
                             "score": v.score,
                             "confidence": v.confidence,
                             "state": v.state.value,
+                            "evidence": v.evidence,
                         }
                         for k, v in result["item_scores"].items()
                     },
+                    "assessor_outputs": result.get("assessor_outputs"),
+                    "linguistic_summary": result.get("linguistic_summary"),
                 }
-                persona_file.write_text(json.dumps(_save, indent=2))
+                if result.get("transcript"):
+                    _save["transcript"] = result["transcript"]
+                persona_file.write_text(json.dumps(_save, indent=2, ensure_ascii=False))
 
         except Exception as e:
             logger.error("Failed to evaluate %s: %s", conv.name, e, exc_info=True)
@@ -594,6 +627,7 @@ def run_full_ablation_study(
     configs: Optional[list[str]] = None,
     personas: Optional[list[str]] = None,
     output_dir: str | Path = "runs/ablation",
+    save_conversations: bool = False,
 ) -> list[AblationResult]:
     """Run the complete ablation study.
 
@@ -603,6 +637,7 @@ def run_full_ablation_study(
         configs: List of config names to run (default: all A0-A7).
         personas: Optional list of persona names (default: all 12).
         output_dir: Directory for results.
+        save_conversations: If True, save transcripts and raw LLM responses in result JSONs.
 
     Returns:
         List of AblationResult, one per configuration.
@@ -622,7 +657,7 @@ def run_full_ablation_study(
         ablation_cfg = ABLATION_CONFIGS[config_name]
         config_output = output_path / config_name
         result = run_ablation(
-            ablation_cfg, conversations, pipeline_cfg, config_output, personas
+            ablation_cfg, conversations, pipeline_cfg, config_output, personas, save_conversations
         )
         results.append(result)
 

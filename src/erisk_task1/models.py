@@ -107,6 +107,7 @@ class AssessorOutput:
     assessor_name: str
     items: list[ItemScore]
     cross_observations: str = ""
+    raw_response: str = ""  # Raw LLM response before JSON parsing
 
 
 @dataclass

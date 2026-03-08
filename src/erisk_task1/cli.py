@@ -201,8 +201,9 @@ def train(base_model: str, epochs: int, batch_size: int, lr: float, loss: str, o
 @click.option("--configs", default=None, help="Comma-separated ablation configs (default: all A0-A7)")
 @click.option("--personas", default=None, help="Comma-separated persona names (e.g., Maria,Noah)")
 @click.option("--output", default="runs/ablation", help="Output directory")
+@click.option("--save-conversations", is_flag=True, default=False, help="Save transcripts, raw LLM responses, and evidence in result JSONs")
 @click.option("--log-level", default="INFO", help="Log level")
-def ablation(config_path: str, talkdep: str, configs: str | None, personas: str | None, output: str, log_level: str):
+def ablation(config_path: str, talkdep: str, configs: str | None, personas: str | None, output: str, save_conversations: bool, log_level: str):
     """Run the ablation study against TalkDep conversations.
 
     Tests pipeline components incrementally (A0-A7) against 12 personas
@@ -244,6 +245,7 @@ def ablation(config_path: str, talkdep: str, configs: str | None, personas: str 
         configs=config_list,
         personas=persona_list,
         output_dir=output,
+        save_conversations=save_conversations,
     )
 
     # Print comparison table
