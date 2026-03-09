@@ -31,3 +31,6 @@ specs/
 
 # results
 runs/
+
+# notebooks
+notebooks/
