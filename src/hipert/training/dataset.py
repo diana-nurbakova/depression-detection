@@ -106,10 +106,10 @@ class ScoringDataset(Dataset):
                      "label", "weight", "difficulty"]:
             result[key] = torch.stack([b[key] for b in batch])
 
-        # Optional context fields
+        # Optional context fields — only stack if ALL items have the key
         for key in ["pre_input_ids", "pre_attention_mask",
                      "post_input_ids", "post_attention_mask"]:
-            if key in batch[0]:
+            if all(key in b for b in batch):
                 result[key] = torch.stack([b[key] for b in batch])
 
         return result

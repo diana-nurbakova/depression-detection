@@ -179,7 +179,7 @@ def train_stage_a(
         trainer.resume_from_checkpoint(resume_from)
 
     summary_a1 = trainer.train()
-    best_a1 = checkpoint_dir / "stage_a1" / backbone_name / "stage_a1_best.pt"
+    best_a1 = checkpoint_dir / "stage_a1" / backbone_name / f"stage_a1_{backbone_name}_best.pt"
     logger.info("Stage A1 complete: best at epoch %d", summary_a1["best_epoch"])
 
     # ---- Stage A2: eRisk 2025 T1 (optional) ----
@@ -226,7 +226,7 @@ def train_stage_a(
 
             trainer_a2 = Trainer(model_a2, config_a2, train_ds_a2, val_ds_a2)
             summary_a2 = trainer_a2.train()
-            best_path = checkpoint_dir / "stage_a2" / backbone_name / "stage_a2_best.pt"
+            best_path = checkpoint_dir / "stage_a2" / backbone_name / f"stage_a2_{backbone_name}_best.pt"
             logger.info("Stage A2 complete: best at epoch %d", summary_a2["best_epoch"])
             return best_path
 

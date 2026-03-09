@@ -124,7 +124,7 @@ def train_stage_b(
         trainer.resume_from_checkpoint(resume_from)
 
     summary = trainer.train()
-    best_path = checkpoint_dir / "stage_b" / backbone_name / "stage_b_best.pt"
+    best_path = checkpoint_dir / "stage_b" / backbone_name / f"stage_b_{backbone_name}_best.pt"
 
     # Post-training calibration
     logger.info("Fitting calibration on validation set...")
