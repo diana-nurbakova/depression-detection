@@ -240,9 +240,35 @@ class SymptomConditionedEncoder(nn.Module):
         backbone_name: str = "mpnet",
         **kwargs,
     ) -> "SymptomConditionedEncoder":
-        """Load model from checkpoint."""
+        """Load model from checkpoint, handling symptom embedding resize.
+
+        When loading a Stage A checkpoint (21 BDI-II symptoms) into a
+        Stage B model (18 ASRS symptoms), the symptom embeddings are
+        resized: overlapping rows are copied, extra rows are dropped,
+        and any new rows are initialized from the mean of existing ones.
+        """
         state = torch.load(path, map_location="cpu", weights_only=False)
         model = cls(backbone_name=backbone_name, **kwargs)
+
+        # Check for symptom embedding size mismatch
+        ckpt_emb = state["model_state_dict"].get("symptom_embeddings.weight")
+        model_emb = model.symptom_embeddings.weight
+
+        if ckpt_emb is not None and ckpt_emb.shape != model_emb.shape:
+            ckpt_n, emb_dim = ckpt_emb.shape
+            model_n = model_emb.shape[0]
+            logger.info(
+                "Resizing symptom embeddings: %d -> %d (keeping shared rows)",
+                ckpt_n, model_n,
+            )
+            # Copy overlapping rows, init extras from mean
+            shared = min(ckpt_n, model_n)
+            new_emb = torch.zeros_like(model_emb)
+            new_emb[:shared] = ckpt_emb[:shared]
+            if model_n > shared:
+                new_emb[shared:] = ckpt_emb[:shared].mean(dim=0, keepdim=True)
+            state["model_state_dict"]["symptom_embeddings.weight"] = new_emb
+
         model.load_state_dict(state["model_state_dict"])
         logger.info("Checkpoint loaded: %s", path)
         return model
