@@ -61,9 +61,9 @@ class TemperatureScaling(nn.Module):
         max_iter: int = 50,
     ) -> None:
         """Fit temperatures on validation data using LBFGS."""
-        all_logits = torch.cat(logits_list, dim=0)
-        all_labels = torch.cat(labels_list, dim=0)
-        all_symptom_ids = torch.cat(symptom_ids_list, dim=0)
+        all_logits = torch.cat(logits_list, dim=0).detach()
+        all_labels = torch.cat(labels_list, dim=0).detach()
+        all_symptom_ids = torch.cat(symptom_ids_list, dim=0).detach()
 
         optimizer = LBFGS([self.temperatures], lr=0.01, max_iter=max_iter)
 
@@ -73,7 +73,7 @@ class TemperatureScaling(nn.Module):
             scaled = all_logits / temps
             loss = F.cross_entropy(scaled, all_labels)
             loss.backward()
-            return loss
+            return loss.detach()
 
         optimizer.step(closure)
 
@@ -124,8 +124,8 @@ class DirichletCalibration(nn.Module):
         lr: float = 0.01,
     ) -> None:
         """Fit Dirichlet parameters on validation data."""
-        all_probs = torch.cat(probs_list, dim=0)
-        all_labels = torch.cat(labels_list, dim=0)
+        all_probs = torch.cat(probs_list, dim=0).detach()
+        all_labels = torch.cat(labels_list, dim=0).detach()
 
         optimizer = LBFGS([self.W, self.b], lr=lr, max_iter=max_iter)
 
@@ -134,7 +134,7 @@ class DirichletCalibration(nn.Module):
             cal_probs = self.forward(all_probs)
             loss = F.nll_loss(torch.log(cal_probs.clamp(min=1e-7)), all_labels)
             loss.backward()
-            return loss
+            return loss.detach()
 
         optimizer.step(closure)
         logger.info("Dirichlet calibration fitted.")
@@ -215,9 +215,10 @@ class CalibrationPipeline:
         # Fit temperature scaling
         self.temp_scaling.fit(all_logits, all_labels, all_symptom_ids)
 
-        # Fit Dirichlet on temperature-scaled probs
+        # Fit Dirichlet on temperature-scaled probs (detached from temp graph)
         temp_probs = [
-            self.temp_scaling(l, s) for l, s in zip(all_logits, all_symptom_ids)
+            self.temp_scaling(l, s).detach()
+            for l, s in zip(all_logits, all_symptom_ids)
         ]
         self.dirichlet.fit(temp_probs, all_labels)
 
