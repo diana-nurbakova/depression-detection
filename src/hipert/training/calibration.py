@@ -13,7 +13,7 @@ from pathlib import Path
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.optim import LBFGS
+from torch.optim import Adam
 from torch.utils.data import DataLoader
 
 logger = logging.getLogger(__name__)
@@ -58,27 +58,26 @@ class TemperatureScaling(nn.Module):
         logits_list: list[torch.Tensor],
         labels_list: list[torch.Tensor],
         symptom_ids_list: list[torch.Tensor],
-        max_iter: int = 50,
+        max_iter: int = 200,
     ) -> None:
-        """Fit temperatures on validation data using LBFGS."""
+        """Fit temperatures on validation data using Adam."""
         all_logits = torch.cat(logits_list, dim=0).detach()
         all_labels = torch.cat(labels_list, dim=0).detach()
         all_symptom_ids = torch.cat(symptom_ids_list, dim=0).detach()
 
-        optimizer = LBFGS([self.temperatures], lr=0.01, max_iter=max_iter)
+        optimizer = Adam([self.temperatures], lr=0.01)
 
-        def closure():
+        for step in range(max_iter):
             optimizer.zero_grad()
             temps = self.temperatures[all_symptom_ids].unsqueeze(-1).clamp(min=0.1, max=10.0)
             scaled = all_logits / temps
             loss = F.cross_entropy(scaled, all_labels)
             loss.backward()
-            return loss.detach()
-
-        optimizer.step(closure)
+            optimizer.step()
 
         logger.info(
-            "Temperature scaling fitted. Range: [%.3f, %.3f]",
+            "Temperature scaling fitted (%d steps). Range: [%.3f, %.3f]",
+            max_iter,
             self.temperatures[1:19].min().item(),
             self.temperatures[1:19].max().item(),
         )
@@ -120,24 +119,23 @@ class DirichletCalibration(nn.Module):
         self,
         probs_list: list[torch.Tensor],
         labels_list: list[torch.Tensor],
-        max_iter: int = 100,
+        max_iter: int = 200,
         lr: float = 0.01,
     ) -> None:
         """Fit Dirichlet parameters on validation data."""
         all_probs = torch.cat(probs_list, dim=0).detach()
         all_labels = torch.cat(labels_list, dim=0).detach()
 
-        optimizer = LBFGS([self.W, self.b], lr=lr, max_iter=max_iter)
+        optimizer = Adam([self.W, self.b], lr=lr)
 
-        def closure():
+        for step in range(max_iter):
             optimizer.zero_grad()
             cal_probs = self.forward(all_probs)
             loss = F.nll_loss(torch.log(cal_probs.clamp(min=1e-7)), all_labels)
             loss.backward()
-            return loss.detach()
+            optimizer.step()
 
-        optimizer.step(closure)
-        logger.info("Dirichlet calibration fitted.")
+        logger.info("Dirichlet calibration fitted (%d steps).", max_iter)
 
     def save(self, path: Path) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)

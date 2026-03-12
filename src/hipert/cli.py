@@ -396,12 +396,12 @@ def train(
                 else:
                     stage_a_ckpt = (
                         checkpoint_dir / "stage_a2" / bb
-                        / "stage_a2_best.pt"
+                        / f"stage_a2_{bb}_best.pt"
                     )
                     if not stage_a_ckpt.exists():
                         stage_a_ckpt = (
                             checkpoint_dir / "stage_a1" / bb
-                            / "stage_a1_best.pt"
+                            / f"stage_a1_{bb}_best.pt"
                         )
             # stage_a_ckpt set from Stage A run above when stage=="ab"
 

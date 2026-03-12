@@ -105,7 +105,7 @@ def run_inference(
     tokenizer = AutoTokenizer.from_pretrained(model_id)
 
     # Load model from best checkpoint
-    ckpt_path = checkpoint_dir / stage / backbone_name / f"{stage}_best.pt"
+    ckpt_path = checkpoint_dir / stage / backbone_name / f"{stage}_{backbone_name}_best.pt"
     if not ckpt_path.exists():
         raise FileNotFoundError(f"Checkpoint not found: {ckpt_path}")
 
