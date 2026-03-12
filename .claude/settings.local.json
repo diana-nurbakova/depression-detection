@@ -22,7 +22,14 @@
       "Bash(uv pip install streamlit plotly)",
       "Bash(uv run python -c \"import streamlit; import plotly; print\\(''OK: streamlit'', streamlit.__version__, ''plotly'', plotly.__version__\\)\")",
       "Bash(uv run python -c \"from erisk_task1.config import PipelineConfig, SDCConfig; cfg = PipelineConfig\\(\\); print\\(f''SDC enabled={cfg.sdc.enabled}, min_signals={cfg.sdc.min_signals}''\\)\")",
-      "Bash(uv run python -m erisk_task1.cli ablation --help)"
+      "Bash(uv run python -m erisk_task1.cli ablation --help)",
+      "Bash(python -m json.tool)",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(len\\(d[''''sentences'''']\\)\\); print\\(set\\(d.keys\\(\\)\\)\\)\")",
+      "Bash(curl -s http://localhost:11434/api/tags)",
+      "Read(//c/Users/dnurb/AppData/Local/Programs/Ollama/**)",
+      "Read(//c/Program Files/Ollama/**)",
+      "Bash(where ollama:*)",
+      "Bash(PYTHONIOENCODING=utf-8 uv run python scripts/analyze_qualitative.py --llm-judge --llm-backend ollama --top-k 10)"
     ]
   }
 }

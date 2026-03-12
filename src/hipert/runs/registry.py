@@ -21,11 +21,11 @@ RunGenerator = Callable[[PipelineConfig], Rankings]
 
 # System names per spec Section 2.3
 SYSTEM_NAMES = {
-    1: "HiPerTHiPerT_full",
-    2: "HiPerTLLM_cascade",
-    3: "HiPerTEnsemble",
-    4: "HiPerTDepTransfer",
-    5: "HiPerTBiEnc_baseline",
+    1: "INSALyon_HiPerT_full",
+    2: "INSALyon_LLM_cascade",
+    3: "INSALyon_Ensemble",
+    4: "INSALyon_DepTransfer",
+    5: "INSALyon_BiEnc_baseline",
 }
 
 # Registry populated by run modules

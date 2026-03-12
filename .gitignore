@@ -30,7 +30,7 @@ uv.lock
 specs/
 
 # results
-runs/
+/runs/
 
 # notebooks
 notebooks/
