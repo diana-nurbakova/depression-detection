@@ -105,17 +105,26 @@ def run_inference(
     tokenizer = AutoTokenizer.from_pretrained(model_id)
 
     # Load model from best checkpoint
-    ckpt_path = checkpoint_dir / stage / backbone_name / f"{stage}_{backbone_name}_best.pt"
+    # For stage_a, resolve to stage_a2 (preferred) or stage_a1 (fallback)
+    if stage == "stage_a":
+        ckpt_path = checkpoint_dir / "stage_a2" / backbone_name / f"stage_a2_{backbone_name}_best.pt"
+        if not ckpt_path.exists():
+            ckpt_path = checkpoint_dir / "stage_a1" / backbone_name / f"stage_a1_{backbone_name}_best.pt"
+        cal_dir = ckpt_path.parent / "calibration"
+    else:
+        ckpt_path = checkpoint_dir / stage / backbone_name / f"{stage}_{backbone_name}_best.pt"
+        cal_dir = checkpoint_dir / stage / backbone_name / "calibration"
+
     if not ckpt_path.exists():
         raise FileNotFoundError(f"Checkpoint not found: {ckpt_path}")
 
+    num_symptoms = 18 if stage == "stage_b" else 21
     model = SymptomConditionedEncoder.load_checkpoint(
         ckpt_path, backbone_name=backbone_name,
-        num_symptoms=18 if stage == "stage_b" else 21,
+        num_symptoms=num_symptoms,
     )
 
     # Load calibration
-    cal_dir = checkpoint_dir / stage / backbone_name / "calibration"
     calibration = CalibrationPipeline(
         num_symptoms=18 if stage == "stage_b" else 21,
     )
