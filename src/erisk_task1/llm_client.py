@@ -367,7 +367,7 @@ def make_clients(config: PipelineConfig) -> dict[str, LLMClient]:
                 max_tokens=mc.max_tokens,
                 max_retries=config.ollama.retry_attempts,
                 timeout=config.ollama.timeout_seconds,
-                rate_limit_delay=0.0,
+                rate_limit_delay=1.0,
             )
         elif mc.provider == "openai":
             return LLMClient(

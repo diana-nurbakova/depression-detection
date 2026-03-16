@@ -30,6 +30,7 @@ from .models import (
 )
 from .prompts import INTERVIEWER_SYSTEM_PROMPT, ORCHESTRATOR_REASONING_PROMPT
 from .scoring import collect_item_scores, pass1_score, compute_preliminary_consensus
+from .tom import TomPerceptionTracker
 
 logger = logging.getLogger(__name__)
 
@@ -66,6 +67,7 @@ class Orchestrator:
         parallel_assessors: bool = True,
         termination_confidence: float = 0.5,
         symptom_scorer=None,
+        tom_tracker: Optional[TomPerceptionTracker] = None,
     ):
         self.interviewer_client = interviewer_client
         self.assessor_client = assessor_client
@@ -76,6 +78,7 @@ class Orchestrator:
         self.parallel_assessors = parallel_assessors
         self.termination_confidence = termination_confidence
         self.symptom_scorer = symptom_scorer  # Optional SymptomScorer
+        self.tom_tracker = tom_tracker  # Optional TomPerceptionTracker
 
         # State
         self.conversation: list[ConversationTurn] = []
@@ -155,7 +158,13 @@ class Orchestrator:
         messages.append({"role": "user", "content": user_msg})
 
         response = self.interviewer_client.complete(messages)
-        return response.strip()
+        interviewer_msg = response.strip()
+
+        # ToM: record which BDI domains the interviewer question targets
+        if self.tom_tracker is not None:
+            self.tom_tracker.update_interviewer(turn_number, interviewer_msg)
+
+        return interviewer_msg
 
     def run_assessors(self) -> dict[str, AssessorOutput]:
         """Run all 4 assessors on the current conversation."""
@@ -214,7 +223,7 @@ class Orchestrator:
         # Domain coverage check — identify gaps
         uncovered_domains = self.get_uncovered_domains()
 
-        input_data = json.dumps({
+        orchestrator_input: dict = {
             "turn_number": turn_number,
             "remaining_turns": self.max_turns - turn_number,
             "conversation_summary": self.get_transcript()[-1000:],  # Last 1000 chars
@@ -230,7 +239,15 @@ class Orchestrator:
             "topics_covered": [t.value for t in self.topics_covered],
             "topics_remaining": [t.value for t in self.topics_remaining],
             "uncovered_bdi_domains": uncovered_domains,
-        }, indent=2)
+        }
+
+        # ToM: inject coverage gaps and alignment gap for the orchestrator to act on
+        if self.tom_tracker is not None and self.tom_tracker.guide_interviewer:
+            orchestrator_input["tom_perception_context"] = (
+                self.tom_tracker.get_orchestrator_context()
+            )
+
+        input_data = json.dumps(orchestrator_input, indent=2)
 
         messages = [
             {"role": "system", "content": ORCHESTRATOR_REASONING_PROMPT},
@@ -327,3 +344,8 @@ class Orchestrator:
         p1_total = pass1_score(self.item_scores)
         self.last_band = self.current_band
         self.current_band = score_to_band(p1_total)
+
+        # ToM: update expressed profile and compute Wasserstein distances
+        if self.tom_tracker is not None:
+            self.tom_tracker.update_expressed(turn_number, self.item_scores)
+            self.tom_tracker.compute_wasserstein_metrics(turn_number)

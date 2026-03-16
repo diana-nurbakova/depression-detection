@@ -57,6 +57,20 @@ def run_persona_conversation(
     # Load persona adapter
     persona_model.load_adapter(persona_id)
 
+    # ToM perception tracker (optional)
+    tom_tracker = None
+    if config.tom.enabled:
+        from .tom import TomPerceptionTracker
+        tom_tracker = TomPerceptionTracker(
+            guide_interviewer=config.tom.guide_interviewer,
+            cost_metric=config.tom.cost_metric,
+        )
+        logger.info(
+            "ToM perception tracker enabled (guide_interviewer=%s, cost_metric=%s)",
+            config.tom.guide_interviewer,
+            config.tom.cost_metric,
+        )
+
     # Initialize orchestrator
     orch = Orchestrator(
         interviewer_client=clients["interviewer"],
@@ -68,6 +82,7 @@ def run_persona_conversation(
         parallel_assessors=config.execution.parallel_assessors,
         termination_confidence=config.execution.termination_confidence,
         symptom_scorer=symptom_scorer,
+        tom_tracker=tom_tracker,
     )
 
     # Initial guidance
@@ -193,6 +208,17 @@ def run_persona_conversation(
             if item.item_id in BDI_ITEMS or item.item_name
         ]
 
+    # ToM summary
+    tom_summary: dict = {}
+    if tom_tracker is not None:
+        tom_summary = tom_tracker.to_summary_dict()
+        logger.info(
+            "ToM summary: %d turns tracked, %d gaps, POT=%s",
+            len(tom_summary.get("turns_tracked", [])),
+            len(tom_summary.get("coverage_gaps", {}).get("gaps", [])),
+            tom_summary.get("pot_available"),
+        )
+
     elapsed = time.monotonic() - t_start
     logger.info(
         "Persona %s complete: BDI=%d (%s), turns=%d, %.1fs",
@@ -213,6 +239,7 @@ def run_persona_conversation(
         justificator_output=justificator_output,
         item_scores=scoring_result["item_scores"],
         correction_result=correction_result,
+        tom_summary=tom_summary,
     )
 
 

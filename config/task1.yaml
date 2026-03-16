@@ -47,7 +47,7 @@ models:
 # ── Execution parameters ──
 execution:
   assess_every_n_turns: 1
-  parallel_assessors: true
+  parallel_assessors: false
   max_turns: 10
   min_turns: 5
   termination_confidence: 0.5
@@ -55,8 +55,8 @@ execution:
 # ── Ollama connection ──
 # Uses OLLAMA_BASE_URL and OLLAMA_API_KEY from .env
 ollama:
-  timeout_seconds: 300
-  retry_attempts: 2
+  timeout_seconds: 600
+  retry_attempts: 3
 
 # ── OpenAI connection ──
 # Uses OPENAI_API_KEY from .env

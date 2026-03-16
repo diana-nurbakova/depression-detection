@@ -302,6 +302,275 @@ def _parse_talkdep_transcript(raw_text: str) -> str:
     return "\n".join(turns)
 
 
+def parse_talkdep_sessions(raw_text: str, persona_name: str) -> list[dict]:
+    """Parse a TalkDep conversation file into a list of per-session turn sequences.
+
+    Each file contains 5 conversations separated by '### **Conversation N**' headers.
+    Returns a list of session dicts, one per conversation:
+      [
+        {
+          "session": 1,
+          "turns": [
+            {"speaker": "interviewer", "text": "..."},
+            {"speaker": "persona", "text": "..."},
+            ...
+          ]
+        },
+        ...
+      ]
+    """
+    # Split on session headers — handles all observed formats:
+    #   "### **Conversation 1**"    "### **Conversation 1:**"
+    #   "### Conversation 1:  ****"
+    session_re = re.compile(
+        r"###\s+\*{0,2}Conversation\s+(\d+):?\s*\*{0,2}", re.IGNORECASE
+    )
+    # Handles plain "**Therapist:**" and numbered "1. **Therapist:**"
+    turn_re = re.compile(r"(?:\d+\.\s*)?\*\*(\w+):\*\*\s*(.*)")
+    # Strip CRLF
+    raw_text = raw_text.replace("\r\n", "\n").replace("\r", "\n")
+
+    # Split text into sections by session header
+    sections = session_re.split(raw_text)
+    # sections = [preamble, "1", session1_text, "2", session2_text, ...]
+
+    sessions: list[dict] = []
+    # sections[0] is preamble (patient name), then alternating: session_number, session_text
+    i = 1
+    while i + 1 < len(sections):
+        session_num = int(sections[i])
+        session_text = sections[i + 1]
+        i += 2
+
+        turns: list[dict] = []
+        for line in session_text.split("\n"):
+            line = line.strip()
+            if not line or line.startswith("---"):
+                continue
+            m = turn_re.match(line)
+            if not m:
+                continue
+            role_raw = m.group(1)
+            text = m.group(2).strip()
+            if not text:
+                continue
+            # Therapist → interviewer; any other name → persona
+            if role_raw.lower() == "therapist":
+                speaker = "interviewer"
+            else:
+                speaker = "persona"
+            turns.append({"speaker": speaker, "text": text})
+
+        if turns:
+            sessions.append({"session": session_num, "turns": turns})
+
+    return sessions
+
+
+def parse_patient_profile_bdi(profile_path: Path, persona_name: str) -> list[int]:
+    """Extract a 21-dim BDI-II severity vector from a TalkDep patient profile.
+
+    Patient profiles list key symptoms with severity scores (0-3). Symptoms
+    not mentioned are assumed 0. The returned list has one entry per BDI-II
+    item (index = item_id - 1).
+
+    Handles two profile formats:
+      Maria.md (single-line):  Sadness: "..." (Severity: 2)
+      Noah.md (multi-line):    **Mild Self-Doubt:**
+                                  *"..."* (Severity: 1)
+    """
+    if not profile_path.exists():
+        logger.warning("Profile not found: %s", profile_path)
+        return [0] * 21
+
+    text = profile_path.read_text(encoding="utf-8")
+    # Normalise line endings
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
+
+    # Map canonical BDI-II name -> item id (1-indexed)
+    bdi_name_to_id: dict[str, int] = {}
+    for item_id, name in BDI_ITEMS.items():
+        bdi_name_to_id[name.lower()] = item_id
+
+    vector = [0] * 21
+
+    # Strategy 1: single-line format
+    #   "Sadness: "I feel sad all the time." (Severity: 2)"
+    #   "**Feelings of Hopelessness:** *"..."* (Severity: 3)"
+    single_re = re.compile(
+        r"\*{0,2}([A-Za-z][A-Za-z\s\(\)/\-]+?)\*{0,2}:"
+        r"[^\n]*\(Severity:\s*(\d)\)",
+        re.IGNORECASE,
+    )
+    for m in single_re.finditer(text):
+        raw_name = m.group(1).strip()
+        severity = int(m.group(2))
+        canonical = canonicalize_symptom(raw_name)
+        if canonical.lower() in bdi_name_to_id:
+            item_id = bdi_name_to_id[canonical.lower()]
+            vector[item_id - 1] = severity
+
+    # Strategy 2: multi-line format (bold header on its own line, severity below)
+    #   "- **Mild Self-Doubt:**\n    *"..."* (Severity: 1)"
+    # Find bold symptom headers, then scan up to 3 lines forward for "(Severity: N)"
+    header_re = re.compile(r"\*\*([A-Za-z][A-Za-z\s\(\)/\-]+?):\*\*", re.IGNORECASE)
+    severity_nearby_re = re.compile(r"\(Severity:\s*(\d)\)")
+    lines = text.split("\n")
+    for i, line in enumerate(lines):
+        m = header_re.search(line)
+        if m:
+            raw_name = m.group(1).strip()
+            # Skip if severity already found on the same line (Strategy 1 handled it)
+            if severity_nearby_re.search(line):
+                continue
+            # Look in the next 3 lines
+            window = "\n".join(lines[i + 1 : i + 4])
+            ms = severity_nearby_re.search(window)
+            if ms:
+                severity = int(ms.group(1))
+                canonical = canonicalize_symptom(raw_name)
+                if canonical.lower() in bdi_name_to_id:
+                    item_id = bdi_name_to_id[canonical.lower()]
+                    if vector[item_id - 1] == 0:  # don't overwrite Strategy 1 result
+                        vector[item_id - 1] = severity
+                else:
+                    logger.debug(
+                        "Profile %s: unmatched symptom '%s' -> '%s'",
+                        persona_name, raw_name, canonical,
+                    )
+
+    return vector
+
+
+def save_talkdep_conversations(
+    talkdep_dir: str | Path,
+    output_dir: str | Path,
+    combined: bool = True,
+) -> None:
+    """Export all TalkDep conversations as structured JSON files for ToM analysis.
+
+    For each of the 12 personas, saves:
+      {output_dir}/{name}/session_{N}.json  — one file per conversation session
+      {output_dir}/{name}/all_sessions.json — all 5 sessions merged (single turn list)
+
+    Also saves:
+      {output_dir}/ground_truth.json — per-persona 21-dim BDI-II vectors
+      {output_dir}/golden_scores.json — per-persona total BDI-II scores + bands
+
+    Args:
+        talkdep_dir: Path to the TalkDep repo root (e.g., "data/TalkDep").
+        output_dir: Directory to write the JSON files into.
+        combined: If True (default), also save an all_sessions.json per persona.
+    """
+    import json
+
+    talkdep_dir = Path(talkdep_dir)
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    conv_dir = (
+        talkdep_dir
+        / "persona-development"
+        / "conversation_generation"
+        / "final_conversations"
+    )
+    profile_dir = (
+        talkdep_dir
+        / "persona-development"
+        / "llm-personas-information"
+        / "patient_profiles"
+    )
+
+    if not conv_dir.exists():
+        raise FileNotFoundError(f"TalkDep conversation dir not found: {conv_dir}")
+
+    ground_truth: dict[str, list[int]] = {}
+    golden_scores_out: dict[str, dict] = {}
+
+    for name, golden_total in sorted(GOLDEN_SCORES.items(), key=lambda x: x[1]):
+        # ── 1. Parse conversation sessions ───────────────────────────────────
+        fname = f"{name.lower()}-final-conversation.txt"
+        fpath = conv_dir / fname
+        if not fpath.exists():
+            logger.warning("Conversation file not found for %s: %s", name, fpath)
+            continue
+
+        raw_text = fpath.read_text(encoding="utf-8")
+        sessions = parse_talkdep_sessions(raw_text, name)
+
+        persona_dir = output_dir / name
+        persona_dir.mkdir(parents=True, exist_ok=True)
+
+        # Per-session files
+        for session in sessions:
+            session_data = {
+                "persona_id": name,
+                "session": session["session"],
+                "golden_total": golden_total,
+                "golden_band": score_to_band(golden_total).value,
+                "turns": session["turns"],
+            }
+            session_file = persona_dir / f"session_{session['session']}.json"
+            session_file.write_text(
+                json.dumps(session_data, indent=2, ensure_ascii=False)
+            )
+
+        total_turns = sum(len(s["turns"]) for s in sessions)
+        logger.info(
+            "  %s: %d sessions, %d turns total -> %s",
+            name, len(sessions), total_turns, persona_dir,
+        )
+
+        # Combined all-sessions file
+        if combined and sessions:
+            all_turns = []
+            for session in sessions:
+                all_turns.extend(session["turns"])
+            combined_data = {
+                "persona_id": name,
+                "golden_total": golden_total,
+                "golden_band": score_to_band(golden_total).value,
+                "n_sessions": len(sessions),
+                "turns": all_turns,
+            }
+            combined_file = persona_dir / "all_sessions.json"
+            combined_file.write_text(
+                json.dumps(combined_data, indent=2, ensure_ascii=False)
+            )
+
+        # ── 2. Parse patient profile for ground-truth BDI-II vector ─────────
+        profile_path = profile_dir / f"{name}.md"
+        bdi_vector = parse_patient_profile_bdi(profile_path, name)
+        ground_truth[name] = bdi_vector
+
+        # Cross-check: profile-derived total vs. golden total
+        profile_total = sum(bdi_vector)
+        logger.debug(
+            "  %s: profile-derived total=%d vs golden=%d (partial profile; unlisted items=0)",
+            name, profile_total, golden_total,
+        )
+
+        golden_scores_out[name] = {
+            "total": golden_total,
+            "band": score_to_band(golden_total).value,
+            "profile_derived_total": profile_total,
+        }
+
+    # ── 3. Save ground truth and golden scores ────────────────────────────────
+    gt_path = output_dir / "ground_truth.json"
+    gt_path.write_text(json.dumps(ground_truth, indent=2))
+    logger.info("Saved ground_truth.json: %d personas -> %s", len(ground_truth), gt_path)
+
+    gs_path = output_dir / "golden_scores.json"
+    gs_path.write_text(json.dumps(golden_scores_out, indent=2))
+    logger.info("Saved golden_scores.json -> %s", gs_path)
+
+    logger.info(
+        "Export complete: %d personas -> %s (ground_truth.json, golden_scores.json)",
+        len(ground_truth), output_dir,
+    )
+
+
 def _compute_symptom_hit_rate(
     golden_symptoms: list[str],
     predicted_symptoms: list[str],

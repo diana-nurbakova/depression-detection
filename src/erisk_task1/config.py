@@ -95,6 +95,14 @@ class SDCConfig:
 
 
 @dataclass
+class TomConfig:
+    """Theory of Mind perception tracker configuration."""
+    enabled: bool = False
+    guide_interviewer: bool = True   # inject ToM coverage gaps into orchestrator context
+    cost_metric: str = "clinical"    # "clinical" | "embedding" | "all"
+
+
+@dataclass
 class CorrectionConfig:
     """Post-hoc score correction config per run."""
     run1: str = "band_aware"
@@ -158,6 +166,7 @@ class PipelineConfig:
     logging: LoggingConfig = field(default_factory=LoggingConfig)
     correction: CorrectionConfig = field(default_factory=CorrectionConfig)
     sdc: SDCConfig = field(default_factory=SDCConfig)
+    tom: TomConfig = field(default_factory=TomConfig)
 
     # Run configuration
     run_id: int = 1
@@ -279,6 +288,15 @@ def load_config(config_path: str | Path = "config/task1.yaml") -> PipelineConfig
             cfg.logging.save_linguistic_features = lg.get(
                 "save_linguistic_features", cfg.logging.save_linguistic_features
             )
+
+        # ToM
+        if "tom" in raw:
+            t = raw["tom"]
+            cfg.tom.enabled = t.get("enabled", cfg.tom.enabled)
+            cfg.tom.guide_interviewer = t.get(
+                "guide_interviewer", cfg.tom.guide_interviewer
+            )
+            cfg.tom.cost_metric = t.get("cost_metric", cfg.tom.cost_metric)
 
         # Run config
         if "run" in raw:

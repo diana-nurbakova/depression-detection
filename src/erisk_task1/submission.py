@@ -113,6 +113,10 @@ def save_internal_results(result: PersonaResult, output_dir: Path, suffix: str =
             "clinical_narrative": result.justificator_output.clinical_narrative,
         }
 
+    # Add ToM summary if tracker was active
+    if result.tom_summary:
+        internal["tom"] = result.tom_summary
+
     path = output_dir / f"internal{suffix}.json"
     with open(path, "w") as f:
         json.dump(internal, f, indent=2)

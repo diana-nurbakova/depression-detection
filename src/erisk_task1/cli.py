@@ -270,6 +270,161 @@ def ablation(config_path: str, talkdep: str, configs: str | None, personas: str 
     click.echo(f"\nDetailed results saved to: {output}/")
 
 
+@cli.command("save-talkdep")
+@click.option("--talkdep", default="data/TalkDep", help="Path to TalkDep repo root")
+@click.option(
+    "--output",
+    default="data/talkdep_conversations",
+    help="Output directory for structured JSONs",
+)
+@click.option(
+    "--no-combined",
+    "no_combined",
+    is_flag=True,
+    default=False,
+    help="Skip saving all_sessions.json per persona",
+)
+@click.option("--log-level", default="INFO", help="Log level")
+def save_talkdep(talkdep: str, output: str, no_combined: bool, log_level: str):
+    """Export TalkDep conversations as structured JSONs for ToM analysis.
+
+    Saves per-session and combined JSON files for each of the 12 TalkDep personas,
+    plus a ground_truth.json with approximate 21-dim BDI-II vectors extracted from
+    patient profiles, and a golden_scores.json with total BDI-II scores.
+
+    Output structure:
+      {output}/{Name}/session_1.json  ... session_5.json
+      {output}/{Name}/all_sessions.json
+      {output}/ground_truth.json
+      {output}/golden_scores.json
+
+    Example:
+      uv run python -m erisk_task1.cli save-talkdep
+      uv run python -m erisk_task1.cli save-talkdep --output runs/tom/talkdep_data
+    """
+    setup_logging(log_level)
+
+    from .evaluation import save_talkdep_conversations
+
+    talkdep_path = Path(talkdep)
+    if not talkdep_path.exists():
+        click.echo(f"TalkDep directory not found: {talkdep_path}", err=True)
+        raise SystemExit(1)
+
+    click.echo(f"TalkDep source: {talkdep_path}")
+    click.echo(f"Output dir:     {output}")
+    click.echo()
+
+    save_talkdep_conversations(
+        talkdep_dir=talkdep,
+        output_dir=output,
+        combined=not no_combined,
+    )
+
+    output_path = Path(output)
+    click.echo(f"Done. Files written to {output_path.resolve()}/")
+    click.echo(f"  Per persona: session_1..N.json + all_sessions.json")
+    click.echo(f"  Shared:      ground_truth.json  (partial BDI-II vectors from profiles)")
+    click.echo(f"               golden_scores.json (total BDI-II + band)")
+    click.echo()
+    click.echo("Next steps:")
+    click.echo(
+        "  Run assessors per turn on any session JSON with the ToM analysis pipeline."
+    )
+
+
+@cli.command("tom-ablation")
+@click.option("--config", "config_path", default="config/task1.yaml", help="Config YAML path")
+@click.option("--data", "data_dir", default="data/talkdep_conversations",
+              help="Path to saved TalkDep conversations (from save-talkdep)")
+@click.option("--personas", default=None,
+              help="Comma-separated persona names (e.g., Maria,Noah)")
+@click.option("--output", default="runs/tom_ablation", help="Output directory")
+@click.option("--assess-every", default=0, type=int,
+              help="Run assessors every N persona turns (0 = config default)")
+@click.option("--sessions", default=None,
+              help="Comma-separated session numbers to use (e.g., 1,2,3; default: all combined)")
+@click.option("--provider", default=None,
+              type=click.Choice(["ollama", "together", "huggingface"]),
+              help="Override LLM provider for assessor/orchestrator")
+@click.option("--log-level", default="INFO", help="Log level")
+def tom_ablation(config_path: str, data_dir: str, personas: str | None,
+                 output: str, assess_every: int, sessions: str | None,
+                 provider: str | None, log_level: str):
+    """Run ToM ablation study: tom_on vs tom_off on TalkDep conversations.
+
+    Replays pre-recorded TalkDep conversations through the Orchestrator
+    with incremental assessment, comparing ToM-enabled vs baseline.
+
+    Requires saved TalkDep data (run 'save-talkdep' first).
+
+    Example:
+      uv run python -m erisk_task1.cli tom-ablation
+      uv run python -m erisk_task1.cli tom-ablation --personas Maria,Noah,Ethan
+      uv run python -m erisk_task1.cli tom-ablation --provider together
+      uv run python -m erisk_task1.cli tom-ablation --sessions 1,2 --assess-every 2
+    """
+    log_file = str(Path(output) / "tom_ablation.log")
+    setup_logging(log_level, log_file)
+
+    config = load_config(config_path)
+
+    # Override provider
+    if provider in ("together", "huggingface"):
+        model_name = (
+            "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+            if provider == "together"
+            else "meta-llama/Llama-3.3-70B-Instruct"
+        )
+        for mc in (config.assessor, config.orchestrator_llm):
+            mc.provider = provider
+            mc.model = model_name
+
+    persona_list = None
+    if personas:
+        persona_list = [p.strip() for p in personas.split(",")]
+
+    session_list = None
+    if sessions:
+        session_list = [int(s.strip()) for s in sessions.split(",")]
+
+    from .tom_ablation import (
+        format_tom_analysis_table,
+        format_tom_comparison,
+        run_tom_ablation as _run_tom_ablation,
+    )
+
+    click.echo("ToM Ablation Study")
+    click.echo(f"  Data: {data_dir}")
+    click.echo(f"  Personas: {persona_list or 'all'}")
+    click.echo(f"  Sessions: {session_list or 'all combined'}")
+    click.echo(f"  Assessor: {config.assessor.model} via {config.assessor.provider}")
+    click.echo(f"  Assess every: {assess_every or 'config default'} turns")
+    click.echo(f"  Output: {output}")
+    click.echo()
+
+    tom_off, tom_on = _run_tom_ablation(
+        pipeline_cfg=config,
+        data_dir=data_dir,
+        personas=persona_list,
+        output_dir=output,
+        assess_every_n=assess_every,
+        sessions=session_list,
+    )
+
+    # Print comparison table
+    click.echo()
+    click.echo(format_tom_comparison(tom_off, tom_on))
+
+    # Print ToM analysis
+    analysis_path = Path(output) / "tom_analysis.json"
+    if analysis_path.exists():
+        click.echo()
+        click.echo(format_tom_analysis_table(analysis_path))
+
+    click.echo(f"\nDetailed results saved to: {output}/")
+
+
 @cli.command()
 @click.argument("text")
 def features(text: str):
