@@ -78,6 +78,22 @@ class OllamaConfig:
 
 
 @dataclass
+class HFInferenceConfig:
+    model: str = "meta-llama/Llama-3.3-70B-Instruct"
+    token: str = ""  # overridden by HF_TOKEN env var
+    temperature: float = 0.1
+    max_tokens: int = 2048
+    timeout_seconds: int = 120
+    retry_attempts: int = 3
+
+
+@dataclass
+class LLMConfig:
+    """Top-level LLM backend selector."""
+    backend: str = "ollama"  # "ollama" or "hf"
+
+
+@dataclass
 class ServerConfig:
     base_url: str = "https://erisk.irlab.org/challenge-t2"
     team_token: str = ""
@@ -114,7 +130,9 @@ class Task2Config:
     wasserstein: WassersteinConfig = field(default_factory=WassersteinConfig)
     mahalanobis: MahalanobisConfig = field(default_factory=MahalanobisConfig)
     tom: ToMConfig = field(default_factory=ToMConfig)
+    llm: LLMConfig = field(default_factory=LLMConfig)
     ollama: OllamaConfig = field(default_factory=OllamaConfig)
+    hf_inference: HFInferenceConfig = field(default_factory=HFInferenceConfig)
     server: ServerConfig = field(default_factory=ServerConfig)
     logging: LoggingConfig = field(default_factory=LoggingConfig)
     thread_format: ThreadFormatConfig = field(default_factory=ThreadFormatConfig)
@@ -140,9 +158,35 @@ def load_config(config_path: str | Path = "config/task2.yaml") -> Task2Config:
 
     # Environment overrides
     cfg.ollama.base_url = os.getenv("OLLAMA_BASE_URL", cfg.ollama.base_url)
+    cfg.hf_inference.token = os.getenv("HF_TOKEN", cfg.hf_inference.token)
     cfg.server.team_token = os.getenv("ERISK_TOKEN", cfg.server.team_token)
 
     return cfg
+
+
+def create_llm_client(cfg: Task2Config):
+    """Create the appropriate LLM client based on config."""
+    if cfg.llm.backend == "hf":
+        from erisk_task2.tom.hf_client import HFInferenceClient
+        return HFInferenceClient(
+            model=cfg.hf_inference.model,
+            token=cfg.hf_inference.token,
+            temperature=cfg.hf_inference.temperature,
+            max_tokens=cfg.hf_inference.max_tokens,
+            timeout=cfg.hf_inference.timeout_seconds,
+            max_retries=cfg.hf_inference.retry_attempts,
+        )
+    else:
+        from erisk_task2.tom.llm_client import OllamaClient
+        return OllamaClient(
+            base_url=cfg.ollama.base_url,
+            model=cfg.ollama.model,
+            num_ctx=cfg.ollama.num_ctx,
+            keep_alive=cfg.ollama.keep_alive,
+            temperature=cfg.ollama.temperature,
+            timeout=cfg.ollama.timeout_seconds,
+            max_retries=cfg.ollama.retry_attempts,
+        )
 
 
 def _apply_dict(obj, d: dict) -> None:

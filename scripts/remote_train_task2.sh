@@ -1,78 +1,54 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Remote Training Script for eRisk Task 2
-# Syncs project + data to a GPU server, runs training, downloads results.
+# Task 2 Training — run directly on the GPU server
 #
-# Usage:
-#   ./scripts/remote_train_task2.sh <user@host> [--setup-only] [--run-only] [--download-only]
+# Setup (once, from your local machine):
+#   1. ssh user@server
+#   2. git clone <repo-url> ~/depression-detection
+#   3. scp -r /path/to/data/eRisk-2025 user@server:~/depression-detection/data/eRisk-2025
+#   4. scp /path/to/.env user@server:~/depression-detection/.env
 #
-# Prerequisites:
-#   - SSH key-based auth configured for the remote server
-#   - Python 3.11+ and uv available (or installable) on the remote
-#   - NVIDIA GPU with CUDA drivers on the remote
+# Then on the server:
+#   cd ~/depression-detection
+#   ./scripts/remote_train_task2.sh            # setup + train (default)
+#   ./scripts/remote_train_task2.sh --setup    # just install deps & verify GPU
+#   ./scripts/remote_train_task2.sh --train    # just launch training
+#   ./scripts/remote_train_task2.sh --pull     # git pull + train
 # =============================================================================
 
 set -euo pipefail
 
-# ── Configuration ──────────────────────────────────────────────────────────────
-REMOTE_HOST="${1:?Usage: $0 <user@host> [--setup-only|--run-only|--download-only]}"
-FLAG="${2:-}"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+OUTPUT_DIR="${PROJECT_DIR}/runs/task2/train"
+CONFIG_GPU="${PROJECT_DIR}/config/task2_gpu.yaml"
+LOG_FILE="${OUTPUT_DIR}/training.log"
 
-REMOTE_PROJECT_DIR="~/depression-detection"
-REMOTE_DATA_DIR="${REMOTE_PROJECT_DIR}/data"
-REMOTE_OUTPUT_DIR="${REMOTE_PROJECT_DIR}/runs/task2/train"
+log() { echo "[$(date '+%H:%M:%S')] $*"; }
 
-LOCAL_PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-LOCAL_DATA_DIR="${LOCAL_PROJECT_DIR}/data/eRisk-2025"
-LOCAL_OUTPUT_DIR="${LOCAL_PROJECT_DIR}/runs/task2/train"
+# ── Setup: deps + GPU check ──────────────────────────────────────────────────
+setup() {
+    log "=== Setup ==="
+    cd "${PROJECT_DIR}"
 
-# Training data subpath (relative to data/eRisk-2025/)
-TRAIN_DATA_SUBPATH="eRisk25-datasets/t2-early-contextualized-depression/final-eriskt2-dataset-with-ground-truth/final-eriskt2-dataset-with-ground-truth/all_combined"
+    # Install uv if not present
+    if ! command -v uv &>/dev/null; then
+        log "Installing uv..."
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+        export PATH="$HOME/.local/bin:$PATH"
+    fi
+    log "uv: $(uv --version)"
 
-# ── Helpers ────────────────────────────────────────────────────────────────────
-log()  { echo "[$(date '+%H:%M:%S')] $*"; }
-rssh() { ssh -o ConnectTimeout=10 "${REMOTE_HOST}" "$@"; }
+    # Install project deps
+    unset VIRTUAL_ENV 2>/dev/null || true
+    uv sync
+    log "Dependencies installed."
 
-# ── Phase 1: Setup remote environment ─────────────────────────────────────────
-setup_remote() {
-    log "=== Phase 1: Setting up remote environment ==="
-
-    log "Creating remote directories..."
-    rssh "mkdir -p ${REMOTE_PROJECT_DIR} ${REMOTE_DATA_DIR}"
-
-    log "Syncing project source code..."
-    rsync -avz --progress \
-        --exclude '.git' \
-        --exclude '.venv' \
-        --exclude '__pycache__' \
-        --exclude 'data/' \
-        --exclude 'runs/' \
-        --exclude 'notebooks/' \
-        --exclude 'specs/' \
-        --exclude '.env' \
-        --exclude '*.egg-info' \
-        --exclude 'dist/' \
-        --exclude '.vscode/' \
-        --exclude '.idea/' \
-        "${LOCAL_PROJECT_DIR}/" "${REMOTE_HOST}:${REMOTE_PROJECT_DIR}/"
-
-    log "Syncing training data..."
-    rsync -avz --progress \
-        "${LOCAL_DATA_DIR}/" "${REMOTE_HOST}:${REMOTE_DATA_DIR}/eRisk-2025/"
-
-    log "Creating remote .env file..."
-    rssh "cat > ${REMOTE_PROJECT_DIR}/.env" <<'ENVEOF'
-# Minimal .env for training (add tokens if needed for ToM LLM calls)
-# ERISK_TOKEN=
-# ERISK_USER=
-# OLLAMA_BASE_URL=
-# OLLAMA_API_KEY=
-ENVEOF
-
-    log "Creating GPU-enabled config override..."
-    rssh "cat > ${REMOTE_PROJECT_DIR}/config/task2_gpu.yaml" <<'CFGEOF'
-# GPU override for remote training — merged on top of task2.yaml
-# Paths (relative to remote project root)
+    # Create GPU config override if not present
+    if [ ! -f "${CONFIG_GPU}" ]; then
+        log "Creating GPU config: ${CONFIG_GPU}"
+        cat > "${CONFIG_GPU}" <<'CFGEOF'
+# GPU override — inherits everything from task2.yaml except these overrides
 training_data_dir: "data/eRisk-2025/eRisk25-datasets/t2-early-contextualized-depression/final-eriskt2-dataset-with-ground-truth/final-eriskt2-dataset-with-ground-truth/all_combined"
 labels_path: "data/eRisk-2025/eRisk25-datasets/t2-early-contextualized-depression/final-eriskt2-dataset-with-ground-truth/final-eriskt2-dataset-with-ground-truth/shuffled_ground_truth_labels.txt"
 
@@ -89,118 +65,144 @@ symptom:
   variant: "C"
   use_depresym_embeddings: true
   activation_threshold: 0.3
+
+# Use HuggingFace Inference API instead of Ollama for ToM LLM calls
+llm:
+  backend: "hf"
+
+hf_inference:
+  model: "meta-llama/Llama-3.3-70B-Instruct"
+  temperature: 0.1
+  max_tokens: 2048
+  timeout_seconds: 120
 CFGEOF
+    fi
 
-    log "Installing uv and project dependencies on remote..."
-    rssh <<'SETUPEOF'
-set -euo pipefail
-cd ~/depression-detection
-
-# Install uv if not present
-if ! command -v uv &>/dev/null; then
-    echo "Installing uv..."
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    export PATH="$HOME/.local/bin:$PATH"
-fi
-
-# Create venv and install deps
-unset VIRTUAL_ENV
-uv sync
-
-# Verify GPU
-uv run python -c "
+    # Verify GPU
+    log "Checking GPU..."
+    uv run python -c "
 import torch
-print(f'PyTorch version: {torch.__version__}')
-print(f'CUDA available:  {torch.cuda.is_available()}')
+print(f'  PyTorch:  {torch.__version__}')
+print(f'  CUDA:     {torch.cuda.is_available()}')
 if torch.cuda.is_available():
-    print(f'GPU:             {torch.cuda.get_device_name(0)}')
-    print(f'VRAM:            {torch.cuda.get_device_properties(0).total_mem / 1e9:.1f} GB')
+    print(f'  GPU:      {torch.cuda.get_device_name(0)}')
+    print(f'  VRAM:     {torch.cuda.get_device_properties(0).total_mem / 1e9:.1f} GB')
 else:
-    print('WARNING: No GPU detected! Training will be slow.')
+    print('  WARNING: No GPU detected! Training will fall back to CPU.')
 "
-SETUPEOF
+
+    # Verify training data
+    TRAIN_DATA="${PROJECT_DIR}/data/eRisk-2025/eRisk25-datasets/t2-early-contextualized-depression/final-eriskt2-dataset-with-ground-truth/final-eriskt2-dataset-with-ground-truth/all_combined"
+    if [ -d "${TRAIN_DATA}" ]; then
+        FILE_COUNT=$(ls "${TRAIN_DATA}"/*.json 2>/dev/null | wc -l)
+        log "Training data: ${FILE_COUNT} user files found."
+    else
+        log "ERROR: Training data not found!"
+        log "Copy from local: scp -r /path/to/data/eRisk-2025 server:~/depression-detection/data/"
+        exit 1
+    fi
+
+    # Verify .env
+    if [ ! -f "${PROJECT_DIR}/.env" ]; then
+        log "WARNING: No .env file found. Copy from local: scp .env server:~/depression-detection/"
+    fi
 
     log "Setup complete."
 }
 
-# ── Phase 2: Launch training ──────────────────────────────────────────────────
-run_training() {
-    log "=== Phase 2: Launching training ==="
+# ── Train: launch in tmux ────────────────────────────────────────────────────
+train() {
+    log "=== Launching training ==="
+    cd "${PROJECT_DIR}"
+    mkdir -p "${OUTPUT_DIR}"
+    unset VIRTUAL_ENV 2>/dev/null || true
 
-    # Use nohup + tmux so training survives SSH disconnects
-    rssh <<'TRAINEOF'
-set -euo pipefail
-export PATH="$HOME/.local/bin:$PATH"
-cd ~/depression-detection
+    if command -v tmux &>/dev/null; then
+        tmux kill-session -t task2_train 2>/dev/null || true
 
-# Create output dir
-mkdir -p runs/task2/train
+        tmux new-session -d -s task2_train "bash -c '
+            set -euo pipefail
+            export PATH=\"\$HOME/.local/bin:\$PATH\"
+            cd ${PROJECT_DIR}
+            unset VIRTUAL_ENV 2>/dev/null || true
 
-# Kill any previous training tmux session
-tmux kill-session -t task2_train 2>/dev/null || true
+            echo \"[\$(date)] Training started\" | tee ${LOG_FILE}
 
-# Launch in tmux
-tmux new-session -d -s task2_train "bash -c '
-    set -euo pipefail
-    export PATH=\"$HOME/.local/bin:$PATH\"
-    cd ~/depression-detection
-    unset VIRTUAL_ENV
+            uv run erisk-task2 train \
+                --config ${CONFIG_GPU} \
+                --output-dir ${OUTPUT_DIR} \
+                2>&1 | tee -a ${LOG_FILE}
 
-    echo \"[$(date)] Starting Task 2 training...\" | tee runs/task2/train/training.log
+            echo \"\" | tee -a ${LOG_FILE}
+            echo \"[\$(date)] Training complete.\" | tee -a ${LOG_FILE}
+        '"
 
-    uv run erisk-task2 train \
-        --config config/task2_gpu.yaml \
-        --output-dir runs/task2/train \
-        2>&1 | tee -a runs/task2/train/training.log
-
-    echo \"[$(date)] Training complete.\" | tee -a runs/task2/train/training.log
-'"
-
-echo ""
-echo "Training launched in tmux session 'task2_train'."
-echo "Monitor with:  ssh $HOSTNAME -t 'tmux attach -t task2_train'"
-echo "Or check logs: ssh $HOSTNAME 'tail -f ~/depression-detection/runs/task2/train/training.log'"
-TRAINEOF
-
-    log "Training launched in background tmux session."
-    log ""
-    log "To monitor progress:"
-    log "  ssh ${REMOTE_HOST} -t 'tmux attach -t task2_train'"
-    log ""
-    log "To check logs:"
-    log "  ssh ${REMOTE_HOST} 'tail -f ${REMOTE_PROJECT_DIR}/runs/task2/train/training.log'"
-    log ""
-    log "Once training is complete, run:"
-    log "  $0 ${REMOTE_HOST} --download-only"
+        log ""
+        log "Training running in tmux. Safe to disconnect SSH."
+        log ""
+        log "  Attach:  tmux attach -t task2_train"
+        log "  Logs:    tail -f ${LOG_FILE}"
+        log "  Status:  tmux ls"
+        log ""
+        log "After training, download results from your local machine:"
+        log "  scp -r server:~/depression-detection/runs/task2/train ./runs/task2/"
+    else
+        log "tmux not found — running with nohup..."
+        nohup bash -c "
+            set -euo pipefail
+            export PATH=\"\$HOME/.local/bin:\$PATH\"
+            cd ${PROJECT_DIR}
+            unset VIRTUAL_ENV 2>/dev/null || true
+            echo \"[\$(date)] Training started\" > ${LOG_FILE}
+            uv run erisk-task2 train \
+                --config ${CONFIG_GPU} \
+                --output-dir ${OUTPUT_DIR} \
+                2>&1 | tee -a ${LOG_FILE}
+            echo \"[\$(date)] Training complete.\" | tee -a ${LOG_FILE}
+        " &
+        log "Training PID: $!"
+        log "Logs: tail -f ${LOG_FILE}"
+    fi
 }
 
-# ── Phase 3: Download results ────────────────────────────────────────────────
-download_results() {
-    log "=== Phase 3: Downloading results ==="
+# ── Main ─────────────────────────────────────────────────────────────────────
+FLAG="${1:---all}"
 
-    mkdir -p "${LOCAL_OUTPUT_DIR}"
-
-    rsync -avz --progress \
-        "${REMOTE_HOST}:${REMOTE_OUTPUT_DIR}/" "${LOCAL_OUTPUT_DIR}/"
-
-    log "Results downloaded to: ${LOCAL_OUTPUT_DIR}"
-    log ""
-    log "Expected artifacts:"
-    ls -lh "${LOCAL_OUTPUT_DIR}/" 2>/dev/null || log "(directory listing failed)"
-}
-
-# ── Main ──────────────────────────────────────────────────────────────────────
 case "${FLAG}" in
-    --setup-only)    setup_remote ;;
-    --run-only)      run_training ;;
-    --download-only) download_results ;;
-    "")
-        setup_remote
-        run_training
+    --setup)
+        setup
+        ;;
+    --train)
+        train
+        ;;
+    --pull)
+        log "Pulling latest changes..."
+        cd "${PROJECT_DIR}" && git pull
+        setup
+        train
+        ;;
+    --all)
+        setup
+        train
+        ;;
+    -h|--help)
+        cat <<EOF
+Usage: $0 [--setup|--train|--pull|--all|-h]
+
+  --setup   Install deps, verify GPU & data
+  --train   Launch training in tmux
+  --pull    git pull + setup + train
+  --all     setup + train (default)
+
+Initial server setup:
+  git clone <repo-url> ~/depression-detection
+  scp -r local/data/eRisk-2025 server:~/depression-detection/data/eRisk-2025
+  scp local/.env server:~/depression-detection/.env
+  cd ~/depression-detection && ./scripts/remote_train_task2.sh
+EOF
         ;;
     *)
-        echo "Unknown flag: ${FLAG}"
-        echo "Usage: $0 <user@host> [--setup-only|--run-only|--download-only]"
+        echo "Unknown flag: ${FLAG}. Use -h for help."
         exit 1
         ;;
 esac

@@ -16,6 +16,7 @@ import numpy as np
 from erisk_task2.formatting.thread_formatter import format_thread
 from erisk_task2.models import Thread, UserProfile
 from erisk_task2.tom.llm_client import OllamaClient
+from erisk_task2.tom.hf_client import HFInferenceClient
 from erisk_task2.tom.prompts import (
     PROMPT1_SYSTEM,
     PROMPT1_USER,
@@ -46,7 +47,7 @@ class ToMModule:
         chained: bool = False,
         symptom_variant: str = "C",
         encoder=None,  # EmbeddingEncoder for Option A
-        llm_client: Optional[OllamaClient] = None,  # for Option C
+        llm_client: OllamaClient | HFInferenceClient | None = None,
     ):
         self.method = method
         self.chained = chained

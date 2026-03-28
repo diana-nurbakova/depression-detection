@@ -21,6 +21,7 @@ dependencies = [
     "transformers>=4.36",
     "scipy>=1.11",
     "pot>=0.9.6.post1",
+    "huggingface-hub>=0.20",
 ]
 
 [project.optional-dependencies]
