@@ -177,6 +177,37 @@ def wasserstein_balanced(
         return None
 
 
+def wasserstein_transport_plan(
+    source: np.ndarray,
+    target: np.ndarray,
+    cost_matrix: np.ndarray,
+) -> Optional[tuple[float, np.ndarray]]:
+    """Balanced W₁ with full transport plan between two BDI-II profiles.
+
+    Returns (distance, gamma) where gamma is the 21×21 transport plan matrix.
+    gamma[i][j] = mass moved from predicted item i to ground-truth item j.
+    Returns None if POT is unavailable, either profile is all-zero, or fails.
+    """
+    try:
+        import ot
+    except ImportError:
+        return None
+
+    a = _l1_normalize(np.maximum(source, 0.0))
+    b = _l1_normalize(np.maximum(target, 0.0))
+    if a is None or b is None:
+        return None
+
+    try:
+        M = cost_matrix.astype(np.float64)
+        gamma = ot.emd(a, b, M)
+        dist = float(np.sum(gamma * M))
+        return dist, gamma
+    except Exception as e:
+        logger.debug("wasserstein_transport_plan failed: %s", e)
+        return None
+
+
 def wasserstein_unbalanced(
     source: np.ndarray,
     target: np.ndarray,
@@ -210,7 +241,255 @@ def wasserstein_unbalanced(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 5. Interviewer attention heuristic (keyword-based; working-notes version)
+# 5. Three-layer transport plan analysis
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+def _listed_item_indices(gt: np.ndarray) -> list[int]:
+    """Return 0-based indices of items with non-zero ground-truth scores."""
+    return [i for i in range(len(gt)) if gt[i] > 1e-10]
+
+
+def transport_analysis_layer1(
+    predicted: np.ndarray,
+    ground_truth: np.ndarray,
+    cost_matrix: np.ndarray,
+    reg: float = 0.1,
+    reg_m: float = 0.4,
+) -> Optional[dict]:
+    """Layer 1: Unbalanced OT on full raw (unnormalized) profiles.
+
+    Uses unbalanced Sinkhorn so excess predicted mass is absorbed rather than
+    forced into transport.  The plan reveals: correct matches, misattributions,
+    and hallucinated mass that has no GT counterpart.
+
+    Returns dict with distance, plan (21×21), and per-item breakdown, or None.
+    """
+    try:
+        import ot
+    except ImportError:
+        return None
+
+    pred = np.maximum(predicted, 0.0).astype(np.float64) + 1e-10
+    gt = np.maximum(ground_truth, 0.0).astype(np.float64) + 1e-10
+    M = cost_matrix.astype(np.float64)
+
+    try:
+        gamma = ot.unbalanced.sinkhorn_unbalanced(
+            pred, gt, M, reg=reg, reg_m=reg_m,
+        )
+        dist = float(np.sum(gamma * M))
+    except Exception as e:
+        logger.debug("transport_analysis_layer1 failed: %s", e)
+        return None
+
+    # Per-item breakdown
+    listed_idx = _listed_item_indices(ground_truth)
+    items = []
+    for i in range(21):
+        row_mass = float(gamma[i].sum())
+        diag_mass = float(gamma[i, i])
+        # Where does item i's mass go?
+        top_targets = sorted(
+            [(j, float(gamma[i, j])) for j in range(21) if gamma[i, j] > 1e-8],
+            key=lambda x: -x[1],
+        )[:5]
+        items.append({
+            "item_id": i + 1,
+            "item_name": BDI_SHORT[i + 1],
+            "predicted": float(predicted[i]),
+            "gt": float(ground_truth[i]),
+            "transported_mass": round(row_mass, 6),
+            "self_match": round(diag_mass, 6),
+            "in_gt": i in listed_idx,
+            "top_targets": [
+                {"item_id": j + 1, "name": BDI_SHORT[j + 1], "mass": round(m, 6)}
+                for j, m in top_targets
+            ],
+        })
+
+    # Absorbed mass = predicted mass not transported
+    total_pred = float(pred.sum())
+    total_transported = float(gamma.sum())
+
+    return {
+        "distance": round(dist, 6),
+        "reg": reg,
+        "reg_m": reg_m,
+        "total_predicted_mass": round(float(predicted.sum()), 2),
+        "total_gt_mass": round(float(ground_truth.sum()), 2),
+        "total_transported": round(total_transported, 6),
+        "absorbed_mass": round(total_pred - total_transported, 6),
+        "plan": np.round(gamma, 6).tolist(),
+        "items": items,
+    }
+
+
+def transport_analysis_layer2(
+    predicted: np.ndarray,
+    ground_truth: np.ndarray,
+) -> Optional[dict]:
+    """Layer 2: Per-item MAE restricted to listed GT items.
+
+    The cleanest diagnostic — no OT, just direct comparison on items where
+    the clinician explicitly specified severity.
+
+    Returns dict with per-item errors and aggregate MAE, or None if GT is empty.
+    """
+    listed_idx = _listed_item_indices(ground_truth)
+    if not listed_idx:
+        return None
+
+    items = []
+    total_ae = 0.0
+    for i in listed_idx:
+        p = float(predicted[i])
+        g = float(ground_truth[i])
+        ae = abs(p - g)
+        total_ae += ae
+        items.append({
+            "item_id": i + 1,
+            "item_name": BDI_SHORT[i + 1],
+            "predicted": p,
+            "gt": g,
+            "error": round(p - g, 2),
+            "abs_error": round(ae, 2),
+        })
+
+    mae = total_ae / len(listed_idx)
+
+    # Direction summary
+    over = sum(1 for it in items if it["error"] > 0.5)
+    under = sum(1 for it in items if it["error"] < -0.5)
+    correct = len(items) - over - under
+
+    return {
+        "n_listed_items": len(listed_idx),
+        "mae": round(mae, 4),
+        "total_absolute_error": round(total_ae, 2),
+        "n_overestimated": over,
+        "n_underestimated": under,
+        "n_correct": correct,
+        "items": items,
+    }
+
+
+def transport_analysis_layer3(
+    predicted: np.ndarray,
+    ground_truth: np.ndarray,
+    cost_matrix: np.ndarray,
+) -> Optional[dict]:
+    """Layer 3: Balanced W₁ restricted to listed GT items only.
+
+    Zeros out everything except listed items, normalizes, and computes W₁
+    with transport plan.  Produces a small K×K confusion matrix (K = number
+    of listed items) showing whether the assessor confused those specific
+    symptoms with each other.
+
+    Returns dict with distance, restricted plan, and item labels, or None.
+    """
+    try:
+        import ot
+    except ImportError:
+        return None
+
+    listed_idx = _listed_item_indices(ground_truth)
+    if len(listed_idx) < 2:
+        return None  # Need at least 2 items for meaningful transport
+
+    # Restrict to listed items
+    pred_restricted = np.zeros_like(predicted, dtype=np.float64)
+    gt_restricted = np.zeros_like(ground_truth, dtype=np.float64)
+    for i in listed_idx:
+        pred_restricted[i] = max(predicted[i], 0.0)
+        gt_restricted[i] = max(ground_truth[i], 0.0)
+
+    # Normalize
+    a = _l1_normalize(pred_restricted)
+    b = _l1_normalize(gt_restricted)
+    if a is None or b is None:
+        return None
+
+    M = cost_matrix.astype(np.float64)
+
+    try:
+        gamma_full = ot.emd(a, b, M)
+        dist = float(np.sum(gamma_full * M))
+    except Exception as e:
+        logger.debug("transport_analysis_layer3 failed: %s", e)
+        return None
+
+    # Extract the K×K submatrix for listed items only
+    K = len(listed_idx)
+    gamma_sub = np.zeros((K, K), dtype=np.float64)
+    for ri, i in enumerate(listed_idx):
+        for ci, j in enumerate(listed_idx):
+            gamma_sub[ri, ci] = gamma_full[i, j]
+
+    # Build readable confusion entries (off-diagonal)
+    confusions = []
+    for ri, i in enumerate(listed_idx):
+        for ci, j in enumerate(listed_idx):
+            if ri != ci and gamma_sub[ri, ci] > 1e-6:
+                confusions.append({
+                    "from_item": i + 1,
+                    "from_name": BDI_SHORT[i + 1],
+                    "to_item": j + 1,
+                    "to_name": BDI_SHORT[j + 1],
+                    "mass": round(float(gamma_sub[ri, ci]), 6),
+                })
+    confusions.sort(key=lambda x: -x["mass"])
+
+    item_labels = [
+        {"index": i, "item_id": i + 1, "name": BDI_SHORT[i + 1]}
+        for i in listed_idx
+    ]
+
+    return {
+        "distance": round(dist, 6),
+        "n_items": K,
+        "item_labels": item_labels,
+        "plan_submatrix": np.round(gamma_sub, 6).tolist(),
+        "plan_full": np.round(gamma_full, 6).tolist(),
+        "confusions": confusions,
+        "diagonal_mass": round(float(np.trace(gamma_sub)), 6),
+        "off_diagonal_mass": round(float(gamma_sub.sum() - np.trace(gamma_sub)), 6),
+    }
+
+
+def compute_transport_analysis(
+    predicted: np.ndarray,
+    ground_truth: np.ndarray,
+    cost_matrix: Optional[np.ndarray] = None,
+) -> dict:
+    """Run all three layers of transport plan analysis.
+
+    Args:
+        predicted: 21-dim predicted BDI-II profile (raw scores).
+        ground_truth: 21-dim ground-truth BDI-II profile (raw scores).
+        cost_matrix: 21×21 clinical factor distance matrix (default: auto).
+
+    Returns:
+        Dict with keys layer1, layer2, layer3 (each may be None if computation fails).
+    """
+    if cost_matrix is None:
+        cost_matrix = get_cost_matrix()
+
+    return {
+        "layer1_unbalanced_ot": transport_analysis_layer1(
+            predicted, ground_truth, cost_matrix,
+        ),
+        "layer2_listed_item_mae": transport_analysis_layer2(
+            predicted, ground_truth,
+        ),
+        "layer3_restricted_w1": transport_analysis_layer3(
+            predicted, ground_truth, cost_matrix,
+        ),
+    }
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 6. Interviewer attention heuristic (keyword-based; working-notes version)
 # ─────────────────────────────────────────────────────────────────────────────
 
 INTERVIEWER_KEYWORDS: dict[int, list[str]] = {
@@ -308,6 +587,12 @@ class TomPerceptionTracker:
 
     W_accuracy: dict[int, float] = field(default_factory=dict)
     """W_accuracy[t] = W₁(E(t), G) — accuracy vs. ground truth (if available)."""
+
+    transport_plans: dict[int, np.ndarray] = field(default_factory=dict)
+    """transport_plans[t] = 21×21 optimal transport plan γ(E(t), G)."""
+
+    transport_analysis: dict[int, dict] = field(default_factory=dict)
+    """transport_analysis[t] = 3-layer analysis dict (layer1/layer2/layer3)."""
 
     _pot_available: bool = field(default=False, init=False, repr=False)
 
@@ -415,12 +700,19 @@ class TomPerceptionTracker:
                 self.W_align[turn_number] = d
                 computed_any = True
 
-        # W_accuracy: current assessment vs. ground truth
+        # W_accuracy: current assessment vs. ground truth (with transport plan)
         if self.ground_truth is not None:
-            d = wasserstein_balanced(E_t, self.ground_truth, cost_mat)
-            if d is not None:
+            result = wasserstein_transport_plan(E_t, self.ground_truth, cost_mat)
+            if result is not None:
+                d, gamma = result
                 self.W_accuracy[turn_number] = d
+                self.transport_plans[turn_number] = gamma
                 computed_any = True
+
+            # 3-layer transport analysis (on raw unnormalized profiles)
+            analysis = compute_transport_analysis(E_t, self.ground_truth, cost_mat)
+            if any(v is not None for v in analysis.values()):
+                self.transport_analysis[turn_number] = analysis
 
         if computed_any:
             logger.debug(
@@ -587,6 +879,14 @@ class TomPerceptionTracker:
             },
             "W_accuracy": {
                 str(t): round(v, 4) for t, v in self.W_accuracy.items()
+            },
+            "transport_plans": {
+                str(t): np.round(gamma, 6).tolist()
+                for t, gamma in self.transport_plans.items()
+            },
+            "transport_analysis": {
+                str(t): analysis
+                for t, analysis in self.transport_analysis.items()
             },
             "coverage_gaps": gaps_data,
             "ground_truth_provided": self.ground_truth is not None,

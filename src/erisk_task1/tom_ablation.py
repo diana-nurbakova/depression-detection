@@ -54,8 +54,36 @@ from .scoring import (
     select_top4_mechanical,
 )
 from .tom import TomPerceptionTracker
+from .tom_corrections import TomCorrectionConfig
 
 logger = logging.getLogger(__name__)
+
+
+# Named ablation conditions: (condition_name, tom_enabled, correction_config)
+# Each condition runs the conversation with/without ToM and with/without corrections.
+ABLATION_CONDITIONS: dict[str, tuple[bool, Optional[TomCorrectionConfig]]] = {
+    # Baseline: no ToM, no corrections
+    "tom_off": (False, None),
+    # ToM tracking only, no corrections (isolates ToM guidance effect)
+    "tom_on": (True, None),
+    # ToM + C1 only (confidence gate, no somatic boost)
+    "tom_c1": (True, TomCorrectionConfig(
+        enabled=True, conf_threshold=0.5, boost_amount=0,
+    )),
+    # ToM + C1 + C2 standard (confidence gate + somatic boost=9)
+    "tom_c1c2": (True, TomCorrectionConfig(
+        enabled=True, conf_threshold=0.5, base_threshold=20, boost_amount=9,
+    )),
+    # ToM + C1 + C2 conservative (boost=7)
+    "tom_c1c2_conservative": (True, TomCorrectionConfig(
+        enabled=True, conf_threshold=0.5, base_threshold=20, boost_amount=7,
+    )),
+    # ToM + C1 + C2 with W_align filter
+    "tom_c1c2_walign": (True, TomCorrectionConfig(
+        enabled=True, conf_threshold=0.5, base_threshold=20, boost_amount=9,
+        walign_threshold=0.5,
+    )),
+}
 
 
 # ---------------------------------------------------------------------------
@@ -71,6 +99,7 @@ def replay_talkdep_conversation(
     tom_enabled: bool = True,
     ground_truth: Optional[list[int]] = None,
     assess_every_n: int = 0,
+    tom_correction_config: Optional["TomCorrectionConfig"] = None,
 ) -> dict:
     """Replay a pre-recorded TalkDep conversation through the assessment pipeline.
 
@@ -82,6 +111,8 @@ def replay_talkdep_conversation(
         tom_enabled: Whether to enable the ToM perception tracker.
         ground_truth: Optional 21-dim BDI-II vector for W_accuracy.
         assess_every_n: Run assessors every N persona turns. 0 = use config default.
+        tom_correction_config: Optional ToM correction config. If provided, applies
+            C1/C2 corrections. None = no corrections (even if tom_enabled).
 
     Returns:
         Dict with predicted_total, predicted_band, item_scores, tom_summary, timing.
@@ -177,6 +208,26 @@ def replay_talkdep_conversation(
             tom_summary.get("pot_available"),
         )
 
+    # ToM corrections (C1 + C2) — applied when config provided
+    tom_correction_data: dict | None = None
+    if tom_correction_config is not None and tom_correction_config.enabled:
+        from .tom_corrections import apply_tom_corrections
+        tom_corr = apply_tom_corrections(
+            item_scores=scoring_result["item_scores"],
+            pass1_total=scoring_result["pass1_total"],
+            tom_summary=tom_summary or None,
+            config=tom_correction_config,
+        )
+        tom_correction_data = tom_corr.to_dict()
+        final_total = tom_corr.final_total
+        final_band = score_to_band(final_total)
+        if tom_corr.items_gated > 0 or tom_corr.boost_applied > 0:
+            logger.info(
+                "  ToM corrections: %d→%d (gated=%d, boost=+%d)",
+                tom_corr.original_total, tom_corr.final_total,
+                tom_corr.items_gated, tom_corr.boost_applied,
+            )
+
     elapsed = time.monotonic() - t0
 
     return {
@@ -189,6 +240,7 @@ def replay_talkdep_conversation(
         "top4": top4_names,
         "item_scores": scoring_result["item_scores"],
         "tom_summary": tom_summary,
+        "tom_corrections": tom_correction_data,
         "turns_replayed": turn_number,
         "persona_turns": persona_turn_count,
         "timing_s": round(elapsed, 1),
@@ -271,8 +323,9 @@ def run_tom_ablation(
     output_dir: str | Path = "runs/tom_ablation",
     assess_every_n: int = 0,
     sessions: Optional[list[int]] = None,
-) -> tuple[AblationResult, AblationResult]:
-    """Run the ToM ablation study: tom_on vs tom_off on TalkDep.
+    conditions: Optional[list[str]] = None,
+) -> dict[str, AblationResult]:
+    """Run the ToM ablation study on TalkDep.
 
     Args:
         pipeline_cfg: Pipeline config (assessor model, etc.).
@@ -281,9 +334,12 @@ def run_tom_ablation(
         output_dir: Output directory for results.
         assess_every_n: Assessor interval override (0 = config default).
         sessions: Optional list of session numbers to use (default: all 5 combined).
+        conditions: Which conditions to run. Available:
+            tom_off, tom_on, tom_c1, tom_c1c2, tom_c1c2_conservative, tom_c1c2_walign.
+            Default (None) runs tom_off + tom_on.
 
     Returns:
-        Tuple of (tom_off_result, tom_on_result) as AblationResult objects.
+        Dict of condition_name → AblationResult.
     """
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
@@ -318,14 +374,26 @@ def run_tom_ablation(
 
     clients = make_clients(pipeline_cfg)
 
-    # Run both conditions
-    conditions = [
-        ("tom_off", False),
-        ("tom_on", True),
-    ]
+    # Resolve conditions
+    if conditions:
+        # User-specified subset
+        resolved = []
+        for c in conditions:
+            if c not in ABLATION_CONDITIONS:
+                logger.warning("Unknown condition '%s', skipping. Available: %s",
+                               c, list(ABLATION_CONDITIONS.keys()))
+                continue
+            tom_enabled, corr_cfg = ABLATION_CONDITIONS[c]
+            resolved.append((c, tom_enabled, corr_cfg))
+    else:
+        # Default: tom_off + tom_on (backwards compatible)
+        resolved = [
+            ("tom_off", *ABLATION_CONDITIONS["tom_off"]),
+            ("tom_on", *ABLATION_CONDITIONS["tom_on"]),
+        ]
     all_results: dict[str, AblationResult] = {}
 
-    for condition_name, tom_enabled in conditions:
+    for condition_name, tom_enabled, corr_cfg in resolved:
         logger.info("=" * 60)
         logger.info("Condition: %s", condition_name)
         logger.info("=" * 60)
@@ -352,6 +420,7 @@ def run_tom_ablation(
                     tom_enabled=tom_enabled,
                     ground_truth=conv.get("ground_truth_vector"),
                     assess_every_n=assess_every_n,
+                    tom_correction_config=corr_cfg,
                 )
 
                 # Evaluate against golden
@@ -409,7 +478,7 @@ def run_tom_ablation(
     # Build ToM analysis summary (W_accuracy across personas for tom_on)
     _save_tom_analysis(output_path, conversations)
 
-    return all_results["tom_off"], all_results["tom_on"]
+    return all_results
 
 
 # ---------------------------------------------------------------------------
@@ -448,6 +517,8 @@ def _save_persona_result(result: dict, output_dir: Path, condition: str) -> None
     # Include ToM data for tom_on condition
     if result.get("tom_summary"):
         save_data["tom_summary"] = result["tom_summary"]
+    if result.get("tom_corrections"):
+        save_data["tom_corrections"] = result["tom_corrections"]
 
     fpath = output_dir / f"{condition}_{name}.json"
     fpath.write_text(json.dumps(save_data, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -465,7 +536,7 @@ def _save_tom_analysis(output_dir: Path, conversations: list[dict]) -> None:
         fpath = tom_on_dir / f"tom_on_{name}.json"
         if not fpath.exists():
             continue
-        with open(fpath) as f:
+        with open(fpath, encoding="utf-8") as f:
             data = json.load(f)
 
         tom = data.get("tom_summary", {})

@@ -195,4 +195,5 @@ class PersonaResult:
     justificator_output: Optional[JustificatorOutput] = None
     item_scores: dict[int, ItemScore] = field(default_factory=dict)
     correction_result: Optional[dict] = None
+    tom_correction_result: Optional[dict] = None
     tom_summary: dict = field(default_factory=dict)

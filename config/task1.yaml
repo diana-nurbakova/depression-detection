@@ -64,6 +64,18 @@ openai:
   timeout_seconds: 60
   retry_attempts: 3
 
+# ── Theory of Mind ──
+tom:
+  enabled: true
+  guide_interviewer: true
+  cost_metric: "clinical"
+  # ToM-informed corrections (C1: confidence gate, C2: somatic boost)
+  corrections_enabled: false       # Enable for Run 1 (ToM-corrected)
+  conf_threshold: 0.5             # C1: gate items below this confidence
+  base_threshold: 20              # C2: gated_total must be >= moderate band
+  boost_amount: 9                 # C2: somatic boost when coverage=0/6
+  # walign_threshold: 0.5         # C2: optional W_align safety filter
+
 # ── Post-hoc score correction ──
 # See specs/task-1/pipeline_spec_v2.md for details
 correction:

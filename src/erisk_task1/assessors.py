@@ -50,7 +50,7 @@ def _parse_assessor_response(
             continue
 
         score = item_data.get("score")
-        confidence = float(item_data.get("confidence", 0.0))
+        confidence = float(item_data.get("confidence") or 0.0)
         state_str = item_data.get("state", "")
         evidence = item_data.get("evidence", "")
 

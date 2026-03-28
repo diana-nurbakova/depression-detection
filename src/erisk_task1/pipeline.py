@@ -28,6 +28,7 @@ from .persona import PersonaModel
 from .post_hoc_correction import apply_correction, get_strategy_for_run
 from .scoring import run_scoring_pipeline, select_top4_mechanical
 from .sdc import apply_sdc
+from .tom_corrections import TomCorrectionConfig, apply_tom_corrections
 from .submission import format_interactions, format_results, save_internal_results
 
 logger = logging.getLogger(__name__)
@@ -169,6 +170,31 @@ def run_persona_conversation(
         if sdc_res.applied:
             raw_total = sdc_res.adjusted_total
 
+    # ToM-informed corrections (C1: confidence gate, C2: somatic boost)
+    tom_correction_result = None
+    if config.tom.corrections_enabled:
+        tom_corr_cfg = TomCorrectionConfig(
+            enabled=True,
+            conf_threshold=config.tom.conf_threshold,
+            base_threshold=config.tom.base_threshold,
+            boost_amount=config.tom.boost_amount,
+            walign_threshold=config.tom.walign_threshold,
+        )
+        tom_correction_result = apply_tom_corrections(
+            item_scores=scoring_result["item_scores"],
+            pass1_total=scoring_result["pass1_total"],
+            tom_summary=tom_summary,
+            config=tom_corr_cfg,
+        )
+        raw_total = tom_correction_result.final_total
+        logger.info(
+            "ToM corrections: %d→%d (gated=%d items, boost=+%d)",
+            tom_correction_result.original_total,
+            tom_correction_result.final_total,
+            tom_correction_result.items_gated,
+            tom_correction_result.boost_applied,
+        )
+
     # Determine correction strategy for this run
     correction_override = getattr(config.correction, f"run{config.run_id}", None)
     strategy = get_strategy_for_run(config.run_id, correction_override)
@@ -239,6 +265,9 @@ def run_persona_conversation(
         justificator_output=justificator_output,
         item_scores=scoring_result["item_scores"],
         correction_result=correction_result,
+        tom_correction_result=(
+            tom_correction_result.to_dict() if tom_correction_result else None
+        ),
         tom_summary=tom_summary,
     )
 

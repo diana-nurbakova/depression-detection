@@ -101,6 +101,13 @@ class TomConfig:
     guide_interviewer: bool = True   # inject ToM coverage gaps into orchestrator context
     cost_metric: str = "clinical"    # "clinical" | "embedding" | "all"
 
+    # ToM-informed scoring corrections (C1 + C2)
+    corrections_enabled: bool = False
+    conf_threshold: float = 0.5      # C1: gate items below this confidence
+    base_threshold: int = 20         # C2: gated_total must be >= this
+    boost_amount: int = 9            # C2: points added when somatic=0/6
+    walign_threshold: float | None = None  # C2: optional W_align filter
+
 
 @dataclass
 class CorrectionConfig:
@@ -297,6 +304,21 @@ def load_config(config_path: str | Path = "config/task1.yaml") -> PipelineConfig
                 "guide_interviewer", cfg.tom.guide_interviewer
             )
             cfg.tom.cost_metric = t.get("cost_metric", cfg.tom.cost_metric)
+            cfg.tom.corrections_enabled = t.get(
+                "corrections_enabled", cfg.tom.corrections_enabled
+            )
+            cfg.tom.conf_threshold = t.get(
+                "conf_threshold", cfg.tom.conf_threshold
+            )
+            cfg.tom.base_threshold = t.get(
+                "base_threshold", cfg.tom.base_threshold
+            )
+            cfg.tom.boost_amount = t.get(
+                "boost_amount", cfg.tom.boost_amount
+            )
+            cfg.tom.walign_threshold = t.get(
+                "walign_threshold", cfg.tom.walign_threshold
+            )
 
         # Run config
         if "run" in raw:

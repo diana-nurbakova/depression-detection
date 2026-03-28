@@ -29,7 +29,10 @@
       "Read(//c/Users/dnurb/AppData/Local/Programs/Ollama/**)",
       "Read(//c/Program Files/Ollama/**)",
       "Bash(where ollama:*)",
-      "Bash(PYTHONIOENCODING=utf-8 uv run python scripts/analyze_qualitative.py --llm-judge --llm-backend ollama --top-k 10)"
+      "Bash(PYTHONIOENCODING=utf-8 uv run python scripts/analyze_qualitative.py --llm-judge --llm-backend ollama --top-k 10)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); tom=d.get\\(''''tom_summary'''',{}\\); print\\(''''E_profiles keys:'''', list\\(tom.get\\(''''E_profiles'''',{}\\).keys\\(\\)\\)[:5]\\); print\\(''''I_profiles keys:'''', list\\(tom.get\\(''''I_profiles'''',{}\\).keys\\(\\)\\)[:5]\\); print\\(''''W_self:'''', tom.get\\(''''W_self'''',{}\\)\\); print\\(''''W_accuracy:'''', tom.get\\(''''W_accuracy'''',{}\\)\\); print\\(''''ground_truth_provided:'''', tom.get\\(''''ground_truth_provided''''\\)\\)\")",
+      "Bash(grep -n \"parse_patient_profile_bdi\\\\|ground_truth_vector\" /c/Users/dnurb/Documents/depression-detection/src/erisk_task1/*.py)",
+      "Bash(uv run:*)"
     ]
   }
 }

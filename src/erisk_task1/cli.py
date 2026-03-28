@@ -342,6 +342,10 @@ def save_talkdep(talkdep: str, output: str, no_combined: bool, log_level: str):
 @click.option("--output", default="runs/tom_ablation", help="Output directory")
 @click.option("--assess-every", default=0, type=int,
               help="Run assessors every N persona turns (0 = config default)")
+@click.option("--conditions", default=None,
+              help="Comma-separated conditions to run (default: tom_off,tom_on). "
+                   "Available: tom_off, tom_on, tom_c1, tom_c1c2, "
+                   "tom_c1c2_conservative, tom_c1c2_walign")
 @click.option("--sessions", default=None,
               help="Comma-separated session numbers to use (e.g., 1,2,3; default: all combined)")
 @click.option("--provider", default=None,
@@ -349,20 +353,21 @@ def save_talkdep(talkdep: str, output: str, no_combined: bool, log_level: str):
               help="Override LLM provider for assessor/orchestrator")
 @click.option("--log-level", default="INFO", help="Log level")
 def tom_ablation(config_path: str, data_dir: str, personas: str | None,
-                 output: str, assess_every: int, sessions: str | None,
-                 provider: str | None, log_level: str):
-    """Run ToM ablation study: tom_on vs tom_off on TalkDep conversations.
+                 output: str, assess_every: int, conditions: str | None,
+                 sessions: str | None, provider: str | None, log_level: str):
+    """Run ToM ablation study on TalkDep conversations.
 
     Replays pre-recorded TalkDep conversations through the Orchestrator
-    with incremental assessment, comparing ToM-enabled vs baseline.
+    with incremental assessment, comparing different ToM conditions.
 
     Requires saved TalkDep data (run 'save-talkdep' first).
 
     Example:
       uv run python -m erisk_task1.cli tom-ablation
       uv run python -m erisk_task1.cli tom-ablation --personas Maria,Noah,Ethan
+      uv run python -m erisk_task1.cli tom-ablation --conditions tom_off,tom_c1,tom_c1c2
+      uv run python -m erisk_task1.cli tom-ablation --conditions tom_c1c2 --personas Maria,Elena
       uv run python -m erisk_task1.cli tom-ablation --provider together
-      uv run python -m erisk_task1.cli tom-ablation --sessions 1,2 --assess-every 2
     """
     log_file = str(Path(output) / "tom_ablation.log")
     setup_logging(log_level, log_file)
@@ -388,33 +393,48 @@ def tom_ablation(config_path: str, data_dir: str, personas: str | None,
     if sessions:
         session_list = [int(s.strip()) for s in sessions.split(",")]
 
+    from .evaluation import format_comparison_table
     from .tom_ablation import (
+        ABLATION_CONDITIONS,
         format_tom_analysis_table,
         format_tom_comparison,
         run_tom_ablation as _run_tom_ablation,
     )
 
+    condition_list = None
+    if conditions:
+        condition_list = [c.strip() for c in conditions.split(",")]
+
     click.echo("ToM Ablation Study")
     click.echo(f"  Data: {data_dir}")
     click.echo(f"  Personas: {persona_list or 'all'}")
+    click.echo(f"  Conditions: {condition_list or ['tom_off', 'tom_on']}")
     click.echo(f"  Sessions: {session_list or 'all combined'}")
     click.echo(f"  Assessor: {config.assessor.model} via {config.assessor.provider}")
     click.echo(f"  Assess every: {assess_every or 'config default'} turns")
     click.echo(f"  Output: {output}")
+    click.echo(f"  Available conditions: {list(ABLATION_CONDITIONS.keys())}")
     click.echo()
 
-    tom_off, tom_on = _run_tom_ablation(
+    results = _run_tom_ablation(
         pipeline_cfg=config,
         data_dir=data_dir,
         personas=persona_list,
         output_dir=output,
         assess_every_n=assess_every,
         sessions=session_list,
+        conditions=condition_list,
     )
 
-    # Print comparison table
-    click.echo()
-    click.echo(format_tom_comparison(tom_off, tom_on))
+    # Print comparison table if we have 2+ conditions
+    if len(results) >= 2:
+        result_list = list(results.values())
+        click.echo()
+        click.echo(format_comparison_table(result_list))
+    elif len(results) == 1:
+        r = next(iter(results.values()))
+        click.echo(f"\n{r.config_name}: DCHR={r.dchr*100:.1f}%, "
+                   f"MAD={r.mad:.1f}, ADODL={r.adodl:.3f}")
 
     # Print ToM analysis
     analysis_path = Path(output) / "tom_analysis.json"

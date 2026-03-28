@@ -653,7 +653,13 @@ def format_comparison_table(results: list[AblationResult]) -> str:
     lines.append("")
 
     # Per-persona comparison (Appendix A.7)
-    persona_names = [r.name for r in results[0].persona_results]
+    seen = set()
+    persona_names = []
+    for r in results:
+        for p in r.persona_results:
+            if p.name not in seen:
+                seen.add(p.name)
+                persona_names.append(p.name)
     header2 = f"{'Persona':<10} {'Golden':>6}"
     for r in results:
         short = r.config_name[:8]
@@ -666,9 +672,13 @@ def format_comparison_table(results: list[AblationResult]) -> str:
         boundary = "*" if name in BOUNDARY_PERSONAS else " "
         line = f"{name + boundary:<10} {golden:>6}"
         for r in results:
-            pr = r.persona_results[i]
-            mark = "+" if pr.band_correct else "X"
-            line += f" {pr.predicted_total:>6}{mark:>4}"
+            # Find matching persona by name (lists may differ in length)
+            pr = next((p for p in r.persona_results if p.name == name), None)
+            if pr:
+                mark = "+" if pr.band_correct else "X"
+                line += f" {pr.predicted_total:>6}{mark:>4}"
+            else:
+                line += f" {'--':>10}"
         lines.append(line)
 
     return "\n".join(lines)
