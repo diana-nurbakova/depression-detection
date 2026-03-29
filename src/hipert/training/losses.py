@@ -297,7 +297,7 @@ class CORALLoss(nn.Module):
         )  # (batch, num_thresholds)
 
         if self.threshold_weights is not None:
-            loss_per_threshold = loss_per_threshold * self.threshold_weights
+            loss_per_threshold = loss_per_threshold * self.threshold_weights.to(logits.device)
 
         # Per-sample loss
         loss_per_sample = loss_per_threshold.mean(dim=1)  # (batch,)
