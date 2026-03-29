@@ -1,7 +1,7 @@
 [project]
 name = "erisk-2026"
 version = "0.1.0"
-description = "eRisk 2026: Depression Detection (Task 1, 2) and ADHD Symptom Ranking (Task 3)"
+description = "eRisk 2026: Depression Detection (Task 1, 2), ADHD Symptom Ranking (Task 3), and MentalRiskES 2026"
 requires-python = ">=3.11"
 dependencies = [
     "requests>=2.31",
@@ -33,6 +33,7 @@ dev = [
 [project.scripts]
 hipert = "hipert.cli:cli"
 erisk-task2 = "erisk_task2.cli:cli"
+mentalriskes = "mentalriskes.cli:cli"
 
 [build-system]
 requires = ["hatchling"]
@@ -42,7 +43,7 @@ build-backend = "hatchling.build"
 sources = ["src"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/hipert", "src/erisk_task1", "src/erisk_task2"]
+packages = ["src/hipert", "src/erisk_task1", "src/erisk_task2", "src/mentalriskes"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

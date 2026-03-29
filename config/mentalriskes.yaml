@@ -1,0 +1,72 @@
+# MentalRiskES 2026 Task 1 Configuration
+# =============================================
+
+server:
+  # Replace with actual server URL from competition
+  base_url_env: "MENTALRISKES_BASE_URL"       # env var for server URL
+  token_env: "MENTALRISKES_TOKEN"              # env var for auth token
+  user_env: "MENTALRISKES_USER"                # env var for user name
+  use_trial: true                              # true = trial endpoints, false = test
+  retries: 5
+  backoff: 0.1
+
+llm:
+  provider: "ollama"                           # ollama | openai | together
+  base_url_env: "OLLAMA_BASE_URL"
+  api_key_env: "OLLAMA_API_KEY"
+  model: "llama3.3:70b"
+  temperature: 0.1
+  max_tokens: 4096
+  timeout: 180
+
+data:
+  trial_dir: "data/MentalRiskES-2026/task1_trial/data"
+  primate_path: "data/MentalRiskES-2026/primate_dataset.json"
+  output_dir: "output/mentalriskes"
+  checkpoint_dir: "output/mentalriskes/checkpoints"
+  log_dir: "output/mentalriskes/logs"
+
+# Resources
+resources:
+  calibration_config: "specs/MentalRiskES/calibration_config.json"
+  act_vocabulary: "specs/MentalRiskES/act_vocabulary_es.json"
+  hexaflex_quotes: "specs/MentalRiskES/hexaflex_quotes_fallback.json"
+  assessor_prompts: "specs/MentalRiskES/assessor_prompts_v2.py"
+
+# Run configurations (max 3 runs)
+runs:
+  - name: "run0_primary"
+    description: "Llama-3.3-70B, English CoT prompts, flat correction"
+    model: "llama3.3:70b"
+    prompt_language: "english"
+    few_shot: true
+    calibration: "flat"
+    # Flat correction values (tuned on trial data)
+    calibration_params:
+      phq9_subtract: 0
+      gad7_subtract: 0
+
+  - name: "run1_comparison"
+    description: "Llama-3.3-70B, band-aware correction"
+    model: "llama3.3:70b"
+    prompt_language: "english"
+    few_shot: true
+    calibration: "band_aware"
+    calibration_params: {}
+
+  - name: "run2_lightweight"
+    description: "Smaller model, no correction (efficiency baseline)"
+    model: "llama3.1:8b"
+    prompt_language: "english"
+    few_shot: false
+    calibration: "none"
+    calibration_params: {}
+
+# Pipeline settings
+pipeline:
+  log_level: "INFO"
+  log_llm_outputs: true                        # save raw LLM outputs
+  parallel_assessment: false                    # assess instruments in parallel
+  codecarbon:
+    enabled: true
+    country_iso_code: "FRA"
