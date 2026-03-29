@@ -19,10 +19,10 @@ from typing import Any
 
 from .assessors import AssessmentResult, assess_all_instruments
 from .calibration import calibrate_scores, check_cross_instrument_consistency
-from .config import MentalRiskESConfig, RunConfig
+from ..config import MentalRiskESConfig, RunConfig
 from .data import ConversationStore, load_trial_data
-from .llm_client import LLMClient
-from .server import MentalRiskESClient
+from ..llm_client import LLMClient, HFInferenceClient, create_llm_client
+from ..server import MentalRiskESClient
 
 logger = logging.getLogger(__name__)
 
@@ -65,10 +65,10 @@ class Pipeline:
         config.data.checkpoint_dir.mkdir(parents=True, exist_ok=True)
         config.data.log_dir.mkdir(parents=True, exist_ok=True)
 
-    def _create_client(self, run_config: RunConfig | None = None) -> LLMClient:
+    def _create_client(self, run_config: RunConfig | None = None) -> LLMClient | HFInferenceClient:
         """Create an LLM client, optionally overriding model from run config."""
         model = run_config.model if run_config else None
-        return LLMClient.from_config(self.config.llm, model_override=model)
+        return create_llm_client(self.config.llm, model_override=model)
 
     def _assess_session(
         self,
@@ -168,9 +168,22 @@ class Pipeline:
     def run_server(self) -> None:
         """
         Run pipeline against competition server in GET/POST loop.
+
+        Round advancement requires ALL 3 POST submissions (runs 0, 1, 2).
+        If fewer runs are configured, we still submit all configured runs.
+
+        NOTE: If participating in both tasks, the caller must orchestrate
+        task1 GET → task1 POSTs → task2 GET → task2 POSTs before the
+        server advances to the next round.
         """
-        server = MentalRiskESClient.from_config(self.config.server)
+        server = MentalRiskESClient.from_config(self.config.server, task="task1")
         emissions = self._get_emissions_dict()
+
+        # Pre-create one LLM client per run (reused across rounds)
+        run_clients = {
+            rc.name: self._create_client(rc)
+            for rc in self.config.runs
+        }
 
         messages = server.get_messages()
         if not messages:
@@ -179,7 +192,8 @@ class Pipeline:
 
         while messages:
             round_number = next(iter(messages.values()))["round"]
-            logger.info("=== Server Round %d (%d sessions) ===", round_number, len(messages))
+            n_sessions = len(messages)
+            logger.info("=== Server Round %d (%d sessions) ===", round_number, n_sessions)
 
             # Update conversation store
             self.store.update_from_server_response(messages)
@@ -193,7 +207,7 @@ class Pipeline:
             predictions_per_run: list[list[dict]] = []
 
             for run_config in self.config.runs:
-                client = self._create_client(run_config)
+                client = run_clients[run_config.name]
                 run_preds = []
 
                 for session_id in messages:
@@ -203,12 +217,15 @@ class Pipeline:
 
                 predictions_per_run.append(run_preds)
 
-            # Submit all runs
+            # Submit all runs (runs 0..N-1)
             server.submit_all_runs(
                 predictions_per_run, emissions,
                 save_dir=self.config.data.output_dir / "predictions",
                 round_number=round_number,
             )
+
+            logger.info("Round %d complete: submitted %d runs x %d sessions",
+                        round_number, len(predictions_per_run), n_sessions)
 
             # Next round
             messages = server.get_messages()

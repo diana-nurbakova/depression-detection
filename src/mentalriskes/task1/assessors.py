@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from .llm_client import LLMClient, parse_json_response
+from ..llm_client import LLMClient, parse_json_response
 
 logger = logging.getLogger(__name__)
 
@@ -319,6 +319,41 @@ def _extract_labels(parsed: dict, instrument: str) -> list[str]:
 
 
 # ---------------------------------------------------------------------------
+# Score extraction fallbacks
+# ---------------------------------------------------------------------------
+
+def _extract_scores_from_steps(parsed: dict, instrument: str) -> list[int] | None:
+    """
+    Fallback: extract scores from Step 2 item-level data when the final
+    scores array is missing (truncated response or different key name).
+
+    Looks for 'score' field in step_2_temporal or step_2_endorsement items.
+    """
+    spec = INSTRUMENTS.get(instrument)
+    if not spec:
+        return None
+
+    step2 = parsed.get("step_2_temporal") or parsed.get("step_2_endorsement") or {}
+    if not step2:
+        return None
+
+    scores = []
+    for i in range(spec["n_items"]):
+        item_key = f"item_{i + 1}"
+        item_data = step2.get(item_key, {})
+        if isinstance(item_data, dict) and "score" in item_data:
+            try:
+                s = int(item_data["score"])
+                scores.append(max(0, min(spec["max_val"], s)))
+            except (ValueError, TypeError):
+                scores.append(spec["max_val"] // 2)  # midpoint fallback
+        else:
+            return None  # incomplete step 2, can't reliably extract
+
+    return scores if len(scores) == spec["n_items"] else None
+
+
+# ---------------------------------------------------------------------------
 # Assessment execution
 # ---------------------------------------------------------------------------
 
@@ -376,14 +411,19 @@ def assess_instrument(
                 break
 
     if scores is None:
-        logger.warning("No scores found for %s in response, using defaults", instrument)
-        return AssessmentResult(
-            instrument=instrument,
-            scores=_default_scores(instrument),
-            raw_response=raw_response,
-            steps=parsed,
-            error="Scores key not found",
-        )
+        # Fallback: extract scores from Step 2 item-level data
+        scores = _extract_scores_from_steps(parsed, instrument)
+        if scores:
+            logger.info("%s: extracted scores from Step 2 items: %s", instrument, scores)
+        else:
+            logger.warning("No scores found for %s in response, using defaults", instrument)
+            return AssessmentResult(
+                instrument=instrument,
+                scores=_default_scores(instrument),
+                raw_response=raw_response,
+                steps=parsed,
+                error="Scores key not found",
+            )
 
     # Validate and clip
     if len(scores) != spec["n_items"]:

@@ -12,7 +12,7 @@ from pathlib import Path
 
 import click
 
-from .config import load_config
+from ..config import load_config
 from .pipeline import Pipeline, setup_logging
 
 logger = logging.getLogger(__name__)

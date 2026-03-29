@@ -1,7 +1,11 @@
 """LLM client for MentalRiskES Task 1.
 
-Reuses the streaming pattern from erisk_task1.llm_client, simplified for
-this pipeline's needs: JSON-structured assessment outputs.
+Supports two providers:
+  - ollama / openai: HTTP streaming via requests (Ollama native or OpenAI-compatible)
+  - huggingface: HF Inference API via huggingface_hub (serverless, no GPU needed)
+
+Both expose the same interface: complete(), chat_completion(), stats.
+Use create_llm_client() factory to get the right one from config.
 """
 
 from __future__ import annotations
@@ -201,10 +205,183 @@ class LLMClient:
     @property
     def stats(self) -> dict:
         return {
+            "provider": self.provider,
+            "model": self.model,
             "call_count": self._call_count,
             "total_tokens": self._total_tokens,
             "total_latency_ms": round(self._total_latency_ms, 1),
         }
+
+
+# ---------------------------------------------------------------------------
+# HuggingFace Inference API client (serverless, no GPU)
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class HFInferenceClient:
+    """HuggingFace Inference API client with the same interface as LLMClient.
+
+    Uses huggingface_hub.InferenceClient under the hood. No GPU or local
+    model needed — inference runs on HF's serverless infrastructure.
+
+    Requires HF_TOKEN env var or api_key parameter.
+    """
+
+    provider: str = "huggingface"
+    base_url: str = ""  # unused, kept for interface compatibility
+    api_key: str = ""   # HF token
+    model: str = "meta-llama/Llama-3.3-70B-Instruct"
+    temperature: float = 0.1
+    max_tokens: int = 4096
+    max_retries: int = 3
+    rate_limit_delay: float = 1.0
+    timeout: int = 180
+
+    # Tracking
+    _call_count: int = field(default=0, init=False, repr=False)
+    _total_tokens: int = field(default=0, init=False, repr=False)
+    _total_latency_ms: float = field(default=0.0, init=False, repr=False)
+
+    # Lazy-loaded client
+    _client: object = field(default=None, init=False, repr=False)
+
+    @classmethod
+    def from_config(cls, cfg: LLMConfig, model_override: str | None = None) -> HFInferenceClient:
+        import os
+        api_key = cfg.api_key or os.environ.get("HF_TOKEN", "")
+        return cls(
+            provider="huggingface",
+            api_key=api_key,
+            model=model_override or cfg.model,
+            temperature=cfg.temperature,
+            max_tokens=cfg.max_tokens,
+            timeout=cfg.timeout,
+        )
+
+    def _get_client(self):
+        if self._client is None:
+            from huggingface_hub import InferenceClient
+            self._client = InferenceClient(
+                model=self.model,
+                token=self.api_key,
+                timeout=self.timeout,
+            )
+        return self._client
+
+    def complete(
+        self,
+        messages: list[dict[str, str]],
+        temperature: float | None = None,
+        max_tokens: int | None = None,
+    ) -> str:
+        """Send chat completion and return content string."""
+        response = self.chat_completion(messages, temperature, max_tokens)
+        return self._get_content(response)
+
+    def chat_completion(
+        self,
+        messages: list[dict[str, str]],
+        temperature: float | None = None,
+        max_tokens: int | None = None,
+    ) -> dict:
+        """Send chat completion via HF Inference API."""
+        temp = temperature if temperature is not None else self.temperature
+        mtok = max_tokens if max_tokens is not None else self.max_tokens
+        client = self._get_client()
+
+        last_error: Exception | None = None
+        for attempt in range(1, self.max_retries + 1):
+            try:
+                t0 = time.monotonic()
+                response = client.chat_completion(
+                    messages=messages,
+                    temperature=max(temp, 0.01),  # HF doesn't accept 0
+                    max_tokens=mtok,
+                )
+                elapsed = time.monotonic() - t0
+
+                content = response.choices[0].message.content or ""
+                usage = getattr(response, "usage", None)
+                prompt_tok = getattr(usage, "prompt_tokens", 0) if usage else 0
+                completion_tok = getattr(usage, "completion_tokens", 0) if usage else 0
+                total_tok = prompt_tok + completion_tok
+
+                self._call_count += 1
+                self._total_tokens += total_tok
+                self._total_latency_ms += elapsed * 1000
+
+                logger.info(
+                    "HF call %d [%s] %.1fs — tokens=%d, content_len=%d",
+                    self._call_count, self.model, elapsed, total_tok, len(content),
+                )
+
+                if self.rate_limit_delay > 0:
+                    time.sleep(self.rate_limit_delay)
+
+                return {
+                    "choices": [{"message": {"role": "assistant", "content": content}}],
+                    "usage": {
+                        "prompt_tokens": prompt_tok,
+                        "completion_tokens": completion_tok,
+                        "total_tokens": total_tok,
+                    },
+                }
+
+            except Exception as e:
+                last_error = e
+                wait = 2 ** attempt
+                logger.warning(
+                    "HF call failed (attempt %d/%d): %s — retrying in %ds",
+                    attempt, self.max_retries, e, wait,
+                )
+                if attempt < self.max_retries:
+                    time.sleep(wait)
+
+        raise last_error  # type: ignore[misc]
+
+    @staticmethod
+    def _get_content(response: dict) -> str:
+        try:
+            return response["choices"][0]["message"]["content"] or ""
+        except (KeyError, IndexError, TypeError):
+            return ""
+
+    @property
+    def stats(self) -> dict:
+        return {
+            "provider": self.provider,
+            "model": self.model,
+            "call_count": self._call_count,
+            "total_tokens": self._total_tokens,
+            "total_latency_ms": round(self._total_latency_ms, 1),
+        }
+
+
+# ---------------------------------------------------------------------------
+# Factory: create the right client from config
+# ---------------------------------------------------------------------------
+
+
+def create_llm_client(
+    cfg: LLMConfig,
+    model_override: str | None = None,
+) -> LLMClient | HFInferenceClient:
+    """Create an LLM client based on the provider in config.
+
+    Args:
+        cfg: LLM configuration.
+        model_override: Optional model name override (e.g., from run config).
+
+    Returns:
+        LLMClient (ollama/openai) or HFInferenceClient (huggingface).
+    """
+    if cfg.provider == "huggingface":
+        logger.info("Using HuggingFace Inference API: %s", model_override or cfg.model)
+        return HFInferenceClient.from_config(cfg, model_override)
+    else:
+        logger.info("Using %s client: %s", cfg.provider, model_override or cfg.model)
+        return LLMClient.from_config(cfg, model_override)
 
 
 def parse_json_response(text: str) -> dict | None:

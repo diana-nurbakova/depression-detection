@@ -110,10 +110,16 @@ def load_config(config_path: str | Path) -> MentalRiskESConfig:
 
     # LLM
     llm = raw.get("llm", {})
+    provider = llm.get("provider", "ollama")
+    # Resolve API key: for HF, fall back to HF_TOKEN
+    api_key_env = llm.get("api_key_env", "")
+    api_key = os.environ.get(api_key_env, "")
+    if not api_key and provider == "huggingface":
+        api_key = os.environ.get("HF_TOKEN", "")
     cfg.llm = LLMConfig(
-        provider=llm.get("provider", "ollama"),
+        provider=provider,
         base_url=os.environ.get(llm.get("base_url_env", ""), ""),
-        api_key=os.environ.get(llm.get("api_key_env", ""), ""),
+        api_key=api_key,
         model=llm.get("model", "llama3.3:70b"),
         temperature=llm.get("temperature", 0.1),
         max_tokens=llm.get("max_tokens", 4096),

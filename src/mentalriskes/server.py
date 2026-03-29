@@ -2,16 +2,20 @@
 
 Handles GET (fetch messages) and POST (submit predictions) with retry logic.
 Adapted from the organizer's ClientServer.ipynb.
+
+Endpoints:
+  Trial GET:  {base_url}/{task}/getmessages_trial/{token}
+  Test GET:   {base_url}/{task}/getmessages/{token}
+  Trial POST: {base_url}/{task}/submit_trial/{token}/{run}
+  Test POST:  {base_url}/{task}/submit/{token}/{run}
 """
 
 from __future__ import annotations
 
 import json
 import logging
-import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
 
 import requests
 from requests.adapters import HTTPAdapter, Retry
@@ -27,15 +31,17 @@ class MentalRiskESClient:
 
     base_url: str = ""
     token: str = ""
+    task: str = "task1"   # "task1" or "task2"
     use_trial: bool = True
     retries: int = 5
     backoff: float = 0.1
 
     @classmethod
-    def from_config(cls, cfg: ServerConfig) -> MentalRiskESClient:
+    def from_config(cls, cfg: ServerConfig, task: str = "task1") -> MentalRiskESClient:
         return cls(
             base_url=cfg.base_url,
             token=cfg.token,
+            task=task,
             use_trial=cfg.use_trial,
             retries=cfg.retries,
             backoff=cfg.backoff,
@@ -52,16 +58,19 @@ class MentalRiskESClient:
         session.mount("http://", HTTPAdapter(max_retries=retry))
         return session
 
-    def _get_endpoint(self, kind: str) -> str:
-        """Return the correct URL based on trial/test mode."""
-        task = "task1"
+    def _get_url(self, kind: str) -> str:
+        """Build endpoint URL.
+
+        Args:
+            kind: "get" for GET messages, "post" for POST submissions.
+        """
+        base = self.base_url.rstrip("/")
         if kind == "get":
-            suffix = "getmessages_trial" if self.use_trial else "getmessages"
-            return f"{self.base_url}/{task}/{suffix}/{self.token}"
+            action = "getmessages_trial" if self.use_trial else "getmessages"
+            return f"{base}/{self.task}/{action}/{self.token}"
         else:
-            # POST endpoint — run index appended by caller
-            suffix = "submit_trial" if self.use_trial else "submit"
-            return f"{self.base_url}/{task}/{suffix}/{self.token}"
+            action = "submit_trial" if self.use_trial else "submit"
+            return f"{base}/{self.task}/{action}/{self.token}"
 
     def get_messages(self) -> dict:
         """
@@ -71,19 +80,20 @@ class MentalRiskESClient:
             dict keyed by session_id, each containing 'round', 'patient_input',
             and optionally 'therapist_response'. Empty dict when all rounds done.
         """
-        url = self._get_endpoint("get")
+        url = self._get_url("get")
         session = self._make_session()
 
         try:
             response = session.get(url, timeout=30)
             if response.status_code != 200:
-                logger.error("GET failed (status %d): %s", response.status_code, response.text)
+                logger.error("GET %s failed (status %d): %s",
+                             self.task, response.status_code, response.text)
                 return {}
             data = response.json()
-            logger.info("GET round messages: %d sessions", len(data))
+            logger.info("GET %s: %d sessions", self.task, len(data))
             return data
         except Exception as e:
-            logger.error("GET failed: %s", e)
+            logger.error("GET %s failed: %s", self.task, e)
             return {}
 
     def submit_predictions(
@@ -97,28 +107,26 @@ class MentalRiskESClient:
 
         Args:
             run_index: 0-based run index.
-            predictions: list of prediction dicts, each with 'id', 'round', 'prediction'.
+            predictions: list of prediction dicts.
             emissions: CodeCarbon emissions dict.
 
         Returns:
             True if submission succeeded.
         """
-        base_url = self._get_endpoint("post")
-        url = f"{base_url}/{run_index}"
+        url = f"{self._get_url('post')}/{run_index}"
         session = self._make_session()
-
         payload = [{"predictions": predictions, "emissions": emissions}]
 
         try:
             response = session.post(url, json=payload, timeout=30)
             if response.status_code != 200:
-                logger.error("POST run %d failed (status %d): %s",
-                             run_index, response.status_code, response.text)
+                logger.error("POST %s run %d failed (status %d): %s",
+                             self.task, run_index, response.status_code, response.text)
                 return False
-            logger.info("POST run %d: %s", run_index, response.text)
+            logger.info("POST %s run %d: %s", self.task, run_index, response.text)
             return True
         except Exception as e:
-            logger.error("POST run %d failed: %s", run_index, e)
+            logger.error("POST %s run %d failed: %s", self.task, run_index, e)
             return False
 
     def submit_all_runs(

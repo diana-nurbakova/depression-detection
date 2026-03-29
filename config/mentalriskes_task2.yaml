@@ -1,0 +1,65 @@
+# MentalRiskES 2026 Task 2: Therapist Response Selection
+# Configuration file
+
+llm:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  api_key: ""
+  model: "llama3.3:70b"
+  temperature: 0.1
+  max_tokens: 4096
+  timeout: 300
+
+data:
+  trial_dir: "data/MentalRiskES-2026/task2_trial/data"
+  output_dir: "output/mentalriskes_task2"
+
+server:
+  base_url: "https://mental.unizar.es/MentalRiskES"
+  token: "${MENTALRISKES_TOKEN}"
+  use_trial: false
+  retries: 5
+  backoff: 0.1
+
+# Ablation settings
+ablation:
+  local_model: "llama3.3:70b"
+  api_model: "claude-sonnet-4-20250514"
+
+# Default run config (used by 'trial' command without --run)
+default_run:
+  model: "llama3.3:70b"
+  framing: "FUNC"
+  pipeline: "B"
+  lang: "es"
+  lookback_window: 3
+  permutation_voting: false
+
+# Named run configurations for submission
+runs:
+  # Run 0: Best-accuracy config from ablation
+  run0_best:
+    model: "llama3.3:70b"
+    framing: "FUNC"
+    pipeline: "B"
+    lang: "es"
+    lookback_window: 3
+    permutation_voting: false
+
+  # Run 1: Permutation voting variant
+  run1_perm:
+    model: "llama3.3:70b"
+    framing: "FUNC"
+    pipeline: "B"
+    lang: "es"
+    lookback_window: 3
+    permutation_voting: true
+
+  # Run 2: Alternative framing (diversity)
+  run2_tom:
+    model: "llama3.3:70b"
+    framing: "TOM-B"
+    pipeline: "B"
+    lang: "es"
+    lookback_window: 3
+    permutation_voting: false
