@@ -156,14 +156,14 @@ class TrainerV2:
 
         tokenizer = model.tokenizer
 
-        # Create loss
+        # Create loss (must be on same device as model)
         if config.head_type == "coral":
             criterion = CORALLoss(
                 num_classes=4,
                 threshold_weights=config.threshold_weights,
-            )
+            ).to(config.device)
         else:
-            criterion = ListMLELoss(temperature=config.listmle_temperature)
+            criterion = ListMLELoss(temperature=config.listmle_temperature).to(config.device)
 
         # Optimizer
         optimizer = AdamW(
