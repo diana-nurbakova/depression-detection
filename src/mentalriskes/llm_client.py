@@ -385,20 +385,82 @@ def create_llm_client(
 
 
 def parse_json_response(text: str) -> dict | None:
-    """Extract and parse the first JSON object found in LLM output."""
-    # Try to find JSON block in markdown code fence first
-    fence_match = re.search(r'```(?:json)?\s*(\{[\s\S]*?\})\s*```', text)
-    if fence_match:
-        try:
-            return json.loads(fence_match.group(1))
-        except json.JSONDecodeError:
-            pass
+    """Extract and parse JSON from LLM output.
 
-    # Fall back to finding any JSON object
-    json_match = re.search(r'\{[\s\S]*\}', text)
-    if json_match:
+    Handles:
+    - JSON inside ```json ... ``` code fences
+    - Bare JSON objects in text
+    - Truncated JSON (attempts bracket-closing repair)
+    """
+    # Strategy 1: find JSON in markdown code fence
+    fence_match = re.search(r'```(?:json)?\s*(\{[\s\S]*)', text)
+    if fence_match:
+        candidate = fence_match.group(1)
+        # Try to find the closing fence
+        end = candidate.find("```")
+        if end > 0:
+            candidate = candidate[:end].strip()
+        result = _try_parse_json(candidate)
+        if result is not None:
+            return result
+
+    # Strategy 2: find outermost JSON object using bracket matching
+    start = text.find("{")
+    if start >= 0:
+        candidate = text[start:]
+        # Find the matching closing brace by counting brackets
+        depth = 0
+        end = -1
+        for i, ch in enumerate(candidate):
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    end = i
+                    break
+        if end > 0:
+            result = _try_parse_json(candidate[:end + 1])
+            if result is not None:
+                return result
+
+        # Strategy 3: truncated JSON — try to repair by closing open brackets
+        result = _try_parse_json(candidate)
+        if result is not None:
+            return result
+
+    return None
+
+
+def _try_parse_json(text: str) -> dict | None:
+    """Try to parse JSON, with truncation repair as fallback."""
+    text = text.strip()
+    # Direct parse
+    try:
+        result = json.loads(text)
+        if isinstance(result, dict):
+            return result
+    except json.JSONDecodeError:
+        pass
+
+    # Truncation repair: close any unclosed brackets/braces
+    # Strip trailing comma and whitespace
+    repaired = re.sub(r',\s*$', '', text)
+    # Count open vs close
+    open_braces = repaired.count("{") - repaired.count("}")
+    open_brackets = repaired.count("[") - repaired.count("]")
+
+    if open_braces > 0 or open_brackets > 0:
+        # Close any open strings (heuristic: odd number of unescaped quotes)
+        # Simple approach: add closing brackets
+        repaired += "]" * max(0, open_brackets)
+        repaired += "}" * max(0, open_braces)
         try:
-            return json.loads(json_match.group())
+            result = json.loads(repaired)
+            if isinstance(result, dict):
+                logger.debug("Repaired truncated JSON (%d braces, %d brackets closed)",
+                             open_braces, open_brackets)
+                return result
         except json.JSONDecodeError:
             pass
 
