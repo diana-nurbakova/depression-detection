@@ -240,6 +240,10 @@ class Pipeline:
                 log_entry[f"{instrument}_steps"] = result.steps
                 if result.error:
                     log_entry[f"{instrument}_error"] = result.error
+                if result.labels:
+                    log_entry[f"{instrument}_labels"] = result.labels
+                if result.label_mismatches:
+                    log_entry[f"{instrument}_label_mismatches"] = result.label_mismatches
 
         log_path = self.config.data.log_dir / f"predictions_{run_name}.jsonl"
         with open(log_path, "a", encoding="utf-8") as f:

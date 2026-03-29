@@ -6,6 +6,8 @@ Each assessor uses chain-of-thought prompting with three steps:
   Step 2: Temporal/severity inference with behavioral anchors
 
 Prompts are imported from the spec's assessor_prompts_v2 module.
+Verbalizer system (v2.1) replaces numeric tags with clinically meaningful
+Spanish labels and provides label-score consistency checking.
 """
 
 from __future__ import annotations
@@ -19,6 +21,50 @@ from typing import Any
 from .llm_client import LLMClient, parse_json_response
 
 logger = logging.getLogger(__name__)
+
+# ---------------------------------------------------------------------------
+# Verbalizer system (loaded from verbalizer_update_v2_1.py)
+# ---------------------------------------------------------------------------
+
+_VERBALIZERS_LOADED = False
+_PHQ9_VERBALIZERS: dict = {}
+_GAD7_VERBALIZERS: dict = {}
+_COMPACT10_VERBALIZERS: dict = {}
+_EVIDENCE_LEVEL_VERBALIZERS: dict = {}
+_DETECTION_VERBALIZERS: dict = {}
+_VERBALIZER_CONSISTENCY_FN = None
+_VERBALIZER_RESOLVE_FN = None
+
+
+def _load_verbalizers() -> None:
+    """Load verbalizer definitions from the spec module."""
+    global _VERBALIZERS_LOADED
+    global _PHQ9_VERBALIZERS, _GAD7_VERBALIZERS, _COMPACT10_VERBALIZERS
+    global _EVIDENCE_LEVEL_VERBALIZERS, _DETECTION_VERBALIZERS
+    global _VERBALIZER_CONSISTENCY_FN, _VERBALIZER_RESOLVE_FN
+
+    if _VERBALIZERS_LOADED:
+        return
+
+    import importlib.util
+    spec_path = Path("specs/MentalRiskES/verbalizer_update_v2_1.py")
+    if spec_path.exists():
+        spec = importlib.util.spec_from_file_location("verbalizer_update_v2_1", spec_path)
+        mod = importlib.util.module_from_spec(spec)  # type: ignore
+        spec.loader.exec_module(mod)  # type: ignore
+
+        _PHQ9_VERBALIZERS = mod.PHQ9_VERBALIZERS
+        _GAD7_VERBALIZERS = mod.GAD7_VERBALIZERS
+        _COMPACT10_VERBALIZERS = mod.COMPACT10_VERBALIZERS
+        _EVIDENCE_LEVEL_VERBALIZERS = mod.EVIDENCE_LEVEL_VERBALIZERS
+        _DETECTION_VERBALIZERS = mod.DETECTION_VERBALIZERS
+        _VERBALIZER_CONSISTENCY_FN = mod.check_label_score_consistency
+        _VERBALIZER_RESOLVE_FN = mod.resolve_mismatches
+        logger.info("Loaded verbalizers from %s", spec_path)
+    else:
+        logger.warning("Verbalizer file not found at %s — verbalizer features disabled", spec_path)
+
+    _VERBALIZERS_LOADED = True
 
 # ---------------------------------------------------------------------------
 # Instrument specifications
@@ -39,6 +85,8 @@ class AssessmentResult:
     raw_response: str = ""
     steps: dict = field(default_factory=dict)
     error: str | None = None
+    labels: list[str] = field(default_factory=list)  # verbalizer labels from LLM
+    label_mismatches: list[dict] = field(default_factory=list)  # label-score disagreements
 
     @property
     def total(self) -> int:
@@ -156,10 +204,60 @@ Respond with ONLY a JSON object:
 {{"CompACT-10": [item1, item2, item3, item4, item5, item6, item7, item8, item9, item10]}}"""
 
 
+def _build_verbalizer_instructions(instrument: str) -> str:
+    """
+    Build verbalizer instructions to append to the assessor prompt.
+
+    These instruct the model to use clinically meaningful labels instead of
+    raw integers, enabling label-score consistency checking.
+    """
+    _load_verbalizers()
+
+    if not _PHQ9_VERBALIZERS:
+        return ""  # verbalizers not available
+
+    lines = ["\n## MEANINGFUL LABELS (use these instead of raw numbers)\n"]
+
+    if instrument == "PHQ-9":
+        verbs = _PHQ9_VERBALIZERS
+        lines.append("For each item in Step 2, select a frequency_label from:")
+        for score, label in verbs["labels"].items():
+            lines.append(f"  {score} = \"{label}\"")
+        lines.append("\nAlso select an item_specific_descriptor from the item's set.")
+        lines.append("The score MUST match the frequency_label.")
+        lines.append("\nFor Step 1, use detection_label from these process-specific options:")
+        det = _DETECTION_VERBALIZERS.get("phq9", {})
+        for item_key in ["item_1", "item_2", "item_3", "item_4", "item_5",
+                         "item_6", "item_7", "item_8", "item_9"]:
+            item_det = det.get(item_key, {})
+            present = item_det.get("present_labels", [])
+            insuf = item_det.get("insufficient_label", "")
+            if present:
+                lines.append(f"  {item_key}: {' | '.join(present)} | {insuf}")
+
+    elif instrument == "GAD-7":
+        verbs = _GAD7_VERBALIZERS
+        lines.append("For each item in Step 2, select a frequency_label from:")
+        for score, label in verbs["labels"].items():
+            lines.append(f"  {score} = \"{label}\"")
+        lines.append("\nThe score MUST match the frequency_label.")
+
+    elif instrument == "CompACT-10":
+        verbs = _COMPACT10_VERBALIZERS
+        lines.append("For each item in Step 2, select an agreement_label from:")
+        for score, label in verbs["labels"].items():
+            lines.append(f"  {score} = \"{label}\"")
+        lines.append("\nAlso select a construct_descriptor from the item's construct-specific set.")
+        lines.append("The score MUST match the agreement_label.")
+
+    return "\n".join(lines)
+
+
 def build_prompt(
     instrument: str,
     conversation_history: str,
     use_few_shot: bool = True,
+    use_verbalizers: bool = True,
 ) -> str:
     """Build the full assessor prompt for a given instrument."""
     _load_prompts()
@@ -173,10 +271,51 @@ def build_prompt(
 
     few_shot_text = few_shots.get(instrument, "") if use_few_shot else ""
 
+    # Inject verbalizer instructions before the output format section
+    verbalizer_text = _build_verbalizer_instructions(instrument) if use_verbalizers else ""
+    if verbalizer_text:
+        few_shot_text = verbalizer_text + "\n" + few_shot_text
+
     return template.format(
         conversation_history=conversation_history,
         few_shot_examples=few_shot_text,
     )
+
+
+# ---------------------------------------------------------------------------
+# Label extraction from LLM output
+# ---------------------------------------------------------------------------
+
+def _extract_labels(parsed: dict, instrument: str) -> list[str]:
+    """
+    Extract frequency/agreement labels from the Step 2 output.
+
+    Looks for 'frequency_label' (PHQ-9/GAD-7) or 'agreement_label' (CompACT-10)
+    in the step_2_temporal or step_2_endorsement fields.
+    """
+    _load_verbalizers()
+
+    step2 = parsed.get("step_2_temporal") or parsed.get("step_2_endorsement") or {}
+    if not step2:
+        return []
+
+    spec = INSTRUMENTS.get(instrument)
+    if not spec:
+        return []
+
+    label_key = "agreement_label" if instrument == "CompACT-10" else "frequency_label"
+    labels = []
+
+    for i in range(spec["n_items"]):
+        item_key = f"item_{i + 1}"
+        item_data = step2.get(item_key, {})
+        if isinstance(item_data, dict):
+            label = item_data.get(label_key, "")
+            labels.append(label)
+        else:
+            labels.append("")
+
+    return labels
 
 
 # ---------------------------------------------------------------------------
@@ -249,7 +388,6 @@ def assess_instrument(
     # Validate and clip
     if len(scores) != spec["n_items"]:
         logger.warning("%s: expected %d scores, got %d", instrument, spec["n_items"], len(scores))
-        # Pad or truncate
         if len(scores) < spec["n_items"]:
             mid = spec["max_val"] // 2
             scores.extend([mid] * (spec["n_items"] - len(scores)))
@@ -265,11 +403,32 @@ def assess_instrument(
         if step_key in parsed:
             steps[step_key] = parsed[step_key]
 
+    # Extract verbalizer labels from Step 2 output
+    labels = _extract_labels(parsed, instrument)
+
+    # Apply label-score consistency checking
+    label_mismatches = []
+    if labels and _VERBALIZER_CONSISTENCY_FN:
+        label_mismatches = _VERBALIZER_CONSISTENCY_FN(instrument, scores, labels)
+        if label_mismatches:
+            logger.warning(
+                "%s: %d label-score mismatch(es): %s",
+                instrument, len(label_mismatches),
+                [(m["item"], m["label"], m["expected_score"], m["actual_score"])
+                 for m in label_mismatches],
+            )
+            # Trust labels over scores
+            if _VERBALIZER_RESOLVE_FN:
+                scores = _VERBALIZER_RESOLVE_FN(scores, labels, instrument)
+                logger.info("%s: scores corrected via verbalizer labels → %s", instrument, scores)
+
     return AssessmentResult(
         instrument=instrument,
         scores=scores,
         raw_response=raw_response,
         steps=steps,
+        labels=labels,
+        label_mismatches=label_mismatches,
     )
 
 
