@@ -19,10 +19,11 @@ logger = logging.getLogger(__name__)
 Rankings = dict[int, list[tuple[str, float]]]
 RunGenerator = Callable[[PipelineConfig], Rankings]
 
-# System names per spec Section 2.3
+# System names per v2 spec Section 8.1
+# v2 change: LLM cascade is now primary (Run 1), HiPerT is secondary (Run 2)
 SYSTEM_NAMES = {
-    1: "INSALyon_HiPerT_full",
-    2: "INSALyon_LLM_cascade",
+    1: "INSALyon_LLM_cascade",
+    2: "INSALyon_HiPerT_full",
     3: "INSALyon_Ensemble",
     4: "INSALyon_DepTransfer",
     5: "INSALyon_BiEnc_baseline",
@@ -67,9 +68,9 @@ def list_runs() -> list[dict]:
     from hipert.runs import run1_full, run2_llm, run3_ensemble, run4_transfer, run5_bienc  # noqa: F401
 
     descriptions = {
-        1: "Full HiPerT-ADHD pipeline (trained encoder)",
-        2: "LLM cascade scoring only",
-        3: "Weighted ensemble of Run 1 + Run 2 (RRF)",
+        1: "LLM cascade scoring (PRIMARY)",
+        2: "HiPerT v2 cross-encoder reranker",
+        3: "Ensemble of Run 1 + Run 2 (RRF)",
         4: "Depression-only cross-condition transfer",
         5: "Bi-encoder cosine similarity baseline",
     }

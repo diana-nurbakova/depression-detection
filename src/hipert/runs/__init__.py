@@ -1,9 +1,9 @@
-"""Run generators for eRisk 2026 Task 3 submission.
+"""Run generators for eRisk 2026 Task 3 submission (v2 ordering).
 
 5 runs, each producing TREC-format rankings with different strategies:
-- Run 1: HiPerT_full (full pipeline with trained encoder)
-- Run 2: LLM_cascade (LLM scoring only)
-- Run 3: Ensemble_1+2 (RRF combination of Run 1 + Run 2)
+- Run 1: LLM_cascade (LLM scoring — PRIMARY)
+- Run 2: HiPerT_full (cross-encoder reranker v2)
+- Run 3: Ensemble (RRF fusion of Run 1 + Run 2)
 - Run 4: DepTransfer (depression-only cross-condition transfer)
 - Run 5: BiEnc_baseline (cosine similarity only)
 """

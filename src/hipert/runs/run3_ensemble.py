@@ -1,14 +1,15 @@
-"""Run 3: Ensemble_1+2 — Weighted ensemble of Run 1 and Run 2.
+"""Run 3: Ensemble — RRF fusion of Run 1 (LLM) and Run 2 (HiPerT v2).
 
-Combines HiPerT-ADHD encoder scores (Run 1) with calibrated LLM cascade
-scores (Run 2). Uses Reciprocal Rank Fusion (RRF) as the default
-parameter-free method.
+Combines LLM cascade scores (Run 1) with cross-encoder reranker
+scores (Run 2). Uses Reciprocal Rank Fusion (RRF).
 
 Scoring function (RRF):
-    φ_rrf(s, q) = 1/(k + rank_encoder(s)) + 1/(k + rank_llm(s))
+    φ_rrf(s, q) = 1/(k + rank_llm(s)) + 1/(k + rank_hipert(s))
     where k = 60 (standard RRF constant)
 
-Falls back to Run 2 only if Run 1 is not available yet.
+Falls back to Run 5 (BiEnc) + Run 1 if Run 2 is not available.
+
+Spec reference: hipert_v2_spec.md Section 8.4
 """
 
 from __future__ import annotations
@@ -75,36 +76,36 @@ def reciprocal_rank_fusion(
 
 @register_run(3)
 def generate_ensemble(config: PipelineConfig) -> Rankings:
-    """Generate Run 3 rankings by fusing Run 1 and Run 2."""
+    """Generate Run 3 rankings by fusing Run 1 (LLM) and Run 2 (HiPerT v2)."""
     from hipert.runs.registry import RUN_REGISTRY
 
-    # Generate Run 2 (LLM cascade)
-    if 2 not in RUN_REGISTRY:
-        raise RuntimeError("Run 2 (LLM_cascade) must be available for ensemble")
+    # Generate Run 1 (LLM cascade — always available)
+    if 1 not in RUN_REGISTRY:
+        raise RuntimeError("Run 1 (LLM_cascade) must be available for ensemble")
 
-    run2_rankings = RUN_REGISTRY[2](config)
+    run1_rankings = RUN_REGISTRY[1](config)
 
-    # Try Run 1 (full pipeline)
-    if 1 in RUN_REGISTRY:
+    # Try Run 2 (HiPerT v2 cross-encoder)
+    if 2 in RUN_REGISTRY:
         try:
-            run1_rankings = RUN_REGISTRY[1](config)
-            if run1_rankings:
+            run2_rankings = RUN_REGISTRY[2](config)
+            if run2_rankings:
                 logger.info(
-                    "Ensemble: fusing Run 1 (%d symptoms) + Run 2 (%d symptoms) via RRF (k=%d)",
+                    "Ensemble: fusing Run 1 LLM (%d) + Run 2 HiPerT (%d) via RRF (k=%d)",
                     len(run1_rankings), len(run2_rankings), RRF_K,
                 )
                 return reciprocal_rank_fusion(run1_rankings, run2_rankings)
         except Exception as e:
-            logger.warning("Run 1 unavailable for ensemble: %s. Falling back.", e)
+            logger.warning("Run 2 unavailable for ensemble: %s. Falling back.", e)
 
-    # Fallback: fuse Run 5 (bienc) + Run 2 (llm) instead
+    # Fallback: fuse Run 1 (LLM) + Run 5 (BiEnc) instead
     if 5 in RUN_REGISTRY:
         logger.info(
-            "Run 1 not available. Fusing Run 5 (BiEnc) + Run 2 (LLM) as fallback."
+            "Run 2 not available. Fusing Run 1 (LLM) + Run 5 (BiEnc) as fallback."
         )
         run5_rankings = RUN_REGISTRY[5](config)
-        return reciprocal_rank_fusion(run5_rankings, run2_rankings)
+        return reciprocal_rank_fusion(run1_rankings, run5_rankings)
 
-    # No fusion partner — return Run 2 as-is
-    logger.warning("No fusion partner for ensemble. Returning Run 2 as-is.")
-    return run2_rankings
+    # No fusion partner — return Run 1 as-is
+    logger.warning("No fusion partner for ensemble. Returning Run 1 as-is.")
+    return run1_rankings

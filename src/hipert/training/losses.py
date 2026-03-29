@@ -1,10 +1,16 @@
 """Loss functions for ordinal relevance scoring.
 
-L_composite = lambda_1 * L_ord + lambda_2 * L_rank + lambda_3 * L_hier + L_sil
+v1 losses:
+    L_composite = lambda_1 * L_ord + lambda_2 * L_rank + lambda_3 * L_hier
+
+v2 losses (cross-encoder):
+    CORALLoss — ordinal regression via cumulative thresholds
+    ListMLELoss — listwise learning-to-rank via Plackett-Luce
 """
 
 from __future__ import annotations
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -227,6 +233,146 @@ class HierarchyRegularization(nn.Module):
             loss = loss - self.lambda_repel * repel_loss / repel_count
 
         return loss
+
+
+# ---------------------------------------------------------------------------
+# v2 losses for cross-encoder reranker
+# ---------------------------------------------------------------------------
+
+
+class CORALLoss(nn.Module):
+    """CORAL (Consistent Rank Logits) ordinal regression loss.
+
+    Models ordinal labels as a series of binary classification tasks:
+    P(Y > k) for k = 0, 1, 2. Preserves score spread by construction
+    because each sentence gets an independent prediction.
+
+    Niu et al., 2016; Cao et al., 2020.
+
+    Spec reference: hipert_v2_spec.md Section 4
+    """
+
+    def __init__(
+        self,
+        num_classes: int = 4,
+        threshold_weights: list[float] | None = None,
+    ):
+        super().__init__()
+        self.num_thresholds = num_classes - 1  # 3 thresholds for 4 classes
+
+        if threshold_weights is not None:
+            self.register_buffer(
+                "threshold_weights",
+                torch.tensor(threshold_weights, dtype=torch.float32),
+            )
+        else:
+            self.threshold_weights = None
+
+    def forward(
+        self,
+        logits: torch.Tensor,
+        labels: torch.Tensor,
+        confidence_weights: torch.Tensor | None = None,
+    ) -> torch.Tensor:
+        """Compute CORAL loss.
+
+        Args:
+            logits: (batch, num_thresholds) — raw logits from cross-encoder
+            labels: (batch,) — integer scores 0, 1, 2, 3
+            confidence_weights: (batch,) — optional per-sample weights [0, 1]
+
+        Returns:
+            Scalar loss
+        """
+        # Convert to ordinal targets:
+        # label=0 -> [0,0,0], label=1 -> [1,0,0],
+        # label=2 -> [1,1,0], label=3 -> [1,1,1]
+        targets = torch.zeros_like(logits)
+        for k in range(self.num_thresholds):
+            targets[:, k] = (labels > k).float()
+
+        # Binary cross-entropy per threshold
+        loss_per_threshold = F.binary_cross_entropy_with_logits(
+            logits, targets, reduction="none",
+        )  # (batch, num_thresholds)
+
+        if self.threshold_weights is not None:
+            loss_per_threshold = loss_per_threshold * self.threshold_weights
+
+        # Per-sample loss
+        loss_per_sample = loss_per_threshold.mean(dim=1)  # (batch,)
+
+        if confidence_weights is not None:
+            weighted_loss = (loss_per_sample * confidence_weights).sum()
+            return weighted_loss / confidence_weights.sum().clamp(min=1e-8)
+
+        return loss_per_sample.mean()
+
+
+class ListMLELoss(nn.Module):
+    """ListMLE: Listwise Learning-to-Rank via the Plackett-Luce model.
+
+    Directly optimizes the likelihood of the correct permutation.
+    Operates on per-symptom lists of candidates.
+
+    Xia et al., 2008.
+
+    Spec reference: hipert_v2_spec.md Section 5
+    """
+
+    def __init__(self, temperature: float = 1.0):
+        super().__init__()
+        self.temperature = temperature
+
+    def forward(
+        self,
+        scores: torch.Tensor,
+        labels: torch.Tensor,
+        group_ids: torch.Tensor,
+    ) -> torch.Tensor:
+        """Compute ListMLE loss.
+
+        Args:
+            scores: (batch,) scalar scores from cross-encoder
+            labels: (batch,) integer relevance grades 0-3
+            group_ids: (batch,) symptom IDs — defines which sentences form a list
+
+        Returns:
+            Scalar loss averaged across groups
+        """
+        total_loss = 0.0
+        n_groups = 0
+
+        unique_groups = torch.unique(group_ids)
+        for gid in unique_groups:
+            mask = group_ids == gid
+            group_scores = scores[mask] / self.temperature
+            group_labels = labels[mask]
+
+            if group_scores.size(0) < 2:
+                continue
+
+            # Sort by ground-truth relevance (descending) with stochastic tie-break
+            jitter = torch.rand_like(group_labels.float()) * 0.01
+            sort_keys = group_labels.float() + jitter
+            perm = torch.argsort(sort_keys, descending=True)
+
+            sorted_scores = group_scores[perm]
+
+            # Plackett-Luce negative log-likelihood
+            # Cumulative logsumexp from the bottom for numerical stability
+            log_cumsum = torch.logcumsumexp(
+                sorted_scores.flip(0), dim=0,
+            ).flip(0)
+
+            group_loss = -(sorted_scores - log_cumsum).mean()
+            total_loss = total_loss + group_loss
+            n_groups += 1
+
+        if n_groups == 0:
+            return torch.tensor(0.0, device=scores.device, requires_grad=True)
+
+        return total_loss / n_groups
 
 
 class CompositeLoss(nn.Module):

@@ -523,5 +523,268 @@ def run(ctx: click.Context, symptoms: str | None, limit: int | None) -> None:
         runner.close()
 
 
+# ---------------------------------------------------------------------------
+# v2 cross-encoder commands
+# ---------------------------------------------------------------------------
+
+
+@cli.command("extract-v2")
+@click.pass_context
+def extract_v2(ctx: click.Context) -> None:
+    """Extract training data from LLM cascade outputs for v2 cross-encoder."""
+    import logging
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
+
+    config = load_config(ctx.obj["config_path"], ctx.obj["symptoms_path"])
+
+    from hipert.training.extract_training_data import (
+        extract_training_data,
+        save_training_data,
+    )
+
+    data = extract_training_data(
+        silver_labels_dir=config.output_dir / "silver_labels",
+        candidates_dir=config.output_dir / "candidates",
+    )
+
+    output_path = config.output_dir / "training_v2" / "training_data.jsonl"
+    save_training_data(data, output_path)
+
+    click.echo(f"Extracted {len(data)} training examples to {output_path}")
+
+
+@cli.command("train-v2")
+@click.option(
+    "--head-type", type=click.Choice(["coral", "listmle", "both"]),
+    default="coral", help="Loss function (default: coral).",
+)
+@click.option(
+    "--backbone", type=click.Choice(["mpnet", "mental-roberta", "clinical-bert", "all"]),
+    default="mpnet", help="Backbone model (default: mpnet).",
+)
+@click.option("--epochs", type=int, default=20, help="Max epochs per fold.")
+@click.option("--batch-size", type=int, default=64, help="Training batch size.")
+@click.option("--lr", type=float, default=2e-5, help="Learning rate.")
+@click.option("--folds", type=int, default=5, help="Number of CV folds (1-5).")
+@click.option(
+    "--threshold-weights", type=str, default="1.0,1.5,2.0",
+    help="CORAL threshold weights (comma-separated).",
+)
+@click.option(
+    "--use-confidence/--no-confidence", default=True,
+    help="Use confidence weighting for CORAL.",
+)
+@click.pass_context
+def train_v2(
+    ctx: click.Context,
+    head_type: str,
+    backbone: str,
+    epochs: int,
+    batch_size: int,
+    lr: float,
+    folds: int,
+    threshold_weights: str,
+    use_confidence: bool,
+) -> None:
+    """Train cross-encoder v2 with CORAL or ListMLE loss."""
+    import logging
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
+
+    config = load_config(ctx.obj["config_path"], ctx.obj["symptoms_path"])
+
+    from hipert.training.extract_training_data import load_training_data
+    from hipert.training.trainer_v2 import TrainerV2, TrainerV2Config, select_best_variant
+
+    # Load training data
+    data_path = config.output_dir / "training_v2" / "training_data.jsonl"
+    if not data_path.exists():
+        click.echo(f"ERROR: Training data not found at {data_path}", err=True)
+        click.echo("Run 'hipert extract-v2' first.", err=True)
+        sys.exit(1)
+
+    all_data = load_training_data(data_path)
+    click.echo(f"Loaded {len(all_data)} training examples")
+
+    # Parse threshold weights
+    tw = [float(x) for x in threshold_weights.split(",")]
+
+    head_types = ["coral", "listmle"] if head_type == "both" else [head_type]
+    backbones = (
+        ["mpnet", "mental-roberta", "clinical-bert"]
+        if backbone == "all" else [backbone]
+    )
+
+    summaries: dict[str, dict] = {}
+
+    for ht in head_types:
+        for bb in backbones:
+            click.echo(f"\n{'='*60}")
+            click.echo(f"Training: {ht} / {bb}")
+            click.echo(f"{'='*60}")
+
+            trainer_config = TrainerV2Config(
+                backbone_name=bb,
+                head_type=ht,
+                learning_rate=lr if ht == "coral" else lr * 0.5,
+                max_epochs=epochs if ht == "coral" else epochs + 10,
+                batch_size=batch_size,
+                threshold_weights=tw if ht == "coral" else None,
+                use_confidence_weighting=use_confidence and ht == "coral",
+                checkpoint_dir=config.output_dir / "training_v2",
+                num_folds=folds,
+                patience=3 if ht == "coral" else 5,
+            )
+
+            trainer = TrainerV2(trainer_config)
+            summary = trainer.train_all_folds(all_data)
+            summaries[f"{ht}/{bb}"] = summary
+
+            click.echo(
+                f"  Result: NDCG@10={summary['mean_ndcg@10']:.4f}±{summary['std_ndcg@10']:.4f} "
+                f"P@10={summary['mean_p@10']:.4f} CV={summary['mean_cv']:.4f}"
+            )
+
+    # If both variants trained, select best
+    if head_type == "both" and len(backbones) == 1:
+        bb = backbones[0]
+        coral_s = summaries.get(f"coral/{bb}", {})
+        listmle_s = summaries.get(f"listmle/{bb}", {})
+        if coral_s and listmle_s:
+            best = select_best_variant(coral_s, listmle_s)
+            click.echo(f"\nSelected variant: {best}")
+
+    click.echo("\nv2 training complete!")
+
+
+@cli.command("infer-v2")
+@click.option(
+    "--head-type", type=click.Choice(["coral", "listmle"]),
+    default="coral", help="Which head type to use.",
+)
+@click.option(
+    "--backbone", type=click.Choice(["mpnet", "mental-roberta", "clinical-bert", "all"]),
+    default="all", help="Backbone model(s) for inference.",
+)
+@click.option("--folds", type=int, default=5, help="Number of folds to average.")
+@click.option("--top-n", type=int, default=1000, help="Top-N per symptom.")
+@click.option("--batch-size", type=int, default=128, help="Inference batch size.")
+@click.pass_context
+def infer_v2(
+    ctx: click.Context,
+    head_type: str,
+    backbone: str,
+    folds: int,
+    top_n: int,
+    batch_size: int,
+) -> None:
+    """Run cross-encoder v2 inference to produce scored rankings."""
+    import logging
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
+
+    config = load_config(ctx.obj["config_path"], ctx.obj["symptoms_path"])
+
+    checkpoint_dir = config.output_dir / "training_v2"
+    candidates_dir = config.output_dir / "candidates"
+    output_dir = config.output_dir / "encoder_scores_v2"
+
+    if backbone == "all":
+        from hipert.training.inference_v2 import run_v2_ensemble_inference
+
+        run_v2_ensemble_inference(
+            checkpoint_dir=checkpoint_dir,
+            candidates_dir=candidates_dir,
+            output_dir=output_dir,
+            head_type=head_type,
+            num_folds=folds,
+            batch_size=batch_size,
+            top_n=top_n,
+        )
+    else:
+        from hipert.training.inference_v2 import run_v2_inference
+
+        run_v2_inference(
+            checkpoint_dir=checkpoint_dir,
+            candidates_dir=candidates_dir,
+            output_dir=output_dir,
+            head_type=head_type,
+            backbone_name=backbone,
+            num_folds=folds,
+            batch_size=batch_size,
+            top_n=top_n,
+        )
+
+    click.echo(f"v2 encoder scores written to {output_dir}")
+
+
+@cli.command("diagnose-v2")
+@click.option(
+    "--head-type", type=click.Choice(["coral", "listmle"]),
+    default="coral", help="Which head type to diagnose.",
+)
+@click.option(
+    "--backbone", type=click.Choice(["mpnet", "mental-roberta", "clinical-bert"]),
+    default="mpnet", help="Backbone model to diagnose.",
+)
+@click.option("--fold", type=int, default=1, help="Which fold checkpoint to use.")
+@click.pass_context
+def diagnose_v2(
+    ctx: click.Context,
+    head_type: str,
+    backbone: str,
+    fold: int,
+) -> None:
+    """Run score spread diagnostic on a trained v2 model."""
+    import logging
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
+
+    config = load_config(ctx.obj["config_path"], ctx.obj["symptoms_path"])
+
+    from hipert.training.cross_encoder import CrossEncoderReranker
+    from hipert.training.extract_training_data import load_training_data
+    from hipert.training.trainer_v2 import diagnose_score_spread
+
+    # Load model
+    ckpt_path = (
+        config.output_dir / "training_v2" / head_type / backbone
+        / f"fold_{fold}" / "best.pt"
+    )
+    if not ckpt_path.exists():
+        click.echo(f"ERROR: Checkpoint not found: {ckpt_path}", err=True)
+        sys.exit(1)
+
+    model = CrossEncoderReranker.load_checkpoint(ckpt_path)
+
+    # Load data
+    data_path = config.output_dir / "training_v2" / "training_data.jsonl"
+    data = load_training_data(data_path)
+
+    device = "cuda" if __import__("torch").cuda.is_available() else "cpu"
+    report = diagnose_score_spread(model, data, model.tokenizer, device=device)
+
+    if report["healthy"]:
+        click.echo(f"\nDiagnosis: HEALTHY (mean CV = {report['mean_cv']:.4f})")
+    else:
+        click.echo(
+            f"\nDiagnosis: COLLAPSED (mean CV = {report['mean_cv']:.4f}) "
+            f"— {report['n_collapsed']}/18 symptoms collapsed"
+        )
+
+
 if __name__ == "__main__":
     cli()

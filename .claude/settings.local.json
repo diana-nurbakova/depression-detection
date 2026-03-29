@@ -32,7 +32,14 @@
       "Bash(PYTHONIOENCODING=utf-8 uv run python scripts/analyze_qualitative.py --llm-judge --llm-backend ollama --top-k 10)",
       "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); tom=d.get\\(''''tom_summary'''',{}\\); print\\(''''E_profiles keys:'''', list\\(tom.get\\(''''E_profiles'''',{}\\).keys\\(\\)\\)[:5]\\); print\\(''''I_profiles keys:'''', list\\(tom.get\\(''''I_profiles'''',{}\\).keys\\(\\)\\)[:5]\\); print\\(''''W_self:'''', tom.get\\(''''W_self'''',{}\\)\\); print\\(''''W_accuracy:'''', tom.get\\(''''W_accuracy'''',{}\\)\\); print\\(''''ground_truth_provided:'''', tom.get\\(''''ground_truth_provided''''\\)\\)\")",
       "Bash(grep -n \"parse_patient_profile_bdi\\\\|ground_truth_vector\" /c/Users/dnurb/Documents/depression-detection/src/erisk_task1/*.py)",
-      "Bash(uv run:*)"
+      "Bash(uv run:*)",
+      "Bash(xargs grep:*)",
+      "Bash(grep -E \"\\\\.py$\")",
+      "Bash(python3 -c \"import sys,json; [print\\(json.dumps\\(list\\(json.loads\\(l\\).keys\\(\\)\\)\\)\\) for l in sys.stdin]\")",
+      "Bash(python3 -c \"import sys,json; d=json.loads\\(sys.stdin.readline\\(\\)\\); print\\(json.dumps\\({k:d[k] for k in [''''sentence_id'''',''''symptom_id'''',''''final_label'''',''''confidence_weight'''',''''escalated'''']}, indent=2\\)\\)\")",
+      "Bash(python3 -c \"import sys,json; data=json.loads\\(sys.stdin.readline\\(\\)\\); print\\(type\\(data\\)\\); d=data[0] if isinstance\\(data,list\\) else data; print\\(json.dumps\\(list\\(d.keys\\(\\)\\)\\)\\)\")",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\(''c:/Users/dnurb/Documents/depression-detection/output/candidates/symptom_1.json''\\)\\); print\\(type\\(data\\)\\); print\\(len\\(data\\)\\); print\\(json.dumps\\(list\\(data[0].keys\\(\\)\\)\\)\\)\")",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\(''c:/Users/dnurb/Documents/depression-detection/output/candidates/symptom_1.json'', encoding=''utf-8''\\)\\); print\\(len\\(data\\)\\); print\\(json.dumps\\(list\\(data[0].keys\\(\\)\\)\\)\\); print\\(json.dumps\\({k:data[0][k] for k in [''docno'',''combined_score'',''text''] if k in data[0]}, ensure_ascii=False\\)[:200]\\)\")"
     ]
   }
 }

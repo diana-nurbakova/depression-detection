@@ -1,70 +1,93 @@
-"""Run 1: HiPerT_full — Full HiPerT-ADHD pipeline.
+"""Run 1: LLM_cascade — LLM scoring only (PRIMARY).
 
-Complete system: bi-encoder retrieval → LLM cascade → silver labels →
-encoder training (Stages A→B→C) → calibrated inference → ensemble.
+v2 change: LLM cascade is now the primary submission (Run 1).
+
+Pure LLM scoring with the full prompt engineering stack. Ranks by
+LLM-assigned score with tie-breaking by confidence and cosine similarity.
 
 Scoring function:
-    φ(s, q) = Σ_{r=0}^{3} r · p̂_cal(r | s, q)
-    φ_ensemble = (1/3) · [φ_MentalRoBERTa + φ_ClinicalBERT + φ_mpnet]
+    φ(s, q) = 10 · llm_grade + 5 · confidence_weight
+              + 0.01 · llm_confidence + 0.001 · cosine
 
-Status: STUB — requires encoder training infrastructure (Stages A, B, C).
+Reads silver label JSONL files and candidate JSON files (for cosine scores).
+
+Spec reference: hipert_v2_spec.md Section 8.2
 """
 
 from __future__ import annotations
 
 import json
 import logging
-from pathlib import Path
 
 from hipert.config import PipelineConfig
 from hipert.runs.registry import Rankings, register_run
 
 logger = logging.getLogger(__name__)
 
-# Path where trained encoder scores would be saved
-ENCODER_SCORES_DIR = "output/encoder_scores"
-
 
 @register_run(1)
-def generate_hipert_full(config: PipelineConfig) -> Rankings:
-    """Generate Run 1 rankings from trained encoder scores.
-
-    Looks for pre-computed encoder scores at:
-        output/encoder_scores/symptom_{id}.json
-
-    Each file: list of {"docno": str, "score": float} sorted by score desc.
-
-    If encoder scores are not available, raises RuntimeError.
-    """
-    scores_dir = config.output_dir / "encoder_scores"
-    if not scores_dir.exists():
-        raise RuntimeError(
-            f"Encoder scores not found at {scores_dir}. "
-            "Run encoder training (Stages A→B→C) and inference first."
-        )
-
+def generate_llm_cascade(config: PipelineConfig) -> Rankings:
+    """Generate Run 1 rankings from LLM scoring results."""
+    silver_labels_dir = config.output_dir / "silver_labels"
+    candidates_dir = config.output_dir / "candidates"
     rankings: Rankings = {}
-    found = 0
 
     for symptom_id in range(1, 19):
-        scores_path = scores_dir / f"symptom_{symptom_id}.json"
-        if not scores_path.exists():
-            logger.warning("No encoder scores for symptom %d", symptom_id)
+        jsonl_path = silver_labels_dir / f"symptom_{symptom_id}.jsonl"
+        if not jsonl_path.exists():
+            logger.warning("No silver labels for symptom %d", symptom_id)
             continue
 
-        with open(scores_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
+        # Load LLM scoring results
+        results = []
+        with open(jsonl_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        results.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        continue
 
-        scored = [(item["docno"], item["score"]) for item in data]
+        if not results:
+            continue
+
+        # Load retrieval cosine scores for tie-breaking
+        cosine_scores: dict[str, float] = {}
+        candidates_path = candidates_dir / f"symptom_{symptom_id}.json"
+        if candidates_path.exists():
+            with open(candidates_path, "r", encoding="utf-8") as f:
+                for c in json.load(f):
+                    cosine_scores[c["docno"]] = c.get("combined_score", 0.0)
+
+        # Build ranking score per v2 spec Section 8.2
+        scored = []
+        for r in results:
+            docno = r["sentence_id"]
+            label = r.get("final_label", 0)
+            conf_weight = r.get("confidence_weight", 0.0)
+
+            if r.get("escalated") and r.get("gpt_output"):
+                llm_confidence = r["gpt_output"].get("confidence", 3)
+            else:
+                llm_confidence = r.get("llama_output", {}).get("confidence", 3)
+
+            cosine = cosine_scores.get(docno, 0.0)
+
+            score = (
+                label * 10.0
+                + conf_weight * 5.0
+                + llm_confidence * 0.01
+                + cosine * 0.001
+            )
+            scored.append((docno, score))
+
         scored.sort(key=lambda x: x[1], reverse=True)
         rankings[symptom_id] = scored[:1000]
-        found += 1
 
-    if found == 0:
-        raise RuntimeError(
-            f"No encoder score files found in {scores_dir}. "
-            "Run encoder training and inference first."
+        logger.debug(
+            "Symptom %d: %d sentences ranked by LLM score",
+            symptom_id, len(rankings[symptom_id]),
         )
 
-    logger.info("Run 1: loaded encoder scores for %d/18 symptoms", found)
     return rankings
