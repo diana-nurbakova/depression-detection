@@ -78,6 +78,7 @@ class MentalRiskESConfig:
     llm: LLMConfig = field(default_factory=LLMConfig)
     data: DataConfig = field(default_factory=DataConfig)
     resources: ResourcesConfig = field(default_factory=ResourcesConfig)
+    simulation_llm: LLMConfig = field(default_factory=LLMConfig)
     runs: list[RunConfig] = field(default_factory=list)
     pipeline: PipelineSettings = field(default_factory=PipelineSettings)
 
@@ -135,6 +136,25 @@ def load_config(config_path: str | Path) -> MentalRiskESConfig:
         checkpoint_dir=Path(data.get("checkpoint_dir", "output/mentalriskes/checkpoints")),
         log_dir=Path(data.get("log_dir", "output/mentalriskes/logs")),
     )
+
+    # Simulation LLM (for data_prep — defaults to main LLM if not specified)
+    sim = raw.get("simulation_llm", {})
+    if sim:
+        sim_provider = sim.get("provider", "openai")
+        sim_api_key_env = sim.get("api_key_env", "")
+        sim_api_key = os.environ.get(sim_api_key_env, "")
+        cfg.simulation_llm = LLMConfig(
+            provider=sim_provider,
+            base_url=os.environ.get(sim.get("base_url_env", ""), ""),
+            api_key=sim_api_key,
+            model=sim.get("model", "meta-llama/Llama-3.3-70B-Instruct-Turbo"),
+            temperature=sim.get("temperature", 0.7),
+            max_tokens=sim.get("max_tokens", 512),
+            timeout=sim.get("timeout", 60),
+        )
+    else:
+        # Fall back to main LLM config
+        cfg.simulation_llm = cfg.llm
 
     # Resources
     res = raw.get("resources", {})

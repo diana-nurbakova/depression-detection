@@ -35,6 +35,7 @@ hipert = "hipert.cli:cli"
 erisk-task2 = "erisk_task2.cli:cli"
 mentalriskes = "mentalriskes.task1.cli:cli"
 mentalriskes-task2 = "mentalriskes.task2.cli:cli"
+mentalriskes-dataprep = "mentalriskes.data_prep.cli:cli"
 
 [build-system]
 requires = ["hatchling"]
