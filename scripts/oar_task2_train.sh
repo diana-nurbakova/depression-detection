@@ -1,38 +1,23 @@
 #!/usr/bin/env bash
 # =============================================================================
-# OAR Job Script — Task 2 Training on GPU compute node
+# OAR Job Script — Task 2 Training on Grid5000 Lyon GPU node
 #
-# Submit from the frontend:
-#   oarsub -S ./scripts/oar_task2_train.sh
+# Submit from the Lyon frontend:
+#   oarsub -t exotic -p "cluster='sirius'" -l /nodes=1/gpu=1,walltime=12:00:00 \
+#       -O %jobid%-task2.stdout -E %jobid%-task2.stderr \
+#       "./scripts/oar_task2_train.sh"
+#
+# Or for gemini (V100):
+#   oarsub -t exotic -p "cluster='gemini'" -l /nodes=1/gpu=1,walltime=12:00:00 \
+#       -O %jobid%-task2.stdout -E %jobid%-task2.stderr \
+#       "./scripts/oar_task2_train.sh"
 #
 # Monitor:
-#   oarstat -u                          # list your jobs
+#   oarstat -u
 #   tail -f ~/depression-detection/runs/task2/train/training.log
-#   oarstat -fj <JOB_ID>               # detailed job info
 #
 # Cancel:
 #   oardel <JOB_ID>
-# =============================================================================
-
-# ── OAR directives ───────────────────────────────────────────────────────────
-#OAR -n erisk-task2-train
-#OAR -l /nodes=1/gpu=1,walltime=12:00:00
-#OAR -p gpu='YES'
-#OAR --stdout %jobid%-task2-train.stdout
-#OAR --stderr %jobid%-task2-train.stderr
-#OAR -d /home/%u/depression-detection
-
-# =============================================================================
-# NOTE: You may need to adjust the OAR directives above for your cluster.
-# Common variations:
-#   #OAR -l /nodes=1/gpunum=1,walltime=12:00:00
-#   #OAR -p gpumodel='V100'
-#   #OAR -t gpu
-#   #OAR -q gpu
-#
-# Check your cluster's GPU properties with:
-#   oarnodes -p gpu | head
-#   oarstat --properties
 # =============================================================================
 
 set -euo pipefail
@@ -53,10 +38,6 @@ mkdir -p "${OUTPUT_DIR}"
 echo "[$(date)] Job ${OAR_JOB_ID:-unknown} started on $(hostname)" | tee "${LOG_FILE}"
 
 # ── Environment setup ────────────────────────────────────────────────────────
-# Load modules if your cluster uses them (uncomment/adjust as needed)
-# module load cuda/12.x
-# module load python/3.11
-
 # Install uv if not present
 if ! command -v uv &>/dev/null; then
     echo "Installing uv..."
@@ -71,7 +52,7 @@ uv sync 2>&1 | tail -5
 # ── GPU check ────────────────────────────────────────────────────────────────
 echo "" | tee -a "${LOG_FILE}"
 echo "=== GPU Info ===" | tee -a "${LOG_FILE}"
-nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv,noheader 2>/dev/null | tee -a "${LOG_FILE}" || echo "nvidia-smi not found"
+nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv,noheader 2>&1 | tee -a "${LOG_FILE}"
 
 uv run python -c "
 import torch
