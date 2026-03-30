@@ -59,7 +59,7 @@ runs:
 
   - name: "run2_lightweight"
     description: "Smaller model, no correction (efficiency baseline)"
-    model: "llama3.1:8b"
+    model: "mistral:7b"
     prompt_language: "english"
     few_shot: false
     calibration: "none"

@@ -370,6 +370,238 @@ def info(ctx: click.Context) -> None:
         click.echo(f"  Could not check: {e}")
 
 
+# ---- Evaluation commands ----
+
+@cli.command("evaluate-task2")
+@click.option("--simulated-dir", default="output/mentalriskes/data_prep/simulated/task2",
+              help="Directory with simulated Task 2 sessions")
+@click.option("--config", "config_path", default="config/mentalriskes_task2.yaml",
+              help="Task 2 config file")
+@click.option("--framing", default="FUNC", help="Evaluation framing (FUNC|HYB|TOM-B|TOM-C)")
+@click.option("--lang", default="es", help="Prompt language (es|en)")
+@click.pass_context
+def evaluate_task2(
+    ctx: click.Context,
+    simulated_dir: str,
+    config_path: str,
+    framing: str,
+    lang: str,
+) -> None:
+    """Run Task 2 selector on simulated data and evaluate against gold labels."""
+    from ..config import load_config
+    from ..llm_client import LLMClient
+    from ..task2.evaluation import accuracy, cohens_kappa, bootstrap_ci
+    from ..task2.models import RoundRecord
+    from ..task2.pipeline import PipelineConfig as T2PipelineConfig, Task2Pipeline
+
+    config = load_config(config_path if Path(config_path).exists() else "config/mentalriskes.yaml")
+    client = LLMClient.from_config(config.llm)
+    click.echo(f"LLM: {config.llm.provider} / {config.llm.model}")
+
+    sim_dir = Path(simulated_dir)
+    session_dirs = sorted(d for d in sim_dir.iterdir() if d.is_dir() and d.name.startswith("sim_"))
+
+    if not session_dirs:
+        click.echo("No simulated sessions found.", err=True)
+        return
+
+    all_preds: list[int] = []
+    all_labels: list[int] = []
+
+    for sess_dir in session_dirs:
+        labels_path = sess_dir / "labels.json"
+        if not labels_path.exists():
+            click.echo(f"  Skipping {sess_dir.name}: no labels.json")
+            continue
+
+        with open(labels_path, encoding="utf-8") as f:
+            labels = {int(k): v for k, v in json.load(f).items()}
+
+        # Load rounds
+        rounds = []
+        for rf in sorted(sess_dir.glob("round_*.json")):
+            with open(rf, encoding="utf-8") as fh:
+                data = json.load(fh)["trial"]
+            rounds.append(RoundRecord(
+                round_id=data["round"],
+                patient_message=data["patient_input"],
+                options={
+                    "option_1": data["option_1"],
+                    "option_2": data["option_2"],
+                    "option_3": data["option_3"],
+                },
+            ))
+        rounds.sort(key=lambda r: r.round_id)
+
+        if not rounds:
+            continue
+
+        click.echo(f"\n--- {sess_dir.name}: {len(rounds)} rounds ---")
+
+        # Run pipeline
+        pipe_cfg = T2PipelineConfig(
+            name=f"eval_{sess_dir.name}",
+            model=config.llm.model,
+            framing=framing,
+            pipeline="B",
+            lang=lang,
+            lookback_window=3,
+        )
+        pipeline = Task2Pipeline(llm=client, config=pipe_cfg)
+        result = pipeline.run_rounds(rounds)
+
+        # Compare with labels
+        sess_preds = []
+        sess_labels = []
+        for r_out in result.rounds:
+            rid = r_out.round_id
+            if rid in labels:
+                pred = r_out.selection.chosen_option
+                gold = labels[rid]
+                mark = "OK" if pred == gold else "XX"
+                click.echo(f"  R{rid:2d}: pred={pred} gold={gold} {mark}")
+                sess_preds.append(pred)
+                sess_labels.append(gold)
+
+        if sess_preds:
+            acc = accuracy(sess_preds, sess_labels)
+            click.echo(f"  Session accuracy: {acc:.0%} ({sum(p==l for p,l in zip(sess_preds,sess_labels))}/{len(sess_preds)})")
+            all_preds.extend(sess_preds)
+            all_labels.extend(sess_labels)
+
+    # Overall results
+    if all_preds:
+        click.echo(f"\n{'='*50}")
+        click.echo(f"OVERALL Task 2 Evaluation ({len(all_preds)} rounds across {len(session_dirs)} sessions)")
+        click.echo(f"  Accuracy: {accuracy(all_preds, all_labels):.1%} ({sum(p==l for p,l in zip(all_preds,all_labels))}/{len(all_preds)})")
+        click.echo(f"  Cohen's kappa: {cohens_kappa(all_preds, all_labels):.3f}")
+        ci = bootstrap_ci(all_preds, all_labels)
+        click.echo(f"  95% CI: [{ci[0]:.1%}, {ci[1]:.1%}]")
+        click.echo(f"  Random baseline: 33.3%")
+
+
+@cli.command("evaluate-task1")
+@click.option("--simulated-dir", default="output/mentalriskes/data_prep/simulated/task1",
+              help="Directory with simulated Task 1 sessions")
+@click.option("--config", "config_path", default="config/mentalriskes.yaml",
+              help="MentalRiskES config file")
+@click.option("--run", "run_name", default=None,
+              help="Run only a specific run config")
+@click.option("--last-n-rounds", default=3, type=int,
+              help="Evaluate only last N rounds per session (where most evidence is)")
+@click.pass_context
+def evaluate_task1(
+    ctx: click.Context,
+    simulated_dir: str,
+    config_path: str,
+    run_name: str | None,
+    last_n_rounds: int,
+) -> None:
+    """Run Task 1 assessors on simulated data and compare to target scores."""
+    from ..config import load_config
+    from ..llm_client import create_llm_client
+    from ..task1.data import ConversationStore
+    from ..task1.pipeline import Pipeline, RoundPrediction
+
+    config = load_config(config_path)
+
+    if run_name:
+        config.runs = [r for r in config.runs if r.name == run_name]
+        if not config.runs:
+            click.echo(f"Run '{run_name}' not found.", err=True)
+            return
+
+    sim_dir = Path(simulated_dir)
+    session_dirs = sorted(d for d in sim_dir.iterdir() if d.is_dir() and d.name.startswith("sim_"))
+
+    if not session_dirs:
+        click.echo("No simulated sessions found.", err=True)
+        return
+
+    click.echo(f"Evaluating {len(session_dirs)} sessions with {len(config.runs)} run(s)")
+    click.echo(f"LLM: {config.llm.provider} / {config.llm.model}")
+
+    for run_config in config.runs:
+        click.echo(f"\n{'='*60}")
+        click.echo(f"Run: {run_config.name} (model={run_config.model}, cal={run_config.calibration})")
+        click.echo(f"{'='*60}")
+
+        client = create_llm_client(config.llm, model_override=run_config.model)
+
+        phq9_errors = []
+        gad7_errors = []
+
+        for sess_dir in session_dirs:
+            meta_path = sess_dir / "metadata.json"
+            if not meta_path.exists():
+                continue
+
+            with open(meta_path, encoding="utf-8") as f:
+                meta = json.load(f)
+
+            session_id = meta["session_id"]
+            target_phq9 = meta["target_scores"]["phq9_total"]
+            target_gad7 = meta["target_scores"]["gad7_total"]
+
+            # Load round files into a ConversationStore
+            store = ConversationStore()
+            round_files = sorted(sess_dir.glob("round_*.json"))
+            n_rounds = len(round_files)
+
+            # Only process last N rounds for assessment
+            eval_rounds = round_files[-last_n_rounds:]
+
+            # But we need full history — load all rounds into store first
+            for rf in round_files:
+                with open(rf, encoding="utf-8") as fh:
+                    data = json.load(fh)
+                store.update_from_server_response(data)
+
+            # Assess on the last round (full context available)
+            context = store.get_context(session_id, max_turns=20)
+
+            from ..task1.assessors import assess_all_instruments
+            from ..task1.calibration import calibrate_scores
+
+            assessments = assess_all_instruments(
+                client, context, use_few_shot=run_config.few_shot,
+            )
+
+            phq9_raw = assessments["PHQ-9"].scores
+            gad7_raw = assessments["GAD-7"].scores
+            compact10_raw = assessments["CompACT-10"].scores
+
+            phq9_cal = calibrate_scores(
+                phq9_raw, "PHQ-9", run_config.calibration, run_config.calibration_params,
+            )
+            gad7_cal = calibrate_scores(
+                gad7_raw, "GAD-7", run_config.calibration, run_config.calibration_params,
+            )
+            compact10_cal = calibrate_scores(
+                compact10_raw, "CompACT-10", run_config.calibration, run_config.calibration_params,
+            )
+
+            pred_phq9 = sum(phq9_cal)
+            pred_gad7 = sum(gad7_cal)
+            pred_compact10 = sum(compact10_cal)
+
+            phq9_err = pred_phq9 - target_phq9
+            gad7_err = pred_gad7 - target_gad7
+
+            phq9_errors.append(abs(phq9_err))
+            gad7_errors.append(abs(gad7_err))
+
+            click.echo(f"\n  {session_id}:")
+            click.echo(f"    PHQ-9:      pred={pred_phq9:2d}  target={target_phq9:2d}  err={phq9_err:+d}  items={phq9_cal}")
+            click.echo(f"    GAD-7:      pred={pred_gad7:2d}  target={target_gad7:2d}  err={gad7_err:+d}  items={gad7_cal}")
+            click.echo(f"    CompACT-10: pred={pred_compact10:2d}  items={compact10_cal}")
+
+        if phq9_errors:
+            click.echo(f"\n  --- Summary ({run_config.name}) ---")
+            click.echo(f"  PHQ-9  MAE: {sum(phq9_errors)/len(phq9_errors):.1f}")
+            click.echo(f"  GAD-7  MAE: {sum(gad7_errors)/len(gad7_errors):.1f}")
+
+
 @cli.command("run-all")
 @click.option("--output", "output_dir", default="output/mentalriskes/data_prep",
               help="Output directory")
@@ -424,3 +656,7 @@ def run_all(
     # Final status
     click.echo("\n=== Data Preparation Complete ===")
     ctx.invoke(info)
+
+
+if __name__ == "__main__":
+    cli()
