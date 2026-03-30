@@ -23,6 +23,8 @@ PROJECT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 OUTPUT_DIR="${PROJECT_DIR}/runs/task2/train"
 CONFIG_GPU="${PROJECT_DIR}/config/task2_gpu.yaml"
 LOG_FILE="${OUTPUT_DIR}/training.log"
+TRAIN_DATA_DIR="${PROJECT_DIR}/data/eRisk-2025/eRisk25-datasets/t2-early-contextualized-depression/final-eriskt2-dataset-with-ground-truth/final-eriskt2-dataset-with-ground-truth/all_combined"
+LABELS_PATH="${PROJECT_DIR}/data/eRisk-2025/eRisk25-datasets/t2-early-contextualized-depression/final-eriskt2-dataset-with-ground-truth/final-eriskt2-dataset-with-ground-truth/shuffled_ground_truth_labels.txt"
 
 log() { echo "[$(date '+%H:%M:%S')] $*"; }
 
@@ -128,8 +130,9 @@ train() {
 
             echo \"[\$(date)] Training started\" | tee ${LOG_FILE}
 
-            uv run erisk-task2 train \
-                --config ${CONFIG_GPU} \
+            uv run erisk-task2 --config ${CONFIG_GPU} train \
+                --data-dir ${TRAIN_DATA_DIR} \
+                --labels ${LABELS_PATH} \
                 --output-dir ${OUTPUT_DIR} \
                 2>&1 | tee -a ${LOG_FILE}
 
@@ -154,8 +157,9 @@ train() {
             cd ${PROJECT_DIR}
             unset VIRTUAL_ENV 2>/dev/null || true
             echo \"[\$(date)] Training started\" > ${LOG_FILE}
-            uv run erisk-task2 train \
-                --config ${CONFIG_GPU} \
+            uv run erisk-task2 --config ${CONFIG_GPU} train \
+                --data-dir ${TRAIN_DATA_DIR} \
+                --labels ${LABELS_PATH} \
                 --output-dir ${OUTPUT_DIR} \
                 2>&1 | tee -a ${LOG_FILE}
             echo \"[\$(date)] Training complete.\" | tee -a ${LOG_FILE}
