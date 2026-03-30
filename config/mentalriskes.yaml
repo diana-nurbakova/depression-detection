@@ -10,14 +10,14 @@ server:
   backoff: 0.1
 
 llm:
-  # provider: "ollama"                         # ollama | openai | huggingface
-  # base_url_env: "OLLAMA_BASE_URL"
-  # api_key_env: "OLLAMA_API_KEY"
-  # model: "llama3.3:70b"
+  provider: "ollama"                           # ollama | openai | huggingface
+  base_url_env: "OLLAMA_BASE_URL"
+  api_key_env: "OLLAMA_API_KEY"
+  model: "llama3.3:70b"
 
-  provider: "huggingface"                      # HF Inference API (serverless, no GPU)
-  api_key_env: "HF_TOKEN"                      # falls back to HF_TOKEN env var automatically
-  model: "meta-llama/Llama-3.3-70B-Instruct"
+  # provider: "huggingface"                    # HF Inference API (serverless, no GPU)
+  # api_key_env: "HF_TOKEN"                    # falls back to HF_TOKEN env var automatically
+  # model: "meta-llama/Llama-3.3-70B-Instruct"
 
   temperature: 0.1
   max_tokens: 8192                             # CompACT-10 CoT needs ~5-6K output tokens
@@ -41,7 +41,7 @@ resources:
 runs:
   - name: "run0_primary"
     description: "Llama-3.3-70B, English CoT prompts, flat correction"
-    model: "meta-llama/Llama-3.3-70B-Instruct"
+    model: "llama3.3:70b"
     prompt_language: "english"
     few_shot: true
     calibration: "flat"
@@ -51,7 +51,7 @@ runs:
 
   - name: "run1_comparison"
     description: "Llama-3.3-70B, band-aware correction"
-    model: "meta-llama/Llama-3.3-70B-Instruct"
+    model: "llama3.3:70b"
     prompt_language: "english"
     few_shot: true
     calibration: "band_aware"
@@ -59,7 +59,7 @@ runs:
 
   - name: "run2_lightweight"
     description: "Smaller model, no correction (efficiency baseline)"
-    model: "meta-llama/Llama-3.1-8B-Instruct"
+    model: "llama3.1:8b"
     prompt_language: "english"
     few_shot: false
     calibration: "none"

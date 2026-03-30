@@ -322,6 +322,60 @@ def _extract_labels(parsed: dict, instrument: str) -> list[str]:
 # Score extraction fallbacks
 # ---------------------------------------------------------------------------
 
+def _extract_bare_scores(text: str, instrument: str) -> list[int] | None:
+    """Extract a scores array from prose output when JSON parsing fails.
+
+    Handles patterns like:
+      - "CompACT-10: [3, 3, 4, 3, ...]"
+      - "### PHQ-9 Scores\n[1, 2, 1, ...]"
+      - "PHQ-9: [1, 2, 1, 2, 1, 2, 2, 2, 0]"
+      - Bare "[3, 3, 4, ...]" near end of response
+
+    Returns the scores list if found and valid, else None.
+    """
+    import re
+
+    spec = INSTRUMENTS.get(instrument)
+    if not spec:
+        return None
+
+    n_items = spec["n_items"]
+    max_val = spec["max_val"]
+
+    # Pattern: look for the instrument name followed by a scores array
+    # Handles "PHQ-9", "GAD-7", "CompACT-10", "CompACT10", case-insensitive
+    inst_pattern = re.escape(instrument).replace(r"\-", r"[\-\s]?")
+    # Match: instrument name ... [scores]
+    pattern = rf'(?:{inst_pattern})\s*(?:Scores?|:)?\s*\[([0-9,\s]+)\]'
+    match = re.search(pattern, text, re.IGNORECASE)
+
+    if not match:
+        # Fallback: find the LAST bracket array in the text with the right number of elements
+        all_arrays = re.findall(r'\[([0-9,\s]+)\]', text)
+        for arr_str in reversed(all_arrays):
+            nums = [int(x.strip()) for x in arr_str.split(",") if x.strip().isdigit()]
+            if len(nums) == n_items:
+                match_str = arr_str
+                break
+        else:
+            return None
+    else:
+        match_str = match.group(1)
+
+    # Parse the numbers
+    try:
+        scores = [int(x.strip()) for x in match_str.split(",") if x.strip().isdigit()]
+    except ValueError:
+        return None
+
+    if len(scores) != n_items:
+        return None
+
+    # Validate range
+    scores = [max(0, min(max_val, s)) for s in scores]
+    return scores
+
+
 def _extract_scores_from_steps(parsed: dict, instrument: str) -> list[int] | None:
     """
     Fallback: extract scores from Step 2 item-level data when the final
@@ -357,6 +411,71 @@ def _extract_scores_from_steps(parsed: dict, instrument: str) -> list[int] | Non
 # Assessment execution
 # ---------------------------------------------------------------------------
 
+def _minimal_retry_prompt(instrument: str, conversation_history: str) -> str:
+    """Build a calibrated retry prompt when CoT fails to produce valid JSON.
+
+    Includes item descriptions, conservative scoring guidance, and anchors
+    to prevent the over-scoring bias seen with bare prompts.
+    """
+    if instrument == "PHQ-9":
+        return f"""You are a clinical psychologist. Read this Spanish therapeutic conversation and predict PHQ-9 scores.
+
+PHQ-9 items (0=not at all, 1=several days, 2=more than half, 3=nearly every day):
+1. Little interest or pleasure in doing things
+2. Feeling down, depressed, hopeless
+3. Trouble sleeping or sleeping too much
+4. Feeling tired or little energy
+5. Poor appetite or overeating
+6. Feeling bad about yourself or failure
+7. Trouble concentrating
+8. Moving/speaking slowly or being restless
+9. Thoughts of self-harm (default to 0 unless clear evidence)
+
+RULES: Score based on evidence in the conversation only. If a symptom is not discussed, score 1 for a clearly distressed patient, 0 otherwise. Most patients score 0-2 per item. Score 3 only with strong explicit evidence. Item 9 defaults to 0.
+
+CONVERSATION:
+{conversation_history}
+
+Respond with ONLY this JSON:
+{{"{instrument}": [item1, item2, item3, item4, item5, item6, item7, item8, item9]}}"""
+
+    elif instrument == "GAD-7":
+        return f"""You are a clinical psychologist. Read this Spanish therapeutic conversation and predict GAD-7 scores.
+
+GAD-7 items (0=never, 1=several days, 2=more than half, 3=nearly every day):
+1. Feeling nervous, anxious, on edge
+2. Not being able to stop or control worrying
+3. Worrying too much about different things
+4. Trouble relaxing
+5. Being so restless it's hard to sit still
+6. Becoming easily annoyed or irritable
+7. Feeling afraid as if something awful might happen
+
+RULES: Score based on evidence only. If a symptom is not discussed, score 1 for a clearly anxious patient, 0 otherwise. Distinguish: item 1=general nervousness, items 2-3=worry patterns, item 4=physical tension, item 5=motor restlessness, item 6=irritability, item 7=anticipatory fear.
+
+CONVERSATION:
+{conversation_history}
+
+Respond with ONLY this JSON:
+{{"{instrument}": [item1, item2, item3, item4, item5, item6, item7]}}"""
+
+    else:  # CompACT-10
+        return f"""You are an ACT psychologist. Read this Spanish therapeutic conversation and predict CompACT-10 scores.
+
+CompACT-10 items (0=strongly disagree, 3=neutral, 6=strongly agree):
+OPENNESS (reverse: high=more avoidance): 3.Thought suppression, 5.Situational avoidance, 8.Emotional suppression
+AWARENESS (reverse: high=more autopilot): 1.Rushing meaningful activities, 6.Inattentive engagement, 9.Autopilot
+VALUED ACTION (direct: high=more aligned): 2.Coherent living, 4.Values-aligned, 7.Persistence, 10.Perseverance
+
+RULES: Score the patient's GENERAL TENDENCY, not just this session. For a moderately distressed patient: Openness items typically 3-4, Awareness items 3, Valued Action items 3-4. Do NOT score all items at extremes. Use the full 0-6 range.
+
+CONVERSATION:
+{conversation_history}
+
+Respond with ONLY this JSON:
+{{"{instrument}": [item1, item2, item3, item4, item5, item6, item7, item8, item9, item10]}}"""
+
+
 def assess_instrument(
     client: LLMClient,
     instrument: str,
@@ -366,14 +485,8 @@ def assess_instrument(
     """
     Run a single instrument assessment via LLM.
 
-    Args:
-        client: LLM client instance.
-        instrument: "PHQ-9", "GAD-7", or "CompACT-10".
-        conversation_history: Formatted conversation string.
-        use_few_shot: Whether to include few-shot examples.
-
-    Returns:
-        AssessmentResult with scores and reasoning steps.
+    Uses chain-of-thought prompt first. If JSON parsing fails, retries
+    with a minimal prompt that asks for scores only.
     """
     spec = INSTRUMENTS[instrument]
     prompt = build_prompt(instrument, conversation_history, use_few_shot)
@@ -384,17 +497,40 @@ def assess_instrument(
         raw_response = client.complete(messages)
     except Exception as e:
         logger.error("LLM call failed for %s: %s", instrument, e)
-        # Graceful degradation: return defaults
         defaults = _default_scores(instrument)
         return AssessmentResult(
             instrument=instrument, scores=defaults,
             error=str(e), raw_response="",
         )
 
-    # Parse response
+    # Parse response: try JSON first, then extract scores from prose
     parsed = parse_json_response(raw_response)
     if parsed is None:
-        logger.warning("Failed to parse JSON for %s, using defaults", instrument)
+        # Attempt 2: extract bare scores array from prose response
+        # The model often outputs markdown with scores as [1, 2, 3, ...]
+        bare_scores = _extract_bare_scores(raw_response, instrument)
+        if bare_scores is not None:
+            logger.info("%s: extracted scores from prose: %s", instrument, bare_scores)
+            parsed = {instrument: bare_scores}
+        else:
+            # Attempt 3: retry with minimal prompt
+            logger.info("CoT parse failed for %s, retrying with minimal prompt", instrument)
+            retry_prompt = _minimal_retry_prompt(instrument, conversation_history)
+            try:
+                retry_response = client.complete([{"role": "user", "content": retry_prompt}])
+                parsed = parse_json_response(retry_response)
+                if parsed is None:
+                    bare_scores = _extract_bare_scores(retry_response, instrument)
+                    if bare_scores is not None:
+                        parsed = {instrument: bare_scores}
+                if parsed is not None:
+                    raw_response = retry_response
+                    logger.info("Minimal retry succeeded for %s", instrument)
+            except Exception:
+                pass
+
+    if parsed is None:
+        logger.warning("All parse attempts failed for %s, using defaults", instrument)
         return AssessmentResult(
             instrument=instrument,
             scores=_default_scores(instrument),

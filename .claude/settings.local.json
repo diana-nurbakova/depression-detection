@@ -45,7 +45,9 @@
       "Bash(cp assessors.py calibration.py data.py evaluation.py pipeline.py primate.py cli.py task1/)",
       "Bash(PYTHONIOENCODING=utf-8 cat data/MentalRiskES-2026/task1_trial/data/round_2.json)",
       "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(list\\(d[''''trial''''].keys\\(\\)\\)\\)\")",
-      "Bash(uv pip:*)"
+      "Bash(uv pip:*)",
+      "Bash(PYTHONIOENCODING=utf-8 python -c \":*)",
+      "Bash(PYTHONIOENCODING=utf-8 uv run python -c \":*)"
     ]
   }
 }

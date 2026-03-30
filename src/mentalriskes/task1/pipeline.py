@@ -70,6 +70,11 @@ class Pipeline:
         model = run_config.model if run_config else None
         return create_llm_client(self.config.llm, model_override=model)
 
+    # Max conversation turns to include in prompt (first turn + last N).
+    # Keeps prompt size manageable for long sessions.
+    # 20 turns ≈ 10 exchanges ≈ ~4K chars of context.
+    MAX_CONTEXT_TURNS = 20
+
     def _assess_session(
         self,
         session_id: str,
@@ -77,7 +82,7 @@ class Pipeline:
         client: LLMClient,
     ) -> RoundPrediction:
         """Run the full 3-instrument assessment for a single session."""
-        context = self.store.get_context(session_id)
+        context = self.store.get_context(session_id, max_turns=self.MAX_CONTEXT_TURNS)
         session = self.store.get_history(session_id)
 
         # Assess all instruments

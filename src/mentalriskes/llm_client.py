@@ -256,6 +256,8 @@ class HFInferenceClient:
             model=model_override or cfg.model,
             temperature=cfg.temperature,
             max_tokens=cfg.max_tokens,
+            max_retries=5,          # more retries for rate limits
+            rate_limit_delay=2.0,   # 2s between calls to avoid TPM spikes
             timeout=cfg.timeout,
         )
 
@@ -330,11 +332,20 @@ class HFInferenceClient:
 
             except Exception as e:
                 last_error = e
-                wait = 2 ** attempt
-                logger.warning(
-                    "HF call failed (attempt %d/%d): %s — retrying in %ds",
-                    attempt, self.max_retries, e, wait,
-                )
+                err_str = str(e)
+                # Rate limit: wait longer (parse retry-after or use 10s base)
+                if "429" in err_str or "rate limit" in err_str.lower():
+                    wait = max(10, 2 ** (attempt + 1))
+                    logger.warning(
+                        "HF rate limited (attempt %d/%d), waiting %ds",
+                        attempt, self.max_retries, wait,
+                    )
+                else:
+                    wait = 2 ** attempt
+                    logger.warning(
+                        "HF call failed (attempt %d/%d): %s — retrying in %ds",
+                        attempt, self.max_retries, e, wait,
+                    )
                 if attempt < self.max_retries:
                     time.sleep(wait)
 

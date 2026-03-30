@@ -1,6 +1,7 @@
 """Evaluation utilities for MentalRiskES Task 1.
 
-Compares predictions against manual annotations (trial data) or gold labels.
+Uses shared metrics from mentalriskes.metrics. Adds task1-specific
+convenience functions for trial evaluation and trajectory analysis.
 """
 
 from __future__ import annotations
@@ -9,7 +10,13 @@ import json
 import logging
 from pathlib import Path
 
-import numpy as np
+from ..metrics import (
+    evaluate_task1_full,
+    format_task1_report,
+    mae,
+    pearson_r,
+    rmse,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -21,113 +28,21 @@ TRIAL_GOLD = {
 }
 
 
-def item_mae(predicted: list[int], gold: list[int]) -> float:
-    """Mean Absolute Error per item."""
-    return float(np.mean(np.abs(np.array(predicted) - np.array(gold))))
-
-
-def per_item_errors(predicted: list[int], gold: list[int]) -> list[int]:
-    """Absolute error per item."""
-    return [abs(p - g) for p, g in zip(predicted, gold)]
-
-
-def total_score_error(predicted: list[int], gold: list[int]) -> int:
-    """Absolute error of total scores."""
-    return abs(sum(predicted) - sum(gold))
-
-
-def severity_band_phq9(total: int) -> str:
-    if total <= 4:
-        return "minimal"
-    elif total <= 9:
-        return "mild"
-    elif total <= 14:
-        return "moderate"
-    elif total <= 19:
-        return "moderately_severe"
-    return "severe"
-
-
-def severity_band_gad7(total: int) -> str:
-    if total <= 4:
-        return "minimal"
-    elif total <= 9:
-        return "mild"
-    elif total <= 14:
-        return "moderate"
-    return "severe"
-
-
 def evaluate_prediction(
     phq9: list[int],
     gad7: list[int],
     compact10: list[int],
     gold: dict[str, list[int]] | None = None,
 ) -> dict:
-    """
-    Evaluate a prediction against gold standard.
-
-    If gold is None, uses TRIAL_GOLD (manual annotations for trial patient at round 19).
-    """
+    """Evaluate a single prediction using the full metric suite."""
     gold = gold or TRIAL_GOLD
-
-    results = {}
-    for instrument, predicted in [("PHQ-9", phq9), ("GAD-7", gad7), ("CompACT-10", compact10)]:
-        g = gold.get(instrument)
-        if g is None:
-            continue
-
-        results[instrument] = {
-            "predicted": predicted,
-            "gold": g,
-            "predicted_total": sum(predicted),
-            "gold_total": sum(g),
-            "item_mae": round(item_mae(predicted, g), 3),
-            "per_item_errors": per_item_errors(predicted, g),
-            "total_error": total_score_error(predicted, g),
-        }
-
-        if instrument == "PHQ-9":
-            results[instrument]["predicted_band"] = severity_band_phq9(sum(predicted))
-            results[instrument]["gold_band"] = severity_band_phq9(sum(g))
-            results[instrument]["band_correct"] = (
-                results[instrument]["predicted_band"] == results[instrument]["gold_band"]
-            )
-        elif instrument == "GAD-7":
-            results[instrument]["predicted_band"] = severity_band_gad7(sum(predicted))
-            results[instrument]["gold_band"] = severity_band_gad7(sum(g))
-            results[instrument]["band_correct"] = (
-                results[instrument]["predicted_band"] == results[instrument]["gold_band"]
-            )
-
-    return results
+    predicted = {"PHQ-9": phq9, "GAD-7": gad7, "CompACT-10": compact10}
+    return evaluate_task1_full(predicted, gold)
 
 
 def print_evaluation_report(results: dict) -> str:
     """Format evaluation results as a readable report."""
-    lines = []
-    lines.append("=" * 60)
-    lines.append("MentalRiskES Task 1 — Evaluation Report")
-    lines.append("=" * 60)
-
-    for instrument in ["PHQ-9", "GAD-7", "CompACT-10"]:
-        r = results.get(instrument)
-        if r is None:
-            continue
-
-        lines.append(f"\n--- {instrument} ---")
-        lines.append(f"  Predicted: {r['predicted']} (total={r['predicted_total']})")
-        lines.append(f"  Gold:      {r['gold']} (total={r['gold_total']})")
-        lines.append(f"  Item MAE:  {r['item_mae']}")
-        lines.append(f"  Per-item:  {r['per_item_errors']}")
-        lines.append(f"  Total err: {r['total_error']}")
-
-        if "predicted_band" in r:
-            match = "MATCH" if r["band_correct"] else "MISMATCH"
-            lines.append(f"  Band: {r['predicted_band']} vs {r['gold_band']} [{match}]")
-
-    report = "\n".join(lines)
-    return report
+    return format_task1_report(results)
 
 
 def evaluate_trial_run(predictions_log_path: str | Path) -> dict:
@@ -156,3 +71,40 @@ def evaluate_trial_run(predictions_log_path: str | Path) -> dict:
         )
 
     return results
+
+
+def evaluate_trajectory(
+    predictions_log_path: str | Path,
+    gold: dict[str, list[int]] | None = None,
+) -> dict[str, list[dict]]:
+    """
+    Evaluate how predictions evolve across rounds (convergence analysis).
+
+    Returns:
+        {session_id: [{round, rmse_phq9, rmse_gad7, rmse_compact10, ...}]}
+    """
+    gold = gold or TRIAL_GOLD
+    path = Path(predictions_log_path)
+    if not path.exists():
+        return {}
+
+    trajectories: dict[str, list[dict]] = {}
+
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            entry = json.loads(line)
+            sid = entry["session_id"]
+            r = entry["round"]
+
+            round_metrics = {"round": r}
+            for instrument, key in [("PHQ-9", "phq9"), ("GAD-7", "gad7"), ("CompACT-10", "compact10")]:
+                g = gold.get(instrument)
+                p = entry.get(key, [])
+                if g and p:
+                    round_metrics[f"rmse_{instrument}"] = rmse(p, g)
+                    round_metrics[f"mae_{instrument}"] = mae(p, g)
+                    round_metrics[f"total_{instrument}"] = sum(p)
+
+            trajectories.setdefault(sid, []).append(round_metrics)
+
+    return trajectories
