@@ -147,6 +147,17 @@ class LLMClient:
                 logger.warning("LLM connection error (attempt %d/%d), retrying in %ds",
                                attempt, self.max_retries, wait)
                 time.sleep(wait)
+            except Exception as e:
+                # Catch stream disconnections and other transient errors
+                err_name = type(e).__name__
+                if "Disconnected" in err_name or "RemoteDisconnected" in str(e) or "ConnectionReset" in err_name:
+                    last_error = e
+                    wait = 2 ** attempt
+                    logger.warning("LLM stream error (attempt %d/%d): %s, retrying in %ds",
+                                   attempt, self.max_retries, err_name, wait)
+                    time.sleep(wait)
+                else:
+                    raise
 
         raise last_error  # type: ignore[misc]
 
