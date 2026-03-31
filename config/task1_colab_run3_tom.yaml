@@ -1,0 +1,92 @@
+# eRisk 2026 Task 1 — Run 3 ToM (Colab + Together AI)
+# Strategy: ToM C1+C2 corrections (confidence gate + somatic boost)
+# Replaces flat_minus_3 — DCHR=67%, MAD=4.7, ADODL=1.000 on TalkDep 12-persona eval
+hardware_scenario: "colab_t4"
+
+models:
+  persona:
+    base_model: "meta-llama/Meta-Llama-3-8B-Instruct"
+    adapter_pattern: "Anxo/erisk26-task1-patient-{id:02d}-adapter"
+    torch_dtype: "float16"
+    device_map: "auto"
+    generation:
+      temperature: 0.6
+      top_p: 0.9
+      max_new_tokens: 256
+    system_prompt: >
+      You are a simulated patient. Act realistically based on your
+      internal training. Ensure contextual realism. Avoid overly detailed
+      or formal speech. Keep natural speaking style (e.g., short answers,
+      hesitations, casual expressions). Do not mention you are an AI.
+
+  interviewer:
+    provider: "openai"
+    model: "gpt-5-nano"
+    temperature: 0.7
+    max_tokens: 1000
+
+  assessor:
+    provider: "together"
+    model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+    temperature: 0.1
+    max_tokens: 2000
+
+  orchestrator_llm:
+    provider: "together"
+    model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+    temperature: 0.3
+    max_tokens: 1500
+
+  justificator:
+    provider: "together"
+    model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+    temperature: 0.2
+    max_tokens: 3000
+
+execution:
+  assess_every_n_turns: 1
+  parallel_assessors: true
+  max_turns: 8
+  min_turns: 5
+  termination_confidence: 0.5
+
+sentence_transformer:
+  enabled: true
+  model_path: "models/symptom_transformer"
+  device: "cuda"
+  batch_size: 64
+
+# ── Theory of Mind ──
+tom:
+  enabled: true
+  guide_interviewer: true
+  cost_metric: "clinical"
+  # C1: confidence gate — drops low-confidence item scores
+  # C2: somatic boost — adds +9 when somatic coverage = 0/6 and gated_total >= 20
+  corrections_enabled: true
+  conf_threshold: 0.5
+  base_threshold: 20
+  boost_amount: 9
+  # walign_threshold: null  # W_align filter disabled (no benefit over standard C1+C2)
+
+# No standard post-hoc correction for Run 3 — ToM corrections replace it
+correction:
+  run3: "none"
+
+together:
+  timeout_seconds: 120
+  retry_attempts: 3
+
+openai:
+  timeout_seconds: 60
+  retry_attempts: 3
+
+logging:
+  output_dir: "./runs/task1"
+  log_level: "INFO"
+  save_raw_llm_responses: true
+  save_linguistic_features: true
+
+run:
+  id: 3
+  type: "automated"
