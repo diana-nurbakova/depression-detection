@@ -58,7 +58,9 @@ uv run python -c "
 import torch
 print(f'PyTorch {torch.__version__}, CUDA available: {torch.cuda.is_available()}')
 if torch.cuda.is_available():
-    print(f'GPU: {torch.cuda.get_device_name(0)}, VRAM: {torch.cuda.get_device_properties(0).total_mem / 1e9:.1f} GB')
+    props = torch.cuda.get_device_properties(0)
+    vram = getattr(props, 'total_memory', None) or getattr(props, 'total_mem', 0)
+    print(f'GPU: {props.name}, VRAM: {vram / 1e9:.1f} GB')
 " 2>&1 | tee -a "${LOG_FILE}"
 
 # ── Create GPU config if needed ──────────────────────────────────────────────
