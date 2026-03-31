@@ -170,6 +170,17 @@ def run_persona_conversation(
         if sdc_res.applied:
             raw_total = sdc_res.adjusted_total
 
+    # ToM summary (must come before ToM corrections)
+    tom_summary: dict = {}
+    if tom_tracker is not None:
+        tom_summary = tom_tracker.to_summary_dict()
+        logger.info(
+            "ToM summary: %d turns tracked, %d gaps, POT=%s",
+            len(tom_summary.get("turns_tracked", [])),
+            len(tom_summary.get("coverage_gaps", {}).get("gaps", [])),
+            tom_summary.get("pot_available"),
+        )
+
     # ToM-informed corrections (C1: confidence gate, C2: somatic boost)
     tom_correction_result = None
     if config.tom.corrections_enabled:
@@ -233,17 +244,6 @@ def run_persona_conversation(
             for item in top4_items
             if item.item_id in BDI_ITEMS or item.item_name
         ]
-
-    # ToM summary
-    tom_summary: dict = {}
-    if tom_tracker is not None:
-        tom_summary = tom_tracker.to_summary_dict()
-        logger.info(
-            "ToM summary: %d turns tracked, %d gaps, POT=%s",
-            len(tom_summary.get("turns_tracked", [])),
-            len(tom_summary.get("coverage_gaps", {}).get("gaps", [])),
-            tom_summary.get("pot_available"),
-        )
 
     elapsed = time.monotonic() - t_start
     logger.info(
