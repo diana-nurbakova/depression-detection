@@ -1,10 +1,15 @@
 """LLM client for MentalRiskES Task 1.
 
-Supports two providers:
-  - ollama / openai: HTTP streaming via requests (Ollama native or OpenAI-compatible)
+Supports three providers:
+  - ollama:      Ollama native or /v1 OpenAI-compatible endpoint (local GPU)
+  - together:    TogetherAI API (https://api.together.xyz/v1) — streaming, pay-per-token
+  - openai:      OpenAI-compatible (non-streaming by default; set base_url for any endpoint)
   - huggingface: HF Inference API via huggingface_hub (serverless, no GPU needed)
 
-Both expose the same interface: complete(), chat_completion(), stats.
+Together is the recommended remote option for the ablation study: Llama-3.3-70B-Instruct-Turbo
+at ~$0.88/M tokens is cheap enough to run all 6 ablation configs on trial data.
+
+All providers expose the same interface: complete(), chat_completion(), stats.
 Use create_llm_client() factory to get the right one from config.
 """
 
@@ -37,10 +42,14 @@ class LLMClient:
     rate_limit_delay: float = 1.0
     timeout: int = 180
 
+    # Fallback client (used when primary fails after all retries)
+    _fallback: LLMClient | None = field(default=None, init=False, repr=False)
+
     # Tracking
     _call_count: int = field(default=0, init=False, repr=False)
     _total_tokens: int = field(default=0, init=False, repr=False)
     _total_latency_ms: float = field(default=0.0, init=False, repr=False)
+    _fallback_count: int = field(default=0, init=False, repr=False)
 
     @classmethod
     def from_config(cls, cfg: LLMConfig, model_override: str | None = None) -> LLMClient:
@@ -53,6 +62,11 @@ class LLMClient:
             max_tokens=cfg.max_tokens,
             timeout=cfg.timeout,
         )
+
+    def with_fallback(self, fallback: LLMClient) -> LLMClient:
+        """Attach a fallback client used when the primary fails after all retries."""
+        self._fallback = fallback
+        return self
 
     def complete(
         self,
@@ -70,8 +84,31 @@ class LLMClient:
         temperature: float | None = None,
         max_tokens: int | None = None,
     ) -> dict:
-        """Send a streaming chat completion request and return assembled response."""
+        """Send chat completion, falling back to secondary client on failure."""
+        try:
+            return self._do_chat_completion(messages, temperature, max_tokens)
+        except Exception as primary_err:
+            if self._fallback is None:
+                raise
+            logger.warning(
+                "Primary LLM failed (%s/%s): %s — falling back to %s/%s",
+                self.provider, self.model, primary_err,
+                self._fallback.provider, self._fallback.model,
+            )
+            self._fallback_count += 1
+            return self._fallback._do_chat_completion(messages, temperature, max_tokens)
+
+    def _do_chat_completion(
+        self,
+        messages: list[dict[str, str]],
+        temperature: float | None = None,
+        max_tokens: int | None = None,
+    ) -> dict:
+        """Send a chat completion request and return response."""
         use_native_ollama = self.provider == "ollama" and "/v1" not in self.base_url
+        # Stream for: Ollama (native + /v1) and Together (avoids long non-streaming timeouts).
+        # Non-streaming for: generic openai-compatible endpoints (simpler, safer).
+        use_streaming = use_native_ollama or self.provider in ("ollama", "together")
 
         if use_native_ollama:
             url = f"{self.base_url.rstrip('/')}/api/chat"
@@ -92,7 +129,7 @@ class LLMClient:
                 "stream": True,
                 "options": {"temperature": temp, "num_predict": mtok},
             }
-        else:
+        elif use_streaming:
             payload = {
                 "model": self.model,
                 "messages": messages,
@@ -101,18 +138,41 @@ class LLMClient:
                 "temperature": temp,
                 "max_tokens": mtok,
             }
+        else:
+            # Newer OpenAI models (gpt-5-nano, o-series) require max_completion_tokens
+            # and don't support temperature
+            is_new_openai = any(self.model.startswith(p) for p in ("gpt-5-nano", "gpt-5-mini", "o1", "o3", "o4"))
+            payload: dict = {
+                "model": self.model,
+                "messages": messages,
+                "stream": False,
+            }
+            if is_new_openai:
+                payload["max_completion_tokens"] = mtok
+                # These models only support temperature=1 (default); omit it
+            else:
+                payload["max_tokens"] = mtok
+                payload["temperature"] = temp
 
         last_error: Exception | None = None
         for attempt in range(1, self.max_retries + 1):
             try:
                 t0 = time.monotonic()
                 read_timeout = max(self.timeout, 300)
-                response = requests.post(
-                    url, headers=headers, json=payload,
-                    timeout=(30, read_timeout), stream=True,
-                )
-                response.raise_for_status()
-                result = self._consume_stream(response, use_native_ollama)
+                if use_streaming:
+                    response = requests.post(
+                        url, headers=headers, json=payload,
+                        timeout=(30, read_timeout), stream=True,
+                    )
+                    response.raise_for_status()
+                    result = self._consume_stream(response, use_native_ollama)
+                else:
+                    response = requests.post(
+                        url, headers=headers, json=payload,
+                        timeout=(30, read_timeout),
+                    )
+                    response.raise_for_status()
+                    result = response.json()
                 elapsed = time.monotonic() - t0
 
                 self._call_count += 1
@@ -215,13 +275,18 @@ class LLMClient:
 
     @property
     def stats(self) -> dict:
-        return {
+        s = {
             "provider": self.provider,
             "model": self.model,
             "call_count": self._call_count,
             "total_tokens": self._total_tokens,
             "total_latency_ms": round(self._total_latency_ms, 1),
         }
+        if self._fallback_count > 0:
+            s["fallback_count"] = self._fallback_count
+            s["fallback_provider"] = self._fallback.provider if self._fallback else None
+            s["fallback_model"] = self._fallback.model if self._fallback else None
+        return s
 
 
 # ---------------------------------------------------------------------------
@@ -385,25 +450,55 @@ class HFInferenceClient:
 # ---------------------------------------------------------------------------
 
 
+_TOGETHER_DEFAULT_BASE_URL = "https://api.together.xyz/v1"
+
+
 def create_llm_client(
     cfg: LLMConfig,
     model_override: str | None = None,
 ) -> LLMClient | HFInferenceClient:
     """Create an LLM client based on the provider in config.
 
+    Supported providers:
+      - "ollama":      local Ollama (streaming, native or /v1)
+      - "together":    TogetherAI (streaming SSE, OpenAI-compatible)
+                       base_url defaults to https://api.together.xyz/v1
+                       api_key from TOGETHER_API_KEY env var
+      - "openai":      OpenAI or any OpenAI-compatible endpoint (non-streaming)
+      - "huggingface": HF Inference API (serverless)
+
     Args:
         cfg: LLM configuration.
         model_override: Optional model name override (e.g., from run config).
 
     Returns:
-        LLMClient (ollama/openai) or HFInferenceClient (huggingface).
+        LLMClient (ollama/together/openai) or HFInferenceClient (huggingface).
     """
     if cfg.provider == "huggingface":
         logger.info("Using HuggingFace Inference API: %s", model_override or cfg.model)
         return HFInferenceClient.from_config(cfg, model_override)
-    else:
-        logger.info("Using %s client: %s", cfg.provider, model_override or cfg.model)
-        return LLMClient.from_config(cfg, model_override)
+
+    if cfg.provider == "together":
+        import os
+        base_url = cfg.base_url or os.environ.get("TOGETHER_BASE_URL", _TOGETHER_DEFAULT_BASE_URL)
+        api_key = cfg.api_key or os.environ.get("TOGETHER_API_KEY", "")
+        if not api_key:
+            logger.warning("Together provider selected but TOGETHER_API_KEY is not set")
+        client = LLMClient(
+            provider="together",
+            base_url=base_url,
+            api_key=api_key,
+            model=model_override or cfg.model,
+            temperature=cfg.temperature,
+            max_tokens=cfg.max_tokens,
+            timeout=cfg.timeout,
+            rate_limit_delay=0.5,   # Together handles bursts well; small delay avoids RPM limits
+        )
+        logger.info("Using TogetherAI: %s @ %s", client.model, base_url)
+        return client
+
+    logger.info("Using %s client: %s", cfg.provider, model_override or cfg.model)
+    return LLMClient.from_config(cfg, model_override)
 
 
 def parse_json_response(text: str) -> dict | None:

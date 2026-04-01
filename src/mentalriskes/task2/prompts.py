@@ -485,11 +485,161 @@ Select the option with highest weighted score.""",
 
 
 # ---------------------------------------------------------------------------
-# Variant-specific system prompt assembly
+# Single-prompt CoT (Variant A) — combines state + evaluation in one call
 # ---------------------------------------------------------------------------
 
-def build_selection_system(framing: str, lang: str = "es") -> str:
+SINGLE_COT_SYSTEM = {
+    "es": """\
+Eres un sistema de apoyo a la decisión terapéutica basado en Terapia de Aceptación \
+y Compromiso (ACT). Recibes una conversación terapéutica en español y debes:
+
+1. Analizar el ESTADO actual del paciente (fase terapéutica, emoción, procesos ACT).
+2. EVALUAR tres opciones de respuesta del terapeuta usando análisis funcional.
+3. SELECCIONAR la opción más apropiada.
+
+Responde con un JSON que incluya tanto el estado como la selección.""",
+
+    "en": """\
+You are an ACT-based therapeutic decision support system. You receive a therapeutic \
+conversation in Spanish and must:
+
+1. Analyze the patient's current STATE (therapeutic phase, emotion, ACT processes).
+2. EVALUATE three therapist response options using functional analysis.
+3. SELECT the most appropriate option.
+
+Respond with JSON including both state and selection.""",
+}
+
+
+# ---------------------------------------------------------------------------
+# Step 1.5: Characterization-only (Variant B+)
+# ---------------------------------------------------------------------------
+
+CHARACTERIZATION_SYSTEM = {
+    "es": """\
+Eres un sistema de etiquetado terapéutico. Para cada una de las tres opciones de \
+respuesta del terapeuta, asigna etiquetas terapéuticas del vocabulario controlado. \
+Evalúa la FUNCIÓN de cada respuesta, no su forma superficial.
+
+Etiquetas de consistencia: validación_empática, defusión_experiencial, \
+  aceptación_compasiva, momento_presente_atento, exploración_valores, \
+  acción_comprometida_gradual, yo_contexto_observador, normalización_experiencia, \
+  permanencia_con_dificultad.
+
+Etiquetas de inconsistencia: consejo_directivo, reaseguramiento_prematuro, \
+  activación_prematura, sobrecarga_preguntas, conceptual_excesivo, \
+  positivismo_forzado, control_emocional, mindfulness_como_control, \
+  imposición_valores.
+
+Responde SOLO con JSON:
+{
+  "opcion_1": {"etiquetas_consistencia": [], "etiquetas_inconsistencia": [], "función_principal": "..."},
+  "opcion_2": {"etiquetas_consistencia": [], "etiquetas_inconsistencia": [], "función_principal": "..."},
+  "opcion_3": {"etiquetas_consistencia": [], "etiquetas_inconsistencia": [], "función_principal": "..."}
+}""",
+
+    "en": """\
+You are a therapeutic tagging system. For each of the three therapist response options, \
+assign therapeutic tags from the controlled vocabulary. Evaluate the FUNCTION of each \
+response, not its surface form.
+
+Consistency tags: empathic_validation, experiential_defusion, \
+  compassionate_acceptance, mindful_present_moment, values_exploration, \
+  gradual_committed_action, observer_self, experience_normalization, \
+  staying_with_difficulty.
+
+Inconsistency tags: directive_advice, premature_reassurance, \
+  premature_activation, question_overload, excessively_conceptual, \
+  forced_positivity, emotional_control, mindfulness_as_control, \
+  values_imposition.
+
+Respond ONLY with JSON:
+{
+  "option_1": {"consistency_tags": [], "inconsistency_tags": [], "primary_function": "..."},
+  "option_2": {"consistency_tags": [], "inconsistency_tags": [], "primary_function": "..."},
+  "option_3": {"consistency_tags": [], "inconsistency_tags": [], "primary_function": "..."}
+}""",
+}
+
+
+# ---------------------------------------------------------------------------
+# Experiential tiebreaker calibration (§4.2 of v1.2 update)
+# ---------------------------------------------------------------------------
+
+EXPERIENTIAL_CALIBRATION = {
+    "es": """\
+
+## CALIBRACIÓN DE SELECCIÓN
+
+Cuando dos opciones son similares en consistencia ACT y adecuación a la fase:
+
+1. Prefiere la opción que usa un enfoque más EXPERIENCIAL y METAFÓRICO \
+sobre la que es más directa o conceptual.
+(Ejemplo: "observa cómo se siente en tu cuerpo" > "¿qué piensas sobre eso?")
+
+2. Prefiere la opción que INVITA a la observación sobre la que DIRIGE \
+la atención.
+(Ejemplo: "¿qué notas?" > "fíjate en que...")
+
+3. Prefiere la opción que avanza al RITMO DEL PACIENTE sobre la que \
+introduce técnicas nuevas o empuja hacia una fase siguiente.
+(Ejemplo: acompañar en la experiencia actual > proponer un ejercicio nuevo)
+
+4. Prefiere la opción que es más BREVE y da más ESPACIO cuando el \
+paciente ha mostrado señales de necesitar procesamiento interno \
+(pausas, "gracias", turnos cortos).
+
+Esta calibración refleja principios clínicos ACT: los métodos \
+experienciales son preferibles a los conceptuales (ACT-FM C2), y el \
+ritmo debe ser del paciente, no del terapeuta.""",
+
+    "en": """\
+
+## SELECTION CALIBRATION
+
+When two options are similar in ACT consistency and phase fit:
+
+1. Prefer the option using a more EXPERIENTIAL and METAPHORICAL approach \
+over a more direct or conceptual one.
+(Example: "notice how that feels in your body" > "what do you think about that?")
+
+2. Prefer the option that INVITES observation over one that DIRECTS attention.
+(Example: "what do you notice?" > "pay attention to...")
+
+3. Prefer the option that follows the PATIENT'S PACE over one that introduces \
+new techniques or pushes toward the next phase.
+(Example: accompanying the current experience > proposing a new exercise)
+
+4. Prefer the option that is more BRIEF and gives more SPACE when the patient \
+has shown signs of needing internal processing (pauses, "thank you", short turns).
+
+This calibration reflects core ACT clinical principles: experiential methods \
+are preferable to conceptual ones (ACT-FM C2), and pacing should follow the \
+patient, not the therapist.""",
+}
+
+
+def build_selection_system(
+    framing: str, lang: str = "es", calibration: bool = False,
+) -> str:
     """Assemble the full system prompt for Step 2 based on framing variant.
+
+    Args:
+        framing: FUNC, HYB, TOM-B, or TOM-C.
+        lang: "es" or "en".
+        calibration: If True, append experiential tiebreaker calibration.
+
+    Returns:
+        Full system prompt string.
+    """
+    system = _build_selection_system_base(framing, lang)
+    if calibration:
+        system += EXPERIENTIAL_CALIBRATION[lang]
+    return system
+
+
+def _build_selection_system_base(framing: str, lang: str = "es") -> str:
+    """Assemble the base system prompt for Step 2 (without calibration).
 
     Variants:
       FUNC  — Full functional analysis (§5.5)
@@ -501,9 +651,7 @@ def build_selection_system(framing: str, lang: str = "es") -> str:
         return FUNC_SYSTEM[lang]
 
     elif framing == "HYB":
-        # FUNC elimination steps + ToM for evaluation/selection
         base = FUNC_SYSTEM[lang]
-        # Insert ToM module before the selection step
         tom = TOM_EVAL_MODULE[lang]
         return f"""{base}
 
@@ -696,82 +844,7 @@ Respond ONLY with valid JSON:
         raise ValueError(f"Unknown framing variant: {framing}")
 
 
-# ---------------------------------------------------------------------------
-# Single-prompt CoT (Variant A) — combines state + evaluation in one call
-# ---------------------------------------------------------------------------
-
-SINGLE_COT_SYSTEM = {
-    "es": """\
-Eres un sistema de apoyo a la decisión terapéutica basado en Terapia de Aceptación \
-y Compromiso (ACT). Recibes una conversación terapéutica en español y debes:
-
-1. Analizar el ESTADO actual del paciente (fase terapéutica, emoción, procesos ACT).
-2. EVALUAR tres opciones de respuesta del terapeuta usando análisis funcional.
-3. SELECCIONAR la opción más apropiada.
-
-Responde con un JSON que incluya tanto el estado como la selección.""",
-
-    "en": """\
-You are an ACT-based therapeutic decision support system. You receive a therapeutic \
-conversation in Spanish and must:
-
-1. Analyze the patient's current STATE (therapeutic phase, emotion, ACT processes).
-2. EVALUATE three therapist response options using functional analysis.
-3. SELECT the most appropriate option.
-
-Respond with JSON including both state and selection.""",
-}
-
-
-# ---------------------------------------------------------------------------
-# Step 1.5: Characterization-only (Variant B+)
-# ---------------------------------------------------------------------------
-
-CHARACTERIZATION_SYSTEM = {
-    "es": """\
-Eres un sistema de etiquetado terapéutico. Para cada una de las tres opciones de \
-respuesta del terapeuta, asigna etiquetas terapéuticas del vocabulario controlado. \
-Evalúa la FUNCIÓN de cada respuesta, no su forma superficial.
-
-Etiquetas de consistencia: validación_empática, defusión_experiencial, \
-  aceptación_compasiva, momento_presente_atento, exploración_valores, \
-  acción_comprometida_gradual, yo_contexto_observador, normalización_experiencia, \
-  permanencia_con_dificultad.
-
-Etiquetas de inconsistencia: consejo_directivo, reaseguramiento_prematuro, \
-  activación_prematura, sobrecarga_preguntas, conceptual_excesivo, \
-  positivismo_forzado, control_emocional, mindfulness_como_control, \
-  imposición_valores.
-
-Responde SOLO con JSON:
-{
-  "opcion_1": {"etiquetas_consistencia": [], "etiquetas_inconsistencia": [], "función_principal": "..."},
-  "opcion_2": {"etiquetas_consistencia": [], "etiquetas_inconsistencia": [], "función_principal": "..."},
-  "opcion_3": {"etiquetas_consistencia": [], "etiquetas_inconsistencia": [], "función_principal": "..."}
-}""",
-
-    "en": """\
-You are a therapeutic tagging system. For each of the three therapist response options, \
-assign therapeutic tags from the controlled vocabulary. Evaluate the FUNCTION of each \
-response, not its surface form.
-
-Consistency tags: empathic_validation, experiential_defusion, \
-  compassionate_acceptance, mindful_present_moment, values_exploration, \
-  gradual_committed_action, observer_self, experience_normalization, \
-  staying_with_difficulty.
-
-Inconsistency tags: directive_advice, premature_reassurance, \
-  premature_activation, question_overload, excessively_conceptual, \
-  forced_positivity, emotional_control, mindfulness_as_control, \
-  values_imposition.
-
-Respond ONLY with JSON:
-{
-  "option_1": {"consistency_tags": [], "inconsistency_tags": [], "primary_function": "..."},
-  "option_2": {"consistency_tags": [], "inconsistency_tags": [], "primary_function": "..."},
-  "option_3": {"consistency_tags": [], "inconsistency_tags": [], "primary_function": "..."}
-}""",
-}
+# Remove old build_selection_system (replaced above)
 
 
 def build_selection_user(

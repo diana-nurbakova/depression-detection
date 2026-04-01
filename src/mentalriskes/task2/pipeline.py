@@ -27,11 +27,15 @@ class PipelineConfig:
     lang: str = "es"  # es | en
     lookback_window: int = 3  # W1, W3, W5
     permutation_voting: bool = False
+    calibration: bool = False  # Experiential tiebreaker calibration
 
     @property
     def config_id(self) -> str:
         perm = "PERM" if self.permutation_voting else "FIX"
-        return f"{self.pipeline}_{self.model.split(':')[0]}_{self.lang}_{self.framing}_{perm}_W{self.lookback_window}"
+        cal = "_CAL" if self.calibration else ""
+        # Sanitize model name for filenames (remove / and :)
+        model_short = self.model.split("/")[-1].split(":")[0]
+        return f"{self.pipeline}_{model_short}_{self.lang}_{self.framing}_{perm}_W{self.lookback_window}{cal}"
 
 
 @dataclass
@@ -70,6 +74,7 @@ class Task2Pipeline:
             pipeline=config.pipeline,
             lang=config.lang,
             lookback_window=config.lookback_window,
+            calibration=config.calibration,
         )
 
     def run_trial(self, trial_dir: Path) -> PipelineResult:

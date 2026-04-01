@@ -53,7 +53,18 @@
       "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(m[''''name'''']\\) for m in d.get\\(''''models'''',[]\\)]\")",
       "Bash(ls -la c:/Users/dnurb/Documents/depression-detection/output/rankings/*.trec)",
       "Read(//c/Users/dnurb/Documents/depression-detection/**)",
-      "Bash(python -c \":*)"
+      "Bash(python -c \":*)",
+      "Bash(grep Round.*selected C:/Users/dnurb/AppData/Local/Temp/claude/c--Users-dnurb-Documents-depression-detection/84d80cb5-e803-4aa7-bea9-e466a682ed86/tasks/b7hsg4kc5.output)",
+      "Bash(python -c \"import json; d=json.load\\(open\\(''data/MentalRiskES-2026/task1_trial/data/round_1.json''\\)\\); print\\(list\\(d.keys\\(\\)\\)[:3]\\); k=list\\(d.keys\\(\\)\\)[0]; print\\(json.dumps\\(d[k], ensure_ascii=False, indent=2\\)[:400]\\)\")",
+      "Bash(grep -c Round.*selected C:/Users/dnurb/AppData/Local/Temp/claude/c--Users-dnurb-Documents-depression-detection/84d80cb5-e803-4aa7-bea9-e466a682ed86/tasks/bbal10ljw.output)",
+      "Bash(grep Round.*selected C:/Users/dnurb/AppData/Local/Temp/claude/c--Users-dnurb-Documents-depression-detection/84d80cb5-e803-4aa7-bea9-e466a682ed86/tasks/bbal10ljw.output)",
+      "Bash(grep -c Round.*selected C:/Users/dnurb/AppData/Local/Temp/claude/c--Users-dnurb-Documents-depression-detection/84d80cb5-e803-4aa7-bea9-e466a682ed86/tasks/b6s11j6k2.output)",
+      "Bash(grep Round.*selected C:/Users/dnurb/AppData/Local/Temp/claude/c--Users-dnurb-Documents-depression-detection/84d80cb5-e803-4aa7-bea9-e466a682ed86/tasks/b6s11j6k2.output)",
+      "Bash(PYTHONPATH=src timeout 1800 python -c \":*)",
+      "Bash(ls -la \"c:/Users/dnurb/Documents/depression-detection/output/mentalriskes_task2/ablation/\"*.jsonl)",
+      "Bash(PYTHONPATH=src timeout 600 python -c \":*)",
+      "Bash(python -m src.mentalriskes.task1.cli --help)",
+      "Bash(PYTHONPATH=src timeout 900 python -c \":*)"
     ]
   }
 }

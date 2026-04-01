@@ -161,6 +161,153 @@ def extract_primate(ctx: click.Context, output: str | None) -> None:
 
 
 @cli.command()
+@click.option("--configs", default="A0,A1,A3,A5",
+              help="Comma-separated config names to run (A0-A5). Default: A0,A1,A3,A5.")
+@click.option("--output-dir", default="runs/mentalriskes_ablation",
+              help="Directory to save per-config results and report.")
+@click.option("--posthoc", "raw_log", default=None,
+              help="Path to existing predictions JSONL: apply B/C post-hoc (no LLM re-run).")
+@click.option("--level-b/--no-level-b", default=True,
+              help="Apply Level B constraints in post-hoc mode.")
+@click.option("--level-c/--no-level-c", default=False,
+              help="Apply Level C agent in post-hoc mode (requires Ollama).")
+@click.pass_context
+def ablation(
+    ctx: click.Context,
+    configs: str,
+    output_dir: str,
+    raw_log: str | None,
+    level_b: bool,
+    level_c: bool,
+) -> None:
+    """Run calibration ablation study (A0–A5) on trial data.
+
+    Two modes:\n
+    1. Full LLM ablation (default): runs each config end-to-end, requires Ollama.\n
+       Example: mentalriskes ablation --configs A0,A1,A3,A5\n
+    2. Post-hoc mode: applies Level B/C to an existing prediction log.\n
+       Example: mentalriskes ablation --posthoc output/mentalriskes/logs/predictions_run0_A5.jsonl
+    """
+    config = load_config(ctx.obj["config_path"])
+    level = "DEBUG" if ctx.obj["verbose"] else config.pipeline.log_level
+    setup_logging(level)
+
+    from .ablation import (
+        ABLATION_CONFIGS,
+        format_ablation_comparison,
+        format_posthoc_report,
+        posthoc_calibration_ablation,
+        run_ablation_study,
+    )
+    from .evaluation import TRIAL_GOLD
+
+    if raw_log:
+        # Post-hoc mode: apply B/C to existing prediction log
+        click.echo(f"Post-hoc calibration ablation on: {raw_log}")
+        click.echo(f"  Level B: {level_b} | Level C: {level_c}")
+
+        client = None
+        if level_c:
+            from ..llm_client import create_llm_client
+            client = create_llm_client(config.llm)
+
+        result = posthoc_calibration_ablation(
+            raw_log, gold=TRIAL_GOLD,
+            apply_level_b=level_b, apply_level_c=level_c,
+            client=client,
+        )
+        report = format_posthoc_report(result, TRIAL_GOLD)
+        click.echo(report)
+
+        # Save
+        out = Path(output_dir)
+        out.mkdir(parents=True, exist_ok=True)
+        suffix = f"{'B' if level_b else ''}{'C' if level_c else ''}"
+        out_path = out / f"posthoc_{suffix}_{Path(raw_log).stem}.json"
+        out_path.write_text(json.dumps(result, indent=2, ensure_ascii=False))
+        click.echo(f"\nSaved to: {out_path}")
+    else:
+        # Full LLM ablation
+        config_names = [c.strip() for c in configs.split(",") if c.strip()]
+        unknown = [c for c in config_names if c not in ABLATION_CONFIGS]
+        if unknown:
+            click.echo(f"Unknown configs: {unknown}. Valid: {list(ABLATION_CONFIGS.keys())}", err=True)
+            sys.exit(1)
+
+        click.echo(f"Running ablation configs: {config_names}")
+        click.echo(f"Trial data: {config.data.trial_dir}")
+        click.echo(f"Output: {output_dir}")
+        click.echo(f"LLM: {config.llm.model} via {config.llm.provider}")
+        click.echo("")
+
+        results = run_ablation_study(
+            configs=config_names,
+            trial_dir=config.data.trial_dir,
+            pipeline_cfg=config,
+            output_dir=output_dir,
+        )
+
+        if results:
+            report = format_ablation_comparison(results)
+            click.echo(report)
+
+
+@cli.command("sim-ablation")
+@click.option("--simulated-dir", required=True,
+              help="Root directory with simulated persona sessions (each sub-dir has round_N.json + metadata.json).")
+@click.option("--configs", default="A0,A1,A3,A5",
+              help="Comma-separated ablation config names. Default: A0,A1,A3,A5.")
+@click.option("--output-dir", default="runs/mentalriskes_simulated_ablation",
+              help="Directory to save results and report.")
+@click.pass_context
+def sim_ablation(
+    ctx: click.Context,
+    simulated_dir: str,
+    configs: str,
+    output_dir: str,
+) -> None:
+    """Run calibration ablation on simulated persona sessions.
+
+    Validates Level A/B/C calibration tiers across multiple synthetic patient
+    profiles. Gold labels are derived from simulator metadata
+    (phq9_total, gad7_total, compact10_profile).
+
+    Typical usage after generating sessions with mentalriskes-dataprep simulate:\\n
+      mentalriskes sim-ablation --simulated-dir output/mentalriskes/data_prep/simulated/task1
+
+    Use --configs A0,A1,A3,A5 for the standard ablation or A0,A1,A2,A3,A4,A5
+    for the full 6-config study.
+    """
+    config = load_config(ctx.obj["config_path"])
+    level = "DEBUG" if ctx.obj["verbose"] else config.pipeline.log_level
+    setup_logging(level)
+
+    from .ablation import ABLATION_CONFIGS, run_ablation_on_simulated
+
+    config_names = [c.strip() for c in configs.split(",") if c.strip()]
+    unknown = [c for c in config_names if c not in ABLATION_CONFIGS]
+    if unknown:
+        click.echo(f"Unknown configs: {unknown}. Valid: {list(ABLATION_CONFIGS.keys())}", err=True)
+        import sys
+        sys.exit(1)
+
+    click.echo(f"Simulated ablation on: {simulated_dir}")
+    click.echo(f"Configs: {config_names}")
+    click.echo(f"LLM: {config.llm.model} via {config.llm.provider}")
+    click.echo(f"Output: {output_dir}")
+    click.echo("")
+
+    results = run_ablation_on_simulated(
+        simulated_dir=simulated_dir,
+        configs=config_names,
+        pipeline_cfg=config,
+        output_dir=output_dir,
+    )
+
+    click.echo(f"\nCompleted: {len(results)} sessions processed.")
+
+
+@cli.command()
 @click.pass_context
 def info(ctx: click.Context) -> None:
     """Show current configuration and resource status."""
@@ -183,6 +330,7 @@ def info(ctx: click.Context) -> None:
     for r in config.runs:
         click.echo(f"  {r.name}: {r.description}")
         click.echo(f"    model={r.model} calibration={r.calibration} few_shot={r.few_shot}")
+        click.echo(f"    prompt_anchors={r.prompt_anchors} level_b={r.level_b} level_c={r.level_c}")
 
     click.echo(f"\nData:")
     click.echo(f"  Trial:     {config.data.trial_dir} ({'exists' if config.data.trial_dir.exists() else 'MISSING'})")

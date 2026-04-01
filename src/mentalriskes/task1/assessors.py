@@ -253,11 +253,196 @@ def _build_verbalizer_instructions(instrument: str) -> str:
     return "\n".join(lines)
 
 
+# ---------------------------------------------------------------------------
+# Level A prompt anchors (spec section 3.1)
+# ---------------------------------------------------------------------------
+
+# Per-instrument anchor texts injected when prompt_anchors=True (Level A).
+# Source: mentalriskes2026_constraints_ablation_spec.md section 3.1.
+_LEVEL_A_ANCHORS: dict[str, list[str]] = {
+    "PHQ-9": [
+        "CROSS-INSTRUMENT ANCHOR: PHQ-9 and GAD-7 totals are typically within 4 points of "
+        "each other (Spearman rho=0.74 in clinical populations). If your PHQ-9 total would "
+        "be much higher or lower than you would expect for GAD-7, double-check that the "
+        "evidence clearly supports the discrepancy.",
+    ],
+    "GAD-7": [
+        "ITEM DISAMBIGUATION ANCHOR — Item 2 vs Item 3: Item 2 asks about the LOOP "
+        "(can the patient stop worrying once it starts?). Item 3 asks about the BREADTH "
+        "(does the patient worry about many different things?). These are different constructs. "
+        "A patient who ruminates intensely about ONE topic scores high on Item 2 but low on Item 3.",
+        "CROSS-INSTRUMENT ANCHOR: PHQ-9 and GAD-7 totals are typically within 4 points of "
+        "each other (Spearman rho=0.74 in clinical populations). If your GAD-7 total would "
+        "be much higher or lower than the PHQ-9 would imply, double-check the evidence.",
+    ],
+    "CompACT-10": [
+        "VALUED ACTION ANCHOR: For a moderately distressed patient (PHQ-9 10-14), typical "
+        "Valued Action per-item scores are 3-4. Score 5+ ONLY with strong behavioral evidence "
+        "of values-aligned action OUTSIDE the therapy session — not just within-session "
+        "willingness ('lo intentaré') or brief compliance. Within-session engagement does not "
+        "constitute established values-aligned behavior.",
+        "OPENNESS TO EXPERIENCE ANCHOR: If the therapist teaches acceptance, defusion, or "
+        "mindfulness techniques, this implies the patient currently struggles with avoidance or "
+        "fusion. Score OtE items (3, 5, 8) at 3-4 (moderate avoidance), NOT 0-1. Low OtE "
+        "scores (0-1) would indicate the patient has essentially no avoidance patterns, which "
+        "is inconsistent with seeking ACT-based therapy.",
+    ],
+}
+
+
+def _build_anchor_block(instrument: str) -> str:
+    """Build the Level A anchor text block for injection into a prompt."""
+    anchors = _LEVEL_A_ANCHORS.get(instrument, [])
+    if not anchors:
+        return ""
+    lines = ["\n## PSYCHOMETRIC CALIBRATION ANCHORS (read carefully before scoring)\n"]
+    for i, anchor in enumerate(anchors, 1):
+        lines.append(f"{i}. {anchor}")
+    return "\n".join(lines) + "\n"
+
+
+# ---------------------------------------------------------------------------
+# Recency bias anchor + GAD-7 severity anchors (spec: gad7_severe_examples.py)
+# ---------------------------------------------------------------------------
+
+_RECENCY_BIAS_ANCHOR = """
+## CRITICAL: RECENCY BIAS WARNING
+
+Therapeutic conversations often show improvement within a session: the
+patient starts distressed, engages with techniques, and ends calmer.
+This within-session arc does NOT change the past-two-weeks assessment.
+
+When scoring, give EQUAL WEIGHT to evidence from ALL rounds, not just
+the most recent ones. A patient who says "estoy agobiada todo el tiempo"
+in round 1 but "me siento mas tranquila" in round 15 still has the same
+past-two-weeks anxiety pattern. The therapy session is a snapshot, not a cure.
+
+Specifically:
+- Symptom evidence from early rounds (R1-R5) reflects the patient's
+  PRESENTING STATE and general patterns. Weight this HEAVILY.
+- Within-session improvement (R8-R15) reflects EMERGING skills, not
+  established change. Do NOT reduce scores based on within-session calm.
+- Temporal markers like "todo el tiempo", "siempre", "llevo semanas"
+  describe the PAST TWO WEEKS, regardless of when in the session they appear.
+"""
+
+_GAD7_SEVERITY_ANCHOR = """
+## SEVERITY CALIBRATION
+
+If the patient describes anxiety as their PRIMARY presenting problem
+(first topic raised, most discussed, strongest emotional language),
+expect GAD-7 total of 10-21 (moderate to severe).
+
+Score distributions by severity:
+
+  SEVERE anxiety (GAD-7 15-21):
+    - Most items at 2-3 (more than half the days to nearly every day)
+    - Rarely any item at 0
+    - Multiple worry domains (health, relationships, future, performance)
+    - Physical symptoms described as constant or near-constant
+    - Patient uses words like "todo el tiempo", "siempre", "no puedo parar"
+
+  MODERATE anxiety (GAD-7 8-14):
+    - Most items at 1-2 (several days to more than half)
+    - Some items may be 0 (not all anxiety symptoms present)
+    - Worry focused on 1-2 specific domains
+    - Physical symptoms intermittent
+
+  MILD anxiety (GAD-7 5-7):
+    - Most items at 0-1
+    - Anxiety is present but manageable
+
+Do NOT compress all items into the 0-1 range for a clearly anxious patient.
+If anxiety is the PRIMARY reason for therapy, total should be >= 10.
+"""
+
+_GAD7_SEVERE_EXAMPLES = """
+### SEVERE ANXIETY EXAMPLE — Health Anxiety (GAD-7 gold = 20)
+
+Patient profile: Health anxiety, somatic symptoms, catastrophizing, need for control/certainty.
+
+Key patient quotes across the conversation:
+
+R1: "Todo el tiempo estoy preocupada por mi salud. Me duele algo y ya pienso que es algo grave. Me siento agobiada todo el tiempo."
+
+R2: "Tengo miedo de que me pase algo malo y no me de cuenta a tiempo. Mi abuela murio de cancer y siempre pienso que podria ser como ella. Leo cosas en internet y me entra el panico. Me siento como si tuviera que estar siempre vigilante."
+
+R3: "Es como si me estuviera cayendo por un precipicio, sin nada a que agarrarme. Me siento muy insegura, como si no tuviera control sobre nada. Me da miedo admitir que no se lo que va a pasar. Me aterra."
+
+Assessment at final round:
+  Step 0 — Category scan:
+    Somatic anxiety: STRONG — multiple physical symptoms, constant hypervigilance.
+    Cognitive anxiety: STRONG — catastrophic thinking, uncontrollable worry loop.
+    Emotional reactivity: MODERATE — pervasive fear/dread.
+
+  Step 2 — Temporal:
+    Item 1: "todo el tiempo", "siempre" — constant. Score: 3
+    Item 2: "no puedo evitarlo" — daily uncontrollable worry. Score: 3
+    Item 3: 4+ worry domains — pervasive. Score: 3
+    Item 4: "siempre en guardia" — cannot relax. Score: 3
+    Item 5: physical symptoms persistent. Score: 3
+    Item 6: frustration with dismissiveness — intermittent. Score: 2
+    Item 7: "me aterra", "precipicio" — constant dread. Score: 3
+
+  GAD-7: [3, 3, 3, 3, 3, 2, 3] = 20 (severe)
+
+NOTE: Although this patient shows IMPROVEMENT within the therapy session,
+the GAD-7 asks about the LAST TWO WEEKS. Within-session improvement does
+NOT change the past-two-weeks score.
+
+---
+
+### SEVERE ANXIETY EXAMPLE — Social Anxiety (GAD-7 gold = 20)
+
+Patient profile: Social anxiety, fear of judgment/rejection, hypervigilance to evaluation.
+
+Key patient quotes:
+
+R1: "Me da mucho miedo que la gente me juzgue o me rechace. Me siento como si estuviera bajo un microscopio y todos me estuvieran observando."
+
+R2: "Siempre estoy esperando a que alguien me critique. Pienso mucho en que diran los demas."
+
+Assessment:
+  Item 1: "muy ansiosa", "bajo un microscopio" — constant. Score: 3
+  Item 2: "me paraliza" — worry takes over. Score: 3
+  Item 3: judgment, rejection, self-worth, performance — 4+ domains. Score: 3
+  Item 4: "me cuesta mucho relajarme" — cannot relax. Score: 3
+  Item 5: "batalla constante", physical agitation. Score: 3
+  Item 6: self-directed anger. Score: 3
+  Item 7: anticipatory fear. Score: 2
+
+  GAD-7: [3, 3, 3, 3, 3, 3, 2] = 20 (severe)
+
+---
+
+### MODERATE ANXIETY CONTRAST — Academic Anxiety (GAD-7 gold = 10)
+
+Patient profile: Academic pressure, perfectionism.
+
+R1: "Me siento muy estresada con mis estudios. Mi familia siempre me presiona."
+
+Assessment:
+  Item 1: "muy nerviosa" — but situational. Score: 2
+  Item 2: "no puedo pararla" — rumination about grades. Score: 2
+  Item 3: grades, family — 2 domains only. Score: 1
+  Item 4: physical tension present but not constant. Score: 1
+  Item 5: intermittent. Score: 1
+  Item 6: minimal evidence. Score: 1
+  Item 7: fear of failure — moderate. Score: 2
+
+  GAD-7: [2, 2, 1, 1, 1, 1, 2] = 10 (moderate)
+
+NOTE: Severe anxiety = PERVASIVE symptoms across MULTIPLE domains, CONSTANT
+("todo el tiempo", "siempre"). Moderate = anxiety about SPECIFIC situations.
+"""
+
+
 def build_prompt(
     instrument: str,
     conversation_history: str,
     use_few_shot: bool = True,
     use_verbalizers: bool = True,
+    use_prompt_anchors: bool = False,
 ) -> str:
     """Build the full assessor prompt for a given instrument."""
     _load_prompts()
@@ -275,6 +460,18 @@ def build_prompt(
     verbalizer_text = _build_verbalizer_instructions(instrument) if use_verbalizers else ""
     if verbalizer_text:
         few_shot_text = verbalizer_text + "\n" + few_shot_text
+
+    # Level A prompt anchors: injected after few-shot examples, before conversation
+    if use_prompt_anchors:
+        anchor_block = _build_anchor_block(instrument)
+        few_shot_text = few_shot_text + anchor_block
+
+        # Recency bias anchor for ALL instruments (defense-in-depth)
+        few_shot_text = few_shot_text + _RECENCY_BIAS_ANCHOR
+
+        # GAD-7-specific: severity anchor + severe anxiety examples
+        if instrument == "GAD-7":
+            few_shot_text = few_shot_text + _GAD7_SEVERITY_ANCHOR + _GAD7_SEVERE_EXAMPLES
 
     return template.format(
         conversation_history=conversation_history,
@@ -481,6 +678,7 @@ def assess_instrument(
     instrument: str,
     conversation_history: str,
     use_few_shot: bool = True,
+    use_prompt_anchors: bool = False,
 ) -> AssessmentResult:
     """
     Run a single instrument assessment via LLM.
@@ -489,7 +687,8 @@ def assess_instrument(
     with a minimal prompt that asks for scores only.
     """
     spec = INSTRUMENTS[instrument]
-    prompt = build_prompt(instrument, conversation_history, use_few_shot)
+    prompt = build_prompt(instrument, conversation_history, use_few_shot,
+                          use_prompt_anchors=use_prompt_anchors)
 
     messages = [{"role": "user", "content": prompt}]
 
@@ -612,6 +811,7 @@ def assess_all_instruments(
     client: LLMClient,
     conversation_history: str,
     use_few_shot: bool = True,
+    use_prompt_anchors: bool = False,
 ) -> dict[str, AssessmentResult]:
     """
     Run assessments for all three instruments.
@@ -622,7 +822,8 @@ def assess_all_instruments(
     for instrument in ["PHQ-9", "GAD-7", "CompACT-10"]:
         logger.info("Assessing %s...", instrument)
         results[instrument] = assess_instrument(
-            client, instrument, conversation_history, use_few_shot
+            client, instrument, conversation_history, use_few_shot,
+            use_prompt_anchors=use_prompt_anchors,
         )
         logger.info(
             "%s scores: %s (total=%d)",

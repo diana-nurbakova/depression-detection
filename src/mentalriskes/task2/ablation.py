@@ -8,8 +8,8 @@ from pathlib import Path
 
 from ..config import LLMConfig
 from ..llm_client import LLMClient
-from .data import TRIAL_INFERRED_LABELS, load_trial_rounds
-from .evaluation import evaluate_result, format_evaluation_report
+from .data import TRIAL_INFERRED_LABELS, discover_sessions, load_session_labels, load_trial_rounds
+from .evaluation import accuracy, bootstrap_ci, cohens_kappa, evaluate_result, format_evaluation_report
 from .pipeline import PipelineConfig, Task2Pipeline
 
 logger = logging.getLogger(__name__)
@@ -51,6 +51,7 @@ def run_ablation(
     output_dir: Path,
     llm_config: LLMConfig,
     labels: dict[int, int] | None = None,
+    fallback_config: LLMConfig | None = None,
 ) -> list[dict]:
     """Run ablation across all configs and return evaluation results.
 
@@ -60,6 +61,7 @@ def run_ablation(
         output_dir: directory to save results.
         llm_config: base LLM configuration (model overridden per config).
         labels: gold labels for evaluation. Defaults to TRIAL_INFERRED_LABELS.
+        fallback_config: optional fallback LLM config (e.g. TogetherAI).
 
     Returns:
         List of evaluation dicts, sorted by accuracy descending.
@@ -73,7 +75,19 @@ def run_ablation(
     for i, cfg in enumerate(configs):
         logger.info("=== Ablation %d/%d: %s ===", i + 1, len(configs), cfg.config_id)
 
-        llm = LLMClient.from_config(llm_config, model_override=cfg.model)
+        # Only override model if the config model is compatible with the provider
+        # (e.g. don't try "llama3.3:70b" on TogetherAI or "claude-*" on Ollama)
+        model = cfg.model
+        if llm_config.provider == "openai" and ":" in model:
+            # Ollama-style model name on OpenAI-compatible provider — use provider default
+            model = None
+        elif llm_config.provider == "ollama" and "/" in model:
+            # HF-style model name on Ollama — skip
+            model = None
+        llm = LLMClient.from_config(llm_config, model_override=model)
+        if fallback_config is not None:
+            fallback_llm = LLMClient.from_config(fallback_config)
+            llm.with_fallback(fallback_llm)
         pipeline = Task2Pipeline(llm=llm, config=cfg)
         result = pipeline.run_trial(trial_dir)
         result_path = pipeline.save_result(result, output_dir)

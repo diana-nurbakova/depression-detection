@@ -61,16 +61,21 @@ class MentalRiskESClient:
     def _get_url(self, kind: str) -> str:
         """Build endpoint URL.
 
+        Trial:  GET  {base_url}/{task}/getmessages_trial/{token}
+                POST {base_url}/{task}/submit_trial/{token}/{run_index}
+        Test:   GET  {base_url}/{task}/getmessages/{token}
+                POST {base_url}/{task}/submit/{token}/{run_index}
+
         Args:
             kind: "get" for GET messages, "post" for POST submissions.
         """
         base = self.base_url.rstrip("/")
+        suffix = "_trial" if self.use_trial else ""
         if kind == "get":
-            action = "getmessages_trial" if self.use_trial else "getmessages"
-            return f"{base}/{self.task}/{action}/{self.token}"
+            return f"{base}/{self.task}/getmessages{suffix}/{self.token}"
         else:
-            action = "submit_trial" if self.use_trial else "submit"
-            return f"{base}/{self.task}/{action}/{self.token}"
+            # run_index appended by caller
+            return f"{base}/{self.task}/submit{suffix}/{self.token}"
 
     def get_messages(self) -> dict:
         """

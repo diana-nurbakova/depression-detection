@@ -10,12 +10,22 @@ server:
   backoff: 0.1
 
 llm:
-  provider: "ollama"                           # ollama | openai | huggingface
-  base_url_env: "OLLAMA_BASE_URL"
-  api_key_env: "OLLAMA_API_KEY"
-  model: "llama3.3:70b"
+  # --- Option A: Local Ollama (GPU required) ---
+  #provider: "ollama"
+  #base_url_env: "OLLAMA_BASE_URL"              # e.g. http://localhost:11434
+  #api_key_env: "OLLAMA_API_KEY"
+  #model: "llama3.3:70b"
 
-  # provider: "huggingface"                    # HF Inference API (serverless, no GPU)
+  # --- Option B: TogetherAI (recommended for remote/ablation, pay-per-token) ---
+  provider: "together"
+  api_key_env: "TOGETHER_API_KEY"            # falls back to TOGETHER_API_KEY env var
+  base_url_env: "TOGETHER_BASE_URL"          # defaults to https://api.together.xyz/v1
+  model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+  # Cost estimate: ~$0.88/M tokens. Full ablation (A0+A1+A3+A5 × 19 rounds × 3 instruments)
+  # ≈ 10-12M tokens → ~$9-11. Post-hoc B+C adds Level C agent: +2-4M tokens → ~$2-4 extra.
+
+  # --- Option C: HuggingFace Inference API (serverless, slower) ---
+  # provider: "huggingface"
   # api_key_env: "HF_TOKEN"                    # falls back to HF_TOKEN env var automatically
   # model: "meta-llama/Llama-3.3-70B-Instruct"
 
@@ -37,33 +47,62 @@ resources:
   hexaflex_quotes: "specs/MentalRiskES/hexaflex_quotes_fallback.json"
   assessor_prompts: "specs/MentalRiskES/assessor_prompts_v2.py"
 
-# Run configurations (max 3 runs)
+# Run configurations (3 official runs — calibration ablation staircase A5/A3/A1)
+# Spec: mentalriskes2026_constraints_ablation_spec.md section 4.3
+# Run 0 (A5) vs Run 1 (A3): measures LLM agent contribution over rule-based
+# Run 1 (A3) vs Run 2 (A1): measures rule-based contribution over prompt anchors
+# Run 0 (A5) vs Run 2 (A1): measures full calibration stack value
 runs:
-  - name: "run0_primary"
-    description: "Llama-3.3-70B, English CoT prompts, flat correction"
+  - name: "run0_A5"
+    description: "A5-T3: full stack — anchors + Level B + Level C + stability-adaptive aggregation."
     model: "llama3.3:70b"
     prompt_language: "english"
     few_shot: true
-    calibration: "flat"
-    calibration_params:
-      phq9_subtract: 0
-      gad7_subtract: 0
-
-  - name: "run1_comparison"
-    description: "Llama-3.3-70B, band-aware correction"
-    model: "llama3.3:70b"
-    prompt_language: "english"
-    few_shot: true
-    calibration: "band_aware"
+    calibration: "none"           # simple correction disabled; Level B/C handle calibration
     calibration_params: {}
+    prompt_anchors: true          # Level A: inject psychometric anchors
+    level_b: true                 # Level B: 7-rule constraint system (C1–C7)
+    level_c: true                 # Level C: LLM calibration agent
+    # Temporal aggregation: T3 for CompACT-10, T2 for PHQ-9/GAD-7
+    temporal_phq9: "T2"           # early-weighted (past-two-weeks constant)
+    temporal_gad7: "T2"           # early-weighted (past-two-weeks constant)
+    temporal_compact10: "T3"      # stability-adaptive (may evolve within session)
+    temporal_decay: "step"        # first 5 rounds doubled
+    temporal_discard_anomalous: true
 
-  - name: "run2_lightweight"
-    description: "Smaller model, no correction (efficiency baseline)"
-    model: "mistral:7b"
+  - name: "run1_A3"
+    description: "A3-T2: safety hedge — anchors + Level B + early-weighted aggregation."
+    model: "llama3.3:70b"
     prompt_language: "english"
-    few_shot: false
+    few_shot: true
     calibration: "none"
     calibration_params: {}
+    prompt_anchors: true          # Level A
+    level_b: true                 # Level B
+    level_c: false                # no Level C agent
+    # Temporal aggregation: T2 for all instruments
+    temporal_phq9: "T2"
+    temporal_gad7: "T2"
+    temporal_compact10: "T2"
+    temporal_decay: "step"
+    temporal_discard_anomalous: true
+
+  - name: "run2_A1"
+    description: "A1-T2: minimal post-hoc — anchors + early-weighted aggregation only."
+    model: "llama3.3:70b"
+    prompt_language: "english"
+    few_shot: true
+    calibration: "none"
+    calibration_params: {}
+    prompt_anchors: true          # Level A only
+    level_b: false
+    level_c: false
+    # Temporal aggregation: T2 for all instruments
+    temporal_phq9: "T2"
+    temporal_gad7: "T2"
+    temporal_compact10: "T2"
+    temporal_decay: "step"
+    temporal_discard_anomalous: true
 
 # Simulation LLM (for data_prep simulator — higher temperature, shorter output)
 simulation_llm:

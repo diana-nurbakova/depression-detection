@@ -47,13 +47,20 @@ class Task2Client:
         return session
 
     def _get_endpoint(self, kind: str) -> str:
+        """Build endpoint URL.
+
+        Trial:  GET  {base_url}/task2/getmessages_trial/{token}
+                POST {base_url}/task2/submit_trial/{token}/{run_index}
+        Test:   GET  {base_url}/task2/getmessages/{token}
+                POST {base_url}/task2/submit/{token}/{run_index}
+        """
         task = "task2"
+        suffix = "_trial" if self.use_trial else ""
         if kind == "get":
-            suffix = "getwritings_trial" if self.use_trial else "getwritings"
-            return f"{self.base_url}/{task}/{suffix}/{self.token}"
+            return f"{self.base_url}/{task}/getmessages{suffix}/{self.token}"
         else:
-            suffix = "submit_trial" if self.use_trial else "submit"
-            return f"{self.base_url}/{task}/{suffix}/{self.token}"
+            # run_index appended by caller
+            return f"{self.base_url}/{task}/submit{suffix}/{self.token}"
 
     def get_round(self) -> dict:
         """Fetch current round data from server.

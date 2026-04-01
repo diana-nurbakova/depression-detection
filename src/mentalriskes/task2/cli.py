@@ -41,11 +41,30 @@ def _make_llm_config(cfg: dict):
     return LLMConfig(
         provider=llm_cfg.get("provider", "ollama"),
         base_url=llm_cfg.get("base_url", os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")),
-        api_key=llm_cfg.get("api_key", os.getenv("OPENAI_API_KEY", "")),
+        api_key=llm_cfg.get("api_key", os.getenv("OLLAMA_API_KEY", os.getenv("OPENAI_API_KEY", ""))),
         model=llm_cfg.get("model", "llama3.3:70b"),
         temperature=llm_cfg.get("temperature", 0.1),
         max_tokens=llm_cfg.get("max_tokens", 4096),
         timeout=llm_cfg.get("timeout", 300),
+    )
+
+
+def _make_fallback_config(cfg: dict):
+    """Build a TogetherAI fallback LLM config from env vars."""
+    from ..config import LLMConfig
+    together_key = os.getenv("TOGETHER_API_KEY", "")
+    together_url = os.getenv("TOGETHER_BASE_URL", "")
+    if not together_key or not together_url:
+        return None
+    llm_cfg = cfg.get("llm", {})
+    return LLMConfig(
+        provider="openai",
+        base_url=together_url,
+        api_key=together_key,
+        model="meta-llama/Llama-3.3-70B-Instruct-Turbo",
+        temperature=llm_cfg.get("temperature", 0.1),
+        max_tokens=llm_cfg.get("max_tokens", 4096),
+        timeout=300,
     )
 
 
@@ -114,13 +133,24 @@ def trial(ctx: click.Context, run: str | None, framing: str | None, pipeline: st
 
 @cli.command()
 @click.option("--configs", "-n", default=None, help="Comma-separated config indices (1-indexed) or 'all'.")
+@click.option("--provider", type=click.Choice(["ollama", "together"]), default=None,
+              help="Override LLM provider (together = TogetherAI via TOGETHER_API_KEY).")
 @click.pass_context
-def ablation(ctx: click.Context, configs: str | None) -> None:
+def ablation(ctx: click.Context, configs: str | None, provider: str | None) -> None:
     """Run ablation study across multiple configurations."""
     from .ablation import format_ablation_summary, get_ablation_configs, run_ablation
 
     cfg = _load_config(ctx.obj["config_path"])
-    llm_config = _make_llm_config(cfg)
+
+    if provider == "together":
+        llm_config = _make_fallback_config(cfg)
+        if not llm_config:
+            click.echo("TOGETHER_API_KEY / TOGETHER_BASE_URL not set in .env", err=True)
+            sys.exit(1)
+    else:
+        llm_config = _make_llm_config(cfg)
+
+    click.echo(f"Primary LLM: {llm_config.provider} / {llm_config.model}")
 
     data_cfg = cfg.get("data", {})
     trial_dir = Path(data_cfg.get("trial_dir", "data/MentalRiskES-2026/task2_trial/data"))
@@ -137,8 +167,15 @@ def ablation(ctx: click.Context, configs: str | None) -> None:
     else:
         selected = all_configs
 
+    # Build fallback config if not already using together as primary
+    fallback_config = None
+    if provider != "together":
+        fallback_config = _make_fallback_config(cfg)
+        if fallback_config:
+            click.echo(f"Fallback LLM: {fallback_config.provider} / {fallback_config.model}")
+
     click.echo(f"Running ablation: {len(selected)} configurations")
-    results = run_ablation(selected, trial_dir, output_dir, llm_config)
+    results = run_ablation(selected, trial_dir, output_dir, llm_config, fallback_config=fallback_config)
     summary = format_ablation_summary(results)
     click.echo(summary)
 
@@ -148,8 +185,7 @@ def ablation(ctx: click.Context, configs: str | None) -> None:
 @click.pass_context
 def server(ctx: click.Context, run_configs: str) -> None:
     """Run pipeline against the competition server (GET/POST loop)."""
-    from ..config import ServerConfig
-    from ..llm_client import LLMClient
+    from ..llm_client import create_llm_client
     from .data import parse_server_round
     from .pipeline import PipelineConfig, Task2Pipeline
     from .server import Task2Client
@@ -159,7 +195,7 @@ def server(ctx: click.Context, run_configs: str) -> None:
 
     server_cfg = cfg.get("server", {})
     client = Task2Client(
-        base_url=server_cfg.get("base_url", ""),
+        base_url=server_cfg.get("base_url", os.getenv("MENTALRISKES_SERVER_URL", "")),
         token=server_cfg.get("token", os.getenv("MENTALRISKES_TOKEN", "")),
         use_trial=server_cfg.get("use_trial", False),
         retries=server_cfg.get("retries", 5),
@@ -183,8 +219,9 @@ def server(ctx: click.Context, run_configs: str) -> None:
             lang=run_cfg.get("lang", "es"),
             lookback_window=run_cfg.get("lookback_window", 3),
             permutation_voting=run_cfg.get("permutation_voting", False),
+            calibration=run_cfg.get("calibration", False),
         )
-        llm = LLMClient.from_config(llm_config, model_override=pcfg.model)
+        llm = create_llm_client(llm_config, model_override=pcfg.model)
         pipelines.append(Task2Pipeline(llm=llm, config=pcfg))
 
     click.echo(f"Server mode: {len(pipelines)} runs, trial={client.use_trial}")

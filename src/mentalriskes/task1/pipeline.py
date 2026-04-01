@@ -18,7 +18,17 @@ from pathlib import Path
 from typing import Any
 
 from .assessors import AssessmentResult, assess_all_instruments
-from .calibration import calibrate_scores, check_cross_instrument_consistency
+from .calibration import (
+    apply_level_b_constraints,
+    calibrate_scores,
+    run_level_c_agent,
+    _should_invoke_level_c,
+    ConstraintViolation,
+)
+from .temporal import (
+    SessionPredictionHistory,
+    apply_temporal_aggregation,
+)
 from ..config import MentalRiskESConfig, RunConfig
 from .data import ConversationStore, load_trial_data
 from ..llm_client import LLMClient, HFInferenceClient, create_llm_client
@@ -38,6 +48,12 @@ class RoundPrediction:
     # Reasoning/metadata
     raw_assessments: dict[str, AssessmentResult] = field(default_factory=dict)
     consistency_warnings: list[dict] = field(default_factory=list)
+    level_b_violations: list = field(default_factory=list)    # ConstraintViolation list
+    level_c_corrections: list[dict] = field(default_factory=list)
+    # Temporal aggregation metadata
+    temporal_method: dict[str, str] = field(default_factory=dict)  # per-instrument method used
+    temporal_confidence: dict = field(default_factory=dict)  # per-instrument confidence labels
+    temporal_anomalous_rounds: dict = field(default_factory=dict)  # flagged rounds
 
     def to_submission_dict(self) -> dict:
         """Format for server POST."""
@@ -60,10 +76,29 @@ class Pipeline:
         self.store = ConversationStore()
         self.predictions: list[dict] = []  # all predictions for logging
 
+        # Per-run, per-session prediction histories for temporal aggregation.
+        # Keyed by (run_name, session_id).
+        self._histories: dict[tuple[str, str], SessionPredictionHistory] = {}
+
         # Create output dirs
         config.data.output_dir.mkdir(parents=True, exist_ok=True)
         config.data.checkpoint_dir.mkdir(parents=True, exist_ok=True)
         config.data.log_dir.mkdir(parents=True, exist_ok=True)
+
+    def _get_history(self, run_name: str, session_id: str) -> SessionPredictionHistory:
+        """Get or create a SessionPredictionHistory for a (run, session) pair."""
+        key = (run_name, session_id)
+        if key not in self._histories:
+            self._histories[key] = SessionPredictionHistory(session_id=session_id)
+        return self._histories[key]
+
+    def _uses_temporal(self, run_config: RunConfig) -> bool:
+        """Check if any instrument uses temporal aggregation (not T0)."""
+        return any(m != "T0" for m in [
+            run_config.temporal_phq9,
+            run_config.temporal_gad7,
+            run_config.temporal_compact10,
+        ])
 
     def _create_client(self, run_config: RunConfig | None = None) -> LLMClient | HFInferenceClient:
         """Create an LLM client, optionally overriding model from run config."""
@@ -81,13 +116,23 @@ class Pipeline:
         run_config: RunConfig,
         client: LLMClient,
     ) -> RoundPrediction:
-        """Run the full 3-instrument assessment for a single session."""
+        """Run the full 3-instrument assessment for a single session.
+
+        Calibration tier flow:
+          Level A: prompt anchors injected into assessor prompts (if prompt_anchors=True)
+          simple : per-item flat/band_aware correction (run_config.calibration)
+          Level B: 7-rule psychometric constraint system (if level_b=True)
+          Level C: LLM calibration agent, conditional on violations (if level_c=True)
+        """
         context = self.store.get_context(session_id, max_turns=self.MAX_CONTEXT_TURNS)
         session = self.store.get_history(session_id)
 
-        # Assess all instruments
+        # Level A: prompt anchors injected at assessment time
         assessments = assess_all_instruments(
-            client, context, use_few_shot=run_config.few_shot,
+            client,
+            context,
+            use_few_shot=run_config.few_shot,
+            use_prompt_anchors=run_config.prompt_anchors,
         )
 
         # Extract raw scores
@@ -95,7 +140,7 @@ class Pipeline:
         gad7_raw = assessments["GAD-7"].scores
         compact10_raw = assessments["CompACT-10"].scores
 
-        # Calibrate
+        # Simple per-item calibration (flat / band_aware / none)
         phq9_cal = calibrate_scores(
             phq9_raw, "PHQ-9", run_config.calibration, run_config.calibration_params,
         )
@@ -106,10 +151,78 @@ class Pipeline:
             compact10_raw, "CompACT-10", run_config.calibration, run_config.calibration_params,
         )
 
-        # Cross-instrument consistency check
-        warnings = check_cross_instrument_consistency(phq9_cal, gad7_cal, compact10_cal)
-        for w in warnings:
-            logger.warning("Session %s: %s — %s", session_id, w["rule"], w["message"])
+        # Level B: rule-based psychometric constraints
+        level_b_violations: list[ConstraintViolation] = []
+        if run_config.level_b:
+            phq9_cal, gad7_cal, compact10_cal, level_b_violations = apply_level_b_constraints(
+                phq9_cal, gad7_cal, compact10_cal,
+            )
+            for v in level_b_violations:
+                logger.info(
+                    "Session %s [Level B %s %s]: %s",
+                    session_id, v.rule, v.severity, v.message[:120],
+                )
+
+        # Level C: LLM calibration agent (conditional on violations / total ceiling)
+        level_c_corrections: list[dict] = []
+        if run_config.level_c and _should_invoke_level_c(
+            level_b_violations, compact10_cal, sum(phq9_cal), sum(gad7_cal),
+        ):
+            logger.info(
+                "Session %s: invoking Level C calibration agent "
+                "(%d Level B violations)",
+                session_id, len(level_b_violations),
+            )
+            phq9_cal, gad7_cal, compact10_cal, level_c_corrections = run_level_c_agent(
+                client, phq9_cal, gad7_cal, compact10_cal,
+                level_b_violations, assessments,
+            )
+
+        # Build consistency warnings for logging (from Level B violations)
+        warnings = [{"rule": v.rule, "message": v.message} for v in level_b_violations]
+
+        # --- Temporal aggregation ---
+        # Store this round's calibrated scores in the prediction matrix,
+        # then aggregate across all rounds seen so far.
+        temporal_meta: dict[str, str] = {}
+        temporal_conf: dict = {}
+        temporal_anom: dict = {}
+
+        if self._uses_temporal(run_config):
+            history = self._get_history(run_config.name, session_id)
+            history.add_round(session.latest_round, phq9_cal, gad7_cal, compact10_cal)
+
+            if history.n_rounds() >= 2:
+                agg = apply_temporal_aggregation(
+                    history,
+                    phq9_method=run_config.temporal_phq9,
+                    gad7_method=run_config.temporal_gad7,
+                    compact10_method=run_config.temporal_compact10,
+                    decay=run_config.temporal_decay,
+                    stability_threshold=run_config.temporal_stability_threshold,
+                    w1_threshold_factor=run_config.temporal_w1_threshold,
+                    discard_anomalous=run_config.temporal_discard_anomalous,
+                )
+                phq9_cal = agg["phq9"]
+                gad7_cal = agg["gad7"]
+                compact10_cal = agg["compact10"]
+                temporal_conf = agg.get("confidence_labels", {})
+                temporal_anom = agg.get("anomalous_rounds", {})
+
+                logger.info(
+                    "Session %s temporal aggregation (%d rounds): "
+                    "PHQ-9=%s(%d) GAD-7=%s(%d) CompACT-10=%s(%d)",
+                    session_id, history.n_rounds(),
+                    phq9_cal, sum(phq9_cal),
+                    gad7_cal, sum(gad7_cal),
+                    compact10_cal, sum(compact10_cal),
+                )
+
+            temporal_meta = {
+                "PHQ-9": run_config.temporal_phq9,
+                "GAD-7": run_config.temporal_gad7,
+                "CompACT-10": run_config.temporal_compact10,
+            }
 
         prediction = RoundPrediction(
             session_id=session_id,
@@ -119,6 +232,11 @@ class Pipeline:
             compact10=compact10_cal,
             raw_assessments=assessments,
             consistency_warnings=warnings,
+            level_b_violations=level_b_violations,
+            level_c_corrections=level_c_corrections,
+            temporal_method=temporal_meta,
+            temporal_confidence=temporal_conf,
+            temporal_anomalous_rounds=temporal_anom,
         )
 
         return prediction
@@ -138,8 +256,12 @@ class Pipeline:
             client = self._create_client(run_config)
             run_predictions: list[RoundPrediction] = []
 
-            # Reset store for each run
+            # Reset store and prediction histories for each run
             self.store = ConversationStore()
+            self._histories = {
+                k: v for k, v in self._histories.items()
+                if k[0] != run_config.name
+            }
 
             for round_n in sorted(trial_data.keys()):
                 logger.info("--- Round %d ---", round_n)
@@ -254,6 +376,20 @@ class Pipeline:
             "gad7_total": sum(pred.gad7),
             "compact10_total": sum(pred.compact10),
             "consistency_warnings": pred.consistency_warnings,
+            "level_b_violations": [
+                {
+                    "rule": v.rule,
+                    "severity": v.severity,
+                    "message": v.message,
+                    "correction_applied": v.correction_applied,
+                    "correction_detail": v.correction_detail,
+                }
+                for v in pred.level_b_violations
+            ],
+            "level_c_corrections": pred.level_c_corrections,
+            "temporal_method": pred.temporal_method,
+            "temporal_confidence": pred.temporal_confidence,
+            "temporal_anomalous_rounds": pred.temporal_anomalous_rounds,
         }
 
         # Add raw LLM outputs if enabled

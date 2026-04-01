@@ -59,8 +59,26 @@ class RunConfig:
     model: str = "llama3.3:70b"
     prompt_language: str = "english"
     few_shot: bool = True
-    calibration: str = "flat"  # flat | band_aware | none
+    calibration: str = "flat"  # flat | band_aware | none (simple per-item strategy)
     calibration_params: dict = field(default_factory=dict)
+
+    # Three-tier calibration (spec: mentalriskes2026_constraints_ablation_spec.md)
+    # A1 = prompt_anchors=True, level_b=False, level_c=False
+    # A3 = prompt_anchors=True, level_b=True,  level_c=False  (Run 1 — safety hedge)
+    # A5 = prompt_anchors=True, level_b=True,  level_c=True   (Run 0 — best RMSE)
+    prompt_anchors: bool = False   # Level A: inject psychometric anchors into assessor prompts
+    level_b: bool = False          # Level B: apply 7-rule rule-based constraint system
+    level_c: bool = False          # Level C: LLM calibration agent (conditional on violations)
+
+    # Temporal aggregation (spec: mentalriskes2026_wasserstein_temporal_spec.md)
+    # Methods: T0=last-round, T1=uniform median, T2=early-weighted, T3=stability-adaptive
+    temporal_phq9: str = "T0"      # aggregation method for PHQ-9
+    temporal_gad7: str = "T0"      # aggregation method for GAD-7
+    temporal_compact10: str = "T0"  # aggregation method for CompACT-10
+    temporal_decay: str = "step"    # decay type for T2 (step/inverse/linear)
+    temporal_stability_threshold: float = 0.5  # std threshold for T3
+    temporal_w1_threshold: float = 2.0  # anomaly detection threshold factor
+    temporal_discard_anomalous: bool = True  # discard anomalous rounds for PHQ-9/GAD-7
 
 
 @dataclass
@@ -112,14 +130,20 @@ def load_config(config_path: str | Path) -> MentalRiskESConfig:
     # LLM
     llm = raw.get("llm", {})
     provider = llm.get("provider", "ollama")
-    # Resolve API key: for HF, fall back to HF_TOKEN
+    # Resolve API key from env var (provider-aware fallbacks)
     api_key_env = llm.get("api_key_env", "")
     api_key = os.environ.get(api_key_env, "")
     if not api_key and provider == "huggingface":
         api_key = os.environ.get("HF_TOKEN", "")
+    if not api_key and provider == "together":
+        api_key = os.environ.get("TOGETHER_API_KEY", "")
+    # Resolve base URL (provider-aware fallback for Together)
+    base_url = os.environ.get(llm.get("base_url_env", ""), "")
+    if not base_url and provider == "together":
+        base_url = os.environ.get("TOGETHER_BASE_URL", "https://api.together.xyz/v1")
     cfg.llm = LLMConfig(
         provider=provider,
-        base_url=os.environ.get(llm.get("base_url_env", ""), ""),
+        base_url=base_url,
         api_key=api_key,
         model=llm.get("model", "llama3.3:70b"),
         temperature=llm.get("temperature", 0.1),
@@ -174,6 +198,16 @@ def load_config(config_path: str | Path) -> MentalRiskESConfig:
             few_shot=run_raw.get("few_shot", True),
             calibration=run_raw.get("calibration", "none"),
             calibration_params=run_raw.get("calibration_params", {}),
+            prompt_anchors=run_raw.get("prompt_anchors", False),
+            level_b=run_raw.get("level_b", False),
+            level_c=run_raw.get("level_c", False),
+            temporal_phq9=run_raw.get("temporal_phq9", "T0"),
+            temporal_gad7=run_raw.get("temporal_gad7", "T0"),
+            temporal_compact10=run_raw.get("temporal_compact10", "T0"),
+            temporal_decay=run_raw.get("temporal_decay", "step"),
+            temporal_stability_threshold=run_raw.get("temporal_stability_threshold", 0.5),
+            temporal_w1_threshold=run_raw.get("temporal_w1_threshold", 2.0),
+            temporal_discard_anomalous=run_raw.get("temporal_discard_anomalous", True),
         ))
 
     # Pipeline

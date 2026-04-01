@@ -34,12 +34,14 @@ class Task2Selector:
         pipeline: str = "B",
         lang: str = "es",
         lookback_window: int = 3,
+        calibration: bool = False,
     ) -> None:
         self.llm = llm
         self.framing = framing
         self.pipeline = pipeline
         self.lang = lang
         self.lookback_window = lookback_window
+        self.calibration = calibration
         self.state = SharedState()
 
     def process_round(
@@ -143,7 +145,7 @@ class Task2Selector:
         characterization_tags: str | None = None,
     ) -> SelectionResult:
         """Step 2: Evaluate options and select best."""
-        system = build_selection_system(self.framing, self.lang)
+        system = build_selection_system(self.framing, self.lang, calibration=self.calibration)
         state_json = json.dumps(self.state.to_state_json(), ensure_ascii=False, indent=2)
         recent = self.state.get_recent_transcript(self.lookback_window)
         sel_log = self.state.get_selection_log_text()
