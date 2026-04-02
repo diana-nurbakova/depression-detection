@@ -314,13 +314,22 @@ class HFInferenceClient:
     rate_limit_delay: float = 1.0
     timeout: int = 180
 
+    # Fallback client (used when primary fails after all retries)
+    _fallback: object | None = field(default=None, init=False, repr=False)
+
     # Tracking
     _call_count: int = field(default=0, init=False, repr=False)
     _total_tokens: int = field(default=0, init=False, repr=False)
     _total_latency_ms: float = field(default=0.0, init=False, repr=False)
+    _fallback_count: int = field(default=0, init=False, repr=False)
 
     # Lazy-loaded client
     _client: object = field(default=None, init=False, repr=False)
+
+    def with_fallback(self, fallback) -> HFInferenceClient:
+        """Attach a fallback client used when the primary fails after all retries."""
+        self._fallback = fallback
+        return self
 
     @classmethod
     def from_config(cls, cfg: LLMConfig, model_override: str | None = None) -> HFInferenceClient:
@@ -425,6 +434,17 @@ class HFInferenceClient:
                 if attempt < self.max_retries:
                     time.sleep(wait)
 
+        # All retries exhausted — try fallback
+        if self._fallback is not None:
+            logger.warning(
+                "HF primary failed (%s): %s — falling back to %s/%s",
+                self.model, last_error,
+                getattr(self._fallback, 'provider', '?'),
+                getattr(self._fallback, 'model', '?'),
+            )
+            self._fallback_count += 1
+            return self._fallback.chat_completion(messages, temperature, max_tokens)
+
         raise last_error  # type: ignore[misc]
 
     @staticmethod
@@ -436,13 +456,18 @@ class HFInferenceClient:
 
     @property
     def stats(self) -> dict:
-        return {
+        s = {
             "provider": self.provider,
             "model": self.model,
             "call_count": self._call_count,
             "total_tokens": self._total_tokens,
             "total_latency_ms": round(self._total_latency_ms, 1),
         }
+        if self._fallback_count > 0:
+            s["fallback_count"] = self._fallback_count
+            s["fallback_provider"] = getattr(self._fallback, 'provider', None)
+            s["fallback_model"] = getattr(self._fallback, 'model', None)
+        return s
 
 
 # ---------------------------------------------------------------------------

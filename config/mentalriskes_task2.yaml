@@ -2,15 +2,16 @@
 # Configuration file — updated 2026-04-01 after ablation study
 
 llm:
-  provider: together
-  # Resolved from env vars TOGETHER_BASE_URL / TOGETHER_API_KEY
-  model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+  provider: huggingface
+  # Resolved from HF_TOKEN env var
+  model: "meta-llama/Llama-3.3-70B-Instruct"
   temperature: 0.1
   max_tokens: 4096
   timeout: 300
 
 data:
   trial_dir: "data/MentalRiskES-2026/task2_trial/data"
+  simulated_dir: "output/mentalriskes/data_prep/simulated/task2"
   output_dir: "output/mentalriskes_task2"
 
 server:

@@ -17,10 +17,10 @@ llm:
   #model: "llama3.3:70b"
 
   # --- Option B: TogetherAI (recommended for remote/ablation, pay-per-token) ---
-  provider: "together"
-  api_key_env: "TOGETHER_API_KEY"            # falls back to TOGETHER_API_KEY env var
-  base_url_env: "TOGETHER_BASE_URL"          # defaults to https://api.together.xyz/v1
-  model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+  provider: "huggingface"
+  api_key_env: "HF_TOKEN"
+  base_url_env: ""
+  model: "meta-llama/Llama-3.3-70B-Instruct"
   # Cost estimate: ~$0.88/M tokens. Full ablation (A0+A1+A3+A5 × 19 rounds × 3 instruments)
   # ≈ 10-12M tokens → ~$9-11. Post-hoc B+C adds Level C agent: +2-4M tokens → ~$2-4 extra.
 

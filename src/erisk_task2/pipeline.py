@@ -381,7 +381,7 @@ def train_pipeline(config: Task2Config):
         start_idx = ckpt["next_idx"]
         logger.info("Resuming from checkpoint: %d/%d users done", start_idx, len(user_ids))
 
-    checkpoint_every = 50  # save every 50 users
+    checkpoint_every = 10  # save every 10 users
 
     for idx in tqdm(range(start_idx, len(user_ids)), desc="Feature extraction",
                     initial=start_idx, total=len(user_ids)):

@@ -194,12 +194,15 @@ def ablation(
 
     from .ablation import (
         ABLATION_CONFIGS,
+        TEMPORAL_ABLATION_CONFIGS,
         format_ablation_comparison,
         format_posthoc_report,
         posthoc_calibration_ablation,
         run_ablation_study,
     )
     from .evaluation import TRIAL_GOLD
+
+    all_configs = {**ABLATION_CONFIGS, **TEMPORAL_ABLATION_CONFIGS}
 
     if raw_log:
         # Post-hoc mode: apply B/C to existing prediction log
@@ -229,9 +232,9 @@ def ablation(
     else:
         # Full LLM ablation
         config_names = [c.strip() for c in configs.split(",") if c.strip()]
-        unknown = [c for c in config_names if c not in ABLATION_CONFIGS]
+        unknown = [c for c in config_names if c not in all_configs]
         if unknown:
-            click.echo(f"Unknown configs: {unknown}. Valid: {list(ABLATION_CONFIGS.keys())}", err=True)
+            click.echo(f"Unknown configs: {unknown}. Valid: {sorted(all_configs.keys())}", err=True)
             sys.exit(1)
 
         click.echo(f"Running ablation configs: {config_names}")
@@ -282,12 +285,13 @@ def sim_ablation(
     level = "DEBUG" if ctx.obj["verbose"] else config.pipeline.log_level
     setup_logging(level)
 
-    from .ablation import ABLATION_CONFIGS, run_ablation_on_simulated
+    from .ablation import ABLATION_CONFIGS, TEMPORAL_ABLATION_CONFIGS, run_ablation_on_simulated
 
+    all_sim_configs = {**ABLATION_CONFIGS, **TEMPORAL_ABLATION_CONFIGS}
     config_names = [c.strip() for c in configs.split(",") if c.strip()]
-    unknown = [c for c in config_names if c not in ABLATION_CONFIGS]
+    unknown = [c for c in config_names if c not in all_sim_configs]
     if unknown:
-        click.echo(f"Unknown configs: {unknown}. Valid: {list(ABLATION_CONFIGS.keys())}", err=True)
+        click.echo(f"Unknown configs: {unknown}. Valid: {sorted(all_sim_configs.keys())}", err=True)
         import sys
         sys.exit(1)
 

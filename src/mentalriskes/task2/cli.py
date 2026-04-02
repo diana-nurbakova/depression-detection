@@ -38,10 +38,23 @@ def _load_config(config_path: str) -> dict:
 def _make_llm_config(cfg: dict):
     from ..config import LLMConfig
     llm_cfg = cfg.get("llm", {})
+    provider = llm_cfg.get("provider", "ollama")
+
+    # Resolve API key based on provider
+    if provider == "huggingface":
+        api_key = llm_cfg.get("api_key", os.getenv("HF_TOKEN", ""))
+        base_url = ""  # not used by HF client
+    elif provider == "together":
+        api_key = llm_cfg.get("api_key", os.getenv("TOGETHER_API_KEY", ""))
+        base_url = llm_cfg.get("base_url", os.getenv("TOGETHER_BASE_URL", "https://api.together.xyz/v1"))
+    else:
+        api_key = llm_cfg.get("api_key", os.getenv("OLLAMA_API_KEY", os.getenv("OPENAI_API_KEY", "")))
+        base_url = llm_cfg.get("base_url", os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"))
+
     return LLMConfig(
-        provider=llm_cfg.get("provider", "ollama"),
-        base_url=llm_cfg.get("base_url", os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")),
-        api_key=llm_cfg.get("api_key", os.getenv("OLLAMA_API_KEY", os.getenv("OPENAI_API_KEY", ""))),
+        provider=provider,
+        base_url=base_url,
+        api_key=api_key,
         model=llm_cfg.get("model", "llama3.3:70b"),
         temperature=llm_cfg.get("temperature", 0.1),
         max_tokens=llm_cfg.get("max_tokens", 4096),
@@ -91,7 +104,7 @@ def cli(ctx: click.Context, verbose: bool, config: str) -> None:
 def trial(ctx: click.Context, run: str | None, framing: str | None, pipeline: str | None,
           lang: str | None, window: int | None, perm: bool) -> None:
     """Run pipeline on local trial data."""
-    from ..llm_client import LLMClient
+    from ..llm_client import create_llm_client
     from .data import TRIAL_INFERRED_LABELS
     from .evaluation import evaluate_result, format_evaluation_report
     from .pipeline import PipelineConfig, Task2Pipeline
@@ -120,7 +133,7 @@ def trial(ctx: click.Context, run: str | None, framing: str | None, pipeline: st
     )
 
     click.echo(f"Running trial: {pcfg.config_id}")
-    llm = LLMClient.from_config(llm_config, model_override=pcfg.model)
+    llm = create_llm_client(llm_config, model_override=pcfg.model)
     pipe = Task2Pipeline(llm=llm, config=pcfg)
     result = pipe.run_trial(trial_dir)
     result_path = pipe.save_result(result, output_dir)
@@ -133,8 +146,8 @@ def trial(ctx: click.Context, run: str | None, framing: str | None, pipeline: st
 
 @cli.command()
 @click.option("--configs", "-n", default=None, help="Comma-separated config indices (1-indexed) or 'all'.")
-@click.option("--provider", type=click.Choice(["ollama", "together"]), default=None,
-              help="Override LLM provider (together = TogetherAI via TOGETHER_API_KEY).")
+@click.option("--provider", type=click.Choice(["ollama", "together", "huggingface"]), default=None,
+              help="Override LLM provider.")
 @click.pass_context
 def ablation(ctx: click.Context, configs: str | None, provider: str | None) -> None:
     """Run ablation study across multiple configurations."""
@@ -147,6 +160,9 @@ def ablation(ctx: click.Context, configs: str | None, provider: str | None) -> N
         if not llm_config:
             click.echo("TOGETHER_API_KEY / TOGETHER_BASE_URL not set in .env", err=True)
             sys.exit(1)
+    elif provider:
+        cfg.setdefault("llm", {})["provider"] = provider
+        llm_config = _make_llm_config(cfg)
     else:
         llm_config = _make_llm_config(cfg)
 
@@ -258,6 +274,68 @@ def server(ctx: click.Context, run_configs: str) -> None:
             round_number=round_num,
         )
         click.echo(f"Round {round_num}: submitted {len(pipelines)} runs")
+
+
+@cli.command("simulated-ablation")
+@click.option("--configs", "-n", default=None, help="Comma-separated config indices (1-indexed) or 'all'.")
+@click.option("--provider", type=click.Choice(["ollama", "together", "huggingface"]), default=None,
+              help="Override LLM provider.")
+@click.option("--data-dir", "-d", default=None,
+              help="Path to simulated data directory. Overrides config value.")
+@click.pass_context
+def simulated_ablation(ctx: click.Context, configs: str | None, provider: str | None,
+                       data_dir: str | None) -> None:
+    """Run ablation study on simulated persona sessions."""
+    from .ablation import format_multi_session_summary, get_ablation_configs, run_multi_session_ablation
+
+    cfg = _load_config(ctx.obj["config_path"])
+
+    if provider == "together":
+        llm_config = _make_fallback_config(cfg)
+        if not llm_config:
+            click.echo("TOGETHER_API_KEY / TOGETHER_BASE_URL not set in .env", err=True)
+            sys.exit(1)
+    elif provider:
+        # Override provider in config before building LLM config
+        cfg.setdefault("llm", {})["provider"] = provider
+        llm_config = _make_llm_config(cfg)
+    else:
+        llm_config = _make_llm_config(cfg)
+
+    click.echo(f"Primary LLM: {llm_config.provider} / {llm_config.model}")
+
+    data_cfg = cfg.get("data", {})
+    simulated_dir = Path(data_dir) if data_dir else Path(
+        data_cfg.get("simulated_dir", "output/mentalriskes/data_prep/simulated/task2")
+    )
+    output_dir = Path(data_cfg.get("output_dir", "output/mentalriskes_task2")) / "simulated_ablation"
+
+    if not simulated_dir.exists():
+        click.echo(f"Simulated data directory not found: {simulated_dir}", err=True)
+        sys.exit(1)
+
+    all_configs = get_ablation_configs(
+        local_model=cfg.get("ablation", {}).get("local_model", "llama3.3:70b"),
+        api_model=cfg.get("ablation", {}).get("api_model", "claude-sonnet-4-20250514"),
+    )
+
+    if configs and configs != "all":
+        indices = [int(i) - 1 for i in configs.split(",")]
+        selected = [all_configs[i] for i in indices if 0 <= i < len(all_configs)]
+    else:
+        selected = all_configs
+
+    # Build fallback config if not already using together as primary
+    fallback_config = None
+    if provider != "together":
+        fallback_config = _make_fallback_config(cfg)
+        if fallback_config:
+            click.echo(f"Fallback LLM: {fallback_config.provider} / {fallback_config.model}")
+
+    click.echo(f"Running simulated ablation: {len(selected)} configs on {simulated_dir}")
+    results = run_multi_session_ablation(selected, simulated_dir, output_dir, llm_config, fallback_config)
+    summary = format_multi_session_summary(results)
+    click.echo(summary)
 
 
 @cli.command()
