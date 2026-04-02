@@ -780,12 +780,14 @@ def run_ablation_on_simulated(
 
         session_results: dict[str, AblationRunResult] = {}
 
+        all_configs = {**ABLATION_CONFIGS, **TEMPORAL_ABLATION_CONFIGS}
+
         for config_name in configs:
-            if config_name not in ABLATION_CONFIGS:
+            if config_name not in all_configs:
                 logger.warning("Unknown ablation config: %s", config_name)
                 continue
 
-            run_config = ABLATION_CONFIGS[config_name]
+            run_config = all_configs[config_name]
             logger.info("  Config %s: %s", config_name, run_config.description)
 
             try:
@@ -854,7 +856,9 @@ def _build_report_from_summaries(
             continue
 
         try:
-            summary = json.loads(summary_path.read_text(encoding="utf-8"))
+            raw = summary_path.read_bytes()
+            text = raw.decode("utf-8", errors="replace")
+            summary = json.loads(text)
         except (json.JSONDecodeError, OSError):
             continue
 
