@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import sys
+from pathlib import Path
 
 import click
 
@@ -40,6 +41,12 @@ def train(ctx, data_dir, labels, output_dir):
     cfg.training_data_dir = data_dir
     cfg.labels_path = labels
     cfg.logging.output_dir = output_dir
+    # Add file logging to output directory
+    log_path = Path(output_dir) / "train.log"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    fh = logging.FileHandler(log_path, encoding="utf-8")
+    fh.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s"))
+    logging.getLogger().addHandler(fh)
     train_pipeline(cfg)
 
 

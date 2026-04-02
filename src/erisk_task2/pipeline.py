@@ -28,6 +28,41 @@ logger = logging.getLogger(__name__)
 # Feature extraction for a single thread (shared by train/eval/live)
 # ---------------------------------------------------------------------------
 
+def precompute_embeddings(threads: list[Thread], indices, encoder) -> np.ndarray:
+    """Pre-encode all texts across threads for a user in one batched call.
+
+    Texts are collected in the exact order process_thread consumes them:
+    - Silent thread (no target texts): other_comment bodies only
+    - Active thread: target_texts, then title (if non-empty), then other_comment bodies
+
+    Returns ndarray of shape (n_total_texts, embedding_dim).
+    """
+    all_texts = []
+    for i in indices:
+        thread = threads[i]
+        has_text = len(thread.target_texts) > 0
+
+        if not has_text:
+            # Silent thread: only other comments
+            for c in thread.other_comments:
+                if c.body:
+                    all_texts.append(c.body)
+        else:
+            # Active thread: target texts, title, other comments
+            all_texts.extend(thread.target_texts)
+            title = thread.title or thread.body or ""
+            if title.strip():
+                all_texts.append(title)
+            for c in thread.other_comments:
+                if c.body:
+                    all_texts.append(c.body)
+
+    if not all_texts:
+        return np.zeros((0, encoder.total_dim))
+
+    return encoder.encode(all_texts)
+
+
 def process_thread(
     thread: Thread,
     profile: UserProfile,
@@ -37,11 +72,16 @@ def process_thread(
     config: Task2Config,
     emotion_classifier=None,
     topic_modeler=None,
+    precomputed: np.ndarray | None = None,
+    emb_offset: int = 0,
 ):
     """Process one thread and update user profile in-place.
 
     Handles Layer 1 (embeddings, symptoms), Layer 2 (sentiment, concern, position),
     Layer 3 (emotion, BERTopic), ToM Option A, and bandit updates.
+
+    If precomputed embeddings are provided, slices from that array instead of
+    calling encoder.encode(). Returns the next offset into the precomputed array.
     """
     from erisk_task2.features.layer1 import update_embedding_running_mean
     from erisk_task2.features.layer2 import compute_reply_sentiment, detect_concern
@@ -64,16 +104,31 @@ def process_thread(
 
         # ToM Option A: observer-only view when target is silent
         other_texts = [c.body for c in thread.other_comments if c.body]
-        if other_texts and encoder is not None:
-            obs_emb = encoder.encode(other_texts).mean(axis=0)
-            profile.observer_view_history.append({"embedding": obs_emb})
+        if other_texts:
+            if precomputed is not None:
+                n = len(other_texts)
+                obs_emb = precomputed[emb_offset:emb_offset + n].mean(axis=0)
+                emb_offset += n
+            elif encoder is not None:
+                obs_emb = encoder.encode(other_texts).mean(axis=0)
+            else:
+                obs_emb = None
+            if obs_emb is not None:
+                profile.observer_view_history.append({"embedding": obs_emb})
+            else:
+                profile.observer_view_history.append(None)
         else:
             profile.observer_view_history.append(None)
         profile.self_view_history.append(None)
-        return
+        return emb_offset
 
     # -- Layer 1: Embeddings --
-    embeddings = encoder.encode(target_texts)  # (n_texts, 1920)
+    n_target = len(target_texts)
+    if precomputed is not None:
+        embeddings = precomputed[emb_offset:emb_offset + n_target]
+        emb_offset += n_target
+    else:
+        embeddings = encoder.encode(target_texts)  # (n_texts, 1920)
     round_mean = embeddings.mean(axis=0)
 
     profile.embedding_sum, profile.embedding_weight = update_embedding_running_mean(
@@ -122,7 +177,11 @@ def process_thread(
     # Thread topic similarity
     title_text = thread.title or thread.body or ""
     if title_text.strip():
-        title_emb = encoder.encode([title_text])[0]
+        if precomputed is not None:
+            title_emb = precomputed[emb_offset]
+            emb_offset += 1
+        else:
+            title_emb = encoder.encode([title_text])[0]
         topic_sim = symptom_scorer.score(title_emb)
         profile.thread_topic_sims.append(topic_sim)
     else:
@@ -159,7 +218,12 @@ def process_thread(
 
     other_texts = [c.body for c in thread.other_comments if c.body]
     if other_texts:
-        obs_emb = encoder.encode(other_texts).mean(axis=0)
+        if precomputed is not None:
+            n = len(other_texts)
+            obs_emb = precomputed[emb_offset:emb_offset + n].mean(axis=0)
+            emb_offset += n
+        else:
+            obs_emb = encoder.encode(other_texts).mean(axis=0)
         profile.observer_view_history.append({"embedding": obs_emb})
     else:
         profile.observer_view_history.append(None)
@@ -170,6 +234,8 @@ def process_thread(
     profile.bandit_alphas, profile.bandit_betas = thompson.update(
         profile.bandit_alphas, profile.bandit_betas, activations,
     )
+
+    return emb_offset
 
 
 def compute_final_features(
@@ -396,10 +462,16 @@ def train_pipeline(config: Task2Config):
         else:
             indices = range(n)
 
+        # Pre-encode all texts for this user in one batched call
+        all_embs = precompute_embeddings(threads, indices, encoder)
+
+        emb_offset = 0
         for i in indices:
-            process_thread(
+            emb_offset = process_thread(
                 threads[i], profile, encoder, symptom_scorer, thompson, config,
                 emotion_classifier=emotion_classifier,
+                precomputed=all_embs,
+                emb_offset=emb_offset,
             )
 
         profiles[uid] = profile

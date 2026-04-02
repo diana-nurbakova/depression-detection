@@ -653,13 +653,42 @@ def derive_gold_from_metadata(metadata: dict) -> dict[str, list[int]]:
 # Simulated-persona ablation — multi-session runner
 # ---------------------------------------------------------------------------
 
+def _load_cached_session_summary(
+    session_dir: Path,
+    configs: list[str],
+) -> dict[str, dict] | None:
+    """Load a cached per-session ablation summary if it contains all requested configs.
+
+    Returns the summary dict if valid, or None if missing/incomplete.
+    """
+    summary_path = session_dir / "ablation_summary.json"
+    if not summary_path.exists():
+        return None
+
+    try:
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return None
+
+    cached_configs = set(summary.get("configs", {}).keys())
+    if not all(c in cached_configs for c in configs):
+        return None
+
+    return summary
+
+
 def run_ablation_on_simulated(
     simulated_dir: str | Path,
     configs: list[str] | None,
     pipeline_cfg: MentalRiskESConfig,
     output_dir: str | Path = "runs/mentalriskes_simulated_ablation",
+    force: bool = False,
 ) -> dict[str, dict[str, AblationRunResult]]:
     """Run ablation on all simulated persona sessions.
+
+    Supports resume: if a session's ablation_summary.json already exists and
+    contains all requested configs, it is skipped.  Use ``force=True`` to
+    re-run all sessions regardless of existing results.
 
     Args:
         simulated_dir: root directory containing one sub-dir per simulated
@@ -667,6 +696,7 @@ def run_ablation_on_simulated(
         configs: ablation config names to run (default: A0, A1, A3, A5).
         pipeline_cfg: MentalRiskES pipeline config (for LLM settings).
         output_dir: directory to save per-session and aggregated results.
+        force: if True, re-run all sessions even if cached results exist.
 
     Returns:
         dict mapping session_id -> {config_name -> AblationRunResult}.
@@ -690,7 +720,27 @@ def run_ablation_on_simulated(
         return {}
 
     logger.info("Found %d simulated sessions in %s", len(session_dirs), simulated_dir)
-    client = create_llm_client(pipeline_cfg.llm)
+
+    # Check which sessions can be skipped (before creating LLM client)
+    cached_count = 0
+    sessions_to_run: list[Path] = []
+    for session_dir in session_dirs:
+        sess_out = output_path / session_dir.name
+        if not force and _load_cached_session_summary(sess_out, configs) is not None:
+            cached_count += 1
+        else:
+            sessions_to_run.append(session_dir)
+
+    if cached_count > 0:
+        logger.info(
+            "%d/%d sessions cached (skipping). %d to run.",
+            cached_count, len(session_dirs), len(sessions_to_run),
+        )
+
+    # Only create LLM client if there's work to do
+    client = None
+    if sessions_to_run:
+        client = create_llm_client(pipeline_cfg.llm)
 
     # session_id -> config_name -> AblationRunResult
     all_results: dict[str, dict[str, AblationRunResult]] = {}
@@ -705,6 +755,18 @@ def run_ablation_on_simulated(
         session_id = metadata["session_id"]
         gold = derive_gold_from_metadata(metadata)
         all_gold[session_id] = gold
+
+        sess_out = output_path / session_id
+
+        # Check cache
+        if not force:
+            cached_summary = _load_cached_session_summary(sess_out, configs)
+            if cached_summary is not None:
+                logger.info("Session %s: CACHED — skipping", session_id)
+                # Reconstruct minimal AblationRunResult stubs for reporting
+                # (final_metrics won't be callable, but the summary is already saved)
+                all_results[session_id] = {}
+                continue
 
         profile_id = metadata.get("profile", {}).get("id", session_id)
         t = metadata["target_scores"]
@@ -748,18 +810,93 @@ def run_ablation_on_simulated(
         all_results[session_id] = session_results
 
         # Save per-session summary
-        sess_out = output_path / session_id
         sess_out.mkdir(exist_ok=True)
         _save_simulated_session_summary(session_id, session_results, gold, metadata, sess_out)
 
-    # Save aggregated report
-    report = format_simulated_ablation_report(all_results, all_gold, configs)
+    # Build aggregated report from saved summaries (includes both cached and fresh)
+    # Re-read all session summaries to include cached sessions in the report
+    report = _build_report_from_summaries(output_path, session_dirs, configs)
     report_path = output_path / "simulated_ablation_report.txt"
     report_path.write_text(report, encoding="utf-8")
     logger.info("Simulated ablation report saved to %s", report_path)
     print(report)
 
     return all_results
+
+
+def _build_report_from_summaries(
+    output_path: Path,
+    session_dirs: list[Path],
+    configs: list[str],
+) -> str:
+    """Build aggregated report from all per-session summary JSON files.
+
+    This reads saved summaries (both cached and freshly generated) so the
+    report always includes all sessions.
+    """
+    lines = [
+        "=" * 80,
+        "SIMULATED ABLATION REPORT (from saved summaries)",
+        "=" * 80,
+        "",
+    ]
+
+    # Collect per-config metrics across sessions
+    config_metrics: dict[str, dict[str, list[float]]] = {
+        c: {"mean_rmse": [], "phq9_rmse": [], "gad7_rmse": [], "compact10_rmse": []}
+        for c in configs
+    }
+
+    for session_dir in session_dirs:
+        session_id = session_dir.name
+        summary_path = output_path / session_id / "ablation_summary.json"
+        if not summary_path.exists():
+            continue
+
+        try:
+            summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            continue
+
+        for config_name in configs:
+            cfg_data = summary.get("configs", {}).get(config_name, {})
+            fm = cfg_data.get("final_metrics", {})
+            overall = fm.get("_overall", {})
+            cm = config_metrics[config_name]
+            cm["mean_rmse"].append(overall.get("mean_rmse", float("nan")))
+            cm["phq9_rmse"].append(fm.get("PHQ-9", {}).get("rmse", float("nan")))
+            cm["gad7_rmse"].append(fm.get("GAD-7", {}).get("rmse", float("nan")))
+            cm["compact10_rmse"].append(fm.get("CompACT-10", {}).get("rmse", float("nan")))
+
+    # Format table
+    header = f"{'Config':<12} {'Sessions':>8} {'Mean RMSE':>12} {'PHQ-9':>10} {'GAD-7':>10} {'CompACT':>10}"
+    lines.append(header)
+    lines.append("-" * 72)
+
+    for c in configs:
+        cm = config_metrics[c]
+        valid = [v for v in cm["mean_rmse"] if not math.isnan(v)]
+        n = len(valid)
+        if n == 0:
+            lines.append(f"{c:<12} {'0':>8} {'N/A':>12} {'N/A':>10} {'N/A':>10} {'N/A':>10}")
+            continue
+
+        mean_rmse = sum(valid) / n
+        phq9_valid = [v for v in cm["phq9_rmse"] if not math.isnan(v)]
+        gad7_valid = [v for v in cm["gad7_rmse"] if not math.isnan(v)]
+        compact_valid = [v for v in cm["compact10_rmse"] if not math.isnan(v)]
+
+        phq9_mean = sum(phq9_valid) / len(phq9_valid) if phq9_valid else float("nan")
+        gad7_mean = sum(gad7_valid) / len(gad7_valid) if gad7_valid else float("nan")
+        compact_mean = sum(compact_valid) / len(compact_valid) if compact_valid else float("nan")
+
+        lines.append(
+            f"{c:<12} {n:>8} {mean_rmse:>12.3f} "
+            f"{phq9_mean:>10.3f} {gad7_mean:>10.3f} {compact_mean:>10.3f}"
+        )
+
+    lines.append("=" * 72)
+    return "\n".join(lines)
 
 
 def _save_simulated_session_summary(

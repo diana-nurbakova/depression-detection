@@ -51,29 +51,34 @@ class EmotionClassifier:
         Returns list of (8,) arrays.
         """
         self.load()
-        results = []
-        for text in texts:
-            word_count = len(text.split())
-            if word_count < min_words:
-                results.append(np.ones(NUM_EMOTIONS) / NUM_EMOTIONS)
-                continue
-
-            preds = self._pipeline(text)[0]
-            dist = np.zeros(NUM_EMOTIONS)
-            for p in preds:
-                label = p["label"].lower()
-                # Map model labels to Plutchik
-                for i, emotion in enumerate(PLUTCHIK_EMOTIONS):
-                    if emotion in label:
-                        dist[i] = p["score"]
-                        break
-            # Normalize
-            total = dist.sum()
-            if total > 0:
-                dist = dist / total
+        results = [None] * len(texts)
+        # Separate texts that need classification from short ones
+        batch_texts = []
+        batch_indices = []
+        for i, text in enumerate(texts):
+            if len(text.split()) < min_words:
+                results[i] = np.ones(NUM_EMOTIONS) / NUM_EMOTIONS
             else:
-                dist = np.ones(NUM_EMOTIONS) / NUM_EMOTIONS
-            results.append(dist)
+                batch_texts.append(text)
+                batch_indices.append(i)
+
+        # Batch classify all qualifying texts at once
+        if batch_texts:
+            all_preds = self._pipeline(batch_texts)
+            for idx, preds in zip(batch_indices, all_preds):
+                dist = np.zeros(NUM_EMOTIONS)
+                for p in preds:
+                    label = p["label"].lower()
+                    for j, emotion in enumerate(PLUTCHIK_EMOTIONS):
+                        if emotion in label:
+                            dist[j] = p["score"]
+                            break
+                total = dist.sum()
+                if total > 0:
+                    dist = dist / total
+                else:
+                    dist = np.ones(NUM_EMOTIONS) / NUM_EMOTIONS
+                results[idx] = dist
 
         return results
 

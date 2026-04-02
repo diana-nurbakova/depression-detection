@@ -262,14 +262,19 @@ def ablation(
               help="Comma-separated ablation config names. Default: A0,A1,A3,A5.")
 @click.option("--output-dir", default="runs/mentalriskes_simulated_ablation",
               help="Directory to save results and report.")
+@click.option("--force", "-f", is_flag=True, help="Force re-run all sessions, ignoring cached results.")
 @click.pass_context
 def sim_ablation(
     ctx: click.Context,
     simulated_dir: str,
     configs: str,
     output_dir: str,
+    force: bool,
 ) -> None:
     """Run calibration ablation on simulated persona sessions.
+
+    Supports resume: sessions with existing ablation_summary.json (containing
+    all requested configs) are skipped.  Use --force to re-run everything.
 
     Validates Level A/B/C calibration tiers across multiple synthetic patient
     profiles. Gold labels are derived from simulator metadata
@@ -299,6 +304,8 @@ def sim_ablation(
     click.echo(f"Configs: {config_names}")
     click.echo(f"LLM: {config.llm.model} via {config.llm.provider}")
     click.echo(f"Output: {output_dir}")
+    if force:
+        click.echo("Force mode: all sessions will be re-run")
     click.echo("")
 
     results = run_ablation_on_simulated(
@@ -306,6 +313,7 @@ def sim_ablation(
         configs=config_names,
         pipeline_cfg=config,
         output_dir=output_dir,
+        force=force,
     )
 
     click.echo(f"\nCompleted: {len(results)} sessions processed.")

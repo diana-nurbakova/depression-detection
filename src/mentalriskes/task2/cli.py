@@ -282,9 +282,10 @@ def server(ctx: click.Context, run_configs: str) -> None:
               help="Override LLM provider.")
 @click.option("--data-dir", "-d", default=None,
               help="Path to simulated data directory. Overrides config value.")
+@click.option("--force", "-f", is_flag=True, help="Force re-run all sessions, ignoring cached results.")
 @click.pass_context
 def simulated_ablation(ctx: click.Context, configs: str | None, provider: str | None,
-                       data_dir: str | None) -> None:
+                       data_dir: str | None, force: bool) -> None:
     """Run ablation study on simulated persona sessions."""
     from .ablation import format_multi_session_summary, get_ablation_configs, run_multi_session_ablation
 
@@ -333,7 +334,9 @@ def simulated_ablation(ctx: click.Context, configs: str | None, provider: str | 
             click.echo(f"Fallback LLM: {fallback_config.provider} / {fallback_config.model}")
 
     click.echo(f"Running simulated ablation: {len(selected)} configs on {simulated_dir}")
-    results = run_multi_session_ablation(selected, simulated_dir, output_dir, llm_config, fallback_config)
+    if force:
+        click.echo("Force mode: all sessions will be re-run")
+    results = run_multi_session_ablation(selected, simulated_dir, output_dir, llm_config, fallback_config, force=force)
     summary = format_multi_session_summary(results)
     click.echo(summary)
 

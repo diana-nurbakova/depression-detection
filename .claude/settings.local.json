@@ -64,7 +64,8 @@
       "Bash(ls -la \"c:/Users/dnurb/Documents/depression-detection/output/mentalriskes_task2/ablation/\"*.jsonl)",
       "Bash(PYTHONPATH=src timeout 600 python -c \":*)",
       "Bash(python -m src.mentalriskes.task1.cli --help)",
-      "Bash(PYTHONPATH=src timeout 900 python -c \":*)"
+      "Bash(PYTHONPATH=src timeout 900 python -c \":*)",
+      "Bash(grep -r \"checkpoint\\\\|resume\\\\|save_state\\\\|load_state\" src/mentalriskes/task1/*.py)"
     ]
   }
 }

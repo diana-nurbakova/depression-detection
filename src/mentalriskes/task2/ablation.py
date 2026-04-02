@@ -15,6 +15,30 @@ from .pipeline import PipelineConfig, Task2Pipeline
 logger = logging.getLogger(__name__)
 
 
+def _resolve_model_override(provider: str, config_model: str, ablation_model: str) -> str | None:
+    """Return model override compatible with the provider, or None to use config default.
+
+    Ablation configs may specify model names in Ollama format (llama3.3:70b) or
+    Together format (meta-llama/Llama-3.3-70B-Instruct-Turbo).  When the active
+    provider is different, fall back to the provider's configured default model.
+    """
+    if provider == "huggingface":
+        # Only allow the override if it matches the HF model exactly
+        # (Ollama ":" names and Together "-Turbo" variants don't exist on HF)
+        if ":" in ablation_model:
+            return None
+        if ablation_model != config_model and ablation_model not in (
+            "meta-llama/Llama-3.3-70B-Instruct",
+        ):
+            # Unknown model for HF — use config default
+            return None
+    elif provider == "openai" and ":" in ablation_model:
+        return None
+    elif provider == "ollama" and "/" in ablation_model:
+        return None
+    return ablation_model
+
+
 def _create_client(llm_config: LLMConfig, model_override: str | None = None):
     """Create the right LLM client based on provider (LLMClient or HFInferenceClient)."""
     return create_llm_client(llm_config, model_override)
@@ -80,18 +104,7 @@ def run_ablation(
     for i, cfg in enumerate(configs):
         logger.info("=== Ablation %d/%d: %s ===", i + 1, len(configs), cfg.config_id)
 
-        # Only override model if the config model is compatible with the provider
-        # (e.g. don't try "llama3.3:70b" on TogetherAI or "claude-*" on Ollama)
-        model = cfg.model
-        if llm_config.provider == "openai" and ":" in model:
-            # Ollama-style model name on OpenAI-compatible provider — use provider default
-            model = None
-        elif llm_config.provider == "ollama" and "/" in model:
-            # HF-style model name on Ollama — skip
-            model = None
-        elif llm_config.provider == "huggingface" and ":" in model:
-            # Ollama-style model name on HF — skip
-            model = None
+        model = _resolve_model_override(llm_config.provider, llm_config.model, cfg.model)
         llm = _create_client(llm_config, model_override=model)
         if fallback_config is not None:
             fallback_llm = _create_client(fallback_config)
@@ -128,18 +141,61 @@ def run_ablation(
     return results
 
 
+def _load_cached_session(result_path: Path, labels: dict[int, int]) -> dict | None:
+    """Load predictions from a cached JSONL result and evaluate against labels.
+
+    Returns a session result dict if the file exists and has valid predictions,
+    or None if missing/invalid.
+    """
+    if not result_path.exists():
+        return None
+
+    preds_dict: dict[int, int] = {}
+    try:
+        with open(result_path, encoding="utf-8") as f:
+            for line in f:
+                entry = json.loads(line)
+                if entry.get("type") == "round":
+                    preds_dict[entry["round_id"]] = entry["chosen_option"]
+    except (json.JSONDecodeError, KeyError):
+        return None
+
+    if not preds_dict:
+        return None
+
+    common_rounds = sorted(set(preds_dict.keys()) & set(labels.keys()))
+    if not common_rounds:
+        return None
+
+    sess_preds = [preds_dict[r] for r in common_rounds]
+    sess_labels = [labels[r] for r in common_rounds]
+    sess_acc = accuracy(sess_preds, sess_labels)
+
+    return {
+        "n_rounds": len(common_rounds),
+        "accuracy": sess_acc,
+        "predictions": {r: preds_dict[r] for r in common_rounds},
+        "labels": {r: labels[r] for r in common_rounds},
+    }
+
+
 def run_multi_session_ablation(
     configs: list[PipelineConfig],
     simulated_dir: Path,
     output_dir: Path,
     llm_config: LLMConfig,
     fallback_config: LLMConfig | None = None,
+    force: bool = False,
 ) -> list[dict]:
     """Run ablation across all configs on multiple simulated sessions.
 
     For each config, runs the pipeline on every session directory found in
     simulated_dir, then aggregates predictions across all sessions for a
     single accuracy/kappa score per config.
+
+    Supports resume: if a session's JSONL result already exists in output_dir,
+    it is loaded from cache instead of re-running.  Use ``force=True`` to
+    re-run all sessions regardless of existing results.
 
     Args:
         configs: list of pipeline configurations to test.
@@ -148,6 +204,7 @@ def run_multi_session_ablation(
         output_dir: directory to save results.
         llm_config: base LLM configuration (model overridden per config).
         fallback_config: optional fallback LLM config.
+        force: if True, re-run all sessions even if cached results exist.
 
     Returns:
         List of evaluation dicts, sorted by accuracy descending.
@@ -169,19 +226,39 @@ def run_multi_session_ablation(
         all_preds: list[int] = []
         all_labels: list[int] = []
         session_results: list[dict] = []
+        cached_count = 0
 
         for session_dir in sessions:
             session_id = session_dir.name
             labels = load_session_labels(session_dir)
 
+            # Check for cached result
+            config_output_dir = output_dir / cfg.config_id
+            result_path = config_output_dir / f"{cfg.config_id}.jsonl"
+            # Pipeline saves as {config_id}.jsonl but session_dir name varies,
+            # so we use a per-session filename to avoid collisions
+            session_result_path = config_output_dir / f"{session_id}.jsonl"
+
+            # Try to load from cache (also check legacy path)
+            cached = None
+            if not force:
+                cached = _load_cached_session(session_result_path, labels)
+
+            if cached is not None:
+                cached_count += 1
+                cached["session_id"] = session_id
+                session_results.append(cached)
+
+                common_rounds = sorted(set(cached["predictions"].keys()) & set(labels.keys()))
+                all_preds.extend([cached["predictions"][r] for r in common_rounds])
+                all_labels.extend([labels[r] for r in common_rounds])
+
+                logger.info("  Session %s: CACHED — %d rounds, acc=%.1f%%",
+                            session_id, cached["n_rounds"], cached["accuracy"] * 100)
+                continue
+
             # Build fresh pipeline per session (reset state)
-            model = cfg.model
-            if llm_config.provider == "openai" and ":" in model:
-                model = None
-            elif llm_config.provider == "ollama" and "/" in model:
-                model = None
-            elif llm_config.provider == "huggingface" and ":" in model:
-                model = None
+            model = _resolve_model_override(llm_config.provider, llm_config.model, cfg.model)
             llm = _create_client(llm_config, model_override=model)
             if fallback_config is not None:
                 fallback_llm = _create_client(fallback_config)
@@ -189,7 +266,16 @@ def run_multi_session_ablation(
 
             pipeline = Task2Pipeline(llm=llm, config=cfg)
             result = pipeline.run_trial(session_dir)
-            result_path = pipeline.save_result(result, output_dir / cfg.config_id)
+
+            # Save with per-session filename
+            config_output_dir.mkdir(parents=True, exist_ok=True)
+            result_path = pipeline.save_result(result, config_output_dir)
+            # Rename to session-specific name for future cache hits
+            target_path = config_output_dir / f"{session_id}.jsonl"
+            if result_path != target_path:
+                if target_path.exists():
+                    target_path.unlink()
+                result_path.rename(target_path)
 
             # Collect per-session predictions aligned with labels
             preds_dict = {r.round_id: r.selection.chosen_option for r in result.rounds}
@@ -212,6 +298,9 @@ def run_multi_session_ablation(
             logger.info("  Session %s: %d rounds, acc=%.1f%%", session_id, len(common_rounds), sess_acc * 100)
 
         elapsed_ms = (time.monotonic() - t0) * 1000
+
+        if cached_count > 0:
+            logger.info("  %d/%d sessions loaded from cache", cached_count, len(sessions))
 
         # Aggregate metrics across all sessions
         agg_acc = accuracy(all_preds, all_labels)
