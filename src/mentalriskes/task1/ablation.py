@@ -1217,15 +1217,17 @@ def _save_ablation_summary(
     output_path: Path,
 ) -> None:
     """Save ablation summary JSON and comparison report."""
+    all_configs = {**ABLATION_CONFIGS, **TEMPORAL_ABLATION_CONFIGS}
     summary = {}
     for config_name, run_result in results.items():
         m = run_result.final_metrics(gold)
+        cfg = all_configs.get(config_name)
         summary[config_name] = {
             "description": run_result.description,
             "config": {
-                "prompt_anchors": ABLATION_CONFIGS[config_name].prompt_anchors,
-                "level_b": ABLATION_CONFIGS[config_name].level_b,
-                "level_c": ABLATION_CONFIGS[config_name].level_c,
+                "prompt_anchors": cfg.prompt_anchors if cfg else False,
+                "level_b": cfg.level_b if cfg else False,
+                "level_c": cfg.level_c if cfg else False,
             },
             "final_metrics": {
                 inst: {k: round(v, 4) if isinstance(v, float) else v
