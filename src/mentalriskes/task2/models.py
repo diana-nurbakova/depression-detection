@@ -57,6 +57,13 @@ class SharedState:
     marcadores_rapport: list[str] = field(default_factory=list)
     resumen_acumulado: str = ""
     selection_log: list[dict] = field(default_factory=list)
+    # Phase transition tracking (v2.0 — D2)
+    transicion: dict = field(default_factory=lambda: {
+        "señales_integración": [],
+        "señales_cierre": [],
+        "rondas_en_fase_actual": 1,
+        "fase_siguiente_probable": "",
+    })
 
     def to_state_json(self) -> dict:
         """Serialize state for prompt injection (excludes transcript)."""
@@ -71,10 +78,12 @@ class SharedState:
             "metaforas_activas": self.metaforas_activas,
             "marcadores_rapport": self.marcadores_rapport,
             "resumen_acumulado": self.resumen_acumulado,
+            "transicion": self.transicion,
         }
 
     def update_from_llm(self, state_json: dict) -> None:
         """Update state from LLM state-update output."""
+        old_phase = self.fase_terapeutica
         if "fase_terapeutica" in state_json:
             self.fase_terapeutica = state_json["fase_terapeutica"]
         if "estado_emocional" in state_json:
@@ -92,6 +101,13 @@ class SharedState:
             self.marcadores_rapport = state_json["marcadores_rapport"]
         if "resumen_acumulado" in state_json:
             self.resumen_acumulado = state_json["resumen_acumulado"]
+        if "transicion" in state_json:
+            self.transicion = state_json["transicion"]
+        # Auto-track rounds in current phase
+        if self.fase_terapeutica != old_phase:
+            self.transicion["rondas_en_fase_actual"] = 1
+        else:
+            self.transicion["rondas_en_fase_actual"] = self.transicion.get("rondas_en_fase_actual", 0) + 1
 
     def get_recent_transcript(self, window: int) -> str:
         """Format last N rounds as full transcript text."""

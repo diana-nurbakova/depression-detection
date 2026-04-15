@@ -242,7 +242,11 @@ class Task2Selector:
 
     @classmethod
     def _extract_chosen_option(cls, parsed: dict) -> int:
-        """Extract the chosen option number from parsed JSON."""
+        """Extract the chosen option number from parsed JSON.
+
+        v2.0: If a reconsideration step changed the selection, the final
+        answer is still in "selección"/"selection", so we read that first.
+        """
         # Try all selection key variants (accented/unaccented/English)
         sel = cls._get_key(parsed, "selección", "seleccion", "selection")
         chosen = cls._get_key(sel, "opcion_elegida", "chosen_option") if isinstance(sel, dict) else {}
@@ -260,6 +264,11 @@ class Task2Selector:
                 oe = cls._get_key(ss, "opcion_elegida", "chosen_option")
                 if isinstance(oe, dict):
                     num = oe.get("numero", oe.get("number", 1))
+
+        # Log reconsideration if present (v2.0)
+        recon = cls._get_key(parsed, "reconsideración", "reconsideracion", "reconsideration")
+        if isinstance(recon, dict) and recon.get("cambio", recon.get("switch", False)):
+            logger.info("Reconsideration triggered: switched selection")
 
         return int(num) if num in (1, 2, 3) else 1
 
@@ -288,6 +297,20 @@ class Task2Selector:
         if isinstance(sel, dict):
             return sel.get("razonamiento", sel.get("reasoning", ""))
         return ""
+
+
+def _count_consistency_tags(parsed: dict) -> int:
+    """Count total consistency tags across all options in a parsed evaluation."""
+    count = 0
+    char = parsed.get("caracterización", parsed.get("caracterizacion",
+           parsed.get("characterization", {})))
+    if isinstance(char, dict):
+        for opt in char.values():
+            if isinstance(opt, dict):
+                tags = opt.get("etiquetas_consistencia", opt.get("consistency_tags", []))
+                if isinstance(tags, list):
+                    count += len(tags)
+    return count
 
 
 def run_with_permutation_voting(

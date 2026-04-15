@@ -147,6 +147,10 @@ class TopicModeler:
             prediction_data=True,
         )
         embedding_model = SentenceTransformer("all-mpnet-base-v2")
+        # sentence-transformers v3+ removed .device; BERTopic needs it
+        if not hasattr(embedding_model, "device"):
+            import torch
+            embedding_model.device = torch.device("cpu")
 
         self.model = BERTopic(
             embedding_model=embedding_model,
@@ -228,4 +232,11 @@ class TopicModeler:
 
     def load(self, path: str | Path):
         from bertopic import BERTopic
-        self.model = BERTopic.load(str(path))
+        try:
+            self.model = BERTopic.load(str(path))
+        except (ImportError, ModuleNotFoundError) as e:
+            logger.warning(
+                "Failed to load BERTopic model (version mismatch): %s. "
+                "Topic features will be zeroed out.", e,
+            )
+            self.model = None

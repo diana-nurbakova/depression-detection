@@ -15,6 +15,13 @@ import numpy as np
 
 logger = logging.getLogger(__name__)
 
+
+def _patch_st_device(model, device: str):
+    """Add .device attribute to SentenceTransformer if missing (v3+ compat)."""
+    import torch
+    if not hasattr(model, "device"):
+        model.device = torch.device(device)
+
 # Lexical word lists
 _FIRST_PERSON_SINGULAR = {"i", "me", "my", "mine", "myself", "i'm", "i've", "i'd", "i'll"}
 
@@ -90,6 +97,7 @@ class EmbeddingEncoder:
         for name in self.model_names:
             logger.info("Loading sentence transformer: %s", name)
             model = SentenceTransformer(name, device=self.device)
+            _patch_st_device(model, self.device)
             self.models.append(model)
         self._loaded = True
 

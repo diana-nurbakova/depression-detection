@@ -342,6 +342,96 @@ def simulated_ablation(ctx: click.Context, configs: str | None, provider: str | 
 
 
 @cli.command()
+@click.option("--framing", type=click.Choice(["FUNC", "HYB", "TOM-B", "TOM-C"]), default="FUNC")
+@click.option("--lang", type=click.Choice(["es", "en"]), default="es")
+@click.option("--window", "-w", type=int, default=3, help="Lookback window size.")
+@click.option("--dataset", type=click.Choice(["trial", "simulated", "both"]), default="both",
+              help="Which dataset to evaluate on.")
+@click.option("--provider", type=click.Choice(["ollama", "together", "huggingface"]), default=None)
+@click.pass_context
+def ensemble(ctx: click.Context, framing: str, lang: str, window: int,
+             dataset: str, provider: str | None) -> None:
+    """Run B+B+ ensemble evaluation (D5)."""
+    from ..llm_client import create_llm_client
+    from .data import TRIAL_INFERRED_LABELS
+    from .evaluation import accuracy, cohens_kappa, evaluate_result, format_evaluation_report
+    from .pipeline import EnsemblePipeline, PipelineConfig
+
+    cfg = _load_config(ctx.obj["config_path"])
+
+    if provider:
+        cfg.setdefault("llm", {})["provider"] = provider
+    llm_config = _make_llm_config(cfg)
+
+    data_cfg = cfg.get("data", {})
+    trial_dir = Path(data_cfg.get("trial_dir", "data/MentalRiskES-2026/task2_trial/data"))
+    output_dir = Path(data_cfg.get("output_dir", "output/mentalriskes_task2")) / "ensemble"
+
+    pcfg = PipelineConfig(
+        name="ensemble",
+        model=llm_config.model,
+        framing=framing,
+        pipeline="ENS",
+        lang=lang,
+        lookback_window=window,
+    )
+
+    llm = create_llm_client(llm_config)
+    ens = EnsemblePipeline(llm=llm, base_config=pcfg)
+
+    if dataset in ("trial", "both"):
+        click.echo(f"Running ensemble on trial data: {framing}/{lang}/W{window}")
+        result = ens.run_trial(trial_dir)
+        result_path = ens.save_result(result, output_dir)
+        eval_result = evaluate_result(result_path, TRIAL_INFERRED_LABELS)
+        report = format_evaluation_report(eval_result)
+        click.echo(report)
+
+    if dataset in ("simulated", "both"):
+        from .data import discover_sessions, load_session_labels
+        from .evaluation import bootstrap_ci
+
+        sim_dir = Path(data_cfg.get("simulated_dir", "output/mentalriskes/data_prep/simulated/task2"))
+        if not sim_dir.exists():
+            click.echo(f"Simulated data not found: {sim_dir}", err=True)
+            return
+
+        sessions = discover_sessions(sim_dir)
+        click.echo(f"Running ensemble on {len(sessions)} simulated sessions")
+
+        all_preds: list[int] = []
+        all_labels: list[int] = []
+
+        for session_dir in sessions:
+            labels = load_session_labels(session_dir)
+            # Fresh ensemble per session
+            llm = create_llm_client(llm_config)
+            ens = EnsemblePipeline(llm=llm, base_config=pcfg)
+            result = ens.run_trial(session_dir)
+
+            session_output = output_dir / "simulated" / session_dir.name
+            ens.save_result(result, session_output)
+
+            preds_dict = {r.round_id: r.selection.chosen_option for r in result.rounds}
+            common = sorted(set(preds_dict.keys()) & set(labels.keys()))
+            sp = [preds_dict[r] for r in common]
+            sl = [labels[r] for r in common]
+            all_preds.extend(sp)
+            all_labels.extend(sl)
+
+            sess_acc = accuracy(sp, sl)
+            click.echo(f"  {session_dir.name}: {len(common)} rounds, acc={sess_acc:.1%}")
+
+        agg_acc = accuracy(all_preds, all_labels)
+        agg_kappa = cohens_kappa(all_preds, all_labels)
+        agg_ci = bootstrap_ci(all_preds, all_labels)
+        click.echo(
+            f"\n  AGGREGATE: {len(all_preds)} rounds, acc={agg_acc:.1%}, "
+            f"kappa={agg_kappa:.3f}, CI=[{agg_ci[0]:.1%},{agg_ci[1]:.1%}]"
+        )
+
+
+@cli.command()
 @click.argument("result_path", type=click.Path(exists=True))
 @click.pass_context
 def evaluate(ctx: click.Context, result_path: str) -> None:

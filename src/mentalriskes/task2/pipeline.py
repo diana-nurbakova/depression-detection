@@ -11,7 +11,7 @@ from pathlib import Path
 from ..llm_client import LLMClient
 from .data import load_trial_rounds
 from .models import RoundRecord, SelectionResult, SharedState
-from .selector import Task2Selector, run_with_permutation_voting
+from .selector import Task2Selector, _count_consistency_tags, run_with_permutation_voting
 
 logger = logging.getLogger(__name__)
 
@@ -189,3 +189,155 @@ class Task2Pipeline:
 
         logger.info("Saved result to %s", path)
         return path
+
+
+class EnsemblePipeline:
+    """B + B+ ensemble pipeline (D5).
+
+    Runs both B and B+ pipelines per round. If they agree, uses the shared
+    answer. If they disagree, uses a tiebreaker based on consistency tag
+    count from the raw evaluation. If tied, defaults to B+ (better on
+    harder trial data).
+    """
+
+    def __init__(self, llm: LLMClient, base_config: PipelineConfig) -> None:
+        self.llm = llm
+        # B config
+        b_config = PipelineConfig(
+            name=f"{base_config.name}_B",
+            model=base_config.model,
+            framing=base_config.framing,
+            pipeline="B",
+            lang=base_config.lang,
+            lookback_window=base_config.lookback_window,
+            permutation_voting=base_config.permutation_voting,
+            calibration=base_config.calibration,
+        )
+        # B+ config
+        bp_config = PipelineConfig(
+            name=f"{base_config.name}_B+",
+            model=base_config.model,
+            framing=base_config.framing,
+            pipeline="B+",
+            lang=base_config.lang,
+            lookback_window=base_config.lookback_window,
+            permutation_voting=base_config.permutation_voting,
+            calibration=base_config.calibration,
+        )
+        self.b_pipeline = Task2Pipeline(llm=llm, config=b_config)
+        self.bp_pipeline = Task2Pipeline(llm=llm, config=bp_config)
+        self.config = PipelineConfig(
+            name=base_config.name,
+            model=base_config.model,
+            framing=base_config.framing,
+            pipeline="ENS",
+            lang=base_config.lang,
+            lookback_window=base_config.lookback_window,
+            permutation_voting=base_config.permutation_voting,
+            calibration=base_config.calibration,
+        )
+
+    def run_trial(self, trial_dir: Path) -> PipelineResult:
+        """Run ensemble on trial data."""
+        rounds = load_trial_rounds(trial_dir)
+        return self._run_rounds(rounds)
+
+    def run_rounds(self, rounds: list[RoundRecord]) -> PipelineResult:
+        """Run ensemble on a list of rounds."""
+        return self._run_rounds(rounds)
+
+    def _run_rounds(self, rounds: list[RoundRecord]) -> PipelineResult:
+        """Process all rounds with B + B+ ensemble."""
+        result = PipelineResult(config=self.config)
+        t0 = time.monotonic()
+
+        agrees = 0
+        disagrees = 0
+
+        for rnd in rounds:
+            t_round = time.monotonic()
+
+            # Run both pipelines on this round
+            # Each pipeline maintains its own state independently
+            b_result = self.b_pipeline.selector.process_round(
+                rnd.round_id, rnd.patient_message, rnd.options
+            )
+            bp_result = self.bp_pipeline.selector.process_round(
+                rnd.round_id, rnd.patient_message, rnd.options
+            )
+
+            # Ensemble decision
+            if b_result.chosen_option == bp_result.chosen_option:
+                # Agreement — use shared answer
+                chosen = b_result.chosen_option
+                tag = bp_result.primary_tag  # prefer B+'s tag (richer)
+                reasoning = f"B+B ensemble: agreement on option {chosen}"
+                agrees += 1
+            else:
+                # Disagreement — tiebreaker by consistency tag count
+                b_tags = _count_consistency_tags(b_result.raw_evaluation)
+                bp_tags = _count_consistency_tags(bp_result.raw_evaluation)
+
+                if bp_tags >= b_tags:
+                    # B+ wins (default to B+ on ties)
+                    chosen = bp_result.chosen_option
+                    tag = bp_result.primary_tag
+                    reasoning = (
+                        f"B+B ensemble: disagreement (B={b_result.chosen_option}, "
+                        f"B+={bp_result.chosen_option}), B+ wins "
+                        f"(tags: B={b_tags}, B+={bp_tags})"
+                    )
+                else:
+                    # B wins by consistency tags
+                    chosen = b_result.chosen_option
+                    tag = b_result.primary_tag
+                    reasoning = (
+                        f"B+B ensemble: disagreement (B={b_result.chosen_option}, "
+                        f"B+={bp_result.chosen_option}), B wins "
+                        f"(tags: B={b_tags}, B+={bp_tags})"
+                    )
+                disagrees += 1
+
+                logger.info(
+                    "Round %d: ensemble disagreement B=%d B+=%d → %d",
+                    rnd.round_id, b_result.chosen_option, bp_result.chosen_option, chosen,
+                )
+
+            selection = SelectionResult(
+                round_id=rnd.round_id,
+                chosen_option=chosen,
+                primary_tag=tag,
+                reasoning=reasoning,
+                raw_evaluation={
+                    "b_evaluation": b_result.raw_evaluation,
+                    "bp_evaluation": bp_result.raw_evaluation,
+                    "b_chosen": b_result.chosen_option,
+                    "bp_chosen": bp_result.chosen_option,
+                },
+            )
+
+            elapsed = (time.monotonic() - t_round) * 1000
+            output = RoundOutput(
+                round_id=rnd.round_id,
+                selection=selection,
+                state_snapshot=self.bp_pipeline.selector.state.to_state_json(),
+                elapsed_ms=elapsed,
+            )
+            result.rounds.append(output)
+
+            logger.info(
+                "Round %d: ensemble selected option %d (%s) in %.0fms",
+                rnd.round_id, chosen, tag, elapsed,
+            )
+
+        result.total_elapsed_ms = (time.monotonic() - t0) * 1000
+        logger.info(
+            "Ensemble complete: %d agrees, %d disagrees out of %d rounds",
+            agrees, disagrees, len(rounds),
+        )
+        return result
+
+    def save_result(self, result: PipelineResult, output_dir: Path) -> Path:
+        """Save ensemble result — delegates to Task2Pipeline's save method."""
+        # Reuse the save logic from Task2Pipeline
+        return self.bp_pipeline.save_result(result, output_dir)

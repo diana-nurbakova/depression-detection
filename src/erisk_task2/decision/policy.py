@@ -13,8 +13,18 @@ from erisk_task2.models import RunConfig, RunUserState
 
 
 def lc_o(k: int, o: int) -> float:
-    """ERDE latency cost function: lc_o(k) = 1 - 1/(1 + e^(k-o))."""
-    return 1.0 - 1.0 / (1.0 + math.exp(k - o))
+    """ERDE latency cost function: lc_o(k) = 1 - 1/(1 + e^(k-o)).
+
+    Equivalent to sigmoid(k - o); implemented in a numerically stable form
+    so it does not overflow when (k - o) is large in magnitude.
+    """
+    x = float(k - o)
+    if x >= 0:
+        # exp(-x) is in [0, 1] — safe
+        return 1.0 / (1.0 + math.exp(-x))
+    # x < 0: exp(x) is in (0, 1) — safe; rewrite to avoid exp of large positive
+    ex = math.exp(x)
+    return ex / (1.0 + ex)
 
 
 def compute_threshold(

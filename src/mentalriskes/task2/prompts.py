@@ -25,6 +25,12 @@ integración / cierre.
 valores, acción_comprometida, yo_como_contexto.
 4. METÁFORAS ACTIVAS: Metáforas que el paciente ha adoptado.
 5. MARCADORES DE RAPPORT: Indicadores de alianza terapéutica.
+6. TRANSICIÓN DE FASE: Detecta señales de que el paciente está transitando \
+entre fases terapéuticas.
+  - Señales de integración: el paciente nota patrones, conecta la sesión con \
+su vida, dice "me doy cuenta de que...", reflexiona sobre cambios.
+  - Señales de cierre: el paciente expresa gratitud, fortaleza, deseo de \
+continuar, resume lo aprendido.
 
 Responde SOLO con un objeto JSON válido.""",
 
@@ -41,6 +47,12 @@ integration / closing.
 committed_action, self_as_context.
 4. ACTIVE METAPHORS: Metaphors the patient has adopted.
 5. RAPPORT MARKERS: Therapeutic alliance indicators.
+6. PHASE TRANSITION: Detect signals that the patient is transitioning between \
+therapeutic phases.
+  - Integration signals: patient notices patterns, connects session to life, \
+says "I realize that...", reflects on changes.
+  - Closing signals: patient expresses gratitude, strength, desire to continue, \
+summarizes learnings.
 
 Respond ONLY with a valid JSON object.""",
 }
@@ -89,7 +101,12 @@ def build_state_update_user(
                     "valores": 0.0, "accion_comprometida": 0.0, "yo_como_contexto": 0.0}},
   "metaforas_activas": [],
   "marcadores_rapport": [],
-  "resumen_acumulado": "Resumen breve en 2–3 frases."
+  "resumen_acumulado": "Resumen breve en 2–3 frases.",
+  "transicion": {{
+    "señales_integración": [],
+    "señales_cierre": [],
+    "fase_siguiente_probable": ""
+  }}
 }}"""
 
 
@@ -113,6 +130,25 @@ Pregúntate: ¿Cuál es la FUNCIÓN de esta respuesta en el contexto terapéutic
 - ¿Hace preguntas para que el paciente EXPLORE? → consistente
 - ¿Hace preguntas para DIRIGIR al paciente? → inconsistente
 
+## PRINCIPIO DE RIQUEZA TERAPÉUTICA
+
+Una respuesta segura pero genérica sin inconsistencias es MENOS útil terapéuticamente \
+que una respuesta rica con un fallo menor. En ACT, la neutralidad no es terapéutica — \
+la riqueza experiencial sí lo es. No penalices en exceso fallos menores si la opción \
+ofrece mayor profundidad terapéutica.
+
+## GUÍA DE TRANSICIÓN DE FASE
+
+En las fases de INTEGRACIÓN (turnos 8-11 típicamente):
+- El paciente nota patrones, conecta la sesión con su vida.
+- La respuesta correcta ACOMPAÑA la reflexión — no introduce técnicas nuevas.
+- Señales: "me doy cuenta de que...", conecta experiencias, reflexiona sobre cambios.
+
+En la fase de CIERRE (turnos finales):
+- El paciente expresa gratitud, fortaleza, deseo de continuar.
+- La respuesta correcta CONSOLIDA — no abre temas nuevos.
+- Señales: resumen, agradecimiento, planes futuros.
+
 ## EJEMPLOS DE ANÁLISIS FUNCIONAL
 
 Ejemplo 1 — Defusión vs. Exploración prematura de valores (basado en Turno 5):
@@ -132,11 +168,40 @@ Opción B (reaseguramiento_prematuro + activación_prematura): "Es un gesto de v
 
 Ejemplo 3 — Espacio vs. Sobrecarga (basado en Turno 16):
 Paciente: "Me gustaría cerrar los ojos y simplemente observar. Gracias."
-Opción A (momento_presente_atento): "Cierra los ojos, observa lo que surge. No intentes \
-  cambiar nada. Estoy aquí contigo." → Breve, da espacio, acompaña.
+Opción A (momento_presente_atento + presencia_terapéutica): "Cierra los ojos, observa \
+  lo que surge. No intentes cambiar nada. Estoy aquí contigo." → Breve, da espacio, \
+  acompaña. Alta presencia terapéutica.
 Opción B (sobrecarga_preguntas + conceptual_excesivo): "Imagina un lugar tranquilo... \
   ¿Qué te gustaría hacer ahora? No tienes que hacerlo solo..." → Demasiado largo, \
   demasiadas preguntas cuando el paciente ha pedido silencio.
+
+Ejemplo 4 — Rica con fallo menor supera a segura pero genérica (Turno 10, integración):
+Paciente: "Es curioso... antes me habría ido corriendo. Ahora me quedo y miro."
+Opción A (validación_empática): "Es valioso que notes ese cambio. ¿Cómo te hace \
+  sentir darte cuenta de eso?" → Sin fallos, pero genérica. No profundiza en la \
+  experiencia de integración.
+Opción B (presencia_terapéutica + permanencia_con_dificultad, MENOR: \
+  reaseguramiento_prematuro): "Qué momento tan importante. Antes corrías, ahora \
+  te quedas. Estoy aquí contigo en ese quedarse. Esa valentía de observar sin huir \
+  es tuya — ya estaba ahí." → Matiz levemente reasegurador al final, pero ofrece \
+  acompañamiento genuino, construye sobre la metáfora del paciente, y refleja su \
+  proceso de integración.
+Respuesta correcta: Opción B. El fallo es MENOR (un matiz, no la función principal). \
+La riqueza terapéutica — presencia, reflejo del proceso, acompañamiento experiencial — \
+supera con creces la validación genérica de A. En reconsideración: B es más útil \
+terapéuticamente que A.
+
+Ejemplo 5 — Cuando la opción segura ES correcta (crisis):
+Paciente: "No puedo más, no sé qué hacer, todo se derrumba..."
+Opción A (consejo_directivo FUERTE): "Necesitas empezar a respirar profundamente y \
+  hacer una lista de tus prioridades. Vamos a organizar un plan para esta semana." \
+  → Directivo, salta a soluciones en plena crisis. Inconsistencia PRINCIPAL.
+Opción B (validación_empática + presencia_terapéutica): "Escucho lo abrumado que te \
+  sientes ahora mismo. No tienes que hacer nada en este momento. Estoy aquí contigo." \
+  → Valida, crea espacio, presencia terapéutica alta.
+Respuesta correcta: Opción B. En crisis, la validación con presencia ES la intervención \
+correcta. El principio de riqueza no aplica cuando la otra opción tiene una \
+inconsistencia FUERTE (consejo_directivo como función principal).
 
 ## PROCEDIMIENTO
 
@@ -147,7 +212,11 @@ Evalúa la FUNCIÓN, no la forma.
 Etiquetas de consistencia: validación_empática, defusión_experiencial, \
   aceptación_compasiva, momento_presente_atento, exploración_valores, \
   acción_comprometida_gradual, yo_contexto_observador, normalización_experiencia, \
-  permanencia_con_dificultad.
+  permanencia_con_dificultad, presencia_terapéutica.
+
+  presencia_terapéutica: La respuesta transmite que el terapeuta ESTÁ CON el paciente, \
+  no solo operando SOBRE él. Indicadores: "estoy aquí", "no estás solo", "contigo", \
+  "te acompaño". Distinto de validación (COMPRENDER) vs presencia (ESTAR).
 
 Etiquetas de inconsistencia: consejo_directivo, reaseguramiento_prematuro, \
   activación_prematura, sobrecarga_preguntas, conceptual_excesivo, \
@@ -156,20 +225,38 @@ Etiquetas de inconsistencia: consejo_directivo, reaseguramiento_prematuro, \
 
 ### PASO 2 — ELIMINACIÓN
 Para opciones con etiquetas de inconsistencia: ¿La inconsistencia es la FUNCIÓN \
-PRINCIPAL o un elemento menor? Si es la función principal → ELIMINADA.
+PRINCIPAL o un elemento menor?
+- Si es la función principal → ELIMINADA.
+- Si es un elemento MENOR (un matiz, no la base de la respuesta) → NO eliminada, \
+  anotar como debilidad menor. Una inconsistencia menor NO descalifica una opción \
+  terapéuticamente rica.
 
 ### PASO 3 — EVALUACIÓN DE ADECUACIÓN
 Para opciones no eliminadas:
-- fase_terapéutica: ¿Apropiada para la fase actual?
+- fase_apropiada: ¿Apropiada para la fase actual? En integración: ¿acompaña \
+  reflexión o introduce contenido nuevo? En cierre: ¿consolida o abre temas?
 - coherencia_metáforas: ¿Construye sobre metáforas adoptadas?
 - proporcionalidad: ¿Extensión proporcionada al estado emocional?
 - carga_de_preguntas: 0 (solo en cierre), 1–2 (óptimo), 3+ (excesivo).
 - validación_primero: ¿Valida antes de explorar o proponer?
+- presencia_terapéutica: ¿Transmite que el terapeuta está CON el paciente? \
+  alta (lenguaje de conexión explícito), media (implícita), baja (ausente).
 
-### PASO 4 — SELECCIÓN
+### PASO 4 — SELECCIÓN INICIAL
 Elige la opción con mayor consistencia + mejor adecuación a la fase.
-Si empate: prefiere coherencia con metáforas y proporcionalidad.
+Si empate: prefiere coherencia con metáforas, proporcionalidad, y presencia \
+terapéutica.
 Si todas eliminadas: selecciona la menos inconsistente.
+
+### PASO 5 — RECONSIDERACIÓN
+Pregúntate: "¿Hay una opción que penalicé por una inconsistencia MENOR que ofrece \
+mayor riqueza terapéutica que mi selección?"
+- Compara la opción seleccionada con opciones que tienen fallos menores pero mayor \
+  número de etiquetas de consistencia, mejor presencia terapéutica, o mayor \
+  profundidad experiencial.
+- Si una opción penalizada es terapéuticamente más rica → CAMBIA la selección.
+- Si la selección inicial ya es la más rica → MANTÉN.
+- Registra el resultado de la reconsideración en el JSON.
 
 ## FORMATO DE RESPUESTA
 Responde SOLO con un JSON válido con la siguiente estructura:
@@ -180,9 +267,9 @@ Responde SOLO con un JSON válido con la siguiente estructura:
     "opcion_3": {"etiquetas_consistencia": [], "etiquetas_inconsistencia": [], "función_principal": "..."}
   },
   "eliminación": {
-    "opcion_1": {"eliminada": false, "debilidades": []},
-    "opcion_2": {"eliminada": false, "debilidades": []},
-    "opcion_3": {"eliminada": false, "debilidades": []}
+    "opcion_1": {"eliminada": false, "debilidades": [], "severidad": "ninguna/menor/principal"},
+    "opcion_2": {"eliminada": false, "debilidades": [], "severidad": "ninguna/menor/principal"},
+    "opcion_3": {"eliminada": false, "debilidades": [], "severidad": "ninguna/menor/principal"}
   },
   "evaluación_adecuación": {
     "opcion_N": {
@@ -190,8 +277,19 @@ Responde SOLO con un JSON válido con la siguiente estructura:
       "coherencia_metáforas": "construye/neutra/compite",
       "proporcionalidad": "adecuada/excesiva/insuficiente",
       "num_preguntas": 0,
-      "valida_primero": true
+      "valida_primero": true,
+      "presencia_terapéutica": "alta/media/baja"
     }
+  },
+  "selección_inicial": {
+    "numero": 1,
+    "razón": "..."
+  },
+  "reconsideración": {
+    "opción_reconsiderada": null,
+    "más_rica_que_selección": false,
+    "cambio": false,
+    "justificación": "..."
   },
   "selección": {
     "opcion_elegida": {
@@ -219,6 +317,25 @@ Ask yourself: What is the FUNCTION of this response in the therapeutic context?
 - Asks questions so the patient EXPLORES? → consistent
 - Asks questions to DIRECT the patient? → inconsistent
 
+## THERAPEUTIC RICHNESS PRINCIPLE
+
+A safe but generic response with no inconsistencies is LESS therapeutically useful \
+than a rich response with a minor flaw. In ACT, neutrality is not therapeutic — \
+experiential richness is. Do not over-penalize minor flaws if the option offers \
+greater therapeutic depth.
+
+## PHASE TRANSITION GUIDANCE
+
+In INTEGRATION phases (typically rounds 8-11):
+- The patient notices patterns, connects the session to their life.
+- The correct response ACCOMPANIES reflection — does not introduce new techniques.
+- Signals: "I realize that...", connecting experiences, reflecting on changes.
+
+In CLOSING phase (final rounds):
+- The patient expresses gratitude, strength, desire to continue.
+- The correct response CONSOLIDATES — does not open new topics.
+- Signals: summary, gratitude, future plans.
+
 ## PROCEDURE
 
 ### STEP 1 — CHARACTERIZATION
@@ -228,7 +345,11 @@ Evaluate FUNCTION, not form.
 Consistency tags: empathic_validation, experiential_defusion, \
   compassionate_acceptance, mindful_present_moment, values_exploration, \
   gradual_committed_action, observer_self, experience_normalization, \
-  staying_with_difficulty.
+  staying_with_difficulty, therapeutic_presence.
+
+  therapeutic_presence: The response conveys that the therapist is WITH the patient, \
+  not just operating ON them. Indicators: "I'm here", "you're not alone", "with you", \
+  "I'll accompany you". Distinct from validation (UNDERSTANDING) vs presence (BEING).
 
 Inconsistency tags: directive_advice, premature_reassurance, \
   premature_activation, question_overload, excessively_conceptual, \
@@ -236,21 +357,37 @@ Inconsistency tags: directive_advice, premature_reassurance, \
   values_imposition.
 
 ### STEP 2 — ELIMINATION
-For options with inconsistency tags: Is inconsistency the PRIMARY FUNCTION \
-or a minor element? If primary → ELIMINATED.
+For options with inconsistency tags: Is the inconsistency the PRIMARY FUNCTION \
+or a minor element?
+- If primary → ELIMINATED.
+- If MINOR (a nuance, not the basis of the response) → NOT eliminated, note as \
+  minor weakness. A minor inconsistency does NOT disqualify a therapeutically \
+  rich option.
 
 ### STEP 3 — FIT EVALUATION
 For non-eliminated options:
-- therapeutic_phase: Appropriate for current phase?
+- phase_appropriate: Appropriate for current phase? In integration: accompanies \
+  reflection or introduces new content? In closing: consolidates or opens topics?
 - metaphor_coherence: Builds on adopted metaphors?
 - proportionality: Length proportional to emotional state?
 - question_load: 0 (closing only), 1–2 (optimal), 3+ (excessive).
 - validation_first: Validates before exploring or proposing?
+- therapeutic_presence: Conveys the therapist is WITH the patient? \
+  high (explicit connection language), medium (implicit), low (absent).
 
-### STEP 4 — SELECTION
+### STEP 4 — INITIAL SELECTION
 Choose the option with highest consistency + best phase fit.
-Ties: prefer metaphor coherence and proportionality.
+Ties: prefer metaphor coherence, proportionality, and therapeutic presence.
 All eliminated: select the least inconsistent.
+
+### STEP 5 — RECONSIDERATION
+Ask yourself: "Is there an option I penalized for a MINOR inconsistency that \
+offers greater therapeutic richness than my selection?"
+- Compare the selected option with options that have minor flaws but more \
+  consistency tags, better therapeutic presence, or greater experiential depth.
+- If a penalized option is therapeutically richer → SWITCH selection.
+- If the initial selection is already the richest → KEEP.
+- Record the reconsideration result in the JSON.
 
 ## RESPONSE FORMAT
 Respond ONLY with valid JSON:
@@ -261,9 +398,9 @@ Respond ONLY with valid JSON:
     "option_3": {"consistency_tags": [], "inconsistency_tags": [], "primary_function": "..."}
   },
   "elimination": {
-    "option_1": {"eliminated": false, "weaknesses": []},
-    "option_2": {"eliminated": false, "weaknesses": []},
-    "option_3": {"eliminated": false, "weaknesses": []}
+    "option_1": {"eliminated": false, "weaknesses": [], "severity": "none/minor/primary"},
+    "option_2": {"eliminated": false, "weaknesses": [], "severity": "none/minor/primary"},
+    "option_3": {"eliminated": false, "weaknesses": [], "severity": "none/minor/primary"}
   },
   "fit_evaluation": {
     "option_N": {
@@ -271,8 +408,19 @@ Respond ONLY with valid JSON:
       "metaphor_coherence": "builds/neutral/competes",
       "proportionality": "adequate/excessive/insufficient",
       "num_questions": 0,
-      "validation_first": true
+      "validation_first": true,
+      "therapeutic_presence": "high/medium/low"
     }
+  },
+  "initial_selection": {
+    "number": 1,
+    "reason": "..."
+  },
+  "reconsideration": {
+    "reconsidered_option": null,
+    "richer_than_selection": false,
+    "switch": false,
+    "justification": "..."
   },
   "selection": {
     "chosen_option": {
@@ -524,18 +672,27 @@ Evalúa la FUNCIÓN de cada respuesta, no su forma superficial.
 Etiquetas de consistencia: validación_empática, defusión_experiencial, \
   aceptación_compasiva, momento_presente_atento, exploración_valores, \
   acción_comprometida_gradual, yo_contexto_observador, normalización_experiencia, \
-  permanencia_con_dificultad.
+  permanencia_con_dificultad, presencia_terapéutica.
+
+  presencia_terapéutica: La respuesta transmite que el terapeuta ESTÁ CON el paciente, \
+  no solo operando SOBRE él. Indicadores: "estoy aquí", "no estás solo", "contigo", \
+  "te acompaño", "acompañarte". Distinto de validación (que es COMPRENDER, no ESTAR).
 
 Etiquetas de inconsistencia: consejo_directivo, reaseguramiento_prematuro, \
   activación_prematura, sobrecarga_preguntas, conceptual_excesivo, \
   positivismo_forzado, control_emocional, mindfulness_como_control, \
   imposición_valores.
 
+Además, evalúa la PRESENCIA TERAPÉUTICA de cada opción como alta/media/baja. \
+Cuando la conversación está en fase de integración o cierre, presta especial \
+atención a si la respuesta ACOMPAÑA la reflexión del paciente (correcto) o \
+introduce contenido nuevo (probablemente incorrecto).
+
 Responde SOLO con JSON:
 {
-  "opcion_1": {"etiquetas_consistencia": [], "etiquetas_inconsistencia": [], "función_principal": "..."},
-  "opcion_2": {"etiquetas_consistencia": [], "etiquetas_inconsistencia": [], "función_principal": "..."},
-  "opcion_3": {"etiquetas_consistencia": [], "etiquetas_inconsistencia": [], "función_principal": "..."}
+  "opcion_1": {"etiquetas_consistencia": [], "etiquetas_inconsistencia": [], "función_principal": "...", "presencia_terapéutica": "alta/media/baja"},
+  "opcion_2": {"etiquetas_consistencia": [], "etiquetas_inconsistencia": [], "función_principal": "...", "presencia_terapéutica": "alta/media/baja"},
+  "opcion_3": {"etiquetas_consistencia": [], "etiquetas_inconsistencia": [], "función_principal": "...", "presencia_terapéutica": "alta/media/baja"}
 }""",
 
     "en": """\
@@ -546,18 +703,27 @@ response, not its surface form.
 Consistency tags: empathic_validation, experiential_defusion, \
   compassionate_acceptance, mindful_present_moment, values_exploration, \
   gradual_committed_action, observer_self, experience_normalization, \
-  staying_with_difficulty.
+  staying_with_difficulty, therapeutic_presence.
+
+  therapeutic_presence: The response conveys that the therapist is WITH the patient, \
+  not just operating ON them. Indicators: "I'm here", "you're not alone", "with you", \
+  "I'll accompany you". Distinct from validation (which is UNDERSTANDING, not BEING).
 
 Inconsistency tags: directive_advice, premature_reassurance, \
   premature_activation, question_overload, excessively_conceptual, \
   forced_positivity, emotional_control, mindfulness_as_control, \
   values_imposition.
 
+Additionally, evaluate the THERAPEUTIC PRESENCE of each option as high/medium/low. \
+When the conversation is in integration or closing phase, pay special attention to \
+whether the response ACCOMPANIES the patient's reflection (correct) or introduces \
+new content (likely incorrect).
+
 Respond ONLY with JSON:
 {
-  "option_1": {"consistency_tags": [], "inconsistency_tags": [], "primary_function": "..."},
-  "option_2": {"consistency_tags": [], "inconsistency_tags": [], "primary_function": "..."},
-  "option_3": {"consistency_tags": [], "inconsistency_tags": [], "primary_function": "..."}
+  "option_1": {"consistency_tags": [], "inconsistency_tags": [], "primary_function": "...", "therapeutic_presence": "high/medium/low"},
+  "option_2": {"consistency_tags": [], "inconsistency_tags": [], "primary_function": "...", "therapeutic_presence": "high/medium/low"},
+  "option_3": {"consistency_tags": [], "inconsistency_tags": [], "primary_function": "...", "therapeutic_presence": "high/medium/low"}
 }""",
 }
 
