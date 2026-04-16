@@ -463,7 +463,15 @@ def train_pipeline(config: Task2Config):
             indices = range(n)
 
         # Pre-encode all texts for this user in one batched call
-        all_embs = precompute_embeddings(threads, indices, encoder)
+        emb_cache_dir = output_dir / "embeddings_cache"
+        emb_cache_dir.mkdir(parents=True, exist_ok=True)
+        emb_cache_path = emb_cache_dir / f"{uid}.npy"
+
+        if emb_cache_path.exists():
+            all_embs = np.load(emb_cache_path)
+        else:
+            all_embs = precompute_embeddings(threads, indices, encoder)
+            np.save(emb_cache_path, all_embs)
 
         emb_offset = 0
         for i in indices:
@@ -751,21 +759,35 @@ def evaluate_pipeline(config: Task2Config):
 
     maha_offset = 1920 + 21 + 21 + 147 + 4 + 3 + 1 + 3 + 21 + 9 + 41 + 72
 
-    # --- Phase 1: Pre-compute embeddings per user (batched) ---
-    logger.info("Pre-computing embeddings for all users...")
+    # --- Phase 1: Load or compute embeddings per user (cached to disk) ---
+    emb_cache_dir = output_dir / "eval_embeddings_cache"
+    emb_cache_dir.mkdir(parents=True, exist_ok=True)
+
+    logger.info("Loading/computing embeddings for all users...")
     user_precomputed: dict[str, np.ndarray] = {}
     user_ids_sorted = sorted(users.keys())
-    for uid in tqdm(user_ids_sorted, desc="Precompute embeddings"):
-        threads = users[uid]
-        n = len(threads)
-        # Subsample eval rounds (same indices the loop will visit)
-        indices = list(range(0, min(n, max_rounds), eval_step))
-        if indices:
-            user_precomputed[uid] = precompute_embeddings(threads, indices, encoder)
+    computed_count = 0
+    for uid in tqdm(user_ids_sorted, desc="Load/compute embeddings"):
+        cache_path = emb_cache_dir / f"{uid}.npy"
+        if cache_path.exists():
+            user_precomputed[uid] = np.load(cache_path)
         else:
-            user_precomputed[uid] = np.zeros((0, encoder.total_dim))
+            threads = users[uid]
+            n = len(threads)
+            indices = list(range(0, min(n, max_rounds), eval_step))
+            if indices:
+                embs = precompute_embeddings(threads, indices, encoder)
+            else:
+                embs = np.zeros((0, encoder.total_dim))
+            np.save(cache_path, embs)
+            user_precomputed[uid] = embs
+            computed_count += 1
 
-    logger.info("Embeddings pre-computed for %d users", len(user_precomputed))
+    logger.info(
+        "Embeddings ready for %d users (%d computed, %d cached)",
+        len(user_precomputed), computed_count,
+        len(user_precomputed) - computed_count,
+    )
 
     # --- Phase 2: Round-by-round simulation ---
     # Track embedding offset per user across rounds

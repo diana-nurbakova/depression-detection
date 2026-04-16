@@ -71,6 +71,9 @@ def get_ablation_configs(
     # Pass 4 — Permutation voting (1 run)
     configs.append(PipelineConfig(name="P4_C11", model=local_model, framing="FUNC", pipeline="B", lang="es", lookback_window=3, permutation_voting=True))
 
+    # Pass 5 — B+ with HYB framing (1 run)
+    configs.append(PipelineConfig(name="P5_C12", model=local_model, framing="HYB", pipeline="B+", lang="es", lookback_window=3))
+
     return configs
 
 
