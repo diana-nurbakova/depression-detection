@@ -751,18 +751,41 @@ def evaluate_pipeline(config: Task2Config):
 
     maha_offset = 1920 + 21 + 21 + 147 + 4 + 3 + 1 + 3 + 21 + 9 + 41 + 72
 
+    # --- Phase 1: Pre-compute embeddings per user (batched) ---
+    logger.info("Pre-computing embeddings for all users...")
+    user_precomputed: dict[str, np.ndarray] = {}
+    user_ids_sorted = sorted(users.keys())
+    for uid in tqdm(user_ids_sorted, desc="Precompute embeddings"):
+        threads = users[uid]
+        n = len(threads)
+        # Subsample eval rounds (same indices the loop will visit)
+        indices = list(range(0, min(n, max_rounds), eval_step))
+        if indices:
+            user_precomputed[uid] = precompute_embeddings(threads, indices, encoder)
+        else:
+            user_precomputed[uid] = np.zeros((0, encoder.total_dim))
+
+    logger.info("Embeddings pre-computed for %d users", len(user_precomputed))
+
+    # --- Phase 2: Round-by-round simulation ---
+    # Track embedding offset per user across rounds
+    user_emb_offsets: dict[str, int] = {uid: 0 for uid in users}
+
     for round_num in tqdm(range(0, max_rounds, eval_step), desc="Eval rounds"):
-        # Process threads
+        # Process threads with precomputed embeddings
         for uid in users:
             threads = users[uid]
             if round_num >= len(threads):
                 continue
-            process_thread(
+            new_offset = process_thread(
                 threads[round_num], profiles[uid],
                 encoder, symptom_scorer, thompson, config,
                 emotion_classifier=emotion_classifier,
                 topic_modeler=topic_modeler,
+                precomputed=user_precomputed.get(uid),
+                emb_offset=user_emb_offsets[uid],
             )
+            user_emb_offsets[uid] = new_offset
 
         # Classification + decision for each run
         for rc in DEFAULT_RUNS:
