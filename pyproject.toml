@@ -22,6 +22,9 @@ dependencies = [
     "scipy>=1.11",
     "pot>=0.9.6.post1",
     "huggingface-hub>=0.20",
+    "onnxruntime>=1.25.0",
+    "optimum>=2.1.0",
+    "openpyxl>=3.1.5",
 ]
 
 [project.optional-dependencies]
@@ -36,6 +39,7 @@ erisk-task2 = "erisk_task2.cli:cli"
 mentalriskes = "mentalriskes.task1.cli:cli"
 mentalriskes-task2 = "mentalriskes.task2.cli:cli"
 mentalriskes-dataprep = "mentalriskes.data_prep.cli:cli"
+mentalriskes-server = "mentalriskes.combined_server:main"
 
 [build-system]
 requires = ["hatchling"]

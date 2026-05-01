@@ -2,8 +2,9 @@
 # Configuration file — updated 2026-04-01 after ablation study
 
 llm:
-  provider: huggingface
-  # Resolved from HF_TOKEN env var
+  provider: deepinfra
+  api_key_env: "DEEPINFRA_API_KEY"
+  # base_url defaults to https://api.deepinfra.com/v1/openai
   model: "meta-llama/Llama-3.3-70B-Instruct"
   temperature: 0.1
   max_tokens: 4096
@@ -23,44 +24,42 @@ server:
 
 # Ablation settings (for reference)
 ablation:
-  local_model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+  local_model: "meta-llama/Llama-3.3-70B-Instruct"
   api_model: "claude-sonnet-4-20250514"
 
 # Default run config (used by 'trial' command without --run)
 default_run:
-  model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+  model: "meta-llama/Llama-3.3-70B-Instruct"
   framing: "FUNC"
   pipeline: "B+"
   lang: "es"
   lookback_window: 3
 
 # ============================================================
-# 3 Submission Runs (finalized from ablation study)
+# 3 Submission Runs (finalized from v2.0 ablation, Apr 2026)
 # ============================================================
 runs:
-  # Run 0: Pure functional baseline with characterization
-  # Best accuracy (55.6%), kappa 0.345
+  # Run 0: Permutation voting — best on simulated (94.3%, κ=0.914)
   run0:
-    model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
-    framing: "FUNC"
-    pipeline: "B+"
-    lang: "es"
-    lookback_window: 3
-
-  # Run 1: Same accuracy, highest kappa (0.351), framing diversity
-  # Makes different per-round errors than Run 0
-  run1:
-    model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
-    framing: "HYB"
-    pipeline: "B+"
-    lang: "es"
-    lookback_window: 3
-
-  # Run 2: Structural fallback (2-step pipeline)
-  # If B+'s characterization overfits to trial style, the simpler pipeline hedges
-  run2:
-    model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+    model: "meta-llama/Llama-3.3-70B-Instruct"
     framing: "FUNC"
     pipeline: "B"
+    lang: "es"
+    lookback_window: 3
+    permutation_voting: true
+
+  # Run 1: Fixed order baseline — most robust across trial+sim (50%/92%)
+  run1:
+    model: "meta-llama/Llama-3.3-70B-Instruct"
+    framing: "FUNC"
+    pipeline: "B"
+    lang: "es"
+    lookback_window: 3
+
+  # Run 2: B+ with HYB framing — structural + framing diversity
+  run2:
+    model: "meta-llama/Llama-3.3-70B-Instruct"
+    framing: "HYB"
+    pipeline: "B+"
     lang: "es"
     lookback_window: 3

@@ -60,7 +60,7 @@ server:
   timeout: 60
 
 logging:
-  output_dir: "./runs/task2"
+  output_dir: "./runs/task2/train"
   log_level: "INFO"
 
 thread_format:

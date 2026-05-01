@@ -1,13 +1,14 @@
 """LLM client for MentalRiskES Task 1.
 
-Supports three providers:
+Supports five providers:
   - ollama:      Ollama native or /v1 OpenAI-compatible endpoint (local GPU)
   - together:    TogetherAI API (https://api.together.xyz/v1) — streaming, pay-per-token
+  - deepinfra:   DeepInfra API (https://api.deepinfra.com/v1/openai) — streaming, pay-per-token
   - openai:      OpenAI-compatible (non-streaming by default; set base_url for any endpoint)
   - huggingface: HF Inference API via huggingface_hub (serverless, no GPU needed)
 
-Together is the recommended remote option for the ablation study: Llama-3.3-70B-Instruct-Turbo
-at ~$0.88/M tokens is cheap enough to run all 6 ablation configs on trial data.
+DeepInfra is the recommended remote option for the test replay: Llama-3.3-70B-Instruct
+at competitive per-token pricing with stable streaming and no Hugging Face TPM caps.
 
 All providers expose the same interface: complete(), chat_completion(), stats.
 Use create_llm_client() factory to get the right one from config.
@@ -106,9 +107,9 @@ class LLMClient:
     ) -> dict:
         """Send a chat completion request and return response."""
         use_native_ollama = self.provider == "ollama" and "/v1" not in self.base_url
-        # Stream for: Ollama (native + /v1) and Together (avoids long non-streaming timeouts).
+        # Stream for: Ollama (native + /v1), Together, DeepInfra (avoids long non-streaming timeouts).
         # Non-streaming for: generic openai-compatible endpoints (simpler, safer).
-        use_streaming = use_native_ollama or self.provider in ("ollama", "together")
+        use_streaming = use_native_ollama or self.provider in ("ollama", "together", "deepinfra")
 
         if use_native_ollama:
             url = f"{self.base_url.rstrip('/')}/api/chat"
@@ -201,16 +202,30 @@ class LLMClient:
                     time.sleep(wait)
                 else:
                     raise
-            except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+            except (
+                requests.exceptions.ConnectionError,
+                requests.exceptions.Timeout,
+                requests.exceptions.ChunkedEncodingError,
+            ) as e:
                 last_error = e
                 wait = 2 ** attempt
-                logger.warning("LLM connection error (attempt %d/%d), retrying in %ds",
-                               attempt, self.max_retries, wait)
+                logger.warning(
+                    "LLM transport error (attempt %d/%d): %s, retrying in %ds",
+                    attempt, self.max_retries, type(e).__name__, wait,
+                )
                 time.sleep(wait)
             except Exception as e:
                 # Catch stream disconnections and other transient errors
                 err_name = type(e).__name__
-                if "Disconnected" in err_name or "RemoteDisconnected" in str(e) or "ConnectionReset" in err_name:
+                err_str = str(e)
+                if (
+                    "Disconnected" in err_name
+                    or "RemoteDisconnected" in err_str
+                    or "ConnectionReset" in err_name
+                    or "IncompleteRead" in err_name
+                    or "ChunkedEncodingError" in err_name
+                    or "ProtocolError" in err_name
+                ):
                     last_error = e
                     wait = 2 ** attempt
                     logger.warning("LLM stream error (attempt %d/%d): %s, retrying in %ds",
@@ -476,6 +491,7 @@ class HFInferenceClient:
 
 
 _TOGETHER_DEFAULT_BASE_URL = "https://api.together.xyz/v1"
+_DEEPINFRA_DEFAULT_BASE_URL = "https://api.deepinfra.com/v1/openai"
 
 
 def create_llm_client(
@@ -489,6 +505,9 @@ def create_llm_client(
       - "together":    TogetherAI (streaming SSE, OpenAI-compatible)
                        base_url defaults to https://api.together.xyz/v1
                        api_key from TOGETHER_API_KEY env var
+      - "deepinfra":   DeepInfra (streaming SSE, OpenAI-compatible)
+                       base_url defaults to https://api.deepinfra.com/v1/openai
+                       api_key from DEEPINFRA_API_KEY env var
       - "openai":      OpenAI or any OpenAI-compatible endpoint (non-streaming)
       - "huggingface": HF Inference API (serverless)
 
@@ -497,7 +516,7 @@ def create_llm_client(
         model_override: Optional model name override (e.g., from run config).
 
     Returns:
-        LLMClient (ollama/together/openai) or HFInferenceClient (huggingface).
+        LLMClient (ollama/together/deepinfra/openai) or HFInferenceClient (huggingface).
     """
     if cfg.provider == "huggingface":
         logger.info("Using HuggingFace Inference API: %s", model_override or cfg.model)
@@ -520,6 +539,25 @@ def create_llm_client(
             rate_limit_delay=0.5,   # Together handles bursts well; small delay avoids RPM limits
         )
         logger.info("Using TogetherAI: %s @ %s", client.model, base_url)
+        return client
+
+    if cfg.provider == "deepinfra":
+        import os
+        base_url = cfg.base_url or os.environ.get("DEEPINFRA_BASE_URL", _DEEPINFRA_DEFAULT_BASE_URL)
+        api_key = cfg.api_key or os.environ.get("DEEPINFRA_API_KEY", "")
+        if not api_key:
+            logger.warning("DeepInfra provider selected but DEEPINFRA_API_KEY is not set")
+        client = LLMClient(
+            provider="deepinfra",
+            base_url=base_url,
+            api_key=api_key,
+            model=model_override or cfg.model,
+            temperature=cfg.temperature,
+            max_tokens=cfg.max_tokens,
+            timeout=cfg.timeout,
+            rate_limit_delay=0.3,   # DeepInfra has generous throughput; small delay
+        )
+        logger.info("Using DeepInfra: %s @ %s", client.model, base_url)
         return client
 
     logger.info("Using %s client: %s", cfg.provider, model_override or cfg.model)

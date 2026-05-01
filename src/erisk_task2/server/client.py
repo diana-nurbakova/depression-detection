@@ -45,7 +45,9 @@ class ERiskClient:
         self.checkpoint_dir = self.log_dir / "checkpoint"
         self.server_log_dir = self.log_dir / "server_responses"
         self.decision_log_dir = self.log_dir / "decisions"
-        for d in [self.log_dir, self.checkpoint_dir, self.server_log_dir, self.decision_log_dir]:
+        self.submit_log_dir = self.log_dir / "submit_responses"
+        for d in [self.log_dir, self.checkpoint_dir, self.server_log_dir,
+                  self.decision_log_dir, self.submit_log_dir]:
             d.mkdir(parents=True, exist_ok=True)
 
     def get_discussions(self) -> Optional[list[dict]]:
@@ -56,10 +58,10 @@ class ERiskClient:
         url = f"{self.base_url}/getdiscussions/{self.token}"
         return self._get_with_retry(url)
 
-    def submit_run(self, run_number: int, payload: list[dict]) -> bool:
+    def submit_run(self, run_number: int, payload: list[dict]) -> tuple[bool, str]:
         """POST submission for a single run.
 
-        Returns True if successful.
+        Returns (success, response_body).
         """
         url = f"{self.base_url}/submit/{self.token}/{run_number}"
         return self._post_with_retry(url, payload)
@@ -81,21 +83,24 @@ class ERiskClient:
         logger.error("All GET attempts failed for %s", url)
         return None
 
-    def _post_with_retry(self, url: str, payload: list[dict]) -> bool:
+    def _post_with_retry(self, url: str, payload: list[dict]) -> tuple[bool, str]:
         delay = self.initial_delay
         for attempt in range(self.max_retries):
             try:
                 resp = self._session.post(url, json=payload, timeout=self.timeout)
+                body = resp.text
                 if resp.status_code == 200:
-                    return True
-                logger.warning("POST %s returned %d (attempt %d)", url, resp.status_code, attempt + 1)
+                    logger.info("POST %s → 200: %s", url, body[:200])
+                    return True, body
+                logger.warning("POST %s returned %d (attempt %d): %s", url, resp.status_code, attempt + 1, body[:500])
             except requests.RequestException as e:
                 logger.warning("POST %s failed (attempt %d): %s", url, attempt + 1, e)
+                body = str(e)
             if attempt < self.max_retries - 1:
                 time.sleep(delay)
                 delay *= self.backoff_factor
         logger.error("All POST attempts failed for %s", url)
-        return False
+        return False, body
 
     def initialize(self, run_configs: list[RunConfig] | None = None):
         """Initialize or restore state.
@@ -159,11 +164,40 @@ class ERiskClient:
     def log_server_response(self, response_data: list[dict]):
         """Save raw server response."""
         path = self.server_log_dir / f"round_{self.current_round:04d}.json"
-        with open(path, "w") as f:
-            json.dump(response_data, f)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(response_data, f, ensure_ascii=False)
 
     def log_decisions(self, run_number: int, payload: list[dict]):
         """Save submitted decisions."""
         path = self.decision_log_dir / f"run_{run_number}_round_{self.current_round:04d}.json"
         with open(path, "w") as f:
             json.dump(payload, f)
+
+    def log_submit_response(self, run_number: int, success: bool, response_body: str):
+        """Save server response to our POST submission."""
+        path = self.submit_log_dir / f"run_{run_number}_round_{self.current_round:04d}.json"
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump({"success": success, "response": response_body}, f)
+
+    def log_round_interaction(self, round_number: int, n_active_users: int,
+                              submissions: dict[int, list[dict]]):
+        """Append a full round summary to the interaction log (JSONL)."""
+        path = self.log_dir / "interactions.jsonl"
+        record = {
+            "round": round_number,
+            "active_users": n_active_users,
+            "total_users": len(self.master_user_list),
+            "runs": {},
+        }
+        for run_num, payload in submissions.items():
+            alerts = [e for e in payload if e["decision"] == 1]
+            record["runs"][run_num] = {
+                "total_alerts": len(alerts),
+                "new_alerts": [
+                    e["nick"] for e in alerts
+                    if self.run_states[run_num][e["nick"]].alert_round == round_number
+                ],
+                "scores": {e["nick"]: e["score"] for e in payload},
+            }
+        with open(path, "a", encoding="utf-8") as f:
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")

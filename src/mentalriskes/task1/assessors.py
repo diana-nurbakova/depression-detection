@@ -769,7 +769,16 @@ def assess_instrument(
         else:
             scores = scores[:spec["n_items"]]
 
-    scores = [max(0, min(spec["max_val"], int(s))) for s in scores]
+    def _safe_int(val, default: int = 0) -> int:
+        """Convert to int, falling back to default for non-numeric values."""
+        try:
+            return int(val)
+        except (ValueError, TypeError):
+            logger.warning("%s: non-numeric score '%s', using default %d", instrument, val, default)
+            return default
+
+    mid = spec["max_val"] // 2
+    scores = [max(0, min(spec["max_val"], _safe_int(s, mid))) for s in scores]
 
     # Extract reasoning steps
     steps = {}

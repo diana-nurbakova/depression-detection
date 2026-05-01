@@ -292,6 +292,74 @@ class Pipeline:
 
         return all_results
 
+    def create_server_client(self) -> MentalRiskESClient:
+        """Create a server client for Task 1."""
+        return MentalRiskESClient.from_config(self.config.server, task="task1")
+
+    def init_server_state(self) -> dict[str, Any]:
+        """Initialise reusable state for server mode.
+
+        Returns a dict with ``run_clients`` and ``emissions`` to pass into
+        :meth:`process_server_round`.
+        """
+        run_clients = {
+            rc.name: self._create_client(rc)
+            for rc in self.config.runs
+        }
+        return {"run_clients": run_clients, "emissions": self._get_emissions_dict()}
+
+    def process_server_round(
+        self,
+        messages: dict,
+        server: MentalRiskESClient,
+        state: dict[str, Any],
+    ) -> None:
+        """Process a single server round: assess all sessions, submit predictions.
+
+        Args:
+            messages: raw GET response from server (keyed by session_id).
+            server: the HTTP client used to POST submissions.
+            state: dict returned by :meth:`init_server_state`.
+        """
+        run_clients = state["run_clients"]
+        emissions = state["emissions"]
+
+        round_number = next(iter(messages.values()))["round"]
+        n_sessions = len(messages)
+        logger.info("=== Task 1 Server Round %d (%d sessions) ===", round_number, n_sessions)
+
+        # Update conversation store
+        self.store.update_from_server_response(messages)
+
+        # Save raw server response
+        round_path = self.config.data.output_dir / f"round_{round_number}_messages.json"
+        with open(round_path, "w", encoding="utf-8") as f:
+            json.dump(messages, f, ensure_ascii=False, indent=2)
+
+        # Build predictions for each run
+        predictions_per_run: list[list[dict]] = []
+
+        for run_config in self.config.runs:
+            client = run_clients[run_config.name]
+            run_preds = []
+
+            for session_id in messages:
+                pred = self._assess_session(session_id, run_config, client)
+                run_preds.append(pred.to_submission_dict())
+                self._log_prediction(pred, run_config.name)
+
+            predictions_per_run.append(run_preds)
+
+        # Submit all runs (runs 0..N-1)
+        server.submit_all_runs(
+            predictions_per_run, emissions,
+            save_dir=self.config.data.output_dir / "predictions",
+            round_number=round_number,
+        )
+
+        logger.info("Task 1 Round %d complete: submitted %d runs x %d sessions",
+                    round_number, len(predictions_per_run), n_sessions)
+
     def run_server(self) -> None:
         """
         Run pipeline against competition server in GET/POST loop.
@@ -299,18 +367,12 @@ class Pipeline:
         Round advancement requires ALL 3 POST submissions (runs 0, 1, 2).
         If fewer runs are configured, we still submit all configured runs.
 
-        NOTE: If participating in both tasks, the caller must orchestrate
-        task1 GET → task1 POSTs → task2 GET → task2 POSTs before the
-        server advances to the next round.
+        NOTE: If participating in both tasks, use the combined ``mentalriskes-server``
+        command which orchestrates task1 GET → task1 POSTs → task2 GET → task2 POSTs
+        per round.
         """
-        server = MentalRiskESClient.from_config(self.config.server, task="task1")
-        emissions = self._get_emissions_dict()
-
-        # Pre-create one LLM client per run (reused across rounds)
-        run_clients = {
-            rc.name: self._create_client(rc)
-            for rc in self.config.runs
-        }
+        server = self.create_server_client()
+        state = self.init_server_state()
 
         messages = server.get_messages()
         if not messages:
@@ -318,43 +380,7 @@ class Pipeline:
             return
 
         while messages:
-            round_number = next(iter(messages.values()))["round"]
-            n_sessions = len(messages)
-            logger.info("=== Server Round %d (%d sessions) ===", round_number, n_sessions)
-
-            # Update conversation store
-            self.store.update_from_server_response(messages)
-
-            # Save raw messages
-            round_path = self.config.data.output_dir / f"round_{round_number}_messages.json"
-            with open(round_path, "w", encoding="utf-8") as f:
-                json.dump(messages, f, ensure_ascii=False, indent=2)
-
-            # Build predictions for each run
-            predictions_per_run: list[list[dict]] = []
-
-            for run_config in self.config.runs:
-                client = run_clients[run_config.name]
-                run_preds = []
-
-                for session_id in messages:
-                    pred = self._assess_session(session_id, run_config, client)
-                    run_preds.append(pred.to_submission_dict())
-                    self._log_prediction(pred, run_config.name)
-
-                predictions_per_run.append(run_preds)
-
-            # Submit all runs (runs 0..N-1)
-            server.submit_all_runs(
-                predictions_per_run, emissions,
-                save_dir=self.config.data.output_dir / "predictions",
-                round_number=round_number,
-            )
-
-            logger.info("Round %d complete: submitted %d runs x %d sessions",
-                        round_number, len(predictions_per_run), n_sessions)
-
-            # Next round
+            self.process_server_round(messages, server, state)
             messages = server.get_messages()
 
         logger.info("All rounds processed.")

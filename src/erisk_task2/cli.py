@@ -59,6 +59,12 @@ def run(ctx, official):
     cfg = ctx.obj["config"]
     if official:
         cfg.server.base_url = "https://erisk.irlab.org/challenge-t2-official"
+    # Add file logging
+    log_path = Path(cfg.logging.output_dir) / "run.log"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    fh = logging.FileHandler(log_path, encoding="utf-8")
+    fh.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s"))
+    logging.getLogger().addHandler(fh)
     run_pipeline(cfg)
 
 

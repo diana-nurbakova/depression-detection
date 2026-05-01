@@ -5,28 +5,32 @@ server:
   base_url_env: "MENTALRISKES_SERVER_URL"      # env var for server URL
   token_env: "MENTALRISKES_TOKEN"              # env var for auth token
   user_env: "MENTALRISKES_USER"                # env var for user name
-  use_trial: true                              # true = trial endpoints, false = test
+  use_trial: false                             # true = trial endpoints, false = test
   retries: 5
   backoff: 0.1
 
 llm:
-  # --- Option A: Local Ollama (GPU required) ---
-  #provider: "ollama"
-  #base_url_env: "OLLAMA_BASE_URL"              # e.g. http://localhost:11434
-  #api_key_env: "OLLAMA_API_KEY"
-  #model: "llama3.3:70b"
-
-  # --- Option B: TogetherAI (recommended for remote/ablation, pay-per-token) ---
-  provider: "huggingface"
-  api_key_env: "HF_TOKEN"
-  base_url_env: ""
+  # --- Option A: DeepInfra (default — streaming SSE, OpenAI-compatible) ---
+  provider: "deepinfra"
+  api_key_env: "DEEPINFRA_API_KEY"
+  base_url_env: ""                             # default https://api.deepinfra.com/v1/openai
   model: "meta-llama/Llama-3.3-70B-Instruct"
-  # Cost estimate: ~$0.88/M tokens. Full ablation (A0+A1+A3+A5 × 19 rounds × 3 instruments)
-  # ≈ 10-12M tokens → ~$9-11. Post-hoc B+C adds Level C agent: +2-4M tokens → ~$2-4 extra.
 
-  # --- Option C: HuggingFace Inference API (serverless, slower) ---
+  # --- Option B: Local Ollama (GPU required) ---
+  # provider: "ollama"
+  # base_url_env: "OLLAMA_BASE_URL"            # e.g. http://localhost:11434
+  # api_key_env: "OLLAMA_API_KEY"
+  # model: "llama3.3:70b"
+
+  # --- Option C: TogetherAI ---
+  # provider: "together"
+  # api_key_env: "TOGETHER_API_KEY"
+  # base_url_env: "TOGETHER_BASE_URL"
+  # model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+
+  # --- Option D: HuggingFace Inference API (serverless) ---
   # provider: "huggingface"
-  # api_key_env: "HF_TOKEN"                    # falls back to HF_TOKEN env var automatically
+  # api_key_env: "HF_TOKEN"
   # model: "meta-llama/Llama-3.3-70B-Instruct"
 
   temperature: 0.1
@@ -55,7 +59,7 @@ resources:
 runs:
   - name: "run0_A5"
     description: "A5-T3: full stack — anchors + Level B + Level C + stability-adaptive aggregation."
-    model: "llama3.3:70b"
+    model: "meta-llama/Llama-3.3-70B-Instruct"
     prompt_language: "english"
     few_shot: true
     calibration: "none"           # simple correction disabled; Level B/C handle calibration
@@ -72,7 +76,7 @@ runs:
 
   - name: "run1_A3"
     description: "A3-T2: safety hedge — anchors + Level B + early-weighted aggregation."
-    model: "llama3.3:70b"
+    model: "meta-llama/Llama-3.3-70B-Instruct"
     prompt_language: "english"
     few_shot: true
     calibration: "none"
@@ -89,7 +93,7 @@ runs:
 
   - name: "run2_A1"
     description: "A1-T2: minimal post-hoc — anchors + early-weighted aggregation only."
-    model: "llama3.3:70b"
+    model: "meta-llama/Llama-3.3-70B-Instruct"
     prompt_language: "english"
     few_shot: true
     calibration: "none"

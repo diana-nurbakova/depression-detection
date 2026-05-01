@@ -1,0 +1,10 @@
+metric,value
+n_total,300.0
+submitted_acc_on_join,0.2467
+s2_acc_on_join,0.4167
+agreement_rate,0.38
+both_correct,34.0
+s2_wins,91.0
+submitted_wins,40.0
+both_wrong_same,80.0
+both_wrong_disagree,55.0

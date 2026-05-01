@@ -104,16 +104,11 @@ def process_thread(
 
         # ToM Option A: observer-only view when target is silent
         other_texts = [c.body for c in thread.other_comments if c.body]
-        if other_texts:
-            if precomputed is not None:
-                n = len(other_texts)
+        if other_texts and precomputed is not None:
+            n = len(other_texts)
+            if emb_offset + n <= len(precomputed):
                 obs_emb = precomputed[emb_offset:emb_offset + n].mean(axis=0)
                 emb_offset += n
-            elif encoder is not None:
-                obs_emb = encoder.encode(other_texts).mean(axis=0)
-            else:
-                obs_emb = None
-            if obs_emb is not None:
                 profile.observer_view_history.append({"embedding": obs_emb})
             else:
                 profile.observer_view_history.append(None)
@@ -218,13 +213,14 @@ def process_thread(
 
     other_texts = [c.body for c in thread.other_comments if c.body]
     if other_texts:
-        if precomputed is not None:
+        if precomputed is not None and emb_offset + len(other_texts) <= len(precomputed):
             n = len(other_texts)
             obs_emb = precomputed[emb_offset:emb_offset + n].mean(axis=0)
             emb_offset += n
+            profile.observer_view_history.append({"embedding": obs_emb})
         else:
-            obs_emb = encoder.encode(other_texts).mean(axis=0)
-        profile.observer_view_history.append({"embedding": obs_emb})
+            # Skip encoding other_comments when not precomputed (too slow)
+            profile.observer_view_history.append(None)
     else:
         profile.observer_view_history.append(None)
 
@@ -904,6 +900,12 @@ def run_pipeline(config: Task2Config):
 
     logger.info("=== LIVE PIPELINE ===")
 
+    if not config.server.team_token:
+        raise ValueError(
+            "ERISK_TOKEN not set. Set it in .env or as an environment variable."
+        )
+    logger.info("Server: %s", config.server.base_url)
+
     output_dir = Path(config.logging.output_dir)
 
     # Initialize client
@@ -934,22 +936,31 @@ def run_pipeline(config: Task2Config):
     )
     emotion_classifier.load()
 
-    # Layer 3: BERTopic
+    # Layer 3: BERTopic — skip in live pipeline to save memory.
+    # BERTopic loads its own sentence transformer internally, which combined
+    # with the 3 existing encoders causes OOM. The 41 topic features will be
+    # zeroed out; the classifiers still use the remaining ~2300 features.
     topic_modeler = TopicModeler()
-    bertopic_path = output_dir / "bertopic_model"
-    if bertopic_path.exists():
-        topic_modeler.load(bertopic_path)
-        logger.info("BERTopic model loaded")
+    logger.info("BERTopic skipped in live pipeline (memory optimization)")
 
     # Load classifiers
     classifiers = {}
+    required_types = set()
     for rc in DEFAULT_RUNS:
         ctype = rc.classifier_type.value
+        required_types.add(ctype)
         model_path = output_dir / f"classifier_{ctype}.pkl"
         if model_path.exists() and ctype not in classifiers:
             clf = create_classifier(ctype)
             clf.load(model_path)
             classifiers[ctype] = clf
+
+    missing = required_types - set(classifiers.keys())
+    if missing:
+        raise FileNotFoundError(
+            f"Missing trained classifiers: {missing}. "
+            f"Run 'train' first. Looked in {output_dir}"
+        )
 
     # Load Mahalanobis
     mahalanobis = MahalanobisScorer()
@@ -981,18 +992,53 @@ def run_pipeline(config: Task2Config):
         if round_number == 0:
             client.capture_master_list(threads)
 
-        # 2. Feature extraction
-        for uid, thread in threads.items():
-            profile = client.profiles.get(uid)
-            if profile is None:
-                continue
+        # 2. Feature extraction — batch target texts + titles only (skip other_comments
+        # which are only used for ToM observer view and add ~10x encoding overhead)
+        t_enc = time.monotonic()
+        ordered_uids = [uid for uid in threads if uid in client.profiles]
+        all_texts = []
+        user_text_counts = []  # number of precomputed texts per user
+        for uid in ordered_uids:
+            thread = threads[uid]
+            count = 0
+            has_text = len(thread.target_texts) > 0
+            if has_text:
+                all_texts.extend(thread.target_texts)
+                count += len(thread.target_texts)
+                title = thread.title or thread.body or ""
+                if title.strip():
+                    all_texts.append(title)
+                    count += 1
+            user_text_counts.append(count)
+
+        if all_texts:
+            all_embeddings = encoder.encode(all_texts)
+        else:
+            all_embeddings = np.zeros((0, encoder.total_dim))
+        t_enc = time.monotonic() - t_enc
+        logger.info("Encoding %d texts: %.1fs", len(all_texts), t_enc)
+
+        t_proc = time.monotonic()
+        emb_offset = 0
+        for uid, n_texts in zip(ordered_uids, user_text_counts):
+            if n_texts > 0:
+                user_embs = all_embeddings[emb_offset:emb_offset + n_texts]
+                emb_offset += n_texts
+            else:
+                user_embs = None
             process_thread(
-                thread, profile, encoder, symptom_scorer, thompson, config,
+                threads[uid], client.profiles[uid],
+                encoder, symptom_scorer, thompson, config,
                 emotion_classifier=emotion_classifier,
                 topic_modeler=topic_modeler,
+                precomputed=user_embs,
+                emb_offset=0,
             )
+        t_proc = time.monotonic() - t_proc
+        logger.info("Process threads: %.1fs", t_proc)
 
         # 3. Classification + Decision per run
+        round_submissions: dict[int, list[dict]] = {}
         for rc in DEFAULT_RUNS:
             clf = classifiers.get(rc.classifier_type.value)
 
@@ -1024,13 +1070,15 @@ def run_pipeline(config: Task2Config):
 
             # Submit
             payload = client.build_submission(rc.run_number)
-            success = client.submit_run(rc.run_number, payload)
-            if success:
-                client.log_decisions(rc.run_number, payload)
-            else:
-                logger.error("Failed to submit run %d", rc.run_number)
+            round_submissions[rc.run_number] = payload
+            client.log_decisions(rc.run_number, payload)
+            success, resp_body = client.submit_run(rc.run_number, payload)
+            client.log_submit_response(rc.run_number, success, resp_body)
+            if not success:
+                logger.error("Failed to submit run %d at round %d: %s", rc.run_number, round_number, resp_body)
 
-        # 4. Checkpoint
+        # 4. Interaction log + checkpoint
+        client.log_round_interaction(round_number, len(threads), round_submissions)
         client.current_round = round_number
         client.save_round_state()
 

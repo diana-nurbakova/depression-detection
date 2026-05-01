@@ -147,6 +147,44 @@ class Task2Pipeline:
         result.llm_stats = self.llm.stats
         return result
 
+    def process_single_round(self, round_id: int, patient_message: str, options: dict) -> SelectionResult:
+        """Process a single round, handling permutation voting if configured.
+
+        This is the correct entry point for server mode — it mirrors the logic
+        in ``_run_rounds`` including permutation voting support.
+        """
+        if self.config.permutation_voting:
+            if self.config.pipeline in ("B", "B+"):
+                self.selector._step1_state_update(round_id, patient_message)
+                rnd = RoundRecord(round_id=round_id, patient_message=patient_message, options=options)
+                self.selector.state.transcript.append(rnd)
+
+            selection = run_with_permutation_voting(
+                llm=self.llm,
+                state=self.selector.state,
+                round_id=round_id,
+                patient_message=patient_message,
+                options=options,
+                framing=self.config.framing,
+                pipeline=self.config.pipeline,
+                lang=self.config.lang,
+                lookback_window=self.config.lookback_window,
+            )
+
+            # Record in state
+            rnd = self.selector.state.transcript[-1] if self.selector.state.transcript else None
+            if rnd and rnd.round_id == round_id:
+                rnd.selected_option = selection.chosen_option
+                rnd.selected_response_text = options.get(f"option_{selection.chosen_option}", "")
+            self.selector.state.selection_log.append({
+                "round": round_id,
+                "chosen": selection.chosen_option,
+                "tag": selection.primary_tag,
+            })
+            return selection
+        else:
+            return self.selector.process_round(round_id, patient_message, options)
+
     def save_result(self, result: PipelineResult, output_dir: Path) -> Path:
         """Save pipeline result to JSONL file."""
         output_dir.mkdir(parents=True, exist_ok=True)

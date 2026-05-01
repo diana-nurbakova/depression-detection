@@ -1,0 +1,9 @@
+system,cohort,n,GAD7_MAE_items,GAD7_signed_total_bias,GAD7_band_acc,GAD7_MAE_total
+gemma-4-26b-a4b-it v2,test,10,0.7142857142857142,-3.4,0.5,3.4
+gemma-4-26b-a4b-it v1,test,10,0.7428571428571428,-4.0,0.2,4.0
+gemma-4-31b-it v1,test,10,0.7857142857142857,-4.7,0.3,4.7
+gemma-3-27b-it v2,test,10,0.7428571428571428,-3.8,0.2,4.8
+gemma-3-27b-it v1,test,10,0.8142857142857144,-4.9,0.3,5.1
+"Llama-3.3-70B (replay, our pipeline)",test,10,1.0857142857142859,-6.0,0.2,6.4
+gemma-4-26b-a4b-it v1,simulated,6,,-2.5,0.5,5.5
+gemma-4-26b-a4b-it v2,simulated,6,,-1.6666666666666667,0.5,5.666666666666667

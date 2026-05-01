@@ -37,6 +37,13 @@ def save_checkpoint(
         pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
 
     logger.info("Checkpoint saved: %s", path)
+
+    # Keep only the last 2 checkpoints to avoid filling disk
+    old = sorted(checkpoint_dir.glob("round_*_state.pkl"))[:-2]
+    for f in old:
+        f.unlink()
+        logger.debug("Removed old checkpoint: %s", f)
+
     return path
 
 

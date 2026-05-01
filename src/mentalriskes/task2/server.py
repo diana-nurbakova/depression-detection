@@ -73,6 +73,8 @@ class Task2Client:
         session = self._make_session()
         try:
             response = session.get(url, timeout=30)
+            logger.debug("GET task2 response (status %d): %s",
+                         response.status_code, response.text[:500])
             if response.status_code != 200:
                 logger.error("GET failed (status %d): %s", response.status_code, response.text)
                 return {}
@@ -99,10 +101,27 @@ class Task2Client:
         base_url = self._get_endpoint("post")
         url = f"{base_url}/{run_index}"
         session = self._make_session()
-        payload = [{"predictions": predictions, "emissions": emissions}]
+
+        # Server expects prediction as "option_1", "option_2", "option_3"
+        formatted_preds = [
+            {**p, "prediction": f"option_{p['prediction']}"} for p in predictions
+        ]
+
+        # Server requires all emissions fields
+        if not emissions or "duration" not in emissions:
+            emissions = {
+                "duration": 0.0, "emissions": 0.0, "cpu_energy": 0.0,
+                "gpu_energy": 0.0, "ram_energy": 0.0, "energy_consumed": 0.0,
+                "cpu_count": 0, "gpu_count": 0, "cpu_model": "",
+                "gpu_model": "", "ram_total_size": 0.0, "country_iso_code": "FRA",
+            }
+
+        payload = [{"predictions": formatted_preds, "emissions": emissions}]
 
         try:
             response = session.post(url, json=payload, timeout=30)
+            logger.debug("POST task2 run %d response (status %d): %s",
+                         run_index, response.status_code, response.text[:500])
             if response.status_code != 200:
                 logger.error("POST run %d failed (status %d): %s",
                              run_index, response.status_code, response.text)

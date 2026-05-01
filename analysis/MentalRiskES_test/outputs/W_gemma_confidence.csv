@@ -1,0 +1,16 @@
+model,confidence_level,n_items,item_MAE
+google_gemma-3-27b-it,HIGH,1741,1.0907524411257898
+google_gemma-3-27b-it,MEDIUM,2132,0.8208255159474672
+google_gemma-3-27b-it,LOW,103,1.2912621359223302
+google_gemma-3-27b-it__v2,MEDIUM,2565,0.7801169590643274
+google_gemma-3-27b-it__v2,HIGH,1122,0.8342245989304813
+google_gemma-3-27b-it__v2,LOW,289,1.1764705882352942
+google_gemma-4-26b-a4b-it,MEDIUM,2359,0.9745654938533277
+google_gemma-4-26b-a4b-it,LOW,257,0.914396887159533
+google_gemma-4-26b-a4b-it,HIGH,1360,1.1102941176470589
+google_gemma-4-26b-a4b-it__v2,MEDIUM,2391,0.8954412379757424
+google_gemma-4-26b-a4b-it__v2,LOW,227,1.0748898678414096
+google_gemma-4-26b-a4b-it__v2,HIGH,1358,0.9815905743740795
+google_gemma-4-31b-it,MEDIUM,2338,1.1420017108639864
+google_gemma-4-31b-it,LOW,111,1.2252252252252251
+google_gemma-4-31b-it,HIGH,1527,0.9299279633267845

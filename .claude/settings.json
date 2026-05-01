@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk '{print substr\\($0, index\\($0, \"last=\"\\)\\)}' c:/Users/dnurb/Documents/depression-detection/output/mentalriskes_task2_bare_llm/run_gemma4_31b__S3.log)",
+      "Bash(.venv/Scripts/python.exe -c ' *)",
+      "Bash(PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe analysis/MentalRiskES_test/qualitative_T2_submitted_vs_s2.py --k-per-bucket 8 --gloss)",
+      "Read(//c/Users/dnurb/AppData/Local/Temp/claude/c--Users-dnurb-Documents-depression-detection/667b7f21-742f-411e-bbad-bdc6a94e1cf9/tasks/**)",
+      "Bash(mkdir -p c:/Users/dnurb/Documents/depression-detection/output/mentalriskes_task2_bare_llm c:/Users/dnurb/Documents/depression-detection/output/mentalriskes_gemma_gad7)",
+      "Bash(PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe analysis/MentalRiskES_test/posthoc_S_task2_bare_llm.py --model \"google/gemma-4-31b-it\" --mode S --cohort trial --rate-limit-delay 1)",
+      "Bash(xargs -I{} head -c 500 \"c:/Users/dnurb/Documents/depression-detection/output/mentalriskes_task2/simulated_ablation/B+_Llama-3.3-70B-Instruct-Turbo_es_HYB_FIX_W3/{}\")",
+      "Bash(PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe analysis/MentalRiskES_test/posthoc_T2_cross_cohort_eval.py)",
+      "Bash(PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe analysis/MentalRiskES_test/posthoc_T1_cross_cohort_eval.py)"
+    ]
+  }
+}

@@ -47,6 +47,9 @@ def _make_llm_config(cfg: dict):
     elif provider == "together":
         api_key = llm_cfg.get("api_key", os.getenv("TOGETHER_API_KEY", ""))
         base_url = llm_cfg.get("base_url", os.getenv("TOGETHER_BASE_URL", "https://api.together.xyz/v1"))
+    elif provider == "deepinfra":
+        api_key = llm_cfg.get("api_key", os.getenv("DEEPINFRA_API_KEY", ""))
+        base_url = llm_cfg.get("base_url", os.getenv("DEEPINFRA_BASE_URL", "https://api.deepinfra.com/v1/openai"))
     else:
         api_key = llm_cfg.get("api_key", os.getenv("OLLAMA_API_KEY", os.getenv("OPENAI_API_KEY", "")))
         base_url = llm_cfg.get("base_url", os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"))
@@ -198,8 +201,12 @@ def ablation(ctx: click.Context, configs: str | None, provider: str | None) -> N
 
 @cli.command()
 @click.option("--run-configs", "-r", required=True, help="Comma-separated run config names from YAML.")
+@click.option("--max-rounds", default=200,
+              help="Safety cap on rounds. Loop normally exits when the server returns "
+                   "no more messages; this cap only fires if the server keeps serving "
+                   "data far beyond expectations. NOT a target round count.")
 @click.pass_context
-def server(ctx: click.Context, run_configs: str) -> None:
+def server(ctx: click.Context, run_configs: str, max_rounds: int) -> None:
     """Run pipeline against the competition server (GET/POST loop)."""
     from ..llm_client import create_llm_client
     from .data import parse_server_round
@@ -241,13 +248,19 @@ def server(ctx: click.Context, run_configs: str) -> None:
         pipelines.append(Task2Pipeline(llm=llm, config=pcfg))
 
     click.echo(f"Server mode: {len(pipelines)} runs, trial={client.use_trial}")
+    click.echo(f"max_rounds:  {max_rounds}  (safety cap; loop exits on empty server response)")
 
     # GET/POST loop
-    max_rounds = 30
+    # Termination is data-driven: stop when the server returns no more messages.
+    # `max_rounds` is a safety cap so a misbehaving server can't trap us forever;
+    # hitting it is a hard error, not a normal exit.
+    last_round_seen = 0
+    hit_safety_cap = False
+
     for round_num in range(1, max_rounds + 1):
         data = client.get_round()
         if not data:
-            click.echo("No more data from server. Done.")
+            click.echo("Server returned no messages -> end of test.")
             break
 
         # Process each session
@@ -255,9 +268,10 @@ def server(ctx: click.Context, run_configs: str) -> None:
 
         for session_id, session_data in data.items():
             record = parse_server_round(session_data)
+            last_round_seen = max(last_round_seen, record.round_id)
 
             for run_idx, pipe in enumerate(pipelines):
-                result = pipe.selector.process_round(
+                result = pipe.process_single_round(
                     record.round_id, record.patient_message, record.options
                 )
                 predictions_per_run[run_idx].append({
@@ -274,6 +288,21 @@ def server(ctx: click.Context, run_configs: str) -> None:
             round_number=round_num,
         )
         click.echo(f"Round {round_num}: submitted {len(pipelines)} runs")
+    else:
+        # for ... else fires when the loop exhausts without `break` -- i.e.
+        # we hit max_rounds while the server was still serving messages.
+        hit_safety_cap = True
+
+    click.echo(f"Last round seen: {last_round_seen}")
+    if hit_safety_cap:
+        click.echo(
+            f"WARNING: hit --max-rounds safety cap of {max_rounds} but the server "
+            f"was still serving messages. Submission is INCOMPLETE. Re-launch "
+            f"with --max-rounds {max_rounds * 2} (or more) to continue.",
+            err=True,
+        )
+        sys.exit(2)
+    click.echo("All rounds processed (server signalled end-of-test).")
 
 
 @cli.command("simulated-ablation")

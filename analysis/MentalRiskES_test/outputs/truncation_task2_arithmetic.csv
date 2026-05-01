@@ -1,0 +1,4 @@
+run,n_correct_r1_30,n_total_r1_30,acc_r1_30_only,leaderboard_acc,delta_vs_leaderboard,if_scenario_b_reported,if_scenario_b_implied_true_acc
+0,63,300,0.21,0.21,0.0,0.110915,0.3976
+1,71,300,0.236667,0.236667,-0.0,0.125,0.4481
+2,74,300,0.246667,0.246667,-0.0,0.130282,0.467

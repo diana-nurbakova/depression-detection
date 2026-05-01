@@ -137,10 +137,14 @@ def load_config(config_path: str | Path) -> MentalRiskESConfig:
         api_key = os.environ.get("HF_TOKEN", "")
     if not api_key and provider == "together":
         api_key = os.environ.get("TOGETHER_API_KEY", "")
-    # Resolve base URL (provider-aware fallback for Together)
+    if not api_key and provider == "deepinfra":
+        api_key = os.environ.get("DEEPINFRA_API_KEY", "")
+    # Resolve base URL (provider-aware fallback for Together / DeepInfra)
     base_url = os.environ.get(llm.get("base_url_env", ""), "")
     if not base_url and provider == "together":
         base_url = os.environ.get("TOGETHER_BASE_URL", "https://api.together.xyz/v1")
+    if not base_url and provider == "deepinfra":
+        base_url = os.environ.get("DEEPINFRA_BASE_URL", "https://api.deepinfra.com/v1/openai")
     cfg.llm = LLMConfig(
         provider=provider,
         base_url=base_url,

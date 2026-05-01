@@ -1,0 +1,5 @@
+instrument,boundary_zone,n,band_acc
+GAD-7,False,3,0.0
+GAD-7,True,7,0.2857142857142857
+PHQ-9,False,1,0.0
+PHQ-9,True,9,0.2222222222222222

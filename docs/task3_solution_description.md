@@ -1,5 +1,11 @@
 # Task 3: ADHD Symptom Sentence Ranking — Solution Description (HiPerT)
 
+**Team:** INSALyon
+**Competition:** eRisk 2026, Task 3
+**System:** HiPerT (Hierarchical Prompt Engineering with Transfer learning)
+
+---
+
 ## 1. Task Overview
 
 eRisk 2026 Task 3 requires systems to rank sentences from a large Reddit corpus by their relevance to each of 18 ASRS-v1.1 (Adult ADHD Self-Report Scale) symptoms. For each symptom, systems produce a ranked list of up to 1,000 sentences, each scored on a 0–3 relevance scale:
@@ -31,7 +37,7 @@ The 18 ASRS items are organized into a **three-factor bifactor model** (Panagiot
 
 ### 2.1 Four-Layer Clinical Definitions
 
-Each symptom is grounded in a four-layer clinical definition framework totaling ~12,000 words across all 18 items:
+Each symptom is grounded in a four-layer clinical definition framework totaling ~12,000 words across all 18 items (see `specs/asrs_four_layer_definitions.md`):
 
 1. **L1 — Clinical Definition (DSM-5-TR):** Formal diagnostic criterion from the DSM-5-TR (APA 2022, pp. 68–70), with adult-specific adaptations distinguishing childhood from adult presentations.
 
@@ -43,7 +49,7 @@ Each symptom is grounded in a four-layer clinical definition framework totaling 
 
 ### 2.2 Token Budget Strategy
 
-Not all items require the same elaboration depth. We allocate prompt space based on cross-diagnostic ambiguity:
+Not all items require the same elaboration depth. Prompt space is allocated based on cross-diagnostic ambiguity:
 
 | Budget | Layers Included | Items | Rationale |
 |--------|----------------|-------|-----------|
@@ -55,6 +61,11 @@ Not all items require the same elaboration depth. We allocate prompt space based
 
 ## 3. System Architecture
 
+The HiPerT system is a multi-stage pipeline that combines bi-encoder retrieval, LLM-based scoring, and neural reranking. Two major architecture versions were developed and evaluated:
+
+- **v1** used a bi-encoder (`SymptomConditionedEncoder`) with silhouette-contrastive loss and curriculum learning. This version suffered from representation collapse (Section 10.1) and was superseded by v2.
+- **v2** replaced the bi-encoder with a cross-encoder (`CrossEncoderReranker`) using CORAL ordinal regression or ListMLE listwise ranking loss. The LLM cascade was promoted to the primary submission.
+
 ```
 INPUT CORPUS (4.17M Reddit sentences)
          │
@@ -63,30 +74,25 @@ INPUT CORPUS (4.17M Reddit sentences)
     │  Bi-encoder (all-mpnet-base-v2) → top-K candidates       │
     │  + query expansion + first-person filter + keyword boost  │
     └────┬─────────────────────────────────────────────────────┘
-         │  ~5K–10K candidates per symptom
+         │  ~5K candidates per symptom
     ┌────▼─────────────────────────────────────────────────────┐
     │  STAGE 2: LLM SCORING CASCADE                            │
-    │  Primary LLM scores ALL candidates                       │
-    │  → 5 escalation rules → GPT re-scores ~20–25% of cases  │
-    │  → confidence-weighted silver labels                     │
+    │  Primary LLM (GPT-4o-mini) scores ALL candidates         │
+    │  → 5 escalation rules → optional GPT-4o re-scoring       │
+    │  → confidence-weighted silver labels (0–3)               │
     └────┬─────────────────────────────────────────────────────┘
-         │  ~30K–36K silver label triples
+         │  ~90K silver label triples
     ┌────▼─────────────────────────────────────────────────────┐
-    │  STAGE 3: TRAINING                                       │
-    │  Stage A: Depression pre-training (BDI-Sen + eRisk 2025) │
-    │  Stage B: ADHD fine-tuning (silver labels + curriculum)  │
-    │  3 backbone ensemble (mental-roberta, clinical-bert, mpnet) │
-    └────┬─────────────────────────────────────────────────────┘
-         │
-    ┌────▼─────────────────────────────────────────────────────┐
-    │  STAGE 4: INFERENCE & ENSEMBLE                           │
-    │  3-backbone averaged expected scores                     │
-    │  Per-symptom temperature scaling + Dirichlet calibration │
+    │  STAGE 3: CROSS-ENCODER RERANKER (v2)                    │
+    │  [CLS] symptom [SEP] sentence [SEP]                      │
+    │  CORAL ordinal regression or ListMLE                     │
+    │  3 backbones × 5 folds ensemble                          │
     └────┬─────────────────────────────────────────────────────┘
          │
     ┌────▼─────────────────────────────────────────────────────┐
     │  OUTPUT: 5 SUBMISSION RUNS                               │
-    │  R1=Encoder, R2=LLM, R3=RRF Ensemble, R4=Transfer, R5=BiEnc │
+    │  R1=LLM cascade, R2=CrossEncoder, R3=RRF Ensemble,      │
+    │  R4=DepTransfer, R5=BiEnc baseline                       │
     └──────────────────────────────────────────────────────────┘
 ```
 
@@ -96,22 +102,24 @@ INPUT CORPUS (4.17M Reddit sentences)
 
 ### 4.1 Bi-Encoder Retrieval
 
-- **Model:** `all-mpnet-base-v2` (sentence transformer)
-- **Query expansion:** 2–3 paraphrases per ASRS symptom, concatenated with the original question text
-- **Top-K:** 5,000 candidates per symptom (×2 internal over-retrieval, then filtered)
+- **Model:** `sentence-transformers/all-mpnet-base-v2` (768-dim, 110M parameters)
+- **Source:** Pre-trained general-purpose sentence transformer from Hugging Face
+- **Query expansion:** Each ASRS symptom query is expanded by concatenating the item text with Layer 3 empirical discussion topics from `config/symptoms.yaml`
+- **Top-K:** 5,000 candidates per symptom
 - **Similarity:** Cosine similarity between query and sentence embeddings
+- **Caching:** Corpus embeddings are cached to disk as `.npy` files for efficiency; progressive encoding with checkpointing supports interrupted runs
 
 ### 4.2 First-Person Filter
 
-Retains only sentences containing first-person markers (`I`, `me`, `my`, `mine`, `myself`, `I'm`, `I've`, `I'd`, `I'll`). This eliminates ~60% of the corpus — third-person references, advice, and general statements are rarely relevant at score ≥ 2.
+Retains only sentences containing first-person markers (`I`, `me`, `my`, `mine`, `myself`, `I'm`, `I've`, `I'd`, `I'll`). This eliminates ~60% of the corpus — third-person references, advice, and general statements are rarely relevant at score >= 2.
 
 ### 4.3 Keyword Boost
 
-Each symptom has 16–18 curated keywords (from Layer 3 empirical vocabulary). A `+0.05` boost per keyword match is added to the cosine similarity score. Example keywords for Item 1 (Wrapping up projects): *organize, finish, procrastinate, deadline, last-minute, follow-through, incomplete*.
+Each symptom has 16–18 curated keywords drawn from Layer 3 empirical vocabulary (defined in `config/symptoms.yaml`). A `+0.05` boost per keyword match is added to the cosine similarity score. Example keywords for Item 1 (Wrapping up projects): *organize, finish, procrastinate, deadline, last-minute, follow-through, incomplete*.
 
 ### 4.4 Output
 
-Per symptom: a ranked list of ~5,000–10,000 candidate sentences with `combined_score = cosine_similarity + keyword_boost`. These candidates feed into both the LLM scoring cascade (Stage 2) and the BiEnc baseline run (Run 5).
+Per symptom: a ranked list of ~5,000 candidate sentences with `combined_score = cosine_similarity + keyword_boost`. Saved to `output/candidates/symptom_{id}.json`. These candidates feed into both the LLM scoring cascade (Stage 2) and the BiEnc baseline run (Run 5).
 
 ---
 
@@ -122,11 +130,12 @@ Per symptom: a ranked list of ~5,000–10,000 candidate sentences with `combined
 Every candidate receives a structured LLM assessment. The prompt consists of:
 
 1. **System prompt:** Clinical psychologist specializing in adult ADHD assessment, with the 0–3 scoring rubric.
-2. **Symptom definition:** Clinical elaboration respecting the token budget (full_4 / compressed_3 / minimal_2).
+2. **Symptom definition:** Clinical elaboration respecting the token budget (full_4 / compressed_3 / minimal_2), drawing from the four-layer definitions.
 3. **Four few-shot examples:** One per score level (0, 1, 2, 3) from curated annotations.
 4. **Sentence context:** PRE, [TARGET], POST markers around the sentence to score.
 
 **Structured output template (7 fields):**
+
 ```
 SYMPTOM_MATCH: [YES|PARTIAL|NO]
 SELF_REFERENCE: [DIRECT|INDIRECT|NONE]
@@ -137,36 +146,44 @@ CONFIDENCE: [1|2|3|4|5]
 REASONING: [1–2 sentences]
 ```
 
+**LLM Configuration:**
+
+| Role | Model | Provider | Temperature | Max Tokens |
+|------|-------|----------|-------------|------------|
+| **Primary scorer** | GPT-4o-mini | OpenAI | 0.1 | 512 |
+| **Escalation scorer** | GPT-4o | OpenAI | 0.1 | 512 |
+| **Local alternative** | Llama-3.1-70B | Ollama | 0.1 | 512 |
+
+Rate limit: 0.1s delay between calls, max 5 retries with exponential backoff, 120s read timeout.
+
 ### 5.2 Few-Shot Examples
 
-72 annotated examples (4 per symptom × 18 symptoms), sourced from:
+72 annotated examples (4 per symptom x 18 symptoms), sourced from:
 
-| Source | Use | Count |
-|--------|-----|-------|
-| **score0_random** | Irrelevant control sentences | ~18 |
-| **BDI-Sen** | Depression confounders at score 1–2 | ~25 |
-| **Retrieval candidates** | High-scoring corpus sentences | ~20 |
-| **RedSM5** | Clinician-annotated depression sentences | ~9 |
+| Source Dataset | Use | Count |
+|----------------|-----|-------|
+| **Random corpus sentences** | Irrelevant control (score 0) | ~18 |
+| **BDI-Sen 2.0** | Depression confounders at score 1–2 | ~25 |
+| **Retrieval candidates** | High-scoring corpus sentences (score 2–3) | ~20 |
+| **RedSM5** | Clinician-annotated depression sentences (score 1) | ~9 |
 
 Each example includes the full context triplet and a structured annotation matching the 7-field template. Score-1 examples are deliberately chosen from depression datasets to calibrate the boundary between "depression-related" and "ADHD-related" language.
 
 ### 5.3 Escalation Rules
 
-Five rules trigger re-scoring by a stronger model (GPT-4o):
+Five rules trigger re-scoring by a stronger model:
 
 | Rule | Trigger | Target Rate |
 |------|---------|-------------|
-| **1. Low Confidence** | CONFIDENCE ≤ 2 | ~5–10% |
-| **2. Internal Inconsistency** | Contradictions between fields (e.g., SYMPTOM_MATCH=NO but SCORE ≥ 2; SELF_REFERENCE=NONE but SCORE ≥ 1; DETAIL_LEVEL=HIGH but SCORE ≤ 1) | ~5% |
-| **3. Confounder + Borderline** | CONFOUNDERS ≠ "NONE" AND SCORE ∈ {1, 2} | ~8–12% |
-| **4. Inattention Cross-Diagnostic** | Items 7–11 (Sustained Attention) with SCORE ≥ 2 AND cross-diagnostic keywords (depression, anxiety, fatigue, sleep, etc.) | ~3–5% |
-| **5. Moderate Confidence on Boundary** | SCORE ∈ {1, 2} AND CONFIDENCE = 3 | ~5–8% |
-
-**Expected overall escalation rate:** ~20–25% (concentrated on items 7–11 at 30–45%, minimal for Motor/Verbal H/I at 10–15%).
+| **1. Low Confidence** | CONFIDENCE <= 2 | ~5–10% |
+| **2. Internal Inconsistency** | Contradictions between fields (e.g., SYMPTOM_MATCH=NO but SCORE >= 2) | ~5% |
+| **3. Confounder + Borderline** | CONFOUNDERS != "NONE" AND SCORE in {1, 2} | ~8–12% |
+| **4. Inattention Cross-Diagnostic** | Items 7–11 with SCORE >= 2 AND cross-diagnostic keywords | ~3–5% |
+| **5. Moderate Confidence on Boundary** | SCORE in {1, 2} AND CONFIDENCE = 3 | ~5–8% |
 
 ### 5.4 Resolution Logic
 
-After primary scoring (and optional GPT re-scoring), each (sentence, symptom) pair receives a final label and confidence weight:
+After primary scoring (and optional escalation re-scoring), each (sentence, symptom) pair receives a final label and confidence weight.
 
 **Base symptom weights** (reflecting cross-diagnostic reliability):
 - Motor H/I (items 5–6, 12–14): **1.0** — concrete, observable, few confounders
@@ -178,35 +195,46 @@ After primary scoring (and optional GPT re-scoring), each (sentence, symptom) pa
 
 | Scenario | Resolution Weight |
 |----------|-------------------|
-| Not escalated, confidence ≥ 4 | 0.80 |
+| Not escalated, confidence >= 4 | 0.80 |
 | Not escalated, confidence = 3 | 0.60 |
 | Escalated, GPT agrees (diff = 0) | 0.85 |
 | Escalated, GPT differs by 1 | 0.65 |
-| Escalated, GPT differs by ≥ 2 | 0.45 (trust GPT) |
-| Both uncertain + diff ≥ 2 | 0.30 (use floor(mean)) |
+| Escalated, GPT differs by >= 2 | 0.45 (trust GPT) |
+| Both uncertain + diff >= 2 | 0.30 (use floor(mean)) |
 
-**Final confidence_weight = resolution_weight × symptom_weight** (range: 0.15–0.85)
+**Final confidence_weight = resolution_weight x symptom_weight** (range: 0.15–0.85)
+
+Silver labels are saved as per-symptom JSONL files at `output/silver_labels/symptom_{id}.jsonl`.
 
 ---
 
 ## 6. Data Sources and Cross-Dataset Mappings
 
-A key innovation of HiPerT is leveraging **depression datasets as calibrated confounders and pre-training sources** for ADHD symptom ranking. This is motivated by ~30% ADHD-depression comorbidity and strong surface-level symptom overlap (concentration difficulty, fatigue, agitation, sleep disruption).
-
 ### 6.1 Data Source Inventory
 
 | Dataset | Size | Format | Labels | Role in Pipeline |
 |---------|------|--------|--------|-----------------|
-| **eRisk 2026 Task 3 Corpus** | 4,521 files, ~4.17M sentences | TREC (PRE/TEXT/POST) | Unlabeled | Primary ranking corpus |
-| **BDI-Sen 2.0** | 2,529 sentences, 5,003 annotations | JSONL | Graded 0–3, 21 BDI-II symptoms | Stage A1 pre-training; few-shot confounders |
-| **eRisk 2025 Task 1** | 11,042 judgments | CSV + TREC | Binary (majority + consensus) | Stage A2 pre-training; boundary candidates |
+| **eRisk 2026 Task 3 Corpus** | 4,521 files, ~4.17M sentences | TREC (PRE/TEXT/POST) | Unlabeled | Primary ranking corpus (Stages 1–2) |
+| **BDI-Sen 2.0** (Kayalvizhi et al., 2022) | 2,529 sentences, 5,003 annotations | JSONL | Graded 0–3, 21 BDI-II symptoms | v1 Stage A1 pre-training; few-shot confounders |
+| **eRisk 2025 Task 1** | 11,042 judgments | CSV + TREC | Binary (majority + consensus) | v1 Stage A2 pre-training; boundary candidates |
 | **eRisk 2023 Task 1** | 21,580 judgments | CSV + TREC | Binary (majority + consensus) | Optional additional pre-training |
-| **RedSM5** | 1,484 posts, 2,058 annotations | CSV | Binary + DSM-5 categories | Few-shot confounders; cross-validation |
-| **Few-shot annotations** | 72 examples (4 × 18 symptoms) | JSON | Graded 0–3 + structured fields | LLM scoring calibration |
+| **RedSM5** (Sosa et al.) | 1,484 posts, 2,058 annotations | CSV | Binary + DSM-5 categories | Few-shot confounders; cross-validation |
+| **Few-shot annotations** | 72 examples (4 x 18 symptoms) | JSON | Graded 0–3 + structured fields | LLM scoring calibration |
+
+Data paths are configured in `config/pipeline.yaml`:
+
+| Dataset | Path |
+|---------|------|
+| eRisk 2026 Corpus | `data/eRisk-2026/task3-adhd-symptom-ranking-.../output_trec_files/` |
+| BDI-Sen 2.0 | `data/BDI-Sen/full_dataset/` |
+| eRisk 2025 T1 | `data/eRisk-2025/eRisk25-datasets/t1-depression-symptom-ranking/` |
+| eRisk 2023 T1 | `data/eRisk2023_T1/` |
+| RedSM5 | `data/RedSM5/` |
+| Few-shot examples | `annotations/symptom_*_examples.json` |
 
 ### 6.2 BDI-II → ASRS Symptom Mappings
 
-Depression symptoms from BDI-II (items 1–21) are mapped to overlapping ASRS items based on shared behavioral manifestations:
+Depression symptoms from BDI-II (items 1–21) are mapped to overlapping ASRS items based on shared behavioral manifestations. This mapping is used in Run 4 (DepTransfer) and for depression pre-training in v1:
 
 | BDI-II Query | Depression Symptom | → ASRS Items | ADHD Manifestation |
 |-------------|-------------------|-------------|-------------------|
@@ -218,7 +246,7 @@ Depression symptoms from BDI-II (items 1–21) are mapped to overlapping ASRS it
 
 **Unmapped ASRS items:** 3, 14, 15, 16, 17, 18 — these have no direct BDI-II analog and rely solely on ADHD-specific retrieval and scoring.
 
-### 6.3 BDI-Sen Symptom Mappings
+### 6.3 BDI-Sen Symptom Mappings (for Few-Shot and Pre-Training)
 
 Six BDI-Sen symptoms map to ASRS items:
 
@@ -233,44 +261,30 @@ Six BDI-Sen symptoms map to ASRS items:
 
 **Confounder strategy:** BDI-Sen sentences at severity=1 (mildest depression relevance) are used as calibrated score-1 few-shot examples — they represent the maximal ADHD ambiguity zone where depression language most closely resembles ADHD symptoms.
 
-### 6.4 RedSM5 DSM-5 → ASRS Mappings
-
-Five DSM-5 depression categories from RedSM5 (clinician-annotated) map to ASRS items:
-
-| DSM-5 Category | → ASRS Items |
-|---------------|-------------|
-| COGNITIVE_ISSUES | 7, 8, 9, 10, 11 |
-| PSYCHOMOTOR | 5, 6, 12, 13 |
-| FATIGUE | 4, 7 |
-| SLEEP_ISSUES | 7 |
-| ANHEDONIA | 4, 11 |
-
-### 6.5 Boundary Candidate Extraction
-
-From eRisk 2023 and 2025, we extract **disagreement cases** — sentences where majority vote labeled as relevant but consensus labeled as irrelevant (or vice versa). These ~2,000–2,700 boundary cases per dataset represent the hardest scoring decisions and are particularly valuable as score-1 training examples.
-
-### 6.6 Coverage Summary
+### 6.4 Coverage Summary
 
 | ASRS Item | BDI-Sen | BDI-II Qrels | RedSM5 | External Sources |
 |-----------|:-------:|:------------:|:------:|:----------------:|
-| 1–2 | ✓ (Indecision) | ✓ (Q13) | — | 2 |
+| 1–2 | Yes (Indecision) | Yes (Q13) | — | 2 |
 | 3 | — | — | — | 0 (ADHD-only) |
-| 4 | ✓ (Energy, Fatigue) | ✓ (Q15) | ✓ (FATIGUE) | 3 |
-| 5–6 | ✓ (Agitation) | ✓ (Q11) | ✓ (PSYCHOMOTOR) | 3 |
-| 7 | ✓ (Energy, Sleep) | ✓ (Q15, Q16) | ✓ (FATIGUE, SLEEP) | 4 |
-| 8–11 | ✓ (Concentration) | ✓ (Q19) | ✓ (COGNITIVE) | 3 |
-| 12–13 | ✓ (Agitation) | ✓ (Q11) | ✓ (PSYCHOMOTOR) | 3 |
+| 4 | Yes (Energy, Fatigue) | Yes (Q15) | Yes (FATIGUE) | 3 |
+| 5–6 | Yes (Agitation) | Yes (Q11) | Yes (PSYCHOMOTOR) | 3 |
+| 7 | Yes (Energy, Sleep) | Yes (Q15, Q16) | Yes (FATIGUE, SLEEP) | 4 |
+| 8–11 | Yes (Concentration) | Yes (Q19) | Yes (COGNITIVE) | 3 |
+| 12–13 | Yes (Agitation) | Yes (Q11) | Yes (PSYCHOMOTOR) | 3 |
 | 14–18 | — | — | — | 0 (ADHD-only) |
 
 13 of 18 ASRS items have at least one external depression data source; the remaining 5 (items 3, 14, 15–18) rely solely on corpus retrieval and LLM scoring.
 
 ---
 
-## 7. Stage 3: Training
+## 7. Stage 3: Neural Reranking
 
-### 7.1 Encoder Architecture
+Two neural reranking architectures were developed: a bi-encoder (v1, deprecated) and a cross-encoder (v2, current).
 
-**SymptomConditionedEncoder** — a symptom-aware sentence relevance model:
+### 7.1 v1: Bi-Encoder with Symptom Conditioning (Deprecated)
+
+**Architecture: SymptomConditionedEncoder**
 
 ```
 Input: (text, pre_context, post_context, symptom_id)
@@ -298,249 +312,427 @@ Projection: Linear(2d → d) → LayerNorm → GELU → Dropout(0.1)
 Ordinal Classifier: Linear(d → 4)  →  logits for {0, 1, 2, 3}
 ```
 
-**Three backbone models** (trained independently, ensembled at inference):
+**v1 Training stages:**
+
+| Stage | Data | Labels | Symptoms | Epochs | LR |
+|-------|------|--------|----------|--------|-----|
+| **A1** (BDI-Sen) | 2,529 sentences | Graded 0–3 | 21 BDI-II | 10 | 2e-5 |
+| **A2** (eRisk 2025) | 11,042 judgments | Binary 0/1 | 21 BDI-II | 5 | 1e-5 |
+| **B** (ADHD silver) | ~30K–36K silver labels | Graded 0–3 | 18 ASRS | 15 | 1e-5 |
+
+**v1 Loss functions (composite):**
+- **Ordinal Cross-Entropy:** Soft targets with label smoothing toward adjacent levels (epsilon=0.2)
+- **Margin Ranking Loss:** Pairwise ordinal consistency (gamma=0.3)
+- **Hierarchy Regularization:** Same-factor attraction + cross-factor repulsion (lambda=0.01)
+- **Silhouette Contrastive Loss:** Ordinal-weighted separation in embedding space
+
+**v1 Curriculum learning** ordered symptoms by clinical difficulty: Phase 1 (Motor/Verbal H/I, easy) → Phase 2 (Organization/Memory, medium) → Phase 3 (Sustained Attention, hard).
+
+**Outcome:** The v1 encoder suffered from severe representation collapse (see Section 10.1) and was replaced by the v2 cross-encoder.
+
+### 7.2 v2: Cross-Encoder Reranker (Current)
+
+**Architecture: CrossEncoderReranker**
+
+```
+Input: [CLS] <symptom_text> [SEP] <sentence_text> [SEP]
+   │
+   ▼
+Pre-trained Backbone (one of 3 choices)
+   → [CLS] hidden state (768-dim)
+   │
+   ▼
+Head: Dropout(0.3) → Linear(768, 256) → GELU → Dropout(0.1) → Linear(256, K)
+   │
+   ▼
+Output: K=3 ordinal logits (CORAL) or K=1 scalar (ListMLE)
+```
+
+**Key design choice:** The cross-encoder processes symptom and sentence jointly via cross-attention, enabling valence and negation detection that bi-encoders miss. For example, on Item 1 ("trouble wrapping up final details"), the bi-encoder could not distinguish "I'm dedicated to finishing projects" (positive valence) from "I can never finish projects" (negative valence, symptom-relevant).
+
+**Backbone models (trained independently, ensembled at inference):**
 
 | Backbone | Model ID | Parameters | Domain |
 |----------|---------|-----------|--------|
-| **mental-roberta** | `mental/mental-roberta-base` | 110M | Mental health text |
-| **clinical-bert** | `emilyalsentzer/Bio_ClinicalBERT` | 110M | Clinical notes |
-| **mpnet** | `sentence-transformers/all-mpnet-base-v2` | 420M | General-purpose |
+| **MentalRoBERTa** | `mental/mental-roberta-base` | 125M | Mental health Reddit |
+| **ClinicalBERT** | `emilyalsentzer/Bio_ClinicalBERT` | 110M | Clinical notes |
+| **mpnet** | `sentence-transformers/all-mpnet-base-v2` | 110M | General-purpose |
 
-### 7.2 Loss Functions
+**Layer freezing:** Bottom layers frozen; only top 4 transformer layers + head are fine-tuned. Embeddings always frozen.
 
-**Composite loss:** `L_total = λ₁·L_ord + λ₂·L_rank + λ₃·L_hier` (default λ = 1.0, 0.5, 0.05)
+### 7.3 v2 Loss Functions
 
-| Component | Description | Key Detail |
-|-----------|-------------|------------|
-| **Ordinal Cross-Entropy (L_ord)** | Soft-target CE with label smoothing toward adjacent levels | ε=0.2: core label gets 0.8, each neighbor gets 0.1 |
-| **Symmetric Cross-Entropy (L_sce)** | Bidirectional CE for noise robustness (Stage B only) | α·CE(p,q) + β·CE(q,p), α=1.0, β=0.5 |
-| **Margin Ranking (L_rank)** | Pairwise ordinal consistency enforcement | For pairs where label_i > label_j: max(0, γ − (score_i − score_j)), γ=0.3 |
-| **Hierarchy Regularization (L_hier)** | Symptom embeddings respect clinical hierarchy | Same-factor attraction + weak cross-factor repulsion (λ_repel=0.01) |
-| **Silhouette Contrastive (L_sil)** | Ordinal-weighted separation in embedding space | w(r,r') = \|r−r'\|/3 — novel ordinal silhouette loss |
+Two loss variants were implemented:
 
-### 7.3 Stage A: Depression Pre-Training
+**Option A — CORAL Ordinal Regression** (Niu et al. 2016, Cao et al. 2020):
 
-Pre-trains on labeled depression data with BDI-II symptom IDs (1–21), leveraging the structural similarity between BDI-II and ASRS assessments.
+Models ordinal labels as a series of binary classification tasks: P(Y > k) for k = 0, 1, 2.
 
-#### Stage A1: BDI-Sen Graded Training
+```
+L_coral = -(1/N) Σ_i Σ_{k=1}^{K-1} [ y_ik · log(σ(f_k(x_i))) + (1 - y_ik) · log(1 - σ(f_k(x_i))) ]
+```
+
+Scoring: φ_coral(s, q) = σ(f_1) + σ(f_2) + σ(f_3) ∈ [0, 3]
+
+Optional confidence weighting: samples weighted by LLM confidence in the silver label.
+
+**Option B — ListMLE** (Xia et al. 2008):
+
+Listwise learning-to-rank via the Plackett-Luce model. Directly optimizes the likelihood of the correct permutation of candidates per symptom.
+
+```
+L_listmle = -Σ_{i=1}^{n} [ f(s_π(i), q) - log( Σ_{j=i}^{n} exp(f(s_π(j), q)) ) ]
+```
+
+Uses sublist sampling (size 64, 8 sublists per batch) for computational efficiency with stochastic tie-breaking within grades (reshuffled each epoch).
+
+### 7.4 v2 Training Procedure
+
+**Training data:** 89,998 (symptom_text, sentence_text, score, confidence) triples extracted from LLM cascade silver labels (`output/training_v2/training_data.jsonl`, 41.7 MB).
+
+**Label distribution (from LLM cascade):**
+
+| Score | Meaning | Expected % |
+|-------|---------|------------|
+| 0 | Off-topic | ~35–45% |
+| 1 | Wrong symptom | ~5–10% |
+| 2 | Partial | ~20–30% |
+| 3 | Relevant | ~20–30% |
+
+**Cross-validation:** Leave-symptom-out 5-fold CV (splits by factor/subcluster):
+
+| Fold | Train Symptoms | Validation Symptoms | Validation Factor |
+|------|---------------|--------------------|--------------------|
+| 1 | {1–14} | {15–18} | Verbal H/I |
+| 2 | {1–4, 9–18} | {5–8} | Motor H/I (partial) |
+| 3 | {5–18} | {1–4} | Organization/Planning |
+| 4 | {1–8, 13–18} | {9–12} | Sustained Attention |
+| 5 | {1–12} | {13–18} | Internal Drive + Verbal |
+
+**Hyperparameters:**
 
 | Parameter | Value |
 |-----------|-------|
-| **Data** | 2,529 sentences, 5,003 (sentence, symptom) pairs |
-| **Labels** | Graded 0–3 (severity) |
-| **Context** | None (BDI-Sen has text only) |
-| **Symptoms** | 21 BDI-II items |
-| **Split** | 90/10 train/val (2,276 / 253) |
-| **LR** | 2e-5 |
-| **Epochs** | 10 |
-| **Batch** | 32 |
-| **Backbone freezing** | 6 layers frozen → unfreeze at epoch 3 |
-| **Loss** | Ordinal CE + Margin Ranking + Hierarchy Reg |
-| **Early stopping** | patience=3, min_delta=0.001 |
+| Optimizer | AdamW |
+| Learning rate | 2e-5 |
+| Weight decay | 0.01 |
+| LR schedule | CosineAnnealingLR |
+| Batch size | 32 |
+| Max sequence length | 256 tokens |
+| Gradient clipping | max_norm = 1.0 |
+| Early stopping patience | 3 epochs |
+| Validation metric | nDCG@10 |
 
-#### Stage A2: eRisk 2025 Contextual Fine-Tuning (Optional)
+**Ensemble inference:** 3 backbones x 5 folds = 15 models. Final score per (sentence, symptom):
 
-| Parameter | Value |
-|-----------|-------|
-| **Data** | 11,042 binary judgments with PRE/TEXT/POST context |
-| **Labels** | Binary 0/1 (majority vote), with consensus-weighted confidence (1.0 if consensus, 0.8 if majority-only) |
-| **Context** | Full PRE/TEXT/POST triplets |
-| **Symptoms** | 21 BDI-II items |
-| **Split** | 90/10 train/val (9,938 / 1,104) |
-| **LR** | 1e-5 (half of A1) |
-| **Epochs** | 5 |
-| **Initialization** | A1 best checkpoint |
-| **Early stopping** | patience=2 |
-
-**Key contribution of A2:** Introduces contextual encoding — the model learns to use surrounding sentences (PRE/POST) for disambiguation, which is critical for the target TREC corpus where context is always available.
-
-### 7.4 Stage B: ADHD Fine-Tuning with Curriculum Learning
-
-| Parameter | Value |
-|-----------|-------|
-| **Data** | ~30K–36K silver labels from LLM scoring cascade |
-| **Labels** | Graded 0–3 with confidence weights (0.3–1.0) |
-| **Context** | Full PRE/TEXT/POST triplets |
-| **Symptoms** | 18 ASRS items (resized from 21 BDI-II) |
-| **Split** | 90/10 train/val (stratified by symptom) |
-| **LR** | 1e-5 (conservative) |
-| **Epochs** | 15 |
-| **Initialization** | Stage A best checkpoint |
-| **Loss** | Symmetric CE (noise-robust) + Margin Ranking + Hierarchy Reg |
-| **Early stopping** | patience=5 |
-
-#### Curriculum Learning
-
-Silver labels have heterogeneous noise levels — Motor/Verbal H/I labels are more reliable (concrete behaviors) while Sustained Attention labels are noisier (depression-ADHD overlap). The curriculum introduces examples in order of reliability:
-
-**Difficulty priors** (per symptom):
-- Motor H/I (items 5, 6, 12–14): π = 0.2–0.25 (easy)
-- Verbal H/I (items 15–18): π = 0.3 (easy-medium)
-- Organization/Memory (items 1–4): π = 0.5 (medium)
-- Sustained Attention (items 7–11): π = 0.8 (hard)
-
-**Competence function:** c(t) = min(1, (0.01^p + t/T·(1−0.01^p))^(1/p)) with p=2 (quadratic growth)
-
-**Inclusion probability:** P(s,t) = σ(β(t)·(c(t) − difficulty(s))), where β(t) = 5.0·c(t)
-
-**Three natural phases:**
-1. **Phase 1** (c < 0.35): Motor H/I + Verbal H/I only — the model first learns to recognize concrete, observable ADHD behaviors.
-2. **Phase 2** (0.35 ≤ c < 0.65): Organization/Memory added — introduces moderate cross-diagnostic ambiguity.
-3. **Phase 3** (c ≥ 0.65): Full symptom set including Sustained Attention — the hardest items are introduced last, after the model has a strong foundation in unambiguous ADHD features.
-
-### 7.5 Calibration
-
-Post-training, a two-stage calibration is fitted on the validation set:
-
-1. **Per-symptom temperature scaling:** Learns T_j for each symptom j. Calibrated probabilities: p_cal(r|s,q_j) = softmax(logits/T_j). Temperatures clamped to [0.1, 10.0], fitted via L-BFGS.
-
-2. **Dirichlet calibration:** Learns a linear transform in log-probability space: p_cal = softmax(W·log(p) + b), with W initialized to identity.
-
-**Final expected score:** φ(s,q) = Σ_r r · p_cal(r|s,q) for r ∈ {0,1,2,3}
-
-### 7.6 Checkpointing Strategy
-
-- Every 500 steps (Stage A) / 300 steps (Stage B)
-- Every epoch
-- Best validation metric
-- On interrupt (SIGINT/SIGTERM)
-- Final checkpoint
-- Keep last 5 (prevents disk overflow)
-- Format: `{stage}_{backbone}_{tag}.pt` (e.g., `stage_b_mpnet_best.pt`)
+```
+φ(s,q) = (1/3) Σ_backbone (1/5) Σ_fold predict_score(s, q)
+```
 
 ---
 
-## 8. Stage 4: Inference & Ensemble
+## 8. Submission Runs
 
-### 8.1 Single-Backbone Inference
+Five complementary runs are submitted, each using a different combination of system components:
 
-For each backbone and each of 18 symptoms:
-1. Load best checkpoint and calibration parameters
-2. Encode all candidates with context (PRE/TEXT/POST)
-3. Compute calibrated expected scores: φ(s,q) = Σ_r r · p_cal(r|s,q)
-4. Rank by score, retain top 1,000
+| Run | System Name | Method | Primary Signal |
+|-----|-----------|--------|----------------|
+| **R1** | `INSALyon_LLM_cascade` | LLM scoring only (PRIMARY) | GPT-4o-mini structured assessment |
+| **R2** | `INSALyon_HiPerT_full` | Cross-encoder v2 reranker | 3-backbone × 5-fold ensemble |
+| **R3** | `INSALyon_Ensemble` | RRF fusion of R1 + R2 | Reciprocal Rank Fusion (k=60) |
+| **R4** | `INSALyon_DepTransfer` | Depression-only transfer | Stage A encoder + BDI→ASRS mapping |
+| **R5** | `INSALyon_BiEnc_baseline` | Bi-encoder cosine similarity | Retrieval-only baseline |
 
-### 8.2 Three-Backbone Ensemble
+### 8.1 Run 1: LLM_cascade (Primary Submission)
 
-Scores are averaged across all three backbones:
+Pure LLM-based ranking with hierarchical tie-breaking:
 
 ```
-φ_ensemble(s,q) = (1/3) · [φ_mental-roberta(s,q) + φ_clinical-bert(s,q) + φ_mpnet(s,q)]
+φ(s,q) = label × 10.0                  # Primary: final LLM label (0–3)
+        + confidence_weight × 5.0       # Secondary: resolution confidence
+        + llm_confidence × 0.01         # Tertiary: LLM internal confidence (1–5)
+        + cosine × 0.001               # Quaternary: retrieval similarity
 ```
 
-Union of docnos across backbones (missing scores treated as 0), sorted descending, top 1,000 per symptom.
+Reads silver label JSONL files and candidate JSON files (for cosine scores).
+
+### 8.2 Run 2: HiPerT_full (Cross-Encoder v2)
+
+Cross-encoder reranker trained on LLM silver labels:
+
+```
+φ(s,q) = (1/3) Σ_backbone (1/5) Σ_fold [σ(f₁) + σ(f₂) + σ(f₃)]
+```
+
+Reads pre-computed scores from `output/encoder_scores_v2/`. Falls back to v1 encoder scores if v2 unavailable.
+
+### 8.3 Run 3: Ensemble (RRF Fusion)
+
+Reciprocal Rank Fusion combining Run 1 and Run 2:
+
+```
+φ_rrf(s,q) = 1/(60 + rank_llm(s)) + 1/(60 + rank_hipert(s))
+```
+
+Sentences appearing in only one ranking get 0 for the missing contribution. Falls back to RRF(Run 1, Run 5) if Run 2 is unavailable.
+
+### 8.4 Run 4: DepTransfer (Cross-Condition Transfer)
+
+Uses only Stage A depression pre-training (BDI-Sen + eRisk 2025 T1) without ADHD-specific fine-tuning. The BDI-II → ASRS mapping transfers depression knowledge to 12/18 ASRS items. Unmapped items (3, 14, 15–18) fall back to Run 5 (cosine baseline).
+
+### 8.5 Run 5: BiEnc_baseline (Cosine Similarity)
+
+Simplest system — no LLM, no training:
+
+```
+φ(s,q) = max_k cosine(emb(s), emb(q_k)) + 0.05 × first_person(s) + keyword_boost(s,q)
+```
+
+Serves as baseline and ablation anchor.
 
 ---
 
-## 9. Submission Runs
+## 9. Experiments and Evaluation
 
-We submit five complementary runs, each using a different combination of system components:
+### 9.1 Evaluation Methodology
 
-| Run | System Name | Method | Dependencies | Fallback |
-|-----|-----------|--------|--------------|----------|
-| **R1** | HiPerTHiPerT_full | 3-backbone trained encoder ensemble | Stage A + B training, inference | — |
-| **R2** | HiPerTLLM_cascade | LLM scores + confidence + cosine tie-breaking | LLM scoring complete | — |
-| **R3** | HiPerTEnsemble | RRF fusion of R1 + R2 | R1 + R2 | RRF(R5 + R2) if R1 unavailable |
-| **R4** | HiPerTDepTransfer | Stage A only, BDI-II → ASRS mapping | Stage A training | R5 for unmapped items (3, 14–18) |
-| **R5** | HiPerTBiEnc_baseline | Cosine similarity from retrieval | Retrieval complete | — |
+All 5 runs were evaluated using an internal **LLM-as-Judge** protocol:
 
-### 9.1 Run 1: HiPerT_full (Encoder Ensemble)
+- **Judge models:** Llama 3.3 70B (primary, via Ollama) and Llama 3.1 8B (secondary, via HuggingFace Inference API)
+- **Evaluation scope:** Top-10 sentences per symptom, 18 ASRS items, 5 runs = 900 judgments
+- **Relevance scale:** 3 = Relevant (direct symptom description), 2 = Partial (indirect), 1 = Wrong symptom (ADHD but different item), 0 = Off-topic
 
-The full pipeline. Ranking by calibrated ensemble expected score:
+### 9.2 Overall Results
 
-```
-φ(s,q) = (1/3) · Σ_k Σ_r r · p̂_cal,k(r | s, q)
-```
+| Run | System | Method | P@10 (score >= 2) | Mean Relevance (0–3) | Off-topic % | Wrong Symptom % |
+|-----|--------|--------|----|----|----|-----|
+| **R1** | INSALyon_LLM_cascade | LLM scoring | **0.944** | **2.74** | 1.7% | 3.9% |
+| **R5** | INSALyon_BiEnc_baseline | Cosine similarity | **0.894** | **2.39** | 5.6% | 5.0% |
+| **R3** | INSALyon_Ensemble | RRF (R1+R2) | 0.822 | 2.22 | 14.4% | 3.3% |
+| **R4** | INSALyon_DepTransfer | Stage A only | 0.656 | 1.65 | 28.3% | 6.1% |
+| **R2** | INSALyon_HiPerT_full | Cross-encoder | 0.450 | 1.10 | 49.4% | 5.6% |
 
-### 9.2 Run 2: LLM_cascade (LLM Scoring Only)
+### 9.3 Per-Factor Results (Precision@10)
 
-No trained encoder — purely LLM-based with hierarchical tie-breaking:
+| Factor | R2 (HiPerT) | R1 (LLM) | R3 (Ensemble) | R4 (DepTransfer) | R5 (BiEnc) |
+|--------|:-----------:|:--------:|:-------------:|:----------------:|:----------:|
+| Inattention | 0.589 | **0.933** | 0.833 | 0.644 | 0.956 |
+| Motor H/I | 0.280 | **0.940** | 0.760 | 0.400 | 0.820 |
+| Verbal H/I | 0.350 | **0.975** | 0.875 | **1.000** | 0.850 |
 
-```
-composite_score = label × 10.0              # Primary: final LLM label (0–3)
-                + confidence_weight × 5.0    # Secondary: resolution confidence
-                + llm_confidence × 0.01      # Tertiary: LLM internal confidence (1–5)
-                + cosine × 0.001             # Quaternary: retrieval similarity
-```
+### 9.4 Per-Subcluster Results (Precision@10)
 
-### 9.3 Run 3: Ensemble (RRF Fusion)
+| Subcluster | R2 (HiPerT) | R1 (LLM) | R3 (Ens) | R4 (DepTr) | R5 (BiEnc) |
+|------------|:-----------:|:--------:|:--------:|:----------:|:----------:|
+| Organization/Planning | 0.600 | 0.950 | 0.750 | 0.450 | **0.950** |
+| Memory/Avoidance | 0.500 | 0.850 | 0.800 | 0.750 | **0.950** |
+| Sustained Attention | 0.620 | **0.960** | 0.880 | 0.680 | 0.960 |
+| Fidgeting/Restlessness | 0.200 | 0.950 | 0.750 | 0.300 | **1.000** |
+| Internal Drive/Settling | 0.333 | **0.933** | 0.767 | 0.467 | 0.700 |
+| Output Control | 0.350 | **1.000** | 0.900 | **1.000** | **1.000** |
+| Turn-Taking | 0.350 | **0.950** | 0.850 | **1.000** | 0.700 |
 
-Reciprocal Rank Fusion combining encoder and LLM rankings:
+### 9.5 Cross-Run Agreement (Jaccard Overlap @10)
 
-```
-score_rrf(s) = 1/(60 + rank_encoder(s)) + 1/(60 + rank_llm(s))
-```
+| Pair | @5 | @10 | @20 |
+|------|:--:|:---:|:---:|
+| HiPerT-LLM | 0.006 | 0.003 | 0.006 |
+| HiPerT-Ens | 0.159 | 0.237 | 0.275 |
+| HiPerT-BiEnc | 0.000 | 0.000 | 0.004 |
+| LLM-Ens | 0.120 | 0.225 | 0.296 |
+| LLM-BiEnc | 0.227 | 0.170 | 0.130 |
+| LLM-DepTr | 0.102 | 0.063 | 0.053 |
+| Ens-BiEnc | 0.045 | 0.092 | 0.111 |
+| DepTr-BiEnc | 0.340 | 0.339 | 0.341 |
 
-If R1 is unavailable, falls back to RRF(R5, R2). Parameter-free, no tuning needed.
+### 9.6 Kendall's Tau (Rank Correlation on Shared Sentences, top-50)
 
-### 9.4 Run 4: DepTransfer (Cross-Condition Transfer)
+| Pair | Mean Tau | Shared % |
+|------|:--------:|:--------:|
+| LLM-BiEnc | **0.923** | 10.8% |
+| DepTr-BiEnc | **0.924** | 33.9% |
+| LLM-Ens | 0.564 | 32.5% |
+| HiPerT-Ens | 0.533 | 32.5% |
+| HiPerT-LLM | 0.333 | 0.8% |
 
-Uses only Stage A (depression pre-training) without ADHD fine-tuning. The BDI-II → ASRS mapping transfers depression knowledge to 12/18 ASRS items. Unmapped items (3, 14, 15–18) fall back to Run 5 (cosine baseline).
+### 9.7 Diversity Analysis
 
-**Motivation:** Tests whether depression pre-training alone provides competitive ADHD symptom ranking, given the ~30% comorbidity and shared executive function deficits.
+Unique sentences per run in top-10 (out of 180 possible slots across 18 symptoms):
 
-### 9.5 Run 5: BiEnc_baseline (Cosine Similarity)
+| Run | Unique Sentences | % of Slots |
+|-----|:----------------:|:----------:|
+| DepTransfer | 115 | 63.9% |
+| HiPerT | 111 | 61.7% |
+| LLM | 94 | 52.2% |
+| BiEnc | 86 | 47.8% |
+| Ensemble | 49 | 27.2% |
 
-Simplest system — no LLM, no training. Ranks by combined retrieval score (cosine similarity + keyword boost + first-person indicator). Serves as baseline and fallback.
-
----
-
-## 10. Validation Strategy
-
-### 10.1 Internal Validation
-
-| Method | Description | Threshold |
-|--------|-------------|-----------|
-| **BDI-II cross-validation** | Run LLM pipeline on BDI-Sen sentences with known labels | κ ≥ 0.5 |
-| **Silver label holdout** | 80/20 train/val split on silver labels | MAP, nDCG@100 |
-| **Qualitative audit** | 20 sentences × 3 score levels per symptom | Face validity |
-
-### 10.2 Per-Symptom Quality Monitoring
-
-For each of the 18 symptoms:
-- **Escalation rate** and primary triggers (which rules fire most frequently)
-- **Score distribution** across {0, 1, 2, 3} — detect systematic over/under-scoring
-- **Primary-escalation agreement rate** (target: >50% agreement on escalated cases)
-- **Reliability flag** if agreement < 50% — triggers manual review
-
-### 10.3 Cross-Dataset Calibration
-
-BDI-Sen severity levels (0–3) provide ground truth for calibrating the LLM scoring pipeline on 6 overlapping symptoms. This allows measuring:
-- LLM overestimation bias (expected: 0.3–0.5 points on average)
-- Per-symptom calibration curves
-- Isotonic regression parameters for bias correction
-
----
-
-## 11. LLM Configuration
-
-| Role | Model | Provider | Temperature | Notes |
-|------|-------|----------|-------------|-------|
-| **Primary scorer** | GPT-4o-mini | OpenAI | 0.1 | Structured output, all candidates |
-| **Escalation scorer** | GPT-4o | OpenAI | 0.1 | Re-scores ~20–25% of candidates |
-| **Local alternative** | Llama-3.1-70B | Ollama | 0.1 | Self-hosted, cost-free |
-
-Rate limit: 0.1s delay between calls, max 5 retries, 120s read timeout, batch size 50.
+The union of all top-10 lists spans **652 distinct sentences** across all symptoms, indicating high diversity between runs.
 
 ---
 
-## 12. Key Design Decisions and Rationale
+## 10. Analysis and Lessons Learned
 
-1. **Depression pre-training for ADHD** — BDI-II and ASRS share 12/18 overlapping behavioral constructs (concentration, agitation, energy, sleep, indecision). Pre-training on labeled depression data provides a strong initialization for ADHD symptom recognition, especially for the hardest items (7–11) where both conditions manifest as attention deficits.
+### 10.1 v1 Encoder Collapse (HiPerT v1 Failure)
 
-2. **Curriculum learning by clinical difficulty** — Silver labels from LLM scoring have heterogeneous noise. Motor/Verbal items are straightforward (concrete behaviors), while Sustained Attention items are systematically noisier due to depression-ADHD overlap. Training on easy items first builds a reliable foundation before exposing the model to ambiguous cases.
+The trained bi-encoder (v1) produced scores with coefficient of variation (CV) of 0.00–0.02 across all 18 symptoms. The score gap between top-10 and remaining candidates was negligible:
 
-3. **Symmetric cross-entropy for noise robustness** — Silver labels are imperfect (LLM-generated). The reverse KL term in symmetric CE penalizes overconfident predictions on noisy labels, preventing the model from memorizing LLM errors.
+| Symptom | Top-10 Mean | Rest Mean | Gap | CV |
+|---------|:-----------:|:---------:|:---:|:--:|
+| 1 (Wrapping up) | 0.4573 | 0.4414 | 0.016 | 0.02 |
+| 7 (Unwinding) | 0.6612 | 0.6474 | 0.014 | 0.01 |
+| 9 (Concentrating) | 0.1166 | 0.1153 | 0.001 | 0.00 |
+| 12 (Leaving seat) | 0.0429 | 0.0424 | 0.001 | 0.01 |
+| 17 (Finishing sentences) | 0.0861 | 0.0843 | 0.002 | 0.00 |
 
-4. **Four-layer clinical definitions with token budgets** — Not all symptoms need the same elaboration. Items 7–11 (highest cross-diagnostic ambiguity) receive full 4-layer definitions (~500 tokens), while Items 5, 12, 15–18 (concrete observable behaviors) need only 2 layers (~150 tokens). This optimizes prompt space allocation.
+For comparison, BiEnc achieves a 39% gap on symptom 1 (0.607 vs. 0.437) and LLM cascade achieves a 3.5x ratio on symptom 12.
 
-5. **Escalation cascade (primary → GPT)** — The primary LLM handles 75–80% of cases autonomously. GPT is reserved for structurally uncertain cases (low confidence, internal inconsistency, cross-diagnostic confounders), concentrating compute budget where it matters most.
+**Root causes identified:**
+1. **Silhouette-contrastive loss:** Optimized inter-cluster separation and intra-cluster cohesion, collapsing within-grade variance. Since ranking requires ordering *within* a grade, this destroyed the signal needed for top-K selection.
+2. **Curriculum learning amplification:** Presenting easy (already well-separated) examples first reinforced the collapse direction before harder examples were introduced.
+3. **Depression pre-training damage:** Progression: BiEnc (89.4%) → DepTransfer (65.6%) → HiPerT (45.0%). Depression supervision pushed representations toward BDI-II-relevant features.
+4. **Valence blindness:** The bi-encoder architecture encodes symptom and sentence independently, matching on topic overlap rather than semantic fit. E.g., surfaced sentences about "dedication to projects" rather than "inability to finish projects" for Item 1.
 
-6. **Five complementary runs** — Each run provides a different signal type (learned representations, LLM reasoning, retrieval similarity, cross-condition transfer, fusion). This hedges against failure of any single component and provides ablation insights.
+### 10.2 Key Findings
 
-7. **Depression few-shot examples as confounders** — Score-1 examples are deliberately sourced from BDI-Sen (severity=1) and RedSM5. These sentences describe depression symptoms that superficially resemble ADHD (e.g., "I can't focus on anything anymore" — depression concentration difficulty), teaching the LLM to distinguish mood-congruent from task-selective attention deficits.
+1. **LLM reranking is the strongest signal** — 94.4% P@10. The structured prompt engineering with four-layer clinical definitions and depression confounders as few-shot examples effectively guides the LLM to distinguish ADHD-specific experiences.
 
-8. **Three-backbone ensemble** — Mental-roberta (mental health domain), Clinical-BERT (clinical notes), and MPNet (general-purpose) capture complementary linguistic patterns. Averaging expected scores reduces variance without tuning ensemble weights.
+2. **Bi-encoder baseline is surprisingly competitive** — 89.4% P@10. Good sentence transformers capture symptom relevance well when combined with first-person filtering and keyword boosting.
+
+3. **Ensemble fusion is a mixed bag** — Mixing HiPerT's noisy signal via RRF degrades quality from 94% to 82%, despite adding genuine diversity (64% exclusive sentences in Ensemble top-10).
+
+4. **DepTransfer is factor-specific** — Perfect on Verbal H/I (100%) but poor on Motor H/I (40%), showing BDI-II and ASRS capture partially overlapping constructs.
+
+5. **Cross-encoder (v2) did not fully resolve collapse** — While CORAL/ListMLE losses are theoretically more appropriate than silhouette-contrastive, the v2 cross-encoder still underperformed the LLM cascade and even the simple bi-encoder baseline. Training on silver labels with limited diversity may be inherently limiting.
+
+6. **Verbal/Impulsivity symptoms are easiest** — All runs achieve high precision on items 15–18 (distinctive vocabulary). Motor symptoms (fidgeting, leaving seat) and Internal Drive are hardest.
+
+### 10.3 Configuration Variants Tested
+
+| Configuration | Description | Status |
+|---|---|---|
+| **v1 + silhouette + curriculum** | Bi-encoder, composite loss (ordinal + ranking + hierarchy + silhouette), 3-phase curriculum | Failed (representation collapse, 45% P@10) |
+| **v2 CORAL** | Cross-encoder, CORAL ordinal regression, leave-symptom-out 5-fold CV | Trained but underperformed LLM |
+| **v2 ListMLE** | Cross-encoder, ListMLE listwise ranking, sublist sampling | Trained as alternative to CORAL |
+| **Stage A only (DepTransfer)** | Depression pre-training (BDI-Sen + eRisk 2025), BDI→ASRS mapping, no ADHD fine-tuning | 65.6% P@10 |
+| **LLM cascade (GPT-4o-mini)** | Primary scorer = GPT-4o-mini, escalation = GPT-4o, max 25% escalation | **94.4% P@10** (primary submission) |
+| **LLM cascade (Llama 3.1:70b)** | Primary scorer = Llama 3.1 70B (Ollama), same prompt stack | Available as local alternative |
+| **BiEnc baseline** | all-mpnet-base-v2 cosine similarity + first-person filter + keyword boost | 89.4% P@10 (strong baseline) |
+| **Escalation rate = 0%** | Disabled GPT escalation (single-LLM scoring) | Current production config |
+| **Escalation rate = 20–25%** | Full 5-rule escalation with GPT-4o re-scoring | Original designed config |
+
+---
+
+## 11. Key Design Decisions and Rationale
+
+1. **Depression datasets as calibrated confounders** — BDI-II and ASRS share 12/18 overlapping behavioral constructs (~30% ADHD-depression comorbidity). Depression sentences (BDI-Sen at severity=1) serve as calibrated score-1 few-shot examples, teaching the LLM to distinguish mood-congruent from task-selective attention deficits.
+
+2. **Four-layer clinical definitions with token budgets** — Items 7–11 (highest cross-diagnostic ambiguity) receive full 4-layer definitions (~500 tokens), while Items 5, 12, 15–18 (concrete observable behaviors) need only 2 layers (~150 tokens). This optimizes prompt space allocation.
+
+3. **Cross-encoder over bi-encoder** — After v1's valence blindness failure, the cross-encoder architecture was adopted. Joint processing of `[CLS] symptom [SEP] sentence [SEP]` enables cross-attention between symptom and sentence tokens, supporting valence and negation detection.
+
+4. **CORAL ordinal regression** — Each sentence gets an independent prediction (unlike silhouette loss which operates across the batch), preventing representational collapse. The ordinal structure of 0–3 relevance is preserved without treating labels as unordered categories.
+
+5. **Five complementary runs** — Each run provides a different signal type (LLM reasoning, learned representations, retrieval similarity, cross-condition transfer, fusion). This hedges against failure of any single component and provides ablation insights.
+
+6. **LLM cascade as primary** — Empirical results (94.4% vs. 45–89.4%) led to reversing the initial architecture where HiPerT was primary. The LLM cascade exploits the structured 7-field output template and clinical prompt engineering more effectively than any trained model.
+
+---
+
+## 12. Software Architecture
+
+The system is implemented as the `hipert` Python package (`src/hipert/`), installable via `uv` with the CLI entry point `uv run hipert <command>`.
+
+### 12.1 Package Structure
+
+```
+src/hipert/
+├── cli.py                   # Click CLI: parse, retrieve, score, output, runs, audit,
+│                            #   train, infer, extract-v2, train-v2, infer-v2, diagnose-v2
+├── config.py                # Config loading (pipeline.yaml, symptoms.yaml, annotations)
+├── models.py                # Core dataclasses: Sentence, SymptomDefinition, LLMOutput,
+│                            #   ScoringResult, CandidateScore, FewShotExample
+├── data/
+│   ├── trec_parser.py       # TREC corpus parser (full + simplified formats)
+│   ├── corpus.py            # Corpus loader, statistics, first-person markers
+│   ├── bdisen_loader.py     # BDI-Sen 2.0 data loader
+│   ├── erisk2025_loader.py  # eRisk 2025 T1 data loader
+│   ├── erisk2023_loader.py  # eRisk 2023 T1 data loader
+│   ├── redsm5_loader.py     # RedSM5 data loader
+│   ├── cross_dataset_mappings.py  # BDI-II → ASRS mappings
+│   └── trec_writer.py       # TREC format output writer
+├── retrieval/
+│   ├── encoder.py           # BiEncoderRetriever (embedding, caching)
+│   ├── candidate_selector.py # CandidateSelector (full retrieval pipeline)
+│   ├── filters.py           # First-person filter, keyword boost
+│   └── query_expansion.py   # Symptom query expansion with L3 topics
+├── scoring/
+│   ├── llm_client.py        # LLMClient (OpenAI-compatible, streaming, retry)
+│   ├── hf_llm_client.py     # HuggingFace text-generation-inference client
+│   ├── prompt_builder.py    # PromptBuilder (system/user prompts, token budgets)
+│   ├── response_parser.py   # Robust 7-field regex parser
+│   ├── escalation.py        # 5 escalation trigger rules
+│   ├── resolution.py        # Label resolution with symptom weights
+│   └── scorer.py            # ScoringCascade (full LLM→escalation→GPT orchestration)
+├── pipeline/
+│   ├── runner.py            # PipelineRunner (end-to-end orchestration)
+│   └── checkpoint.py        # CheckpointManager (per-symptom JSONL, thread-safe)
+├── training/
+│   ├── encoder.py           # SymptomConditionedEncoder (v1 bi-encoder)
+│   ├── cross_encoder.py     # CrossEncoderReranker (v2 cross-encoder)
+│   ├── cross_encoder_dataset.py  # CrossEncoderDataset (leave-symptom-out CV)
+│   ├── dataset.py           # ScoringDataset (v1, BDI-Sen/eRisk support)
+│   ├── losses.py            # OrdinalCE, SymmetricCE, Ranking, Hierarchy, Silhouette
+│   ├── trainer.py           # Trainer v1 (checkpointing, early stopping)
+│   ├── trainer_v2.py        # TrainerV2 (per-fold, CORAL/ListMLE)
+│   ├── stage_a.py           # Stage A depression pre-training (A1 BDI-Sen, A2 eRisk)
+│   ├── stage_b.py           # Stage B ADHD fine-tuning (curriculum)
+│   ├── inference.py         # v1 single-backbone and ensemble inference
+│   ├── inference_v2.py      # v2 cross-encoder ensemble inference
+│   ├── calibration.py       # Isotonic regression, temperature scaling
+│   └── extract_training_data.py  # Silver label → cross-encoder training data
+├── runs/
+│   ├── registry.py          # Run registry, system names, dispatch
+│   ├── run1_full.py         # LLM cascade ranking (PRIMARY)
+│   ├── run2_llm.py          # Cross-encoder v2 ranking
+│   ├── run3_ensemble.py     # RRF fusion
+│   ├── run4_transfer.py     # Depression transfer
+│   └── run5_bienc.py        # Bi-encoder baseline
+├── quality/
+│   ├── audit.py             # Per-symptom audit reports
+│   ├── calibration.py       # Post-hoc score calibration
+│   └── confidence.py        # Confidence weighting schemes
+└── utils/
+    └── logging.py           # Logging utilities (console, JSONL, LLM call logs)
+```
+
+### 12.2 Typical Execution Flow
+
+```bash
+# 1. Parse corpus and compute statistics
+uv run hipert parse
+
+# 2. Retrieve candidates (bi-encoder → filter → boost → top-K)
+uv run hipert retrieve
+
+# 3. Score candidates with LLM cascade (resumable)
+uv run hipert score
+
+# 4. (Optional) Train cross-encoder v2
+uv run hipert extract-v2      # Extract training data from silver labels
+uv run hipert train-v2         # Train 3 backbones × 5 folds
+uv run hipert infer-v2         # Generate ensemble scores
+
+# 5. Generate TREC output for all 5 runs
+uv run hipert output --run-id 1  # LLM cascade
+uv run hipert output --run-id 2  # Cross-encoder
+uv run hipert output --run-id 3  # Ensemble
+uv run hipert output --run-id 4  # DepTransfer
+uv run hipert output --run-id 5  # BiEnc baseline
+
+# 6. Quality audit
+uv run hipert audit
+```
 
 ---
 
@@ -548,9 +740,28 @@ Rate limit: 0.1s delay between calls, max 5 retries, 120s read timeout, batch si
 
 | Risk | Likelihood | Impact | Mitigation |
 |------|-----------|--------|-----------|
-| LLM overestimation (scoring too high) | HIGH | MEDIUM | Isotonic regression, "choose lower" prompt rule, BDI-II cross-validation |
-| Low reliability on items 7–11 | HIGH | HIGH | Full 4-layer definitions, symptom weight 0.5, GPT escalation concentrated (30–45% rate) |
+| LLM overestimation (scoring too high) | HIGH | MEDIUM | Isotonic regression, depression confounders as few-shot, BDI-II cross-validation |
+| Low reliability on items 7–11 | HIGH | HIGH | Full 4-layer definitions, symptom weight 0.5, escalation concentrated (30–45% rate) |
+| Trained encoder collapse | REALIZED | HIGH | Replaced bi-encoder with cross-encoder (v2); promoted LLM cascade to primary |
 | Silver labels miss patterns | MEDIUM | HIGH | Layer 3 empirical vocabulary, keyword boost, manual audit per symptom |
-| Primary LLM quality insufficient | MEDIUM | MEDIUM | Structured template, few-shot examples, escalation safety net |
-| Training fails / insufficient GPU | MEDIUM | MEDIUM | Run 2 (LLM-only) and Run 5 (BiEnc) require no training |
+| Training fails / insufficient GPU | MEDIUM | MEDIUM | Run 1 (LLM-only) and Run 5 (BiEnc) require no training |
 | Unmapped ASRS items (3, 14–18) underperform | MEDIUM | LOW | Run 5 fallback provides retrieval-based baseline for all items |
+
+---
+
+## 14. References
+
+- **ASRS-v1.1:** Kessler et al. (2005). The World Health Organization Adult ADHD Self-Report Scale.
+- **DSM-5-TR:** American Psychiatric Association (2022). Diagnostic and Statistical Manual of Mental Disorders, 5th ed., Text Revision.
+- **Bifactor model:** Panagiotidi et al. (2024); Stanton et al. (2018). Three-factor structure of ASRS.
+- **BAARS-IV:** Barkley (2011). Barkley Adult ADHD Rating Scale-IV.
+- **BDI-Sen 2.0:** Kayalvizhi et al. (2022). BDI-Sen: A Sentence-level Dataset for Depression.
+- **RedSM5:** Sosa et al. Clinician-annotated Reddit posts with DSM-5 categories.
+- **BERTopic / Reddit ADHD:** Kang et al. (JMIR 2025). Topic modeling of r/ADHD (372K posts).
+- **Social media ADHD:** Guntuku et al. (2019). Twitter language markers.
+- **CORAL:** Niu et al. (2016); Cao et al. (2020). Consistent Rank Logits for ordinal regression.
+- **ListMLE:** Xia et al. (2008). Listwise approach to learning to rank.
+- **RRF:** Cormack et al. (2009). Reciprocal Rank Fusion.
+- **MentalRoBERTa:** Ji et al. `mental/mental-roberta-base` — RoBERTa pre-trained on mental health Reddit.
+- **ClinicalBERT:** Alsentzer et al. (2019). `Bio_ClinicalBERT` — BERT pre-trained on clinical notes.
+- **MPNet:** Song et al. (2020). `all-mpnet-base-v2` — general-purpose sentence transformer.

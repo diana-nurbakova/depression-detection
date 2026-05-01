@@ -1,0 +1,6 @@
+model,n_sessions,n_records_total,GAD7_MAE_items,GAD7_mean_signed_total_bias,GAD7_band_acc
+google_gemma-3-27b-it,10,568,0.8142857142857143,-4.9,0.3
+google_gemma-3-27b-it__v2,10,568,0.7428571428571428,-3.8,0.2
+google_gemma-4-26b-a4b-it,10,568,0.7428571428571428,-4.0,0.2
+google_gemma-4-26b-a4b-it__v2,10,568,0.7142857142857143,-3.4,0.5
+google_gemma-4-31b-it,10,568,0.7857142857142857,-4.7,0.3

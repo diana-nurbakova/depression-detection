@@ -1,0 +1,110 @@
+# MentalRiskES 2026 Task 1 — TEST REPLAY configuration
+# =====================================================
+# Replays the released 82-round test set through the same Pipeline used during
+# the live competition. Output goes to a separate directory so the original
+# round-30 submission archive in output/mentalriskes/ stays intact.
+#
+# Run:
+#   uv run mentalriskes --config config/mentalriskes_test_replay.yaml trial
+#
+# Optionally restrict to a single run:
+#   uv run mentalriskes --config config/mentalriskes_test_replay.yaml trial --run run2_A1
+
+server:
+  base_url_env: "MENTALRISKES_SERVER_URL"
+  token_env: "MENTALRISKES_TOKEN"
+  user_env: "MENTALRISKES_USER"
+  use_trial: false
+  retries: 5
+  backoff: 0.1
+
+llm:
+  provider: "deepinfra"
+  api_key_env: "DEEPINFRA_API_KEY"
+  base_url_env: ""                             # default https://api.deepinfra.com/v1/openai
+  model: "meta-llama/Llama-3.3-70B-Instruct"
+  temperature: 0.1
+  max_tokens: 8192                             # CompACT-10 CoT needs ~5-6K output tokens
+  timeout: 180
+
+data:
+  # Point trial_dir at the released test data (same round_N.json format).
+  trial_dir: "data/MentalRiskES-2026/test/task1/test/data"
+  primate_path: "data/MentalRiskES-2026/primate_dataset.json"
+  output_dir: "output/mentalriskes_test_replay"
+  checkpoint_dir: "output/mentalriskes_test_replay/checkpoints"
+  log_dir: "output/mentalriskes_test_replay/logs"
+
+resources:
+  calibration_config: "specs/MentalRiskES/calibration_config.json"
+  act_vocabulary: "specs/MentalRiskES/act_vocabulary_es.json"
+  hexaflex_quotes: "specs/MentalRiskES/hexaflex_quotes_fallback.json"
+  assessor_prompts: "specs/MentalRiskES/assessor_prompts_v2.py"
+
+# Submission run definitions — kept identical to the live submission so the
+# replay reproduces what we *would* have submitted at every round.
+runs:
+  - name: "run0_A5"
+    description: "A5-T3: full stack — anchors + Level B + Level C + stability-adaptive aggregation."
+    model: "meta-llama/Llama-3.3-70B-Instruct"
+    prompt_language: "english"
+    few_shot: true
+    calibration: "none"
+    calibration_params: {}
+    prompt_anchors: true
+    level_b: true
+    level_c: true
+    temporal_phq9: "T2"
+    temporal_gad7: "T2"
+    temporal_compact10: "T3"
+    temporal_decay: "step"
+    temporal_discard_anomalous: true
+
+  - name: "run1_A3"
+    description: "A3-T2: safety hedge — anchors + Level B + early-weighted aggregation."
+    model: "meta-llama/Llama-3.3-70B-Instruct"
+    prompt_language: "english"
+    few_shot: true
+    calibration: "none"
+    calibration_params: {}
+    prompt_anchors: true
+    level_b: true
+    level_c: false
+    temporal_phq9: "T2"
+    temporal_gad7: "T2"
+    temporal_compact10: "T2"
+    temporal_decay: "step"
+    temporal_discard_anomalous: true
+
+  - name: "run2_A1"
+    description: "A1-T2: minimal post-hoc — anchors + early-weighted aggregation only."
+    model: "meta-llama/Llama-3.3-70B-Instruct"
+    prompt_language: "english"
+    few_shot: true
+    calibration: "none"
+    calibration_params: {}
+    prompt_anchors: true
+    level_b: false
+    level_c: false
+    temporal_phq9: "T2"
+    temporal_gad7: "T2"
+    temporal_compact10: "T2"
+    temporal_decay: "step"
+    temporal_discard_anomalous: true
+
+simulation_llm:
+  provider: "openai"
+  base_url_env: "TOGETHER_BASE_URL"
+  api_key_env: "TOGETHER_API_KEY"
+  model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+  temperature: 0.7
+  max_tokens: 512
+  timeout: 60
+
+pipeline:
+  log_level: "INFO"
+  log_llm_outputs: true
+  parallel_assessment: false
+  codecarbon:
+    enabled: true
+    country_iso_code: "FRA"

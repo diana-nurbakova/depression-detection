@@ -1,0 +1,64 @@
+# MentalRiskES 2026 Task 2 — TEST REPLAY configuration
+# =====================================================
+# Replays the released 82-round test set through the same Pipeline used during
+# the live competition. Output goes to a separate directory so the original
+# round-30 submission archive in output/mentalriskes_task2/ stays intact.
+#
+# Run:
+#   uv run mentalriskes-task2 --config config/mentalriskes_task2_test_replay.yaml trial -r run0,run1,run2
+
+llm:
+  provider: deepinfra
+  api_key_env: "DEEPINFRA_API_KEY"
+  # base_url defaults to https://api.deepinfra.com/v1/openai
+  model: "meta-llama/Llama-3.3-70B-Instruct"
+  temperature: 0.1
+  max_tokens: 4096
+  timeout: 300
+
+data:
+  # Point trial_dir at the released test data (same round_N.json format).
+  trial_dir: "data/MentalRiskES-2026/test/task2/test/data"
+  simulated_dir: "output/mentalriskes/data_prep/simulated/task2"
+  output_dir: "output/mentalriskes_task2_test_replay"
+
+server:
+  base_url: "http://s3-ceatic.ujaen.es:8036"
+  use_trial: false
+  retries: 5
+  backoff: 0.1
+
+ablation:
+  local_model: "meta-llama/Llama-3.3-70B-Instruct"
+  api_model: "claude-sonnet-4-20250514"
+
+default_run:
+  model: "meta-llama/Llama-3.3-70B-Instruct"
+  framing: "FUNC"
+  pipeline: "B+"
+  lang: "es"
+  lookback_window: 3
+
+# Submission run definitions — identical to the live submission.
+runs:
+  run0:
+    model: "meta-llama/Llama-3.3-70B-Instruct"
+    framing: "FUNC"
+    pipeline: "B"
+    lang: "es"
+    lookback_window: 3
+    permutation_voting: true
+
+  run1:
+    model: "meta-llama/Llama-3.3-70B-Instruct"
+    framing: "FUNC"
+    pipeline: "B"
+    lang: "es"
+    lookback_window: 3
+
+  run2:
+    model: "meta-llama/Llama-3.3-70B-Instruct"
+    framing: "HYB"
+    pipeline: "B+"
+    lang: "es"
+    lookback_window: 3

@@ -1,0 +1,2 @@
+model,mode,n,gold_at_rank_1_pct,gold_at_rank_2_pct,gold_at_rank_3_pct
+google_gemma-3-27b-it,R2,568,0.2869718309859155,0.3714788732394366,0.3415492957746479

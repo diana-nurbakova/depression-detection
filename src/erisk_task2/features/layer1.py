@@ -90,13 +90,23 @@ class EmbeddingEncoder:
         self.models = []
         self._loaded = False
 
-    def load(self):
+    def load(self, backend: str = "torch"):
+        """Load sentence transformer models.
+
+        Args:
+            backend: "torch" (default) or "onnx" (2-4x faster on CPU).
+                     ONNX requires onnxruntime + optimum installed.
+        """
         if self._loaded:
             return
         from sentence_transformers import SentenceTransformer
         for name in self.model_names:
-            logger.info("Loading sentence transformer: %s", name)
-            model = SentenceTransformer(name, device=self.device)
+            logger.info("Loading sentence transformer: %s (backend=%s)", name, backend)
+            kwargs = {"device": self.device}
+            if backend == "onnx":
+                kwargs["backend"] = "onnx"
+                kwargs["model_kwargs"] = {"provider": "CPUExecutionProvider"}
+            model = SentenceTransformer(name, **kwargs)
             _patch_st_device(model, self.device)
             self.models.append(model)
         self._loaded = True

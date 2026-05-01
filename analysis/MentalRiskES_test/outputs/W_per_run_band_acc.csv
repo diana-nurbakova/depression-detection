@@ -1,0 +1,7 @@
+run,instrument,submitted_band_acc,replay_band_acc
+0,GAD-7,0.2,0.2
+0,PHQ-9,0.3,0.1
+1,GAD-7,0.2,0.2
+1,PHQ-9,0.2,0.2
+2,GAD-7,0.2,0.2
+2,PHQ-9,0.2,0.1

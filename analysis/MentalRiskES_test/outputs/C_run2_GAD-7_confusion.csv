@@ -1,0 +1,5 @@
+gold_band,minimal,mild,moderate,severe
+minimal,0,0,0,0
+mild,0,1,0,0
+moderate,0,1,1,0
+severe,1,1,5,0

@@ -90,6 +90,8 @@ class MentalRiskESClient:
 
         try:
             response = session.get(url, timeout=30)
+            logger.debug("GET %s response (status %d): %s",
+                         self.task, response.status_code, response.text[:500])
             if response.status_code != 200:
                 logger.error("GET %s failed (status %d): %s",
                              self.task, response.status_code, response.text)
@@ -124,6 +126,8 @@ class MentalRiskESClient:
 
         try:
             response = session.post(url, json=payload, timeout=30)
+            logger.debug("POST %s run %d response (status %d): %s",
+                         self.task, run_index, response.status_code, response.text[:500])
             if response.status_code != 200:
                 logger.error("POST %s run %d failed (status %d): %s",
                              self.task, run_index, response.status_code, response.text)

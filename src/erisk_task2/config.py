@@ -160,6 +160,7 @@ def load_config(config_path: str | Path = "config/task2.yaml") -> Task2Config:
     cfg.ollama.base_url = os.getenv("OLLAMA_BASE_URL", cfg.ollama.base_url)
     cfg.hf_inference.token = os.getenv("HF_TOKEN", cfg.hf_inference.token)
     cfg.server.team_token = os.getenv("ERISK_TOKEN", cfg.server.team_token)
+    cfg.server.base_url = os.getenv("ERISK_TASK2_SERVER_BASE", cfg.server.base_url)
 
     return cfg
 
