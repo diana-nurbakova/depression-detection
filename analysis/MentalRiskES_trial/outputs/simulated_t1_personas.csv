@@ -1,0 +1,7 @@
+session_id,presentation,profile_id,phq9_target,gad7_target,compact_profile,personality,n_rounds
+sim_anx_academic_42,University student with academic anxiety and concentration difficulties,anx_academic,6,10,low_flexibility,"Perfeccionista, autocrítico/a, evitativo/a ante el malestar",15
+sim_anx_health_46,Person with health anxiety and somatic symptoms,anx_health,4,20,low_flexibility,"Controlador/a, necesidad de certeza, hipervigilante con el cuerpo",15
+sim_anx_social_44,Young adult with social anxiety and low self-esteem,anx_social,14,20,low_flexibility,"Tímido/a, sensible a la evaluación, hipervigilante",15
+sim_dep_burnout_45,Professional with burnout and exhaustion,dep_burnout,14,11,moderate_flexibility,"Responsable, dificultad para poner límites, autocrítico/a",15
+sim_dep_loss_43,Adult with depression following a significant loss,dep_loss,12,7,mixed_flexibility,"Introvertido/a, reflexivo/a, tendencia a rumiar",15
+sim_dep_mild_47,Adolescent with emerging depressive symptoms,dep_mild,7,3,moderate_flexibility,"Reservado/a, respuestas cortas, algo defensivo/a",15

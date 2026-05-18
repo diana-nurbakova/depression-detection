@@ -1,0 +1,8 @@
+session_id,presentation,profile_id,n_rounds,opt1_count,opt2_count,opt3_count,opt1_pct,opt2_pct,opt3_pct
+sim_anx_academic_42,University student with academic anxiety and concentration difficulties,anx_academic,14,5,3,6,0.35714285714285715,0.21428571428571427,0.42857142857142855
+sim_anx_health_46,Person with health anxiety and somatic symptoms,anx_health,14,4,5,5,0.2857142857142857,0.35714285714285715,0.35714285714285715
+sim_anx_social_44,Young adult with social anxiety and low self-esteem,anx_social,14,7,5,2,0.5,0.35714285714285715,0.14285714285714285
+sim_anx_social_99,Young adult with social anxiety and low self-esteem,anx_social,3,0,1,2,0.0,0.3333333333333333,0.6666666666666666
+sim_dep_burnout_45,Professional with burnout and exhaustion,dep_burnout,14,3,8,3,0.21428571428571427,0.5714285714285714,0.21428571428571427
+sim_dep_loss_43,Adult with depression following a significant loss,dep_loss,14,5,3,6,0.35714285714285715,0.21428571428571427,0.42857142857142855
+sim_dep_mild_47,Adolescent with emerging depressive symptoms,dep_mild,14,8,4,2,0.5714285714285714,0.2857142857142857,0.14285714285714285

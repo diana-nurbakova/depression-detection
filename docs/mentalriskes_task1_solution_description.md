@@ -392,7 +392,98 @@ A5-T3 achieves its best performance by round 4 and maintains it consistently. Th
 
 ---
 
-## 7. References
+## 7. Post-Submission Findings
+
+This section documents analyses performed after the submission window closed, on the released test set and via complementary post-hoc systems. Full evidence in [analysis/MentalRiskES_test/SUMMARY.md](../analysis/MentalRiskES_test/SUMMARY.md); paper-ready CSVs in [outputs/](../analysis/MentalRiskES_test/outputs/).
+
+### 7.1 Truncation disclosure (Phase −1)
+
+The combined-server pipeline ([src/mentalriskes/combined_server.py](../src/mentalriskes/combined_server.py)) had a hard-coded `--max-rounds=30` CLI default that terminated execution after 30 of 82 test rounds for all three runs. The system did **not** emit stale or default predictions for rounds 31–82; it simply exited.
+
+The leaderboard scorer was verified to apply **Scenario A** (only submitted rounds are scored): local R1–30 metrics computed from our prediction files match the official MAEs within ±0.10 across all runs and instruments (the small gap is consistent with the 7 patients listed in `gold_label.json` but absent from the released test data being scored against zero defaults in the leaderboard's denominator). The fix is shipped: `--max-rounds` default is now 200 with a hard-error exit when the cap is hit while the server is still serving messages.
+
+### 7.2 Full-replay results (Layer 0)
+
+We re-ran the identical pipeline on all 82 rounds using DeepInfra Llama-3.3-70B (matching the submitted model). Item-MAE per instrument for Run 2 (our official best, A1-T2):
+
+| Instrument | Submitted (R1–30) | Full replay (R1–82) | Δ |
+|---|---|---|---|
+| PHQ-9 | 0.778 | 0.878 | +0.100 |
+| GAD-7 | 0.971 | 1.086 | +0.114 |
+| CompACT-10 | 1.280 | 1.250 | −0.030 |
+| **MAE_Combined** | **1.010** | **1.071** | +0.061 |
+
+**Counter-intuitive finding:** running on all 82 rounds produces *worse* item-MAE than the round-30 snapshot. Per-patient signed bias for PHQ-9 Run 2 worsens from −3.4 → −4.3 (more under-prediction) — the model under-predicts depression more as conversations get longer. Two plausible explanations: (a) the temporal-aggregation T2 weights early rounds heavier and early-round patient state aligns better with the gold's "past two weeks" reference window than late rounds; (b) cumulative transcript context dilutes per-item evidence with non-symptom-relevant material (therapy progress, metaphor exchanges).
+
+**Implication:** the truncation cost the live submission *coverage*, not *quality*. Replay rank projections for Run 1 = rank 10 and Run 2 = rank 11 are essentially tied with the official ranks 12 / 10.
+
+### 7.3 Per-instrument leaderboard positioning (Analysis Q)
+
+The official combined-MAE ranking (rank 10 for Run 2) obscures uneven per-instrument performance. Best-run ranks per instrument on the official leaderboard:
+
+| Metric | Best run | Value | Rank |
+|---|---|---|---|
+| GAD-7 MAE | Run 2 | 1.036 | 8 |
+| PHQ-9 MAE | Run 0 | 0.797 | 4 |
+| **CompACT-10 MAE** | **Run 1** | **1.302** | **3** |
+| GAD-7 Macro | Run 2 | 0.918 | 5 |
+| PHQ-9 Macro | Run 0 | 0.831 | 3 |
+| **CompACT-10 Macro** | **Run 0** | **1.642** | **2** |
+
+**Balanced rank** (mean of per-instrument best ranks, excluding combined) = **4.17**, behind only VerbaNex AI (2.0), FBKillers (3.0), and the Gemma baseline (4.0). CompACT-10 Macro_MAE places us 2nd overall — the **process-measure scoring is a genuine strength**. The combined-rank deficit is driven entirely by GAD-7 over-prediction.
+
+### 7.4 GAD-7 post-hoc: Gemma branch (Layer 3)
+
+A redesigned GAD-7 prompt ([specs/MentalRiskES/gemma_gad7_prompt_spec.md](../specs/MentalRiskES/gemma_gad7_prompt_spec.md), v2 in [gemma_gad7_prompt_v2.md](../specs/MentalRiskES/gemma_gad7_prompt_v2.md)) targets the three diagnosed Llama failure modes: severity-anchor inflation, item-2 over-prediction, recency-bias overcorrection. The v2 prompt adds a severe-anxiety example (gold total 17), indirect-evidence markers for items 5 (restlessness) and 6 (irritability), a soft severity calibration ("therapy patients typically score 10–21"), and refined per-item confidence framing ("how precisely can you estimate frequency", not "how confident is the diagnosis").
+
+Run on all 82 test rounds via OpenRouter, three Gemma variants × two prompt versions:
+
+| Model / prompt | GAD-7 MAE_items | Signed bias | Band acc | Improvement vs Llama (1.086) |
+|---|---|---|---|---|
+| Gemma 3 27B v1 | 0.814 | −4.9 | 0.30 | −25 % |
+| Gemma 3 27B v2 | 0.743 | −3.8 | 0.20 | −32 % |
+| Gemma 4 31B v1 | 0.786 | −4.7 | 0.30 | −28 % |
+| Gemma 4 26B MoE v1 | 0.743 | −4.0 | 0.20 | −32 % |
+| **Gemma 4 26B MoE v2** | **0.714** | **−3.4** | **0.50** | **−34 %** |
+| Competition Gemma baseline | 0.582 | unknown | unknown | (target) |
+
+**Item 2 over-prediction is eliminated** across every Gemma variant (signed bias on item 2 collapses from −0.5 to ≈ 0; trial showed +0.5 — the anti-ceiling guidance worked). **Items 5 and 6 remain a shared blind spot** across Llama and all Gemma models (signed bias −1.3 to −1.6) — patients rarely describe restlessness or irritability with explicit frequency markers, so the limitation is in the transcript evidence rather than prompt design.
+
+**Confidence calibration is inverted** (paper-worthy finding): HIGH-confidence items have item-MAE 1.09, MEDIUM = 0.82, LOW = 1.29. The model is *more* accurate on items it labels MEDIUM than HIGH. HIGH calls appear to be reserved for "the symptom is clearly present", but the model still misjudges frequency.
+
+### 7.5 Hybrid combined MAE with Gemma GAD-7
+
+Replacing the Llama GAD-7 component with the best Gemma variant (4 26B MoE v2) while keeping our PHQ-9 and CompACT-10:
+
+| Source for PHQ-9 + CompACT-10 | Run | Hybrid MAE_Combined | Projected rank |
+|---|---|---|---|
+| Submitted (R1–30) | 1 | **0.917** | **4** |
+| Submitted (R1–30) | 2 | 0.934 | 4 |
+| Replay (R1–82) | 1 | 0.942 | 4 |
+| Replay (R1–82) | 2 | 0.957 | 4 |
+
+**Every hybrid configuration — submitted-base or replay-base, any of the three runs — projects to rank 4** (between the Gemma baseline at 1.002 and BUAP-NLP Lab at 1.039). The PHQ-9 / CompACT-10 base barely moves the needle; the GAD-7 component is the load-bearing fix.
+
+**Oracle ensemble** (best Gemma per session): GAD-7 MAE = 0.657, within 0.075 of the competition Gemma baseline — additional headroom for follow-up work.
+
+### 7.6 Cross-cohort lesson — could we have known before submission?
+
+[posthoc_T1_cross_cohort_eval.py](../analysis/MentalRiskES_test/posthoc_T1_cross_cohort_eval.py) re-evaluates the Gemma branch on the three corpora the submitted system was tuned against:
+
+| Cohort | n | Gemma 4 26B MoE v1 total-MAE | v2 total-MAE | v1 band acc | v2 band acc |
+|---|---|---|---|---|---|
+| test | 10 | 4.0 | **3.4** | 0.20 | **0.50** |
+| simulated | 6 | 5.5 | 5.7 | 0.50 | 0.50 |
+
+The v2 prompt clearly wins on test but is **indistinguishable from v1 on the simulated cohort** (n=6 personas, same band accuracy, similar total-MAE). The simulated benchmark we used pre-submission is too small and too synthetic to flag prompt-design choices at this granularity. **No pre-submission ablation would have selected v2 over v1**, motivating investment in test-like out-of-distribution evaluation corpora before future iterations.
+
+### 7.7 Summary
+
+After fixing the truncation bug and swapping the GAD-7 component for a Gemma v2 alternative, the projected rank for our system on Task 1 moves from **10 → 4**, with CompACT-10 and PHQ-9 remaining strong (ranks 2 and 3 on their Macro variants) and the diagnosed GAD-7 over-prediction reduced to ~0.71 MAE_items. The full evidence stack — Phase −1 verification, full replay, oracle swap, Gemma branch, principled corrections — is consolidated in [analysis/MentalRiskES_test/SUMMARY.md](../analysis/MentalRiskES_test/SUMMARY.md).
+
+---
+
+## 8. References
 
 - Baker, K. D., & Berghoff, C. R. (2021). A network analysis of psychological flexibility processes and depression. *Journal of Contextual Behavioral Science*, 19, 56--62.
 - Francis, A. W., Dawson, D. L., & Golijani-Moghaddam, N. (2016). The development and validation of the Comprehensive assessment of Acceptance and Commitment Therapy processes (CompACT). *Journal of Contextual Behavioral Science*, 5(3), 134--145.

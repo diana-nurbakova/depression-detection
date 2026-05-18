@@ -34,3 +34,5 @@ specs/
 
 # notebooks
 notebooks/
+
+.claude/

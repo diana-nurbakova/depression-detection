@@ -634,6 +634,123 @@ mentalriskes-task2 evaluate --result output/mentalriskes_task2/ablation/result.j
 
 ---
 
+## 9. Post-Submission Findings
+
+This section documents analyses performed after the submission window closed. Full evidence in [analysis/MentalRiskES_test/SUMMARY.md](../analysis/MentalRiskES_test/SUMMARY.md) and [REPORT_T2_case_studies.md](../analysis/MentalRiskES_test/REPORT_T2_case_studies.md); paper-ready CSVs in [outputs/](../analysis/MentalRiskES_test/outputs/).
+
+### 9.1 Truncation disclosure (Phase −1)
+
+A hard-coded `--max-rounds=30` default in the combined-server pipeline ([src/mentalriskes/combined_server.py](../src/mentalriskes/combined_server.py)) terminated execution after 30 of 82 test rounds. The system did **not** emit stale or default predictions for rounds 31–82; it simply exited. The leaderboard scorer applied **Scenario A**: only submitted rounds were scored — local R1–30 Task 2 accuracy matches the leaderboard verbatim (Run 0: 0.210; Run 1: 0.2367; Run 2: 0.2467 — exact equality to 4 decimal places).
+
+The hypothesis that missing rounds were penalised as wrong (which would have mechanically capped our accuracy at ~37 % and meant our true R1–30 accuracy could be ~67 %) is **rejected**. Our 0.247 on the leaderboard is the genuine per-round accuracy.
+
+### 9.2 Full-replay results (Layer 0)
+
+Re-running the identical submitted pipeline on all 82 rounds using DeepInfra Llama-3.3-70B:
+
+| Run | Submitted (R1–30) | Full replay (R1–82) | Δ |
+|---|---|---|---|
+| Run 0 (FUNC PERM) | 0.210 | — | — (perm-voting replay still in flight when SUMMARY v1.2 published) |
+| Run 1 (FUNC FIX) | 0.237 | 0.220 | −0.017 |
+| Run 2 (HYB B+ FIX) | 0.247 | **0.255** | +0.008 |
+
+Replay accuracy is essentially flat: Run 2 ticks up by less than 1 pp, Run 1 ticks down. Per-tercile breakdown for Run 1: early R1–27 = 0.204, mid R28–54 = 0.220, **late R55–82 = 0.288**. Late-round accuracy is *higher* than early-round, contradicting the pre-submission "state-tracker degradation" hypothesis (Analysis U in the v2 spec). The state tracker accumulating context helps, not hurts, at least at the magnitude we observe.
+
+### 9.3 Experiment S — Bare LLM ablation
+
+A stripped-down prompt that asks the LLM "which of these three responses best continues this therapeutic conversation?" — no ACT hexaflex scoring, no shared state tracker, no characterization, no calibration — beats our engineered pipeline by a wide margin on a Gemma model:
+
+| Model | Bare-LLM accuracy | Pred dist (1/2/3) | vs our submission |
+|---|---|---|---|
+| **Gemma 4 31B** | **0.412** | 48 / 27 / 25 | **+16.5 pp** |
+| Gemma 3 27B | 0.290 | 56 / 23 / 21 | +4.3 pp |
+| Llama-3.3-70B | 0.257 | 54 / 29 / 16 | +1.0 pp |
+| Random baseline | 0.363 | uniform | +11.6 pp |
+| **Top team (NLP Innovators)** | 0.393 | — | +14.6 pp |
+
+The result is **architecture-sensitive**: only Gemma 4 31B has the reasoning to make the bare prompt work. The headline is *"simpler-prompt-on-stronger-model wins"*, not "any LLM beats engineered systems."
+
+### 9.4 Experiment S2 — Bare LLM + anti-bias guardrails
+
+Adding four short anti-bias instructions to the bare prompt (don't prefer longer responses; don't always pick option 2; sometimes the simplest validation is best; consider what a skilled therapist would *actually* say) lifts accuracy further:
+
+| Variant | Accuracy | Macro F1 | Pred dist | Mid-tercile acc |
+|---|---|---|---|---|
+| S (bare) | 0.412 | 0.402 | 48 / 27 / 25 | 0.457 |
+| **S2 (bare + guardrails)** | **0.470** | **0.454** | 53 / 23 / 24 | **0.569** |
+| Δ vs S | +5.8 pp | +5.2 | option-1 share +5pp | +11.2 pp |
+
+**Final delta vs submission: +22.3 pp (0.247 → 0.470). Final delta vs the official top team: +7.7 pp (0.393 → 0.470).** Mid-conversation accuracy peaks at **0.569** — the system gets *more than half* of mid-session response selections correct, putting it in clinically-useful territory.
+
+### 9.5 Confirmation experiments — R2, S3, S4
+
+| Mode | Description | Accuracy | Δ vs S2 |
+|---|---|---|---|
+| **S2** | Bare + guardrails | **0.470** | — |
+| S (bare) | 100-token prompt only | 0.412 | −5.8 |
+| S3 (permutation) | 6 candidate orderings × majority vote | 0.400 | −7.0 |
+| S4 (pairwise + Condorcet) | 3 pairwise comparisons | 0.354 | −11.6 |
+| R2 (rank-1 pick from 3-way ranking) | Full ranking, take top | 0.287 | −18.3 |
+
+S3 and S4 both achieve cleaner prediction distributions than S2 (chi² fails to reject uniform for both), but **lose signal**. The contrastive 3-way comparison plus explicit anti-bias instructions (S2) is the optimal point in this design space — beats mechanical bias correction.
+
+**R2 ranking inversion test:** for each round we logged where the gold response lands in Gemma 3 27B's 3-way ranking. Gold lands at rank 1 / 2 / 3 in 28.7 % / 37.1 % / 34.2 % of rounds — roughly uniform, so the "valid but inverted scoring" hypothesis is rejected. The model has weak signal, not anti-correlated signal.
+
+### 9.6 Consensus-failure analysis — gold-3 is categorically hardest
+
+We ran 9 systems (Submitted Run 2 R1-30; Submitted Run 2 full replay; Gemma 4 31B {S, S2, S3, S4, R2}; Gemma 3 27B bare; Llama-3.3-70B bare) on the 299 (round, session) pairs covered by all of them.
+
+| Gold class | n | All-wrong rate | All-correct rate | Mean correct systems / 9 |
+|---|---|---|---|---|
+| 1 | 101 | 17.8 % | 3.0 % | 3.14 |
+| 2 | 94 | 21.3 % | 1.1 % | 2.47 |
+| **3** | **104** | **38.5 %** | **0.0 %** | **1.71** |
+| ALL | 299 | 26.1 % | 1.3 % | 2.43 |
+
+**When the gold response is option 3, 38.5 % of rounds are wrong-by-every-system — and zero rounds had every system correct.** This reframes our pre-submission "safety bias" diagnosis: the bias isn't only in our pipeline, it's shared across the LLM family. Whatever distinguishes "the gold is option 3" from the other classes is something Gemma 3 / Gemma 4 / Llama / our engineered system all fail to learn zero-shot.
+
+**Task-floor estimate:** 26 % all-wrong rate suggests a non-trivial irreducible ambiguity in the response-selection task at the LLM-decision-rule level.
+
+### 9.7 Cross-cohort lesson — could we have known before submission?
+
+[posthoc_T2_cross_cohort_eval.py](../analysis/MentalRiskES_test/posthoc_T2_cross_cohort_eval.py) re-evaluates the bare-LLM systems and our submitted-equivalent (B+ HYB FIX W3) on the three corpora we tuned against:
+
+| System | Test (n=568) | Trial (n=18) | Simulated (n=87) |
+|---|---|---|---|
+| Submitted Run 2 (R1–30) | 0.247 | — | — |
+| Submitted-equivalent (HYB B+ FIX W3) | — | **0.444** (8/18) | 0.897 |
+| Gemma 4 31B bare (S) | 0.412 | 0.333 | 0.931 |
+| **Gemma 4 31B bare + guardrails (S2)** | **0.470** | **0.444** (8/18) | **0.943** |
+
+**Pre-submission ablation would NOT have flagged the bare-LLM win:**
+- On trial, S2 ties Submitted at 8/18. With n = 18 the gap is well within sampling noise.
+- On simulated, S2 leads Submitted by only +4.6 pp (0.943 vs 0.897). All systems saturate above 0.90 because the persona dialogues are constructed with one clearly-fitting response per round.
+- Only the larger, more diverse test corpus reveals the 21.5 pp gap.
+
+**Implication:** the trial and persona-simulated benchmarks under-discriminate at the quality range relevant to system selection. The methodological lesson is to invest in test-like out-of-distribution corpora (e.g., conversations from a different therapist or population) before submission, not just synthetic personas.
+
+### 9.8 Disagreement appendix — Submitted Run 2 vs S2
+
+[outputs/qualitative_T2_submitted_vs_s2.md](../analysis/MentalRiskES_test/outputs/qualitative_T2_submitted_vs_s2.md) classifies all 300 (round, session) inner-join pairs (R1–30 × 10 sessions, both systems have predictions):
+
+| Bucket | Count | Share |
+|---|---|---|
+| Both correct | 34 | 11.3 % |
+| **S2 wins** (S2 right, Submitted wrong) | **91** | **30.3 %** |
+| Submitted wins (Submitted right, S2 wrong) | 40 | 13.3 % |
+| Both wrong, same answer | 80 | 26.7 % |
+| Both wrong, different answers | 55 | 18.3 % |
+
+S2 wins **2.3× as often as Submitted wins**. The largest per-class gain is on gold = 2 (+23 pp), where our submission's option-2 over-prediction paradoxically hurt: it picked option 2 indiscriminately, getting option-2-gold rounds right *because of* the bias, but misrouting the many other rounds where gold = 2 was a short direct validation that the submitted system saw as "too simple."
+
+The dominant pattern in `s2_wins` is **gold = a direct probing question, Submitted picked an elaborated empathic reframe, S2 picked the probe** — the textbook *sophistication-bias* taxonomy entry. A standalone case-study report is at [analysis/MentalRiskES_test/REPORT_T2_case_studies.md](../analysis/MentalRiskES_test/REPORT_T2_case_studies.md).
+
+### 9.9 Summary
+
+Combining the truncation-bug fix with the S2 bare-LLM post-hoc moves our system from official rank 24 / Acc 0.247 to a **projected rank 1 with Acc 0.470 on the test set** — 7.7 pp above the official top team. The post-hoc is architecture-sensitive (only Gemma 4 31B with anti-bias guardrails) and was not predictable from the trial or simulated cohorts we used for pre-submission selection.
+
+---
+
 ## References
 
 [1] Perez-Rosas, V., Mihalcea, R., Resnik, P., et al. (2017). *Understanding and predicting suicidal behavior using social media*. Proceedings of the ACL.

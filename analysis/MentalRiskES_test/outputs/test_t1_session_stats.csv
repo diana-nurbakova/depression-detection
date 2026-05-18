@@ -1,0 +1,11 @@
+session,first_round,last_round,n_rounds,patient_words_total,therapist_words_total,patient_words_per_round_mean,phq9_total,phq9_band,gad7_total,gad7_band,compact10_total
+S01,1,63,63,2022,2330,32.095238095238095,16,moderately_severe,16,severe,37
+S03,1,50,50,1453,1520,29.06,22,severe,18,severe,38
+S04,1,61,61,2168,2253,35.540983606557376,13,moderate,15,severe,44
+S05,1,48,48,2593,2347,54.020833333333336,15,moderately_severe,16,severe,40
+S06,1,58,58,2677,1684,46.1551724137931,16,moderately_severe,10,moderate,35
+S07,1,30,30,986,1266,32.86666666666667,2,minimal,7,mild,22
+S09,1,67,67,2183,2051,32.582089552238806,21,severe,19,severe,45
+S12,1,82,82,2276,3798,27.75609756097561,11,moderate,17,severe,50
+S15,1,59,59,2005,1960,33.983050847457626,11,moderate,16,severe,36
+S16,1,50,50,2154,1967,43.08,7,mild,14,moderate,33

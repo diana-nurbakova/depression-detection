@@ -1,0 +1,3444 @@
+{
+  "slot1": {
+    "session_summary": {
+      "S01": {
+        "phq9_gold_total": 16,
+        "gad7_gold_total": 16,
+        "compact_gold_total": 37,
+        "phq9_band_full": "moderately_severe",
+        "gad7_band_full": "severe",
+        "phq9_cell": "severe",
+        "gad7_cell": "severe",
+        "compact_cell": "medium",
+        "phq9_gold_items": [
+          1,
+          2,
+          2,
+          2,
+          1,
+          3,
+          2,
+          1,
+          2
+        ],
+        "gad7_gold_items": [
+          3,
+          2,
+          2,
+          2,
+          3,
+          2,
+          2
+        ],
+        "compact_gold_items": [
+          5,
+          2,
+          3,
+          4,
+          6,
+          4,
+          1,
+          5,
+          5,
+          2
+        ],
+        "run0_phq9_total": 11,
+        "run0_gad7_total": 10,
+        "run0_compact_total": 33,
+        "run1_phq9_total": 11,
+        "run1_gad7_total": 10,
+        "run1_compact_total": 38,
+        "run2_phq9_total": 11,
+        "run2_gad7_total": 10,
+        "run2_compact_total": 38
+      },
+      "S03": {
+        "phq9_gold_total": 22,
+        "gad7_gold_total": 18,
+        "compact_gold_total": 38,
+        "phq9_band_full": "severe",
+        "gad7_band_full": "severe",
+        "phq9_cell": "severe",
+        "gad7_cell": "severe",
+        "compact_cell": "medium",
+        "phq9_gold_items": [
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "gad7_gold_items": [
+          2,
+          3,
+          3,
+          3,
+          2,
+          3,
+          2
+        ],
+        "compact_gold_items": [
+          6,
+          2,
+          5,
+          1,
+          6,
+          5,
+          1,
+          5,
+          5,
+          2
+        ],
+        "run0_phq9_total": 12,
+        "run0_gad7_total": 12,
+        "run0_compact_total": 34,
+        "run1_phq9_total": 12,
+        "run1_gad7_total": 12,
+        "run1_compact_total": 38,
+        "run2_phq9_total": 13,
+        "run2_gad7_total": 12,
+        "run2_compact_total": 38
+      },
+      "S04": {
+        "phq9_gold_total": 13,
+        "gad7_gold_total": 15,
+        "compact_gold_total": 44,
+        "phq9_band_full": "moderate",
+        "gad7_band_full": "severe",
+        "phq9_cell": "moderate",
+        "gad7_cell": "severe",
+        "compact_cell": "high",
+        "phq9_gold_items": [
+          2,
+          1,
+          1,
+          2,
+          1,
+          1,
+          3,
+          2,
+          0
+        ],
+        "gad7_gold_items": [
+          2,
+          3,
+          2,
+          2,
+          1,
+          3,
+          2
+        ],
+        "compact_gold_items": [
+          5,
+          4,
+          4,
+          4,
+          4,
+          4,
+          5,
+          5,
+          4,
+          5
+        ],
+        "run0_phq9_total": 10,
+        "run0_gad7_total": 9,
+        "run0_compact_total": 34,
+        "run1_phq9_total": 10,
+        "run1_gad7_total": 9,
+        "run1_compact_total": 36,
+        "run2_phq9_total": 10,
+        "run2_gad7_total": 9,
+        "run2_compact_total": 36
+      },
+      "S05": {
+        "phq9_gold_total": 15,
+        "gad7_gold_total": 16,
+        "compact_gold_total": 40,
+        "phq9_band_full": "moderately_severe",
+        "gad7_band_full": "severe",
+        "phq9_cell": "severe",
+        "gad7_cell": "severe",
+        "compact_cell": "medium",
+        "phq9_gold_items": [
+          3,
+          3,
+          2,
+          3,
+          1,
+          1,
+          2,
+          0,
+          0
+        ],
+        "gad7_gold_items": [
+          3,
+          3,
+          3,
+          3,
+          1,
+          2,
+          1
+        ],
+        "compact_gold_items": [
+          3,
+          1,
+          5,
+          5,
+          4,
+          5,
+          3,
+          4,
+          6,
+          4
+        ],
+        "run0_phq9_total": 13,
+        "run0_gad7_total": 10,
+        "run0_compact_total": 36,
+        "run1_phq9_total": 13,
+        "run1_gad7_total": 8,
+        "run1_compact_total": 37,
+        "run2_phq9_total": 13,
+        "run2_gad7_total": 10,
+        "run2_compact_total": 37
+      },
+      "S06": {
+        "phq9_gold_total": 16,
+        "gad7_gold_total": 10,
+        "compact_gold_total": 35,
+        "phq9_band_full": "moderately_severe",
+        "gad7_band_full": "moderate",
+        "phq9_cell": "severe",
+        "gad7_cell": "moderate",
+        "compact_cell": "medium",
+        "phq9_gold_items": [
+          2,
+          3,
+          1,
+          3,
+          1,
+          1,
+          2,
+          0,
+          3
+        ],
+        "gad7_gold_items": [
+          2,
+          2,
+          2,
+          2,
+          1,
+          1,
+          0
+        ],
+        "compact_gold_items": [
+          2,
+          4,
+          5,
+          4,
+          2,
+          2,
+          4,
+          4,
+          4,
+          4
+        ],
+        "run0_phq9_total": 11,
+        "run0_gad7_total": 6,
+        "run0_compact_total": 36,
+        "run1_phq9_total": 11,
+        "run1_gad7_total": 8,
+        "run1_compact_total": 38,
+        "run2_phq9_total": 11,
+        "run2_gad7_total": 8,
+        "run2_compact_total": 38
+      },
+      "S07": {
+        "phq9_gold_total": 2,
+        "gad7_gold_total": 7,
+        "compact_gold_total": 22,
+        "phq9_band_full": "minimal",
+        "gad7_band_full": "mild",
+        "phq9_cell": null,
+        "gad7_cell": "mild",
+        "compact_cell": "medium",
+        "phq9_gold_items": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "gad7_gold_items": [
+          1,
+          1,
+          1,
+          2,
+          0,
+          1,
+          1
+        ],
+        "compact_gold_items": [
+          0,
+          2,
+          5,
+          1,
+          4,
+          0,
+          2,
+          4,
+          0,
+          4
+        ],
+        "run0_phq9_total": 6,
+        "run0_gad7_total": 9,
+        "run0_compact_total": 31,
+        "run1_phq9_total": 4,
+        "run1_gad7_total": 9,
+        "run1_compact_total": 38,
+        "run2_phq9_total": 6,
+        "run2_gad7_total": 9,
+        "run2_compact_total": 38
+      },
+      "S09": {
+        "phq9_gold_total": 21,
+        "gad7_gold_total": 19,
+        "compact_gold_total": 45,
+        "phq9_band_full": "severe",
+        "gad7_band_full": "severe",
+        "phq9_cell": "severe",
+        "gad7_cell": "severe",
+        "compact_cell": "high",
+        "phq9_gold_items": [
+          3,
+          3,
+          2,
+          3,
+          3,
+          3,
+          3,
+          0,
+          1
+        ],
+        "gad7_gold_items": [
+          3,
+          2,
+          3,
+          3,
+          2,
+          3,
+          3
+        ],
+        "compact_gold_items": [
+          5,
+          3,
+          5,
+          4,
+          6,
+          6,
+          2,
+          6,
+          6,
+          2
+        ],
+        "run0_phq9_total": 10,
+        "run0_gad7_total": 11,
+        "run0_compact_total": 35,
+        "run1_phq9_total": 11,
+        "run1_gad7_total": 11,
+        "run1_compact_total": 38,
+        "run2_phq9_total": 10,
+        "run2_gad7_total": 11,
+        "run2_compact_total": 37
+      },
+      "S12": {
+        "phq9_gold_total": 11,
+        "gad7_gold_total": 17,
+        "compact_gold_total": 50,
+        "phq9_band_full": "moderate",
+        "gad7_band_full": "severe",
+        "phq9_cell": "moderate",
+        "gad7_cell": "severe",
+        "compact_cell": "high",
+        "phq9_gold_items": [
+          2,
+          2,
+          1,
+          1,
+          3,
+          1,
+          1,
+          0,
+          0
+        ],
+        "gad7_gold_items": [
+          2,
+          3,
+          3,
+          2,
+          1,
+          3,
+          3
+        ],
+        "compact_gold_items": [
+          4,
+          4,
+          6,
+          5,
+          6,
+          4,
+          6,
+          5,
+          5,
+          5
+        ],
+        "run0_phq9_total": 2,
+        "run0_gad7_total": 4,
+        "run0_compact_total": 32,
+        "run1_phq9_total": 3,
+        "run1_gad7_total": 5,
+        "run1_compact_total": 35,
+        "run2_phq9_total": 2,
+        "run2_gad7_total": 3,
+        "run2_compact_total": 35
+      },
+      "S15": {
+        "phq9_gold_total": 11,
+        "gad7_gold_total": 16,
+        "compact_gold_total": 36,
+        "phq9_band_full": "moderate",
+        "gad7_band_full": "severe",
+        "phq9_cell": "moderate",
+        "gad7_cell": "severe",
+        "compact_cell": "medium",
+        "phq9_gold_items": [
+          1,
+          1,
+          1,
+          1,
+          0,
+          2,
+          2,
+          2,
+          1
+        ],
+        "gad7_gold_items": [
+          1,
+          2,
+          3,
+          2,
+          2,
+          3,
+          3
+        ],
+        "compact_gold_items": [
+          5,
+          4,
+          4,
+          4,
+          2,
+          4,
+          3,
+          5,
+          1,
+          4
+        ],
+        "run0_phq9_total": 5,
+        "run0_gad7_total": 3,
+        "run0_compact_total": 32,
+        "run1_phq9_total": 5,
+        "run1_gad7_total": 3,
+        "run1_compact_total": 36,
+        "run2_phq9_total": 5,
+        "run2_gad7_total": 3,
+        "run2_compact_total": 36
+      },
+      "S16": {
+        "phq9_gold_total": 7,
+        "gad7_gold_total": 14,
+        "compact_gold_total": 33,
+        "phq9_band_full": "mild",
+        "gad7_band_full": "moderate",
+        "phq9_cell": "mild",
+        "gad7_cell": "moderate",
+        "compact_cell": "medium",
+        "phq9_gold_items": [
+          0,
+          0,
+          2,
+          0,
+          1,
+          2,
+          1,
+          1,
+          0
+        ],
+        "gad7_gold_items": [
+          2,
+          2,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        "compact_gold_items": [
+          2,
+          4,
+          4,
+          4,
+          5,
+          1,
+          2,
+          4,
+          3,
+          4
+        ],
+        "run0_phq9_total": 10,
+        "run0_gad7_total": 13,
+        "run0_compact_total": 33,
+        "run1_phq9_total": 10,
+        "run1_gad7_total": 13,
+        "run1_compact_total": 38,
+        "run2_phq9_total": 10,
+        "run2_gad7_total": 13,
+        "run2_compact_total": 38
+      }
+    },
+    "candidates": {
+      "PHQ9_mild": [
+        {
+          "cell_id": "PHQ9_mild",
+          "session_id": "S16",
+          "round_n": 2,
+          "patient_turn_es": "Sí, diría que sí. Me pasa tanto con amigos cercanos como con desconocidos. Con amigos cercanos lo que me suele ocurrir es que me preocupa mucho que se hayan enfadado conmigo o haberles resultado molesta o pesada en algún momento. Como que siempre estoy atenta a ver si hago las cosas bien. Con desconocidos me agobia cualquier situación en la que tenga que interactuar con ellos, siempre estoy pensando en que no voy a tener tema de conversación o que no voy a resultar atractiva o interesante",
+          "target_item_idx": 2,
+          "target_item_desc": "Depressed mood (feeling down, depressed, or hopeless)",
+          "target_item_score_run2": 2,
+          "evidence_run2": "Patient states being 'ansiosa' and 'preocupada' about social relationships",
+          "gold_total": 7,
+          "gold_band": "mild",
+          "run0_total": 10,
+          "run1_total": 10,
+          "run2_total": 10,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 2,
+          "sentence_count": 4
+        },
+        {
+          "cell_id": "PHQ9_mild",
+          "session_id": "S16",
+          "round_n": 12,
+          "patient_turn_es": "Pues supongo que nada fácil, no podría escuchar prácticamente lo que dices",
+          "target_item_idx": 1,
+          "target_item_desc": "Anhedonia (little interest or pleasure in doing things)",
+          "target_item_score_run2": 2,
+          "evidence_run2": "No disfruto casi nunca cuando tengo que estar con desconocidos",
+          "gold_total": 7,
+          "gold_band": "mild",
+          "run0_total": 10,
+          "run1_total": 10,
+          "run2_total": 10,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 4,
+          "sentence_count": 0
+        },
+        {
+          "cell_id": "PHQ9_mild",
+          "session_id": "S16",
+          "round_n": 23,
+          "patient_turn_es": "Sí, es justo eso. No me gusta estar pensando eso en vez de disfrutar del cumpleaños de mi amigo y prestarle atención a él, que es para lo que estoy allí",
+          "target_item_idx": 1,
+          "target_item_desc": "Anhedonia (little interest or pleasure in doing things)",
+          "target_item_score_run2": 2,
+          "evidence_run2": "The patient implies a lack of pleasure in social interactions due to anxiety and self-doubt, suggesting anhedonia.",
+          "gold_total": 7,
+          "gold_band": "mild",
+          "run0_total": 10,
+          "run1_total": 10,
+          "run2_total": 10,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 4,
+          "sentence_count": 1
+        }
+      ],
+      "PHQ9_moderate": [
+        {
+          "cell_id": "PHQ9_moderate",
+          "session_id": "S12",
+          "round_n": 2,
+          "patient_turn_es": "Bueno, la verdad que he tenido días peores, pero tampoco es que esté del todo bien",
+          "target_item_idx": 2,
+          "target_item_desc": "Depressed mood (feeling down, depressed, or hopeless)",
+          "target_item_score_run2": 1,
+          "evidence_run2": "Patient mentions 'he tenido días peores, pero tampoco es que esté del todo bien', implying some level of depressed mood",
+          "gold_total": 11,
+          "gold_band": "moderate",
+          "run0_total": 2,
+          "run1_total": 3,
+          "run2_total": 2,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 1,
+          "sentence_count": 0
+        },
+        {
+          "cell_id": "PHQ9_moderate",
+          "session_id": "S15",
+          "round_n": 6,
+          "patient_turn_es": "Y realmente lo que me hace cambiar de tema, es el hecho de tener mucho pensamientos en mi cabeza a la vez mientras esa conversación está sucediendo, entonces de manera espontánea me sale decir otra cosa",
+          "target_item_idx": 7,
+          "target_item_desc": "Concentration",
+          "target_item_score_run2": 2,
+          "evidence_run2": "The patient explicitly mentions difficulty concentrating and finishing tasks due to distraction.",
+          "gold_total": 11,
+          "gold_band": "moderate",
+          "run0_total": 5,
+          "run1_total": 5,
+          "run2_total": 5,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 1,
+          "sentence_count": 0
+        },
+        {
+          "cell_id": "PHQ9_moderate",
+          "session_id": "S15",
+          "round_n": 30,
+          "patient_turn_es": "Buenas, esta semana algo mejor",
+          "target_item_idx": 2,
+          "target_item_desc": "Depressed mood (feeling down, depressed, or hopeless)",
+          "target_item_score_run2": 1,
+          "evidence_run2": "Patient mentions 'tristeza' (sadness) and notes feeling better over the week, indicating some level of depressed mood.",
+          "gold_total": 11,
+          "gold_band": "moderate",
+          "run0_total": 5,
+          "run1_total": 5,
+          "run2_total": 5,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 1,
+          "sentence_count": 0
+        }
+      ],
+      "PHQ9_severe": [
+        {
+          "cell_id": "PHQ9_severe",
+          "session_id": "S09",
+          "round_n": 20,
+          "patient_turn_es": "Quizás podría coger el autobús para la universidad y no ir siempre andando por miedo",
+          "target_item_idx": 1,
+          "target_item_desc": "Anhedonia (little interest or pleasure in doing things)",
+          "target_item_score_run2": 1,
+          "evidence_run2": "The patient mentions wanting to enjoy situations and do more things, implying a loss of interest in activities.",
+          "gold_total": 21,
+          "gold_band": "severe",
+          "run0_total": 10,
+          "run1_total": 11,
+          "run2_total": 10,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 1,
+          "sentence_count": 0
+        },
+        {
+          "cell_id": "PHQ9_severe",
+          "session_id": "S03",
+          "round_n": 23,
+          "patient_turn_es": "Si, desde luego, me encantaria intentarlo Igualmente, tengo que hacer algo?",
+          "target_item_idx": 2,
+          "target_item_desc": "Depressed mood (feeling down, depressed, or hopeless)",
+          "target_item_score_run2": 1,
+          "evidence_run2": "Patient mentions wanting to reduce suffering, implying emotional distress",
+          "gold_total": 22,
+          "gold_band": "severe",
+          "run0_total": 12,
+          "run1_total": 12,
+          "run2_total": 13,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 1,
+          "sentence_count": 1
+        },
+        {
+          "cell_id": "PHQ9_severe",
+          "session_id": "S01",
+          "round_n": 14,
+          "patient_turn_es": "Pues no exactamente, porque lo he interiorizado, así que en el fondo es mi forma de ser Pero diría el otro día cuando estábamos cenando, a mí no me gusta para nada el champiñon Y a mis amigos si, entonces pidieron una pizza llena de champiñón y pues claro, no podía decir que no me gustaba que pidieran otra, por si acaso se burlaban O lo ignoraban",
+          "target_item_idx": 2,
+          "target_item_desc": "Depressed mood (feeling down, depressed, or hopeless)",
+          "target_item_score_run2": 2,
+          "evidence_run2": "The patient mentions being 'muy nervioso' and having a general state of anxiety, which could imply feelings of being down, depressed, or hopeless, though it's not explicitly stated.",
+          "gold_total": 16,
+          "gold_band": "moderately_severe",
+          "run0_total": 11,
+          "run1_total": 11,
+          "run2_total": 11,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 2,
+          "sentence_count": 0
+        }
+      ],
+      "GAD7_mild": [
+        {
+          "cell_id": "GAD7_mild",
+          "session_id": "S07",
+          "round_n": 28,
+          "patient_turn_es": "En este caso no. Aunque me gustaría ir algún fin de semana a Córdoba para ver a mis amigas. Solo que al final no me decido nunca.",
+          "target_item_idx": 7,
+          "target_item_desc": "Dread (afraid as if something terrible will happen)",
+          "target_item_score_run2": 1,
+          "evidence_run2": "The patient mentions fear or apprehension about certain situations, indicating some level of fear that something terrible could happen or fear of negative outcomes.",
+          "gold_total": 7,
+          "gold_band": "mild",
+          "run0_total": 9,
+          "run1_total": 9,
+          "run2_total": 9,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 1,
+          "sentence_count": 3
+        },
+        {
+          "cell_id": "GAD7_mild",
+          "session_id": "S07",
+          "round_n": 21,
+          "patient_turn_es": "Pues supongo que iría más a verlos en lugar de esperar a que alguno de ellos venga donde estoy yo.",
+          "target_item_idx": 2,
+          "target_item_desc": "Inability to control worry",
+          "target_item_score_run2": 2,
+          "evidence_run2": "Patient implies a worry loop by mentioning avoidance behaviors due to fear of anxiety, suggesting difficulty in controlling worry.",
+          "gold_total": 7,
+          "gold_band": "mild",
+          "run0_total": 9,
+          "run1_total": 9,
+          "run2_total": 9,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 2,
+          "sentence_count": 1
+        },
+        {
+          "cell_id": "GAD7_mild",
+          "session_id": "S07",
+          "round_n": 15,
+          "patient_turn_es": "Pues me he sentido muy nerviosa, lo he pasado mal. ¿A qué te refieres con patrón?",
+          "target_item_idx": 1,
+          "target_item_desc": "Nervousness / on edge",
+          "target_item_score_run2": 2,
+          "evidence_run2": "The patient reports feeling 'muy nerviosa' during exposures in class.",
+          "gold_total": 7,
+          "gold_band": "mild",
+          "run0_total": 9,
+          "run1_total": 9,
+          "run2_total": 9,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 2,
+          "sentence_count": 2
+        }
+      ],
+      "GAD7_moderate": [
+        {
+          "cell_id": "GAD7_moderate",
+          "session_id": "S06",
+          "round_n": 13,
+          "patient_turn_es": "Ahí soy feliz. Básicamente pienso \"ahora voy a descansar\". Y me olvido del mundo. Son los momentos en los que estoy bien, que son muy pocos El problema es el resto del tiempo, que es cuando estoy amargado",
+          "target_item_idx": 3,
+          "target_item_desc": "Excessive worry about different things",
+          "target_item_score_run2": 2,
+          "evidence_run2": "Patient worries about not having time for leisure and possibly about their life situation.",
+          "gold_total": 10,
+          "gold_band": "moderate",
+          "run0_total": 6,
+          "run1_total": 8,
+          "run2_total": 8,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 2,
+          "sentence_count": 3
+        },
+        {
+          "cell_id": "GAD7_moderate",
+          "session_id": "S16",
+          "round_n": 18,
+          "patient_turn_es": "Vale, lo tendré en cuenta",
+          "target_item_idx": 1,
+          "target_item_desc": "Nervousness / on edge",
+          "target_item_score_run2": 3,
+          "evidence_run2": "prácticamente todos los días muy ansiosa",
+          "gold_total": 14,
+          "gold_band": "moderate",
+          "run0_total": 13,
+          "run1_total": 13,
+          "run2_total": 13,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 3,
+          "sentence_count": 0
+        },
+        {
+          "cell_id": "GAD7_moderate",
+          "session_id": "S16",
+          "round_n": 29,
+          "patient_turn_es": "Pues me volvían al poco tiempo, a veces incluso con más intensidad conforme avanzaba la conversación",
+          "target_item_idx": 2,
+          "target_item_desc": "Inability to control worry",
+          "target_item_score_run2": 3,
+          "evidence_run2": "no les estás gustando",
+          "gold_total": 14,
+          "gold_band": "moderate",
+          "run0_total": 13,
+          "run1_total": 13,
+          "run2_total": 13,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 3,
+          "sentence_count": 0
+        }
+      ],
+      "GAD7_severe": [
+        {
+          "cell_id": "GAD7_severe",
+          "session_id": "S04",
+          "round_n": 1,
+          "patient_turn_es": "Hola,  estoy bien algo nerviosa",
+          "target_item_idx": 1,
+          "target_item_desc": "Nervousness / on edge",
+          "target_item_score_run2": 1,
+          "evidence_run2": "Patient mentions being 'nerviosa'",
+          "gold_total": 15,
+          "gold_band": "severe",
+          "run0_total": 9,
+          "run1_total": 9,
+          "run2_total": 9,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 1,
+          "sentence_count": 0
+        },
+        {
+          "cell_id": "GAD7_severe",
+          "session_id": "S04",
+          "round_n": 23,
+          "patient_turn_es": "Me sentí un poco revuelta al hablar de temas que no suelo tocar mucho.",
+          "target_item_idx": 1,
+          "target_item_desc": "Nervousness / on edge",
+          "target_item_score_run2": 1,
+          "evidence_run2": "The patient mentions being 'nerviosa'.",
+          "gold_total": 15,
+          "gold_band": "severe",
+          "run0_total": 9,
+          "run1_total": 9,
+          "run2_total": 9,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 1,
+          "sentence_count": 1
+        },
+        {
+          "cell_id": "GAD7_severe",
+          "session_id": "S01",
+          "round_n": 1,
+          "patient_turn_es": "Hola Pues muy nervioso, no paro de darle vueltas a las cosas",
+          "target_item_idx": 2,
+          "target_item_desc": "Inability to control worry",
+          "target_item_score_run2": 2,
+          "evidence_run2": "Patient states 'no paro de darle vueltas a las cosas', indicating difficulty controlling worry",
+          "gold_total": 16,
+          "gold_band": "severe",
+          "run0_total": 10,
+          "run1_total": 10,
+          "run2_total": 10,
+          "multi_instrument_in_turn": false,
+          "n_present_items": 2,
+          "sentence_count": 0
+        }
+      ],
+      "CompACT10_medium": [
+        {
+          "cell_id": "CompACT10_medium",
+          "session_id": "S03",
+          "round_n": 18,
+          "patient_turn_es": "No, me siento igual de mal",
+          "target_item_idx": 5,
+          "target_item_desc": "Item 5 OtE (avoiding emotional pain — reversed)",
+          "target_item_score_run2": 5,
+          "evidence_run2": "Avoiding situations to not feel bad.",
+          "gold_total": 38,
+          "run0_total": 34,
+          "run1_total": 38,
+          "run2_total": 38,
+          "n_present_items": 1,
+          "sentence_count": 0
+        },
+        {
+          "cell_id": "CompACT10_medium",
+          "session_id": "S03",
+          "round_n": 22,
+          "patient_turn_es": "Pues a ver me gustaria que esas situaciones no me provocaran tanto sufrimiento Miguel perdona, es que me tengo que ir",
+          "target_item_idx": 5,
+          "target_item_desc": "Item 5 OtE (avoiding emotional pain — reversed)",
+          "target_item_score_run2": 5,
+          "evidence_run2": "Patient stays at home",
+          "gold_total": 38,
+          "run0_total": 34,
+          "run1_total": 38,
+          "run2_total": 38,
+          "n_present_items": 1,
+          "sentence_count": 0
+        },
+        {
+          "cell_id": "CompACT10_medium",
+          "session_id": "S16",
+          "round_n": 10,
+          "patient_turn_es": "Ya, probablemente no… Y es verdad que para mi son muy importantes las relaciones sociales, me encanta conectar con la gente y tener intimidad con ella, vínculos que signifiquen algo para mí Y probablemente yo misma hago que eso sea más difícil preguntándome todo el rato si lo que hago está bien",
+          "target_item_idx": 5,
+          "target_item_desc": "Item 5 OtE (avoiding emotional pain — reversed)",
+          "target_item_score_run2": 5,
+          "evidence_run2": "avoids social situations due to anxiety and fear of rejection",
+          "gold_total": 33,
+          "run0_total": 33,
+          "run1_total": 38,
+          "run2_total": 38,
+          "n_present_items": 1,
+          "sentence_count": 0
+        }
+      ],
+      "CompACT10_high": [
+        {
+          "cell_id": "CompACT10_high",
+          "session_id": "S09",
+          "round_n": 12,
+          "patient_turn_es": "Sí, sentía que una vez que me subiera a exponer ya no podría irme en mitad de la exposición si me encontrase muy mal, o al menos no podría hacerlo sin que todo el mundo se diese cuenta de que me estaba pasando algo",
+          "target_item_idx": 5,
+          "target_item_desc": "Item 5 OtE (avoiding emotional pain — reversed)",
+          "target_item_score_run2": 5,
+          "evidence_run2": "Explicit situational avoidance due to anxiety.",
+          "gold_total": 45,
+          "run0_total": 35,
+          "run1_total": 38,
+          "run2_total": 37,
+          "n_present_items": 1,
+          "sentence_count": 0
+        },
+        {
+          "cell_id": "CompACT10_high",
+          "session_id": "S12",
+          "round_n": 21,
+          "patient_turn_es": "Aún así tampoco sé muy bien cómo iniciar conversaciones, siento que se me da mejor escuchar que hablar y me da miedo aburrir a los demás. La cuestión es que me encantaría ser más extrovertida pero la vergüenza me acaba ganando y prefiero no hacer nada con tal de no quedar mal",
+          "target_item_idx": 5,
+          "target_item_desc": "Item 5 OtE (avoiding emotional pain — reversed)",
+          "target_item_score_run2": 5,
+          "evidence_run2": "preference not to relate to people their age",
+          "gold_total": 50,
+          "run0_total": 32,
+          "run1_total": 35,
+          "run2_total": 35,
+          "n_present_items": 1,
+          "sentence_count": 1
+        },
+        {
+          "cell_id": "CompACT10_high",
+          "session_id": "S09",
+          "round_n": 5,
+          "patient_turn_es": "Pues escuche sobre la meditación y cada vez que siento que voy a tener un ataque de ansiedad intento controlar la respiración y hacer respiraciones profundas pero no me ha funcionado mucho, más bien solo me ha ayudado a sobrellevar la situación. También hay días que siendtoy muy sobre pasado como muchos dulces o incluso no salgo de la cama en todo el día si no es necesario.",
+          "target_item_idx": 5,
+          "target_item_desc": "Item 5 OtE (avoiding emotional pain — reversed)",
+          "target_item_score_run2": 5,
+          "evidence_run2": "Avoiding situations due to anxiety.",
+          "gold_total": 45,
+          "run0_total": 35,
+          "run1_total": 38,
+          "run2_total": 37,
+          "n_present_items": 1,
+          "sentence_count": 2
+        }
+      ]
+    },
+    "candidate_counts": {
+      "PHQ9_mild": 14,
+      "PHQ9_moderate": 53,
+      "PHQ9_severe": 79,
+      "GAD7_mild": 13,
+      "GAD7_moderate": 29,
+      "GAD7_severe": 105,
+      "CompACT10_medium": 13,
+      "CompACT10_high": 11
+    }
+  },
+  "slot2": {
+    "candidates": [
+      {
+        "round_n": 12,
+        "patient_turn_es": "Creo que... leer otra frase. Me siento un poco más animado. Y quiero ver si esto sigue pasando. La siguiente es: \"Demostrar que f es continua en x = 0\".",
+        "context_prev": [
+          "Sí, me gustaría que estuvieras ahí. Vale, voy a leer la primera frase. Es... \"Sea f: R -> R definida por f(x) = x^2\". Solo eso. La leo... ¿qué te parece?",
+          "La tensión... ha bajado un poco. Es como si la frase, al ser solo eso, una frase, no tuviera tanto peso. Sigo sintiendo la bola en el estómago, pero... menos intensa. Y el zumbido en la cabeza se ha atenuado un poco. Es curioso."
+        ],
+        "rec_no_level_b": {
+          "round": 12,
+          "phq9": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "gad7": [
+            3,
+            2,
+            3,
+            3,
+            2,
+            3,
+            3
+          ],
+          "compact10": [
+            3,
+            1,
+            4,
+            1,
+            0,
+            3,
+            4,
+            0,
+            3,
+            4
+          ],
+          "phq9_error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "rec_with_level_b": {
+          "round": 12,
+          "phq9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            0
+          ],
+          "gad7": [
+            3,
+            2,
+            1,
+            2,
+            2,
+            1,
+            2
+          ],
+          "compact10": [
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            5,
+            4,
+            4,
+            5
+          ],
+          "phq9_error": "",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "rec_with_level_c": {
+          "round": 12,
+          "phq9": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "gad7": [
+            3,
+            2,
+            1,
+            2,
+            2,
+            1,
+            2
+          ],
+          "compact10": [
+            3,
+            5,
+            4,
+            5,
+            3,
+            3,
+            5,
+            3,
+            4,
+            5
+          ],
+          "phq9_error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "level_b_violations": [
+          {
+            "rule": "C1",
+            "severity": "high",
+            "name": "PHQ-9/GAD-7 normalised discordance",
+            "message": "Δnorm=0.61 > 0.40 (PHQ-9 8/27, GAD-7 19/21)."
+          },
+          {
+            "rule": "C2",
+            "severity": "medium",
+            "name": "Inter-instrument gap",
+            "message": "|PHQ-9-GAD-7| = 11 > 8"
+          },
+          {
+            "rule": "C3",
+            "severity": "medium",
+            "name": "Somatic-factor tracking",
+            "message": "PHQ-9 somatic 1.00 vs GAD-7 somatic 2.67 (Δ=1.67)"
+          },
+          {
+            "rule": "C5",
+            "severity": "medium",
+            "name": "CompACT-OtE under-prediction",
+            "message": "OtE 1.33 < 2.00 (band=high) — flag only"
+          },
+          {
+            "rule": "C6",
+            "severity": "medium",
+            "name": "CompACT-OtE within-subprocess spread",
+            "message": "spread 4 > 3 across [4, 0, 0]"
+          }
+        ],
+        "level_b_changed_scores": true,
+        "level_c_changed_scores": true,
+        "level_b_deltas": {
+          "phq9": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "gad7": [
+            0,
+            0,
+            -2,
+            -1,
+            0,
+            -2,
+            -1
+          ],
+          "compact10": [
+            0,
+            3,
+            0,
+            2,
+            3,
+            0,
+            1,
+            4,
+            1,
+            1
+          ]
+        },
+        "level_c_deltas": {
+          "phq9": [
+            0,
+            -1,
+            0,
+            -1,
+            0,
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "gad7": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "compact10": [
+            0,
+            1,
+            0,
+            2,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0
+          ]
+        },
+        "gold": {
+          "PHQ-9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            0
+          ],
+          "GAD-7": [
+            3,
+            2,
+            2,
+            2,
+            2,
+            1,
+            2
+          ],
+          "CompACT-10": [
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            4
+          ]
+        },
+        "n_violations": 5,
+        "rule_codes": [
+          "C1",
+          "C2",
+          "C3",
+          "C5",
+          "C6"
+        ]
+      },
+      {
+        "round_n": 6,
+        "patient_turn_es": "Suena... difícil. Pero sí, lo intentaré. Es como si estuviera intentando no engancharme a esa idea, ¿no? Dejarla pasar... Vale. Voy a seguir mirando los apuntes y a ver si consigo que el zumbido se calme un poco. Es raro, la verdad.",
+        "context_prev": [
+          "Sí, es un poco más liviano. Como si quitara una capa de tensión. Sigo sintiéndome ansioso, claro, pero... menos agobiado. Sí, me gustaría que estuvieras ahí, como dices, observando. Me ayuda a no sentirme tan solo con todo esto.",
+          "Es como... una bola en el estómago. Pesada, grisácea. Y un zumbido en la cabeza, pensando en que no lo voy a entender, que mis padres tenían razón y que esto es una pérdida de tiempo. Que debería estar buscando trabajo ya. Es un bucle constante. Y da miedo seguir mirando, por si me doy cuenta de que no soy bueno en esto."
+        ],
+        "rec_no_level_b": {
+          "round": 6,
+          "phq9": [
+            2,
+            3,
+            3,
+            3,
+            0,
+            3,
+            3,
+            3,
+            0
+          ],
+          "gad7": [
+            2,
+            2,
+            2,
+            2,
+            3,
+            2,
+            3
+          ],
+          "compact10": [
+            2,
+            2,
+            4,
+            2,
+            0,
+            4,
+            4,
+            4,
+            0,
+            4
+          ],
+          "phq9_error": "",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "rec_with_level_b": {
+          "round": 6,
+          "phq9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            0
+          ],
+          "gad7": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            0,
+            2
+          ],
+          "compact10": [
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            5
+          ],
+          "phq9_error": "",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "rec_with_level_c": {
+          "round": 6,
+          "phq9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            0
+          ],
+          "gad7": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            1,
+            3
+          ],
+          "compact10": [
+            3,
+            4,
+            4,
+            4,
+            3,
+            4,
+            5,
+            2,
+            4,
+            5
+          ],
+          "phq9_error": "",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "level_b_violations": [
+          {
+            "rule": "C6",
+            "severity": "medium",
+            "name": "CompACT-OtE within-subprocess spread",
+            "message": "spread 4 > 3 across [4, 0, 4]"
+          },
+          {
+            "rule": "C6",
+            "severity": "medium",
+            "name": "CompACT-BA within-subprocess spread",
+            "message": "spread 4 > 3 across [2, 4, 0]"
+          }
+        ],
+        "level_b_changed_scores": true,
+        "level_c_changed_scores": true,
+        "level_b_deltas": {
+          "phq9": [
+            -1,
+            -1,
+            -2,
+            -1,
+            1,
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "gad7": [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            -2,
+            -1
+          ],
+          "compact10": [
+            1,
+            2,
+            0,
+            2,
+            3,
+            0,
+            1,
+            -1,
+            4,
+            1
+          ]
+        },
+        "level_c_deltas": {
+          "phq9": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "gad7": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "compact10": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0
+          ]
+        },
+        "gold": {
+          "PHQ-9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            0
+          ],
+          "GAD-7": [
+            3,
+            2,
+            2,
+            2,
+            2,
+            1,
+            2
+          ],
+          "CompACT-10": [
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            4
+          ]
+        },
+        "n_violations": 2,
+        "rule_codes": [
+          "C6",
+          "C6"
+        ]
+      },
+      {
+        "round_n": 13,
+        "patient_turn_es": "Uf, esta es más complicada. Siento que la bola en el estómago vuelve un poco. Y el zumbido en la cabeza se intensifica un poco. Pero... no es tan fuerte como antes. Es como si ya estuviera acostumbrándome a esto de solo observar. Y... también siento un poco de interés. Por ver si puedo entenderla, aunque sea un poco.",
+        "context_prev": [
+          "La tensión... ha bajado un poco. Es como si la frase, al ser solo eso, una frase, no tuviera tanto peso. Sigo sintiendo la bola en el estómago, pero... menos intensa. Y el zumbido en la cabeza se ha atenuado un poco. Es curioso.",
+          "Creo que... leer otra frase. Me siento un poco más animado. Y quiero ver si esto sigue pasando. La siguiente es: \"Demostrar que f es continua en x = 0\"."
+        ],
+        "rec_no_level_b": {
+          "round": 13,
+          "phq9": [
+            2,
+            3,
+            1,
+            3,
+            0,
+            3,
+            3,
+            0,
+            0
+          ],
+          "gad7": [
+            2,
+            0,
+            2,
+            2,
+            2,
+            3,
+            3
+          ],
+          "compact10": [
+            4,
+            1,
+            4,
+            1,
+            0,
+            4,
+            4,
+            0,
+            4,
+            4
+          ],
+          "phq9_error": "",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "rec_with_level_b": {
+          "round": 13,
+          "phq9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            0
+          ],
+          "gad7": [
+            3,
+            0,
+            0,
+            2,
+            2,
+            0,
+            0
+          ],
+          "compact10": [
+            3,
+            4,
+            4,
+            4,
+            3,
+            3,
+            5,
+            3,
+            4,
+            5
+          ],
+          "phq9_error": "",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "rec_with_level_c": {
+          "round": 13,
+          "phq9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            0
+          ],
+          "gad7": [
+            3,
+            2,
+            1,
+            2,
+            0,
+            1,
+            2
+          ],
+          "compact10": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "phq9_error": "",
+          "gad7_error": "",
+          "compact10_error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        },
+        "level_b_violations": [
+          {
+            "rule": "C5",
+            "severity": "medium",
+            "name": "CompACT-OtE under-prediction",
+            "message": "OtE 1.33 < 2.00 (band=high) — flag only"
+          },
+          {
+            "rule": "C6",
+            "severity": "medium",
+            "name": "CompACT-OtE within-subprocess spread",
+            "message": "spread 4 > 3 across [4, 0, 0]"
+          }
+        ],
+        "level_b_changed_scores": true,
+        "level_c_changed_scores": true,
+        "level_b_deltas": {
+          "phq9": [
+            -1,
+            -1,
+            0,
+            -1,
+            1,
+            -1,
+            -1,
+            2,
+            0
+          ],
+          "gad7": [
+            1,
+            0,
+            -2,
+            0,
+            0,
+            -3,
+            -3
+          ],
+          "compact10": [
+            -1,
+            3,
+            0,
+            3,
+            3,
+            -1,
+            1,
+            3,
+            0,
+            1
+          ]
+        },
+        "level_c_deltas": {
+          "phq9": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "gad7": [
+            0,
+            2,
+            1,
+            0,
+            -2,
+            1,
+            2
+          ],
+          "compact10": [
+            0,
+            -1,
+            -1,
+            -1,
+            0,
+            0,
+            -2,
+            0,
+            -1,
+            -2
+          ]
+        },
+        "gold": {
+          "PHQ-9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            0
+          ],
+          "GAD-7": [
+            3,
+            2,
+            2,
+            2,
+            2,
+            1,
+            2
+          ],
+          "CompACT-10": [
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            4
+          ]
+        },
+        "n_violations": 2,
+        "rule_codes": [
+          "C5",
+          "C6"
+        ]
+      },
+      {
+        "round_n": 14,
+        "patient_turn_es": "Sí, es verdad. Me doy cuenta de que no estoy huyendo de nada, solo... observando. Es raro, pero a la vez... liberador. ¿Qué me recomiendas que haga ahora?",
+        "context_prev": [
+          "Creo que... leer otra frase. Me siento un poco más animado. Y quiero ver si esto sigue pasando. La siguiente es: \"Demostrar que f es continua en x = 0\".",
+          "Uf, esta es más complicada. Siento que la bola en el estómago vuelve un poco. Y el zumbido en la cabeza se intensifica un poco. Pero... no es tan fuerte como antes. Es como si ya estuviera acostumbrándome a esto de solo observar. Y... también siento un poco de interés. Por ver si puedo entenderla, aunque sea un poco."
+        ],
+        "rec_no_level_b": {
+          "round": 14,
+          "phq9": [
+            2,
+            3,
+            2,
+            2,
+            0,
+            3,
+            3,
+            3,
+            0
+          ],
+          "gad7": [
+            3,
+            2,
+            1,
+            2,
+            3,
+            2,
+            0
+          ],
+          "compact10": [
+            6,
+            4,
+            5,
+            4,
+            0,
+            0,
+            4,
+            5,
+            0,
+            4
+          ],
+          "phq9_error": "",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "rec_with_level_b": {
+          "round": 14,
+          "phq9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            0
+          ],
+          "gad7": [
+            3,
+            2,
+            1,
+            2,
+            1,
+            0,
+            2
+          ],
+          "compact10": [
+            3,
+            4,
+            4,
+            3,
+            3,
+            3,
+            5,
+            3,
+            4,
+            5
+          ],
+          "phq9_error": "",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "rec_with_level_c": {
+          "round": 14,
+          "phq9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            0
+          ],
+          "gad7": [
+            3,
+            0,
+            0,
+            2,
+            1,
+            0,
+            0
+          ],
+          "compact10": [
+            3,
+            4,
+            4,
+            4,
+            3,
+            3,
+            5,
+            3,
+            3,
+            5
+          ],
+          "phq9_error": "",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "level_b_violations": [
+          {
+            "rule": "C6",
+            "severity": "medium",
+            "name": "CompACT-OtE within-subprocess spread",
+            "message": "spread 5 > 3 across [5, 0, 5]"
+          },
+          {
+            "rule": "C6",
+            "severity": "medium",
+            "name": "CompACT-BA within-subprocess spread",
+            "message": "spread 6 > 3 across [6, 0, 0]"
+          }
+        ],
+        "level_b_changed_scores": true,
+        "level_c_changed_scores": true,
+        "level_b_deltas": {
+          "phq9": [
+            -1,
+            -1,
+            -1,
+            0,
+            1,
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "gad7": [
+            0,
+            0,
+            0,
+            0,
+            -2,
+            -2,
+            2
+          ],
+          "compact10": [
+            -3,
+            0,
+            -1,
+            -1,
+            3,
+            3,
+            1,
+            -2,
+            4,
+            1
+          ]
+        },
+        "level_c_deltas": {
+          "phq9": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "gad7": [
+            0,
+            -2,
+            -1,
+            0,
+            0,
+            0,
+            -2
+          ],
+          "compact10": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0
+          ]
+        },
+        "gold": {
+          "PHQ-9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            0
+          ],
+          "GAD-7": [
+            3,
+            2,
+            2,
+            2,
+            2,
+            1,
+            2
+          ],
+          "CompACT-10": [
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            4
+          ]
+        },
+        "n_violations": 2,
+        "rule_codes": [
+          "C6",
+          "C6"
+        ]
+      },
+      {
+        "round_n": 3,
+        "patient_turn_es": "Sí, tienes razón. La presión de tener que entenderlo todo es parte del problema. Dejar de lado eso... suena mejor. Vale, voy a abrir el libro. Sin pensar en exámenes ni en nada. Solo... mirar. A ver qué pasa. Gracias.",
+        "context_prev": [
+          "Hola. La verdad es que hoy me siento fatal. No sé ni por dónde empezar… Llevo semanas así, pero hoy ha sido el punto de quiebre. No puedo concentrarme en nada, la ansiedad me está carcomiendo y siento que voy a explotar. Necesitaba hablar con alguien, de verdad.",
+          "Uf, es difícil pensar con claridad ahora mismo. Quizás... quizás mirar los apuntes de cálculo. Sé que es lo último que me apetece, pero si me concentrara un poco, aunque fueran 15 minutos, igual me sentiría un poco mejor. O no, pero al menos estaría haciendo algo, ¿sabes? Me da pereza horrible, pero... lo intentaré."
+        ],
+        "rec_no_level_b": {
+          "round": 3,
+          "phq9": [
+            2,
+            3,
+            3,
+            3,
+            0,
+            3,
+            3,
+            3,
+            3
+          ],
+          "gad7": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "compact10": [
+            2,
+            2,
+            4,
+            2,
+            0,
+            4,
+            4,
+            4,
+            0,
+            4
+          ],
+          "phq9_error": "",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "rec_with_level_b": {
+          "round": 3,
+          "phq9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            1,
+            0
+          ],
+          "gad7": [
+            3,
+            1,
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "compact10": [
+            3,
+            4,
+            3,
+            4,
+            1,
+            4,
+            5,
+            3,
+            4,
+            5
+          ],
+          "phq9_error": "",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "rec_with_level_c": {
+          "round": 3,
+          "phq9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            0
+          ],
+          "gad7": [
+            3,
+            1,
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "compact10": [
+            3,
+            5,
+            3,
+            5,
+            4,
+            3,
+            5,
+            1,
+            3,
+            5
+          ],
+          "phq9_error": "",
+          "gad7_error": "",
+          "compact10_error": ""
+        },
+        "level_b_violations": [
+          {
+            "rule": "C6",
+            "severity": "medium",
+            "name": "CompACT-OtE within-subprocess spread",
+            "message": "spread 4 > 3 across [4, 0, 4]"
+          },
+          {
+            "rule": "C6",
+            "severity": "medium",
+            "name": "CompACT-BA within-subprocess spread",
+            "message": "spread 4 > 3 across [2, 4, 0]"
+          }
+        ],
+        "level_b_changed_scores": true,
+        "level_c_changed_scores": true,
+        "level_b_deltas": {
+          "phq9": [
+            -1,
+            -1,
+            -2,
+            -1,
+            1,
+            -1,
+            -1,
+            -2,
+            -3
+          ],
+          "gad7": [
+            0,
+            -2,
+            -2,
+            -1,
+            -2,
+            -2,
+            -2
+          ],
+          "compact10": [
+            1,
+            2,
+            -1,
+            2,
+            1,
+            0,
+            1,
+            -1,
+            4,
+            1
+          ]
+        },
+        "level_c_deltas": {
+          "phq9": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "gad7": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "compact10": [
+            0,
+            1,
+            0,
+            1,
+            3,
+            -1,
+            0,
+            -2,
+            -1,
+            0
+          ]
+        },
+        "gold": {
+          "PHQ-9": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            0
+          ],
+          "GAD-7": [
+            3,
+            2,
+            2,
+            2,
+            2,
+            1,
+            2
+          ],
+          "CompACT-10": [
+            3,
+            3,
+            4,
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            4
+          ]
+        },
+        "n_violations": 2,
+        "rule_codes": [
+          "C6",
+          "C6"
+        ]
+      }
+    ],
+    "all_candidate_count": 5
+  },
+  "slot3": {
+    "candidates": [
+      {
+        "round_n": 9,
+        "patient_turn_es": "Quizás... intentar leer una frase. Solo una. Y luego otra. Sin pensar en si lo entiendo o no. Solo leer. Suena... manejable. ¿Te parece bien?Quizás... intentar leer una frase. Solo una. Y luego otra. Sin pensar en si lo entiendo o no. Solo leer. Suena... manejable. ¿Te parece bien?",
+        "option_1": "Me parece perfecto. Leer una frase, y luego otra, sin pensar en si la entiendes o no. Solo leer. Es como si estuvieras paseando por un jardín, y de repente te detienes a mirar una flor. No tienes que hacer nada más que mirarla. No tienes que juzgarla, no tienes que entenderla. Solo mirarla. ¿Qué te parece si empezamos a leer juntos? ¿Podemos encontrar una frase en los apuntes y simplemente leerla, sin más?",
+        "option_2": "Me parece excelente. Leer una frase, luego otra, sin la carga de entender. Es un paso muy concreto y amable contigo mismo. Es como si le estuvieras diciendo a tu mente: \"Solo quiero ver qué hay aquí, sin juzgar\". ¿Qué te parece si, mientras lees esas frases, te permites notar cómo se siente tu cuerpo? ¿Sigue estando ahí la tensión en los hombros? ¿Hay alguna otra sensación? Y recuerda, la curiosidad es tu aliada. ¿Estás listo para leer esa primera frase?",
+        "option_3": "Perfecto. Eso suena manejable, y es un paso muy valiente. Imagina que estás leyendo como si estuvieras en una biblioteca, y solo estás interesado en ver qué dice la frase, sin la presión de entenderla o de juzgarla. ¿Te gustaría que te acompañara en ese momento, como si fuera un observador que no juzga, solo observa? ¿Qué te parece si empezamos con una frase, y solo nos enfocamos en lo que veamos, sin más?",
+        "gold_selection": 3,
+        "tact_run0": 2,
+        "tact_run1": 2,
+        "tact_run2": 2,
+        "state_snapshot_run2": {
+          "fase_terapeutica": "activación",
+          "estado_emocional": {
+            "valencia": "positiva",
+            "intensidad": "baja",
+            "orientacion_accion": "activa"
+          },
+          "procesos_act": {
+            "defusion": 0.95,
+            "aceptacion": 0.95,
+            "momento_presente": 0.98,
+            "valores": 0.6,
+            "accion_comprometida": 0.8,
+            "yo_como_contexto": 0.5
+          },
+          "metaforas_activas": [
+            "nube que pasa por el cielo",
+            "leer una frase como un paso hacia adelante"
+          ],
+          "marcadores_rapport": [
+            "el paciente se siente cómodo compartiendo sus ideas y sentimientos",
+            "el paciente muestra disposición a intentar nuevas estrategias",
+            "el paciente expresa aprecio por la guía del terapeuta"
+          ],
+          "resumen_acumulado": "El paciente ha comenzado a experimentar una mayor aceptación de sus emociones y pensamientos, y está dispuesto a intentar nuevas estrategias para manejar su malestar. Ahora, el paciente se siente más tranquilo y está dispuesto a tomar pequeños pasos hacia la acción, como leer una frase sin analizarla.",
+          "transicion": {
+            "señales_integración": [
+              "el paciente comienza a identificar pequeños pasos hacia la acción",
+              "el paciente muestra disposición a intentar nuevas estrategias",
+              "el paciente nota una disminución en la intensidad de sus emociones"
+            ],
+            "señales_cierre": [],
+            "fase_siguiente_probable": "integración",
+            "rondas_en_fase_actual": 1
+          }
+        },
+        "raw_evaluation_run2": {
+          "caracterización": {
+            "opcion_1": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "momento_presente_atento",
+                "presencia_terapéutica"
+              ],
+              "etiquetas_inconsistencia": [
+                "consejo_directivo"
+              ],
+              "función_principal": "Validar y acompañar al paciente en su proceso de lectura",
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_2": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "momento_presente_atento",
+                "permanencia_con_dificultad",
+                "presencia_terapéutica"
+              ],
+              "etiquetas_inconsistencia": [
+                "consejo_directivo"
+              ],
+              "función_principal": "Validar y acompañar al paciente en su proceso de lectura y explorar sus sensaciones corporales",
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_3": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "momento_presente_atento",
+                "presencia_terapéutica"
+              ],
+              "etiquetas_inconsistencia": [
+                "consejo_directivo"
+              ],
+              "función_principal": "Validar y acompañar al paciente en su proceso de lectura y ofrecer apoyo como observador",
+              "presencia_terapéutica": "alta"
+            }
+          },
+          "eliminación": {
+            "opcion_1": {
+              "eliminada": false,
+              "debilidades": [
+                "consejo_directivo"
+              ],
+              "severidad": "menor"
+            },
+            "opcion_2": {
+              "eliminada": false,
+              "debilidades": [
+                "consejo_directivo"
+              ],
+              "severidad": "menor"
+            },
+            "opcion_3": {
+              "eliminada": false,
+              "debilidades": [
+                "consejo_directivo"
+              ],
+              "severidad": "menor"
+            }
+          },
+          "evaluación_adecuación": {
+            "opcion_1": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 1,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_2": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 2,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_3": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 1,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            }
+          },
+          "selección_inicial": {
+            "numero": 2,
+            "razón": "La opción 2 ofrece una mayor riqueza terapéutica al combinar la validación empática, el momento presente atento y la permanencia con dificultad, lo que se ajusta bien a la fase actual de activación y al estado emocional del paciente."
+          },
+          "reconsideración": {
+            "opción_reconsiderada": null,
+            "más_rica_que_selección": false,
+            "cambio": false,
+            "justificación": "Aunque las tres opciones tienen fortalezas, la opción 2 se mantiene como la más adecuada debido a su capacidad para abordar múltiples aspectos terapéuticos relevantes en este punto de la sesión."
+          },
+          "selección": {
+            "opcion_elegida": {
+              "numero": 2,
+              "etiqueta_principal": "validación_empática",
+              "fase_match": "activación",
+              "razón_principal": "La opción 2 ofrece una combinación efectiva de validación empática, momento presente atento y exploración de sensaciones corporales, lo que se ajusta bien a las necesidades del paciente en este punto de la terapia."
+            },
+            "razonamiento": "La selección de la opción 2 se basa en su capacidad para proporcionar una respuesta terapéutica rica y multifacética que aborda tanto la experiencia emocional como la física del paciente, promoviendo así un proceso de curación y crecimiento más integral."
+          }
+        },
+        "raw_evaluation_run1": {
+          "caracterización": {
+            "opcion_1": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "presencia_terapéutica",
+                "momento_presente_atento"
+              ],
+              "etiquetas_inconsistencia": [
+                "consejo_directivo"
+              ],
+              "función_principal": "Validación y acompañamiento"
+            },
+            "opcion_2": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "aceptación_compasiva",
+                "exploración_valores"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "Validación y exploración"
+            },
+            "opcion_3": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "presencia_terapéutica",
+                "yo_contexto_observador"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "Validación y acompañamiento"
+            }
+          },
+          "eliminación": {
+            "opcion_1": {
+              "eliminada": false,
+              "debilidades": [
+                "consejo_directivo"
+              ],
+              "severidad": "menor"
+            },
+            "opcion_2": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_3": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            }
+          },
+          "evaluación_adecuación": {
+            "opcion_1": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 1,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_2": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 2,
+              "valida_primero": true,
+              "presencia_terapéutica": "media"
+            },
+            "opcion_3": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 1,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            }
+          },
+          "selección_inicial": {
+            "numero": 2,
+            "razón": "La opción 2 ofrece una validación empática y una exploración de las sensaciones corporales, lo que se ajusta a la fase de integración y al estado emocional del paciente."
+          },
+          "reconsideración": {
+            "opción_reconsiderada": null,
+            "más_rica_que_selección": false,
+            "cambio": false,
+            "justificación": "La opción 2 sigue siendo la más adecuada, ya que ofrece una validación empática y una exploración de las sensaciones corporales, lo que se ajusta a la fase de integración y al estado emocional del paciente."
+          },
+          "selección": {
+            "opcion_elegida": {
+              "numero": 2,
+              "etiqueta_principal": "Validación y exploración",
+              "fase_match": "integración",
+              "razón_principal": "La opción 2 ofrece una validación empática y una exploración de las sensaciones corporales, lo que se ajusta a la fase de integración y al estado emocional del paciente."
+            },
+            "razonamiento": "La opción 2 es la más adecuada porque ofrece una validación empática y una exploración de las sensaciones corporales, lo que se ajusta a la fase de integración y al estado emocional del paciente. Además, no presenta debilidades significativas en la evaluación de adecuación."
+          }
+        },
+        "reasoning_run2": "La selección de la opción 2 se basa en su capacidad para proporcionar una respuesta terapéutica rica y multifacética que aborda tanto la experiencia emocional como la física del paciente, promoviendo así un proceso de curación y crecimiento más integral.",
+        "primary_tag_run2": "validación_empática",
+        "all_runs_disagree": true,
+        "all_runs_agree_among_themselves": true,
+        "candidates_distinct": true
+      },
+      {
+        "round_n": 17,
+        "patient_turn_es": "Es... un torbellino de imágenes y pensamientos. Mis padres, la universidad, el futuro... Y luego, de repente, veo un número. Un número de matemáticas. No sé por qué, pero me tranquiliza un poco. Es como si recordara que, a pesar de todo, soy bueno en esto. Soy bueno en matemáticas.",
+        "option_1": "Es interesante cómo, en medio del torbellino, surge ese número, ese recordatorio de que eres bueno en matemáticas. Eso no es un pensamiento, es una experiencia. Es como si tu mente, en medio del caos, recordara algo que te da un poco de estabilidad. ¿Qué te parece si te permites notar esa sensación de estabilidad, aunque sea por un momento? ¿Te gustaría que te acompañara en ese momento, como si fuera un observador que no juzga, solo observa?",
+        "option_2": "Es fascinante cómo ese torbellino de imágenes y pensamientos te lleva a un número, y cómo ese número te conecta con una sensación de competencia y confianza. Es como si tu mente te estuviera recordando algo importante sobre ti mismo. Permítete saborear esa sensación de ser bueno en matemáticas. No la juzgues, no la analices. Solo déjala estar. ¿Qué te gustaría hacer ahora? ¿Volver a los apuntes, o seguir explorando esa sensación?",
+        "option_3": "Es interesante cómo el torbellino de imágenes y pensamientos se despeja un poco, y te encuentras con ese número de matemáticas. Es como si tu mente hubiera encontrado un refugio, un lugar seguro donde puedes estar en paz. Y ese recuerdo de que eres bueno en matemáticas es un recordatorio de que tienes habilidades y talentos que te pueden ayudar a navegar por este momento difícil. ¿Qué te parece si te permites quedarte con ese recuerdo, y lo uses como un punto de apoyo para seguir adelante?",
+        "gold_selection": 3,
+        "tact_run0": 1,
+        "tact_run1": 1,
+        "tact_run2": 1,
+        "state_snapshot_run2": {
+          "fase_terapeutica": "integración",
+          "estado_emocional": {
+            "valencia": "mixta",
+            "intensidad": "alta",
+            "orientacion_accion": "tentativa"
+          },
+          "procesos_act": {
+            "defusion": 0.8,
+            "aceptacion": 0.9,
+            "momento_presente": 0.8,
+            "valores": 0.7,
+            "accion_comprometida": 0.6,
+            "yo_como_contexto": 0.6
+          },
+          "metaforas_activas": [
+            "nube que pasa por el cielo",
+            "leer una frase como un paso hacia adelante",
+            "acostumbrarse a observar",
+            "observar sin huir",
+            "melodía que suena de fondo",
+            "torbellino de imágenes y pensamientos",
+            "número de matemáticas como fuente de tranquilidad"
+          ],
+          "marcadores_rapport": [
+            "el paciente se siente cómodo compartiendo sus ideas y sentimientos",
+            "el paciente muestra disposición a intentar nuevas estrategias",
+            "el paciente expresa aprecio por la guía del terapeuta",
+            "el paciente muestra interés en el proceso",
+            "el paciente busca recomendaciones para seguir adelante",
+            "el paciente se siente cómodo con el silencio y la observación"
+          ],
+          "resumen_acumulado": "El paciente ha comenzado a observar sus pensamientos y emociones, y ha encontrado un momento de tranquilidad al recordar su habilidad en matemáticas. El paciente está explorando su experiencia emocional y física, y muestra interés en el proceso. Ahora, el paciente está comenzando a integrar sus observaciones y a encontrar patrones en sus pensamientos y emociones.",
+          "transicion": {
+            "señales_integración": [
+              "el paciente nota un cambio en su sensación de abrumador",
+              "el paciente reflexiona sobre su experiencia y la compara con la de antes",
+              "el paciente muestra interés en procesar sus ideas y sentimientos",
+              "el paciente se siente dispuesto a observar y permitir que surja lo que sea",
+              "el paciente encuentra un momento de tranquilidad al recordar su habilidad en matemáticas"
+            ],
+            "señales_cierre": [
+              "el paciente expresa gratitud por la guía del terapeuta",
+              "el paciente muestra interés en seguir adelante con el proceso"
+            ],
+            "fase_siguiente_probable": "cierre",
+            "rondas_en_fase_actual": 1
+          }
+        },
+        "raw_evaluation_run2": {
+          "caracterización": {
+            "opcion_1": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "momento_presente_atento",
+                "yo_contexto_observador",
+                "presencia_terapéutica"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "Explorar y validar la experiencia del paciente"
+            },
+            "opcion_2": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "momento_presente_atento",
+                "aceptación_compasiva"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "Fomentar la aceptación y exploración de la experiencia del paciente"
+            },
+            "opcion_3": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "normalización_experiencia"
+              ],
+              "etiquetas_inconsistencia": [
+                "consejo_directivo"
+              ],
+              "función_principal": "Ofrecer un consejo o solución"
+            }
+          },
+          "eliminación": {
+            "opcion_1": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_2": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_3": {
+              "eliminada": true,
+              "debilidades": [
+                "consejo_directivo"
+              ],
+              "severidad": "principal"
+            }
+          },
+          "evaluación_adecuación": {
+            "opcion_1": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "construye",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 1,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_2": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 1,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            }
+          },
+          "selección_inicial": {
+            "numero": 1,
+            "razón": "La opción 1 es la más consistente con la fase de integración y ofrece una alta presencia terapéutica, lo que es adecuado para el estado emocional mixto y la orientación tentativa del paciente."
+          },
+          "reconsideración": {
+            "opción_reconsiderada": null,
+            "más_rica_que_selección": false,
+            "cambio": false,
+            "justificación": "La opción 1 sigue siendo la más adecuada después de la reconsideración, ya que ofrece una combinación de validación empática, momento presente atento y presencia terapéutica alta, lo que es consistente con las necesidades del paciente en esta fase."
+          },
+          "selección": {
+            "opcion_elegida": {
+              "numero": 1,
+              "etiqueta_principal": "validación_empática",
+              "fase_match": "integración",
+              "razón_principal": "La opción 1 es la más consistente con la fase de integración y ofrece una alta presencia terapéutica, lo que es adecuado para el estado emocional mixto y la orientación tentativa del paciente."
+            },
+            "razonamiento": "La opción 1 es la más adecuada porque ofrece una combinación de validación empática, momento presente atento y presencia terapéutica alta, lo que es consistente con las necesidades del paciente en esta fase de integración."
+          }
+        },
+        "raw_evaluation_run1": {
+          "caracterización": {
+            "opcion_1": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "presencia_terapéutica",
+                "permisividad"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "Validación y acompañamiento"
+            },
+            "opcion_2": {
+              "etiquetas_consistencia": [
+                "exploración",
+                "validación_empática"
+              ],
+              "etiquetas_inconsistencia": [
+                "activación_prematura"
+              ],
+              "función_principal": "Exploración y validación"
+            },
+            "opcion_3": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "presencia_terapéutica"
+              ],
+              "etiquetas_inconsistencia": [
+                "consejo_directivo"
+              ],
+              "función_principal": "Validación y consejo"
+            }
+          },
+          "eliminación": {
+            "opcion_1": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_2": {
+              "eliminada": false,
+              "debilidades": [
+                "activación_prematura"
+              ],
+              "severidad": "menor"
+            },
+            "opcion_3": {
+              "eliminada": false,
+              "debilidades": [
+                "consejo_directivo"
+              ],
+              "severidad": "menor"
+            }
+          },
+          "evaluación_adecuación": {
+            "opcion_1": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "construye",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 1,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_2": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 1,
+              "valida_primero": true,
+              "presencia_terapéutica": "media"
+            },
+            "opcion_3": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "construye",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 0,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            }
+          },
+          "selección_inicial": {
+            "numero": 1,
+            "razón": "La opción 1 ofrece una combinación de validación empática, presencia terapéutica y permisividad, lo que se ajusta a la fase de integración y al estado emocional del paciente."
+          },
+          "reconsideración": {
+            "opción_reconsiderada": null,
+            "más_rica_que_selección": false,
+            "cambio": false,
+            "justificación": "Aunque la opción 3 también ofrece una buena combinación de validación y presencia terapéutica, la opción 1 se ajusta mejor a la fase de integración y al estado emocional del paciente."
+          },
+          "selección": {
+            "opcion_elegida": {
+              "numero": 1,
+              "etiqueta_principal": "Validación y acompañamiento",
+              "fase_match": "Integración",
+              "razón_principal": "La opción 1 ofrece una combinación de validación empática, presencia terapéutica y permisividad, lo que se ajusta a la fase de integración y al estado emocional del paciente."
+            },
+            "razonamiento": "La opción 1 es la más adecuada porque ofrece una combinación de validación empática, presencia terapéutica y permisividad, lo que se ajusta a la fase de integración y al estado emocional del paciente. La opción 2 y 3 también ofrecen aspectos positivos, pero la opción 1 se ajusta mejor a las necesidades del paciente en este momento."
+          }
+        },
+        "reasoning_run2": "La opción 1 es la más adecuada porque ofrece una combinación de validación empática, momento presente atento y presencia terapéutica alta, lo que es consistente con las necesidades del paciente en esta fase de integración.",
+        "primary_tag_run2": "validación_empática",
+        "all_runs_disagree": true,
+        "all_runs_agree_among_themselves": true,
+        "candidates_distinct": true
+      },
+      {
+        "round_n": 12,
+        "patient_turn_es": "Creo que... leer otra frase. Me siento un poco más animado. Y quiero ver si esto sigue pasando. La siguiente es: \"Demostrar que f es continua en x = 0\".",
+        "option_1": "Perfecto. Esa es la siguiente frase. \"Demostrar que f es continua en x = 0\". Observa esa frase, como si fuera un objeto nuevo que estás viendo por primera vez. No tiene que significar nada para ti en este momento. Solo es una colección de palabras. ¿Qué notas ahora? ¿Hay alguna reacción en tu cuerpo? ¿Alguna sensación o pensamiento que surja? No tienes que cambiar nada, solo observar.",
+        "option_2": "Otra frase. Un nuevo conjunto de palabras. Observa cómo se siente leer esta frase en comparación con la primera. ¿Hay alguna diferencia en la forma en que se siente? ¿La tensión en los hombros o en el pecho ha bajado un poco más? ¿El zumbido en la cabeza se ha atenuado aún más? No te preocupes por entender la frase o por lo que significa, solo observa la experiencia de leerla. ¿Qué notas en tu cuerpo o en tu mente ahora que has leído esta frase?",
+        "option_3": "Perfecto. Ahora estás leyendo otra frase, y es como si estuvieras explorando un terreno que antes parecía impenetrable. Observa cómo se siente esta nueva frase, como si fuera un objeto que pasa por tu mente. No necesitas entenderla, ni juzgarla. Solo notarla. ¿Qué ocurre cuando la lees? ¿Hay algo que se siente diferente, incluso si es solo un poco?",
+        "gold_selection": 3,
+        "tact_run0": 3,
+        "tact_run1": 1,
+        "tact_run2": 2,
+        "state_snapshot_run2": {
+          "fase_terapeutica": "integración",
+          "estado_emocional": {
+            "valencia": "positiva",
+            "intensidad": "media",
+            "orientacion_accion": "activa"
+          },
+          "procesos_act": {
+            "defusion": 0.99,
+            "aceptacion": 0.99,
+            "momento_presente": 0.99,
+            "valores": 0.7,
+            "accion_comprometida": 0.92,
+            "yo_como_contexto": 0.6
+          },
+          "metaforas_activas": [
+            "nube que pasa por el cielo",
+            "leer una frase como un paso hacia adelante"
+          ],
+          "marcadores_rapport": [
+            "el paciente se siente cómodo compartiendo sus ideas y sentimientos",
+            "el paciente muestra disposición a intentar nuevas estrategias",
+            "el paciente expresa aprecio por la guía del terapeuta"
+          ],
+          "resumen_acumulado": "El paciente ha comenzado a experimentar una mayor aceptación de sus emociones y pensamientos, y está dispuesto a intentar nuevas estrategias para manejar su malestar. El paciente ha notado una disminución en la tensión y la intensidad de sus emociones después de leer una frase sin analizarla. Ahora, el paciente se siente más animado y está dispuesto a leer otra frase para seguir explorando este enfoque.",
+          "transicion": {
+            "señales_integración": [
+              "el paciente decide leer otra frase para seguir explorando el enfoque",
+              "el paciente se siente más animado y dispuesto a intentar nuevas estrategias"
+            ],
+            "señales_cierre": [],
+            "fase_siguiente_probable": "integración",
+            "rondas_en_fase_actual": 5
+          }
+        },
+        "raw_evaluation_run2": {
+          "caracterización": {
+            "opcion_1": {
+              "etiquetas_consistencia": [
+                "momento_presente_atento",
+                "normalización_experiencia"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "Invitar a la observación sin juicio"
+            },
+            "opcion_2": {
+              "etiquetas_consistencia": [
+                "momento_presente_atento",
+                "normalización_experiencia",
+                "permanencia_con_dificultad"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "Fomentar la conciencia corporal y la observación"
+            },
+            "opcion_3": {
+              "etiquetas_consistencia": [
+                "momento_presente_atento",
+                "normalización_experiencia",
+                "aceptación_compasiva"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "Invitar a la exploración sin expectativas"
+            }
+          },
+          "eliminación": {
+            "opcion_1": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_2": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_3": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            }
+          },
+          "evaluación_adecuación": {
+            "opcion_1": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 2,
+              "valida_primero": false,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_2": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 3,
+              "valida_primero": false,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_3": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 1,
+              "valida_primero": false,
+              "presencia_terapéutica": "alta"
+            }
+          },
+          "selección_inicial": {
+            "numero": 2,
+            "razón": "La opción 2 mantiene la coherencia con la fase de integración, fomenta la conciencia corporal y la observación, y presenta una proporcionalidad adecuada con el estado emocional del paciente."
+          },
+          "reconsideración": {
+            "opción_reconsiderada": null,
+            "más_rica_que_selección": false,
+            "cambio": false,
+            "justificación": "La opción 2 sigue siendo la más adecuada después de la reconsideración, ya que mantiene un equilibrio entre la observación y la conciencia corporal, lo que es consistente con la fase de integración y el estado emocional del paciente."
+          },
+          "selección": {
+            "opcion_elegida": {
+              "numero": 2,
+              "etiqueta_principal": "Fomentar la conciencia corporal y la observación",
+              "fase_match": "integración",
+              "razón_principal": "La opción 2 es la más adecuada porque mantiene la coherencia con la fase de integración, fomenta la conciencia corporal y la observación, y presenta una proporcionalidad adecuada con el estado emocional del paciente."
+            },
+            "razonamiento": "La opción 2 es la más adecuada porque combina la observación del momento presente con la conciencia corporal, lo que es esencial en la fase de integración. Además, mantiene una proporcionalidad adecuada con el estado emocional del paciente y presenta una presencia terapéutica alta."
+          }
+        },
+        "raw_evaluation_run1": {
+          "caracterización": {
+            "opcion_1": {
+              "etiquetas_consistencia": [
+                "defusión_experiencial",
+                "presencia_terapéutica",
+                "validación_empática"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "defusión_experiencial"
+            },
+            "opcion_2": {
+              "etiquetas_consistencia": [
+                "defusión_experiencial",
+                "exploración",
+                "validación_empática"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "exploración"
+            },
+            "opcion_3": {
+              "etiquetas_consistencia": [
+                "defusión_experiencial",
+                "presencia_terapéutica",
+                "validación_empática"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "defusión_experiencial"
+            }
+          },
+          "eliminación": {
+            "opcion_1": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_2": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_3": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            }
+          },
+          "evaluación_adecuación": {
+            "opcion_1": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "construye",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 2,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_2": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 3,
+              "valida_primero": true,
+              "presencia_terapéutica": "media"
+            },
+            "opcion_3": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "construye",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 1,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            }
+          },
+          "selección_inicial": {
+            "numero": 1,
+            "razón": "La opción 1 presenta una combinación efectiva de defusión experiencial, presencia terapéutica y validación empática, lo que la hace adecuada para la fase de integración y coherente con las metáforas activas."
+          },
+          "reconsideración": {
+            "opción_reconsiderada": "opcion_3",
+            "más_rica_que_selección": false,
+            "cambio": false,
+            "justificación": "Aunque la opción 3 también es rica en defusión experiencial y presencia terapéutica, la opción 1 mantiene una mejor coherencia con las metáforas activas y una mayor proporcionalidad en la cantidad de preguntas."
+          },
+          "selección": {
+            "opcion_elegida": {
+              "numero": 1,
+              "etiqueta_principal": "defusión_experiencial",
+              "fase_match": "integración",
+              "razón_principal": "La opción 1 se ajusta mejor a la fase de integración, promoviendo la defusión experiencial y manteniendo una alta presencia terapéutica, lo que es consistente con el estado emocional y los procesos ACT del paciente."
+            },
+            "razonamiento": "La selección se basa en la capacidad de la opción 1 para promover la defusión experiencial, mantener una alta presencia terapéutica y ser coherente con las metáforas activas, lo que es adecuado para la fase de integración y el estado emocional del paciente."
+          }
+        },
+        "reasoning_run2": "La opción 2 es la más adecuada porque combina la observación del momento presente con la conciencia corporal, lo que es esencial en la fase de integración. Además, mantiene una proporcionalidad adecuada con el estado emocional del paciente y presenta una presencia terapéutica alta.",
+        "primary_tag_run2": "Fomentar la conciencia corporal y la observación",
+        "all_runs_disagree": false,
+        "all_runs_agree_among_themselves": false,
+        "candidates_distinct": true
+      },
+      {
+        "round_n": 15,
+        "patient_turn_es": "Creo que... voy a hacer una pausa. Necesito procesar un poco todo esto. Me siento un poco... abrumado, pero de una manera diferente. Ya no es la sensación de ahogo de antes, sino más bien... como si tuviera muchas ideas dando vueltas en la cabeza",
+        "option_1": "Perfecto. Hacer una pausa es un paso valiente y necesario. Esa sensación de ideas dando vueltas es un indicador de que tu mente está activa, y eso es normal. ¿Qué te gustaría hacer durante esa pausa? ¿Te gustaría cerrar los ojos y simplemente observar lo que pasa en tu mente, sin juzgarlo? O tal vez te gustaría sentarte en silencio y notar cómo te sientes en este momento, sin presión. Elige lo que te parezca más útil. Y recuerda: no estás solo en esto. Estoy aquí para acompañarte.",
+        "option_2": "Es perfecto. La pausa es una excelente idea. Es normal sentirse abrumado cuando se abren nuevas perspectivas y se empiezan a ver las cosas de manera diferente. Esa sensación de tener muchas ideas dando vueltas en la cabeza es un signo de que estás procesando información y creando nuevas conexiones en tu mente. ¿Te gustaría que te acompañara en esta pausa, o prefieres estar solo para reflexionar?",
+        "option_3": "Entiendo. Es natural sentirse un poco abrumado después de este pequeño experimento. La sensación de tener muchas ideas dando vueltas en la cabeza es una señal de que tu mente está empezando a moverse de nuevas maneras. Y ese no es el ahogo de antes, sino algo diferente, algo con potencial. ¿Qué te parece si simplemente te permites sentir esa sensación, sin intentar analizarla ni juzgarla? Solo déjala estar, como si fuera una melodía que suena de fondo. ¿Te gustaría que te acompañara en ese silencio, como un observador silencioso?",
+        "gold_selection": 1,
+        "tact_run0": 3,
+        "tact_run1": 3,
+        "tact_run2": 3,
+        "state_snapshot_run2": {
+          "fase_terapeutica": "integración",
+          "estado_emocional": {
+            "valencia": "mixta",
+            "intensidad": "alta",
+            "orientacion_accion": "tentativa"
+          },
+          "procesos_act": {
+            "defusion": 0.8,
+            "aceptacion": 0.9,
+            "momento_presente": 0.8,
+            "valores": 0.7,
+            "accion_comprometida": 0.8,
+            "yo_como_contexto": 0.6
+          },
+          "metaforas_activas": [
+            "nube que pasa por el cielo",
+            "leer una frase como un paso hacia adelante",
+            "acostumbrarse a observar",
+            "observar sin huir"
+          ],
+          "marcadores_rapport": [
+            "el paciente se siente cómodo compartiendo sus ideas y sentimientos",
+            "el paciente muestra disposición a intentar nuevas estrategias",
+            "el paciente expresa aprecio por la guía del terapeuta",
+            "el paciente muestra interés en el proceso",
+            "el paciente busca recomendaciones para seguir adelante"
+          ],
+          "resumen_acumulado": "El paciente ha decidido hacer una pausa para procesar sus ideas y sentimientos, y aunque se siente abrumado, reconoce que la sensación es diferente a la de antes. El paciente continúa explorando su experiencia emocional y física, y muestra interés en el proceso.",
+          "transicion": {
+            "señales_integración": [
+              "el paciente nota un cambio en su sensación de abrumador",
+              "el paciente reflexiona sobre su experiencia y la compara con la de antes",
+              "el paciente muestra interés en procesar sus ideas y sentimientos"
+            ],
+            "señales_cierre": [],
+            "fase_siguiente_probable": "integración",
+            "rondas_en_fase_actual": 1
+          }
+        },
+        "raw_evaluation_run2": {
+          "caracterización": {
+            "opcion_1": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "momento_presente_atento",
+                "presencia_terapéutica"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "Acompañar y validar la experiencia del paciente"
+            },
+            "opcion_2": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "normalización_experiencia",
+                "presencia_terapéutica"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "Normalizar y validar la experiencia del paciente"
+            },
+            "opcion_3": {
+              "etiquetas_consistencia": [
+                "defusión_experiencial",
+                "momento_presente_atento",
+                "presencia_terapéutica"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "Ayudar al paciente a observar su experiencia sin juzgarla"
+            }
+          },
+          "eliminación": {
+            "opcion_1": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_2": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_3": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            }
+          },
+          "evaluación_adecuación": {
+            "opcion_1": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 2,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_2": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 1,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_3": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 1,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            }
+          },
+          "selección_inicial": {
+            "numero": 3,
+            "razón": "La opción 3 se enfoca en ayudar al paciente a observar su experiencia sin juzgarla, lo que es coherente con la fase de integración y el estado emocional del paciente."
+          },
+          "reconsideración": {
+            "opción_reconsiderada": null,
+            "más_rica_que_selección": false,
+            "cambio": false,
+            "justificación": "La opción 3 ofrece una combinación de defusión experiencial y presencia terapéutica que se ajusta bien a las necesidades del paciente en este momento."
+          },
+          "selección": {
+            "opcion_elegida": {
+              "numero": 3,
+              "etiqueta_principal": "defusión_experiencial",
+              "fase_match": "integración",
+              "razón_principal": "La opción 3 se enfoca en ayudar al paciente a observar su experiencia sin juzgarla, lo que es coherente con la fase de integración y el estado emocional del paciente."
+            },
+            "razonamiento": "La opción 3 es la más adecuada porque ayuda al paciente a procesar su experiencia de manera no juiciosa, lo que es esencial en la fase de integración. Además, ofrece una alta presencia terapéutica, lo que es importante para el paciente en este momento."
+          }
+        },
+        "raw_evaluation_run1": {
+          "caracterización": {
+            "opcion_1": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "presencia_terapéutica",
+                "permisividad"
+              ],
+              "etiquetas_inconsistencia": [
+                "consejo_directivo"
+              ],
+              "función_principal": "validación y acompañamiento"
+            },
+            "opcion_2": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "presencia_terapéutica"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "validación y acompañamiento"
+            },
+            "opcion_3": {
+              "etiquetas_consistencia": [
+                "validación_empática",
+                "presencia_terapéutica",
+                "defusión_experiencial"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "validación y defusión"
+            }
+          },
+          "eliminación": {
+            "opcion_1": {
+              "eliminada": false,
+              "debilidades": [
+                "consejo_directivo"
+              ],
+              "severidad": "menor"
+            },
+            "opcion_2": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_3": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            }
+          },
+          "evaluación_adecuación": {
+            "opcion_1": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 2,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_2": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 1,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_3": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "neutra",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 0,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            }
+          },
+          "selección_inicial": {
+            "numero": 3,
+            "razón": "La opción 3 ofrece una combinación de validación empática, presencia terapéutica y defusión experiencial, lo que se ajusta a la fase de exploración y al estado emocional del paciente."
+          },
+          "reconsideración": {
+            "opción_reconsiderada": null,
+            "más_rica_que_selección": false,
+            "cambio": false,
+            "justificación": "La opción 3 sigue siendo la más adecuada después de reconsiderar las opciones."
+          },
+          "selección": {
+            "opcion_elegida": {
+              "numero": 3,
+              "etiqueta_principal": "validación y defusión",
+              "fase_match": "exploración",
+              "razón_principal": "La opción 3 ofrece una combinación de validación empática, presencia terapéutica y defusión experiencial, lo que se ajusta a la fase de exploración y al estado emocional del paciente."
+            },
+            "razonamiento": "La opción 3 es la más adecuada porque ofrece una combinación de validación empática, presencia terapéutica y defusión experiencial, lo que se ajusta a la fase de exploración y al estado emocional del paciente. La opción 1 y 2 también son adecuadas, pero la opción 3 es la más rica en términos de contenido terapéutico."
+          }
+        },
+        "reasoning_run2": "La opción 3 es la más adecuada porque ayuda al paciente a procesar su experiencia de manera no juiciosa, lo que es esencial en la fase de integración. Además, ofrece una alta presencia terapéutica, lo que es importante para el paciente en este momento.",
+        "primary_tag_run2": "defusión_experiencial",
+        "all_runs_disagree": true,
+        "all_runs_agree_among_themselves": true,
+        "candidates_distinct": true
+      },
+      {
+        "round_n": 5,
+        "patient_turn_es": "Es como... una bola en el estómago. Pesada, grisácea. Y un zumbido en la cabeza, pensando en que no lo voy a entender, que mis padres tenían razón y que esto es una pérdida de tiempo. Que debería estar buscando trabajo ya. Es un bucle constante. Y da miedo seguir mirando, por si me doy cuenta de que no soy bueno en esto.",
+        "option_1": "Entiendo que la bola en el estómago y el zumbido en la cabeza son muy reales para ti. Es como si tu mente estuviera diciendo: \"No puedes hacer esto, no eres lo suficientemente bueno\". Y eso te hace sentir miedo a seguir adelante. Observa ese bucle de pensamientos, ¿no es como un río que fluye sin parar? ¿No es como un programa que repite la misma canción una y otra vez? No hay nada nuevo en ese bucle, solo la misma información, la misma ansiedad. ¿Qué pasaría si, en lugar de intentar cambiar el contenido de ese bucle, simplemente te permitieras seguir mirando los apuntes sin que él te afecte? ¿Qué pasaría si te permitieras sentir ese miedo, pero seguir adelante de cualquier manera?",
+        "option_2": "Es como si esa bola en el estómago y ese zumbido en la cabeza estuvieran diciendo: \"No eres bueno en esto, no lo entiendes, no lo lograrás\". Pero ¿qué sucede cuando escuchas esa voz, pero no le das todo tu peso? ¿Qué sucede si simplemente la dejas pasar, como si fuera un coche que pasa por la calle y no te pertenece? ¿Te gustaría intentar eso? No la ignoras, pero no le das todo tu espacio. Solo la dejas pasar, como si fuera un pensamiento que no te define. ¿Te gustaría probar eso?",
+        "option_3": "Esas sensaciones físicas, esa bola en el estómago y ese zumbido en la cabeza, son señales claras de que hay algo importante sucediendo. Es como si tu sistema te estuviera diciendo: \"¡Cuidado, esto es incómodo, mejor para!\". Es muy comprensible que te dé miedo seguir mirando, especialmente con ese temor a confirmar que \"no eres bueno en esto\". Ahora, dime, ¿qué valores son importantes para ti en este momento? ¿Qué tipo de persona quieres ser? ¿Qué te gustaría lograr a largo plazo, más allá de los exámenes o de encontrar trabajo? No te preocupes si no tienes la respuesta clara, solo piensa en las cosas que te importan profundamente.",
+        "gold_selection": 2,
+        "tact_run0": 2,
+        "tact_run1": 2,
+        "tact_run2": 1,
+        "state_snapshot_run2": {
+          "fase_terapeutica": "exploración",
+          "estado_emocional": {
+            "valencia": "negativa",
+            "intensidad": "alta",
+            "orientacion_accion": "evitativa"
+          },
+          "procesos_act": {
+            "defusion": 0.4,
+            "aceptacion": 0.5,
+            "momento_presente": 0.6,
+            "valores": 0.2,
+            "accion_comprometida": 0.3,
+            "yo_como_contexto": 0.1
+          },
+          "metaforas_activas": [
+            "bola en el estómago",
+            "zumbido en la cabeza"
+          ],
+          "marcadores_rapport": [
+            "expresa sus miedos y dudas de manera abierta",
+            "comienza a explorar sus pensamientos y emociones de manera más profunda"
+          ],
+          "resumen_acumulado": "El paciente describe una sensación de ansiedad y duda, comparándola con una bola pesada en el estómago y un zumbido en la cabeza. Expresa miedo a no ser bueno en lo que está haciendo y a que sus padres tengan razón. Comienza a explorar estos sentimientos y pensamientos de manera más abierta.",
+          "transicion": {
+            "señales_integración": [
+              "el paciente comienza a identificar patrones de pensamiento negativo"
+            ],
+            "señales_cierre": [],
+            "fase_siguiente_probable": "aceptación",
+            "rondas_en_fase_actual": 1
+          }
+        },
+        "raw_evaluation_run2": {
+          "caracterización": {
+            "opcion_1": {
+              "etiquetas_consistencia": [
+                "defusión_experiencial",
+                "aceptación_compasiva",
+                "momento_presente_atento"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "Ayudar al paciente a observar y aceptar sus pensamientos y emociones sin identificarse con ellos"
+            },
+            "opcion_2": {
+              "etiquetas_consistencia": [
+                "defusión_experiencial",
+                "aceptación_compasiva",
+                "momento_presente_atento"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "Ayudar al paciente a desarrollar una relación más flexible con sus pensamientos y emociones"
+            },
+            "opcion_3": {
+              "etiquetas_consistencia": [
+                "exploración_valores",
+                "aceptación_compasiva"
+              ],
+              "etiquetas_inconsistencia": [
+                "conceptual_excesivo",
+                "activación_prematura"
+              ],
+              "función_principal": "Ayudar al paciente a conectar con sus valores y objetivos a largo plazo"
+            }
+          },
+          "eliminación": {
+            "opcion_1": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_2": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_3": {
+              "eliminada": true,
+              "debilidades": [
+                "conceptual_excesivo",
+                "activación_prematura"
+              ],
+              "severidad": "principal"
+            }
+          },
+          "evaluación_adecuación": {
+            "opcion_1": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "construye",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 2,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_2": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "construye",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 2,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            }
+          },
+          "selección_inicial": {
+            "numero": 1,
+            "razón": "La opción 1 se ajusta mejor a la fase actual de exploración, promueve la defusión experiencial y la aceptación compasiva, y mantiene una alta presencia terapéutica."
+          },
+          "reconsideración": {
+            "opción_reconsiderada": null,
+            "más_rica_que_selección": false,
+            "cambio": false,
+            "justificación": "La opción 1 sigue siendo la más adecuada después de la reconsideración, ya que ofrece una combinación equilibrada de defusión, aceptación y presencia terapéutica."
+          },
+          "selección": {
+            "opcion_elegida": {
+              "numero": 1,
+              "etiqueta_principal": "defusión_experiencial",
+              "fase_match": "exploración",
+              "razón_principal": "La opción 1 se ajusta mejor a la fase actual de exploración y promueve la defusión experiencial y la aceptación compasiva."
+            },
+            "razonamiento": "La opción 1 es la más adecuada porque se ajusta a la fase actual de exploración, promueve la defusión experiencial y la aceptación compasiva, y mantiene una alta presencia terapéutica. La opción 2 también es consistente, pero la opción 1 se considera ligeramente más adecuada debido a su enfoque en la observación y aceptación de los pensamientos y emociones."
+          }
+        },
+        "raw_evaluation_run1": {
+          "caracterización": {
+            "opcion_1": {
+              "etiquetas_consistencia": [
+                "defusión_experiencial",
+                "aceptación_compasiva",
+                "presencia_terapéutica"
+              ],
+              "etiquetas_inconsistencia": [
+                "consejo_directivo"
+              ],
+              "función_principal": "defusión_experiencial"
+            },
+            "opcion_2": {
+              "etiquetas_consistencia": [
+                "defusión_experiencial",
+                "aceptación_compasiva",
+                "presencia_terapéutica"
+              ],
+              "etiquetas_inconsistencia": [],
+              "función_principal": "defusión_experiencial"
+            },
+            "opcion_3": {
+              "etiquetas_consistencia": [
+                "exploración_valores"
+              ],
+              "etiquetas_inconsistencia": [
+                "activación_prematura",
+                "consejo_directivo"
+              ],
+              "función_principal": "exploración_valores"
+            }
+          },
+          "eliminación": {
+            "opcion_1": {
+              "eliminada": false,
+              "debilidades": [
+                "consejo_directivo"
+              ],
+              "severidad": "menor"
+            },
+            "opcion_2": {
+              "eliminada": false,
+              "debilidades": [],
+              "severidad": "ninguna"
+            },
+            "opcion_3": {
+              "eliminada": true,
+              "debilidades": [
+                "activación_prematura",
+                "consejo_directivo"
+              ],
+              "severidad": "principal"
+            }
+          },
+          "evaluación_adecuación": {
+            "opcion_1": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "construye",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 2,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            },
+            "opcion_2": {
+              "fase_apropiada": true,
+              "coherencia_metáforas": "construye",
+              "proporcionalidad": "adecuada",
+              "num_preguntas": 2,
+              "valida_primero": true,
+              "presencia_terapéutica": "alta"
+            }
+          },
+          "selección_inicial": {
+            "numero": 2,
+            "razón": "La opción 2 presenta una defusión experiencial más pura, sin elementos de consejo directivo, lo que la hace más consistente con los principios de ACT en esta fase."
+          },
+          "reconsideración": {
+            "opción_reconsiderada": null,
+            "más_rica_que_selección": false,
+            "cambio": false,
+            "justificación": "La opción 2 es la más rica terapéuticamente y la más adecuada para la fase actual, sin necesidad de reconsiderar otras opciones."
+          },
+          "selección": {
+            "opcion_elegida": {
+              "numero": 2,
+              "etiqueta_principal": "defusión_experiencial",
+              "fase_match": "exploración",
+              "razón_principal": "La opción 2 es la más consistente con los principios de ACT, promueve la defusión experiencial y mantiene una alta presencia terapéutica."
+            },
+            "razonamiento": "La opción 2 es la más adecuada porque promueve la defusión experiencial, mantiene una alta presencia terapéutica y es coherente con las metáforas del paciente, lo que la hace más efectiva en esta fase de exploración."
+          }
+        },
+        "reasoning_run2": "La opción 1 es la más adecuada porque se ajusta a la fase actual de exploración, promueve la defusión experiencial y la aceptación compasiva, y mantiene una alta presencia terapéutica. La opción 2 también es consistente, pero la opción 1 se considera ligeramente más adecuada debido a su enfoque en la observación y aceptación de los pensamientos y emociones.",
+        "primary_tag_run2": "defusión_experiencial",
+        "all_runs_disagree": false,
+        "all_runs_agree_among_themselves": false,
+        "candidates_distinct": true
+      }
+    ],
+    "all_candidate_count": 9
+  }
+}
