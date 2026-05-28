@@ -77,9 +77,10 @@ INPUT CORPUS (4.17M Reddit sentences)
          │  ~5K candidates per symptom
     ┌────▼─────────────────────────────────────────────────────┐
     │  STAGE 2: LLM SCORING CASCADE                            │
-    │  Primary LLM (GPT-4o-mini) scores ALL candidates         │
-    │  → 5 escalation rules → optional GPT-4o re-scoring       │
-    │  → confidence-weighted silver labels (0–3)               │
+    │  Primary LLM scores ALL candidates                       │
+    │  (AS SUBMITTED: Llama-3.1-8B-4bit via HuggingFace;       │
+    │   designed for GPT-4o-mini + GPT-4o escalation — see §5) │
+    │  → 5 escalation rules → confidence-weighted labels (0–3) │
     └────┬─────────────────────────────────────────────────────┘
          │  ~90K silver label triples
     ┌────▼─────────────────────────────────────────────────────┐
@@ -146,13 +147,13 @@ CONFIDENCE: [1|2|3|4|5]
 REASONING: [1–2 sentences]
 ```
 
-**LLM Configuration:**
+**LLM Configuration — as submitted.** All submitted Task 3 runs were generated on Google Colab via `notebooks/task3_colab.ipynb`, which patches the LLM client (`make_hf_client`) to use a single open model for every scoring call:
 
 | Role | Model | Provider | Temperature | Max Tokens |
 |------|-------|----------|-------------|------------|
-| **Primary scorer** | GPT-4o-mini | OpenAI | 0.1 | 512 |
-| **Escalation scorer** | GPT-4o | OpenAI | 0.1 | 512 |
-| **Local alternative** | Llama-3.1-70B | Ollama | 0.1 | 512 |
+| **Primary + escalation scorer (as submitted)** | **`meta-llama/Llama-3.1-8B-Instruct` (4-bit)** | **HuggingFace** | 0.1 | 512 |
+
+> **As-submitted vs as-designed.** `config/pipeline.yaml` and earlier drafts of this document specify **GPT-4o-mini (OpenAI)** as the primary scorer and **GPT-4o (OpenAI)** as the escalation scorer, with **Llama-3.1-70B (Ollama)** as a local alternative. **None of these produced the submission.** The Colab notebook overrode the client to `meta-llama/Llama-3.1-8B-Instruct` quantized to 4-bit, served via HuggingFace, and generated all five runs (`generate_run`) with it. Consequently the official LLM-cascade results (AP 0.158 / 0.134, P@10 0.344 / 0.272) were achieved by a small 4-bit open model — not GPT-4o-mini. When reading §8 and the figures, interpret every "GPT-4o-mini" reference as the *designed* configuration; the *as-run* scorer was Llama-3.1-8B-4bit. The 5-rule escalation cascade collapses to the same model under this override (no stronger re-scoring model was available on Colab).
 
 Rate limit: 0.1s delay between calls, max 5 retries with exponential backoff, 120s read timeout.
 
@@ -437,7 +438,7 @@ Five complementary runs are submitted, each using a different combination of sys
 
 | Run | System Name | Method | Primary Signal |
 |-----|-----------|--------|----------------|
-| **R1** | `INSALyon_LLM_cascade` | LLM scoring only (PRIMARY) | GPT-4o-mini structured assessment |
+| **R1** | `INSALyon_LLM_cascade` | LLM scoring only (PRIMARY) | Llama-3.1-8B-4bit (HuggingFace) structured assessment — *as submitted; designed for GPT-4o-mini, see §5* |
 | **R2** | `INSALyon_HiPerT_full` | Cross-encoder v2 reranker | 3-backbone × 5-fold ensemble |
 | **R3** | `INSALyon_Ensemble` | RRF fusion of R1 + R2 | Reciprocal Rank Fusion (k=60) |
 | **R4** | `INSALyon_DepTransfer` | Depression-only transfer | Stage A encoder + BDI→ASRS mapping |
@@ -615,8 +616,9 @@ For comparison, BiEnc achieves a 39% gap on symptom 1 (0.607 vs. 0.437) and LLM 
 | **v2 CORAL** | Cross-encoder, CORAL ordinal regression, leave-symptom-out 5-fold CV | Trained but underperformed LLM |
 | **v2 ListMLE** | Cross-encoder, ListMLE listwise ranking, sublist sampling | Trained as alternative to CORAL |
 | **Stage A only (DepTransfer)** | Depression pre-training (BDI-Sen + eRisk 2025), BDI→ASRS mapping, no ADHD fine-tuning | 65.6% P@10 |
-| **LLM cascade (GPT-4o-mini)** | Primary scorer = GPT-4o-mini, escalation = GPT-4o, max 25% escalation | **94.4% P@10** (primary submission) |
-| **LLM cascade (Llama 3.1:70b)** | Primary scorer = Llama 3.1 70B (Ollama), same prompt stack | Available as local alternative |
+| **LLM cascade (Llama-3.1-8B-4bit, HuggingFace) — AS SUBMITTED** | Single open model for primary + escalation (Colab), same prompt stack | Official P@10 0.344 (maj) / 0.272 (unan); the 94.4% figure below is an internal silver-label self-agreement metric, *not* the official qrels P@10 |
+| **LLM cascade (GPT-4o-mini)** | Primary scorer = GPT-4o-mini, escalation = GPT-4o, max 25% escalation | **94.4% P@10** internal silver eval — *designed config, NOT the submission* |
+| **LLM cascade (Llama 3.1:70b)** | Primary scorer = Llama 3.1 70B (Ollama), same prompt stack | Local alternative, not used |
 | **BiEnc baseline** | all-mpnet-base-v2 cosine similarity + first-person filter + keyword boost | 89.4% P@10 (strong baseline) |
 | **Escalation rate = 0%** | Disabled GPT escalation (single-LLM scoring) | Current production config |
 | **Escalation rate = 20–25%** | Full 5-rule escalation with GPT-4o re-scoring | Original designed config |

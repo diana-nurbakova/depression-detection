@@ -235,15 +235,19 @@ All three runs use the full pipeline: specialized assessors + linguistic feature
 
 ## 6. LLM Configuration
 
+Configuration **as submitted** — all three official runs were generated on Google Colab via `notebooks/task1.ipynb`, loading `config/task1_colab_run{1,2,3}.yaml`:
+
 | Role | Model | Provider | Temperature | Notes |
 |------|-------|----------|-------------|-------|
-| Persona | Llama-3-8B-Instruct + LoRA | HuggingFace/PEFT (local) | 0.6 | Per-persona adapter, float16 |
+| Persona | Meta-Llama-3-8B-Instruct + LoRA | HuggingFace/PEFT (local on Colab) | 0.6 | Per-persona adapter, float16 |
 | Interviewer | GPT-5-nano | OpenAI API | 0.7 | Reasoning model, no streaming |
-| Assessor (×4) | Llama-3.3-70B | Ollama (local) | 0.1 | Parallel, streaming |
-| Orchestrator | Llama-3.3-70B | Ollama (local) | 0.3 | Exploration temperature |
-| Justificator | Llama-3.3-70B | Ollama (local) | 0.2 | Conservative temperature |
+| Assessor (×4) | **Llama-3.3-70B-Instruct-Turbo** | **Together AI** | 0.1 | Parallel, streaming |
+| Orchestrator | **Llama-3.3-70B-Instruct-Turbo** | **Together AI** | 0.3 | Exploration temperature |
+| Justificator | **Llama-3.3-70B-Instruct-Turbo** | **Together AI** | 0.2 | Conservative temperature |
 
-Fallback: Assessors can fall back to Qwen-3-32B if Llama-3.3-70B is unavailable. Additional fallback providers: Together AI (Llama-3.3-70B-Instruct-Turbo), HuggingFace Inference API.
+> **As-submitted vs as-designed.** The assessor / orchestrator / justificator ran on **Together AI** serving `meta-llama/Llama-3.3-70B-Instruct-Turbo` (Together's optimized/quantized serving variant), **not** local Ollama. The local-Ollama setup (`config/task1_run{1,2,3}.yaml`, `provider: ollama`, `model: llama3.3:70b`) was the development/offline configuration and was **not** used for the submission. An earlier draft of this table listed Ollama as primary with Together AI as a "fallback" — that is reversed for the actual runs. The persona base model and the GPT-5-nano interviewer are the same in both setups.
+
+Fallback (within either setup): assessors can fall back to Qwen-3-32B if the 70B model is unavailable; HuggingFace Inference API is an additional configured provider.
 
 ---
 

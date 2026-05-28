@@ -252,6 +252,28 @@ def _fuzzy_categorical(raw: str, field_name: str, choices: list[str],
     return {field_name: canon}
 
 
+def _fuzzy_assessor(raw: str, instrument: str, notes: list[str]) -> dict | None:
+    """Salvage a full assessor score vector from prose/markdown or partial JSON.
+
+    Reuses the task1 extractors that the original ``assess_instrument`` relied
+    on: ``_extract_bare_scores`` (markdown/prose ``Instrument: [n, n, ...]`` or a
+    trailing bracket array) and ``_extract_scores_from_steps`` (CoT step-2 items).
+    Returns ``{instrument: [scores]}`` only if the full vector is recovered.
+    """
+    from ..task1 import assessors as _t1
+
+    n = INSTRUMENTS[instrument]["n_items"]
+    scores = _t1._extract_bare_scores(raw, instrument)
+    if scores is None:
+        d = _permissive(raw)
+        if d is not None:
+            scores = assessor_scores(d, instrument) or _t1._extract_scores_from_steps(d, instrument)
+    if scores and len(scores) == n:
+        notes.append(f"assessor {instrument}: recovered {n} scores from prose/markdown")
+        return {instrument: scores}
+    return None
+
+
 def _fuzzy_view(raw: str, notes: list[str]) -> dict | None:
     """Salvage item scores from a structurally broken view response."""
     out: dict = {}
@@ -296,7 +318,9 @@ def recover(raw: str, schema: str | None = None) -> RecoveryResult:
                 return RecoveryResult(d, True, stage, notes=notes)
 
     # Stage 3 — fuzzy field extraction.
-    if schema == "view":
+    if schema and schema.startswith("assessor:"):
+        d = _fuzzy_assessor(raw, schema.split(":", 1)[1], notes)
+    elif schema == "view":
         d = _fuzzy_view(raw, notes)
     elif schema == "tom_tier_patient":
         d = _fuzzy_categorical(raw, "argmax", TOM_TIER_LABELS_ES, None, notes)

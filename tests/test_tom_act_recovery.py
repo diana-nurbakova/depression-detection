@@ -85,6 +85,22 @@ def test_assessor_step2_items_ok():
     assert recovery.assessor_scores(r.parsed, "GAD-7") == [1] * 7
 
 
+def test_assessor_recovers_markdown_bare_array():
+    # Real Llama failure mode: markdown CoT ending in a bare scores array.
+    raw = ("## Step 0: Triflex scan ...\n- Item 10: 4\n\n"
+           "## CompACT-10\n\n[3, 3, 4, 3, 4, 3, 4, 3, 4, 4]\n\nThis assessment ...")
+    r = recovery.recover(raw, "assessor:CompACT-10")
+    assert r.success and r.stage == "fuzzy"
+    assert recovery.assessor_scores(r.parsed, "CompACT-10") == [3, 3, 4, 3, 4, 3, 4, 3, 4, 4]
+
+
+def test_assessor_recovers_prose_labeled_array():
+    raw = "Reasoning about anxiety ...\nGAD-7: [2, 3, 1, 1, 0, 1, 2]\nEnd."
+    r = recovery.recover(raw, "assessor:GAD-7")
+    assert r.success
+    assert r.parsed["GAD-7"] == [2, 3, 1, 1, 0, 1, 2]
+
+
 def test_empty_response():
     r = recovery.recover("", "tom_stance")
     assert not r.success and r.error == "empty_response"

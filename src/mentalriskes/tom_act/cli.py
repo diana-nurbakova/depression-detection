@@ -20,7 +20,7 @@ import yaml
 
 from ..config import LLMConfig
 from ..llm_client import create_llm_client
-from . import aggregator, gemma_signals, llama_regen, wasserstein
+from . import aggregator, gemma_signals, llama_regen, reparse as reparse_mod, wasserstein
 from .analysis import case_studies, micro_validation, rq1, rq2, rq3, rq4, rq5
 from .data import load_sessions
 from .dispatcher import Dispatcher
@@ -166,6 +166,16 @@ def wasserstein_cmd(ctx):
         xpersp.to_parquet(root / "outputs" / "cross_perspective" / "gaps.parquet", index=False)
     logger.info("Wasserstein: %d temporal rows, %d cross-perspective rows",
                 len(temporal), len(xpersp))
+
+
+@cli.command("reparse")
+@click.pass_context
+def reparse_cmd(ctx):
+    """Re-parse previously-failed JSONL lines with updated recovery logic (no LLM calls)."""
+    summary = reparse_mod.reparse(ctx.obj["root"])
+    total = sum(summary.values())
+    logger.info("reparse complete: recovered %d call(s) total: %s",
+                total, {k: v for k, v in summary.items() if v})
 
 
 @cli.command("aggregate")
