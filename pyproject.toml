@@ -25,6 +25,12 @@ dependencies = [
     "onnxruntime>=1.25.0",
     "optimum>=2.1.0",
     "openpyxl>=3.1.5",
+    "statsmodels>=0.14",
+    "rapidfuzz>=3.0",
+    "json-repair>=0.25",
+    "pandas>=2.0",
+    "pyarrow>=14.0",
+    "matplotlib>=3.7",
 ]
 
 [project.optional-dependencies]
@@ -38,6 +44,7 @@ hipert = "hipert.cli:cli"
 erisk-task2 = "erisk_task2.cli:cli"
 mentalriskes = "mentalriskes.task1.cli:cli"
 mentalriskes-task2 = "mentalriskes.task2.cli:cli"
+mentalriskes-tom-act = "mentalriskes.tom_act.cli:cli"
 mentalriskes-dataprep = "mentalriskes.data_prep.cli:cli"
 mentalriskes-server = "mentalriskes.combined_server:main"
 

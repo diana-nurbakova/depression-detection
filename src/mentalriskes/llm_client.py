@@ -109,7 +109,7 @@ class LLMClient:
         use_native_ollama = self.provider == "ollama" and "/v1" not in self.base_url
         # Stream for: Ollama (native + /v1), Together, DeepInfra (avoids long non-streaming timeouts).
         # Non-streaming for: generic openai-compatible endpoints (simpler, safer).
-        use_streaming = use_native_ollama or self.provider in ("ollama", "together", "deepinfra")
+        use_streaming = use_native_ollama or self.provider in ("ollama", "together", "deepinfra", "openrouter")
 
         if use_native_ollama:
             url = f"{self.base_url.rstrip('/')}/api/chat"
@@ -492,6 +492,7 @@ class HFInferenceClient:
 
 _TOGETHER_DEFAULT_BASE_URL = "https://api.together.xyz/v1"
 _DEEPINFRA_DEFAULT_BASE_URL = "https://api.deepinfra.com/v1/openai"
+_OPENROUTER_DEFAULT_BASE_URL = "https://openrouter.ai/api/v1"
 
 
 def create_llm_client(
@@ -558,6 +559,25 @@ def create_llm_client(
             rate_limit_delay=0.3,   # DeepInfra has generous throughput; small delay
         )
         logger.info("Using DeepInfra: %s @ %s", client.model, base_url)
+        return client
+
+    if cfg.provider == "openrouter":
+        import os
+        base_url = cfg.base_url or os.environ.get("OPENROUTER_BASE_URL", _OPENROUTER_DEFAULT_BASE_URL)
+        api_key = cfg.api_key or os.environ.get("OPENROUTER_API_KEY", "")
+        if not api_key:
+            logger.warning("OpenRouter provider selected but OPENROUTER_API_KEY is not set")
+        client = LLMClient(
+            provider="openrouter",
+            base_url=base_url,
+            api_key=api_key,
+            model=model_override or cfg.model,
+            temperature=cfg.temperature,
+            max_tokens=cfg.max_tokens,
+            timeout=cfg.timeout,
+            rate_limit_delay=0.5,   # OpenRouter aggregates providers; modest delay avoids RPM caps
+        )
+        logger.info("Using OpenRouter: %s @ %s", client.model, base_url)
         return client
 
     logger.info("Using %s client: %s", cfg.provider, model_override or cfg.model)

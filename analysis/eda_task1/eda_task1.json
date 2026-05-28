@@ -1,0 +1,1747 @@
+{
+  "dataset": "eRisk 2026 Task 1 — official test golden data (20 LLM personas)",
+  "source_files": {
+    "patients": "data/eRisk-2026/eRisk26-datasets-20260519T175618Z-3-001/eRisk26-datasets/task1-llms/golden-data/patients_data.jsonl",
+    "bdi_items": "data/eRisk-2026/eRisk26-datasets-20260519T175618Z-3-001/eRisk26-datasets/task1-llms/golden-data/bdi_symptoms_list.json",
+    "symptom_mappings": "data/eRisk-2026/eRisk26-datasets-20260519T175618Z-3-001/eRisk26-datasets/task1-llms/golden-data/symptom_mappings.json"
+  },
+  "bands_definition": {
+    "minimal": [
+      0,
+      9
+    ],
+    "mild": [
+      10,
+      18
+    ],
+    "moderate": [
+      19,
+      29
+    ],
+    "severe": [
+      30,
+      63
+    ]
+  },
+  "bdi_items": [
+    "Sadness",
+    "Pessimism",
+    "Past failure",
+    "Loss of pleasure",
+    "Guilty feelings",
+    "Punishment feelings",
+    "Self-dislike",
+    "Self-criticalness",
+    "Suicidal thoughts or wishes",
+    "Crying",
+    "Agitation",
+    "Loss of interest",
+    "Indecisiveness",
+    "Worthlessness",
+    "Loss of energy",
+    "Changes in sleeping pattern",
+    "Irritability",
+    "Changes in appetite",
+    "Concentration difficulty",
+    "Tiredness or fatigue",
+    "Loss of interest in sex"
+  ],
+  "bdi_total_stats": {
+    "count": 20,
+    "min": 5.0,
+    "max": 40.0,
+    "mean": 20.45,
+    "median": 19.0,
+    "std": 11.7897,
+    "sorted_personas": [
+      {
+        "patient_id": 18,
+        "patient_name": "Noah",
+        "bdi_score": 5
+      },
+      {
+        "patient_id": 17,
+        "patient_name": "Maya",
+        "bdi_score": 6
+      },
+      {
+        "patient_id": 20,
+        "patient_name": "Sofia",
+        "bdi_score": 6
+      },
+      {
+        "patient_id": 19,
+        "patient_name": "Priya",
+        "bdi_score": 7
+      },
+      {
+        "patient_id": 3,
+        "patient_name": "Amara",
+        "bdi_score": 8
+      },
+      {
+        "patient_id": 9,
+        "patient_name": "Ethan",
+        "bdi_score": 12
+      },
+      {
+        "patient_id": 10,
+        "patient_name": "Gabriel",
+        "bdi_score": 13
+      },
+      {
+        "patient_id": 2,
+        "patient_name": "Alex",
+        "bdi_score": 15
+      },
+      {
+        "patient_id": 12,
+        "patient_name": "Javier",
+        "bdi_score": 15
+      },
+      {
+        "patient_id": 4,
+        "patient_name": "Amir",
+        "bdi_score": 16
+      },
+      {
+        "patient_id": 11,
+        "patient_name": "James",
+        "bdi_score": 22
+      },
+      {
+        "patient_id": 13,
+        "patient_name": "Laura",
+        "bdi_score": 23
+      },
+      {
+        "patient_id": 8,
+        "patient_name": "Emma",
+        "bdi_score": 24
+      },
+      {
+        "patient_id": 1,
+        "patient_name": "Aisha",
+        "bdi_score": 26
+      },
+      {
+        "patient_id": 14,
+        "patient_name": "Linda",
+        "bdi_score": 28
+      },
+      {
+        "patient_id": 6,
+        "patient_name": "Daniel",
+        "bdi_score": 33
+      },
+      {
+        "patient_id": 7,
+        "patient_name": "Elena",
+        "bdi_score": 35
+      },
+      {
+        "patient_id": 5,
+        "patient_name": "Carlos",
+        "bdi_score": 37
+      },
+      {
+        "patient_id": 15,
+        "patient_name": "Marco",
+        "bdi_score": 38
+      },
+      {
+        "patient_id": 16,
+        "patient_name": "Maria",
+        "bdi_score": 40
+      }
+    ]
+  },
+  "band_distribution": {
+    "counts": {
+      "minimal": 5,
+      "mild": 5,
+      "moderate": 5,
+      "severe": 5
+    },
+    "members": {
+      "minimal": [
+        {
+          "patient_id": 3,
+          "patient_name": "Amara",
+          "bdi_score": 8
+        },
+        {
+          "patient_id": 17,
+          "patient_name": "Maya",
+          "bdi_score": 6
+        },
+        {
+          "patient_id": 18,
+          "patient_name": "Noah",
+          "bdi_score": 5
+        },
+        {
+          "patient_id": 19,
+          "patient_name": "Priya",
+          "bdi_score": 7
+        },
+        {
+          "patient_id": 20,
+          "patient_name": "Sofia",
+          "bdi_score": 6
+        }
+      ],
+      "mild": [
+        {
+          "patient_id": 2,
+          "patient_name": "Alex",
+          "bdi_score": 15
+        },
+        {
+          "patient_id": 4,
+          "patient_name": "Amir",
+          "bdi_score": 16
+        },
+        {
+          "patient_id": 9,
+          "patient_name": "Ethan",
+          "bdi_score": 12
+        },
+        {
+          "patient_id": 10,
+          "patient_name": "Gabriel",
+          "bdi_score": 13
+        },
+        {
+          "patient_id": 12,
+          "patient_name": "Javier",
+          "bdi_score": 15
+        }
+      ],
+      "moderate": [
+        {
+          "patient_id": 1,
+          "patient_name": "Aisha",
+          "bdi_score": 26
+        },
+        {
+          "patient_id": 8,
+          "patient_name": "Emma",
+          "bdi_score": 24
+        },
+        {
+          "patient_id": 11,
+          "patient_name": "James",
+          "bdi_score": 22
+        },
+        {
+          "patient_id": 13,
+          "patient_name": "Laura",
+          "bdi_score": 23
+        },
+        {
+          "patient_id": 14,
+          "patient_name": "Linda",
+          "bdi_score": 28
+        }
+      ],
+      "severe": [
+        {
+          "patient_id": 5,
+          "patient_name": "Carlos",
+          "bdi_score": 37
+        },
+        {
+          "patient_id": 6,
+          "patient_name": "Daniel",
+          "bdi_score": 33
+        },
+        {
+          "patient_id": 7,
+          "patient_name": "Elena",
+          "bdi_score": 35
+        },
+        {
+          "patient_id": 15,
+          "patient_name": "Marco",
+          "bdi_score": 38
+        },
+        {
+          "patient_id": 16,
+          "patient_name": "Maria",
+          "bdi_score": 40
+        }
+      ]
+    },
+    "n_personas": 20,
+    "note": "Class balance is uneven: the test set is dominated by minimal/mild/moderate personas with a small severe class. This imbalance — especially the small severe band — is a primary source of difficulty for band-classification metrics (DCHR)."
+  },
+  "key_symptom_prevalence": {
+    "n_symptom_slots": 80,
+    "frequency_all_items": {
+      "Sadness": 3,
+      "Pessimism": 6,
+      "Past failure": 3,
+      "Loss of pleasure": 3,
+      "Guilty feelings": 2,
+      "Punishment feelings": 0,
+      "Self-dislike": 1,
+      "Self-criticalness": 7,
+      "Suicidal thoughts or wishes": 0,
+      "Crying": 3,
+      "Agitation": 4,
+      "Loss of interest": 8,
+      "Indecisiveness": 5,
+      "Worthlessness": 4,
+      "Loss of energy": 4,
+      "Changes in sleeping pattern": 5,
+      "Irritability": 6,
+      "Changes in appetite": 5,
+      "Concentration difficulty": 4,
+      "Tiredness or fatigue": 7,
+      "Loss of interest in sex": 0
+    },
+    "persona_count_all_items": {
+      "Sadness": 3,
+      "Pessimism": 6,
+      "Past failure": 3,
+      "Loss of pleasure": 3,
+      "Guilty feelings": 2,
+      "Punishment feelings": 0,
+      "Self-dislike": 1,
+      "Self-criticalness": 7,
+      "Suicidal thoughts or wishes": 0,
+      "Crying": 3,
+      "Agitation": 4,
+      "Loss of interest": 7,
+      "Indecisiveness": 5,
+      "Worthlessness": 4,
+      "Loss of energy": 4,
+      "Changes in sleeping pattern": 5,
+      "Irritability": 6,
+      "Changes in appetite": 5,
+      "Concentration difficulty": 4,
+      "Tiredness or fatigue": 7,
+      "Loss of interest in sex": 0
+    },
+    "frequency_sorted": [
+      {
+        "symptom": "Loss of interest",
+        "count": 8
+      },
+      {
+        "symptom": "Self-criticalness",
+        "count": 7
+      },
+      {
+        "symptom": "Tiredness or fatigue",
+        "count": 7
+      },
+      {
+        "symptom": "Irritability",
+        "count": 6
+      },
+      {
+        "symptom": "Pessimism",
+        "count": 6
+      },
+      {
+        "symptom": "Changes in appetite",
+        "count": 5
+      },
+      {
+        "symptom": "Changes in sleeping pattern",
+        "count": 5
+      },
+      {
+        "symptom": "Indecisiveness",
+        "count": 5
+      },
+      {
+        "symptom": "Agitation",
+        "count": 4
+      },
+      {
+        "symptom": "Concentration difficulty",
+        "count": 4
+      },
+      {
+        "symptom": "Loss of energy",
+        "count": 4
+      },
+      {
+        "symptom": "Worthlessness",
+        "count": 4
+      },
+      {
+        "symptom": "Crying",
+        "count": 3
+      },
+      {
+        "symptom": "Loss of pleasure",
+        "count": 3
+      },
+      {
+        "symptom": "Past failure",
+        "count": 3
+      },
+      {
+        "symptom": "Sadness",
+        "count": 3
+      },
+      {
+        "symptom": "Guilty feelings",
+        "count": 2
+      },
+      {
+        "symptom": "Self-dislike",
+        "count": 1
+      },
+      {
+        "symptom": "Loss of interest in sex",
+        "count": 0
+      },
+      {
+        "symptom": "Punishment feelings",
+        "count": 0
+      },
+      {
+        "symptom": "Suicidal thoughts or wishes",
+        "count": 0
+      }
+    ],
+    "never_appear": [
+      "Punishment feelings",
+      "Suicidal thoughts or wishes",
+      "Loss of interest in sex"
+    ],
+    "most_common_items": [
+      "Loss of interest"
+    ],
+    "most_common_count": 8,
+    "n_distinct_symptoms_used": 18
+  },
+  "symptom_by_band": {
+    "Sadness": {
+      "minimal": 0,
+      "mild": 0,
+      "moderate": 2,
+      "severe": 1
+    },
+    "Pessimism": {
+      "minimal": 2,
+      "mild": 1,
+      "moderate": 1,
+      "severe": 2
+    },
+    "Past failure": {
+      "minimal": 0,
+      "mild": 1,
+      "moderate": 1,
+      "severe": 1
+    },
+    "Loss of pleasure": {
+      "minimal": 1,
+      "mild": 2,
+      "moderate": 0,
+      "severe": 0
+    },
+    "Guilty feelings": {
+      "minimal": 0,
+      "mild": 1,
+      "moderate": 1,
+      "severe": 0
+    },
+    "Self-dislike": {
+      "minimal": 0,
+      "mild": 1,
+      "moderate": 0,
+      "severe": 0
+    },
+    "Self-criticalness": {
+      "minimal": 4,
+      "mild": 1,
+      "moderate": 0,
+      "severe": 2
+    },
+    "Crying": {
+      "minimal": 0,
+      "mild": 0,
+      "moderate": 1,
+      "severe": 2
+    },
+    "Agitation": {
+      "minimal": 2,
+      "mild": 1,
+      "moderate": 0,
+      "severe": 1
+    },
+    "Loss of interest": {
+      "minimal": 2,
+      "mild": 1,
+      "moderate": 1,
+      "severe": 4
+    },
+    "Indecisiveness": {
+      "minimal": 0,
+      "mild": 2,
+      "moderate": 2,
+      "severe": 1
+    },
+    "Worthlessness": {
+      "minimal": 0,
+      "mild": 0,
+      "moderate": 3,
+      "severe": 1
+    },
+    "Loss of energy": {
+      "minimal": 0,
+      "mild": 1,
+      "moderate": 3,
+      "severe": 0
+    },
+    "Changes in sleeping pattern": {
+      "minimal": 2,
+      "mild": 3,
+      "moderate": 0,
+      "severe": 0
+    },
+    "Irritability": {
+      "minimal": 3,
+      "mild": 2,
+      "moderate": 0,
+      "severe": 1
+    },
+    "Changes in appetite": {
+      "minimal": 1,
+      "mild": 2,
+      "moderate": 1,
+      "severe": 1
+    },
+    "Concentration difficulty": {
+      "minimal": 0,
+      "mild": 1,
+      "moderate": 2,
+      "severe": 1
+    },
+    "Tiredness or fatigue": {
+      "minimal": 3,
+      "mild": 0,
+      "moderate": 2,
+      "severe": 2
+    }
+  },
+  "mean_bdi_per_symptom": {
+    "Sadness": {
+      "n_personas": 3,
+      "mean_bdi": 29.0,
+      "min_bdi": 23,
+      "max_bdi": 40
+    },
+    "Pessimism": {
+      "n_personas": 6,
+      "mean_bdi": 20.5,
+      "min_bdi": 6,
+      "max_bdi": 35
+    },
+    "Past failure": {
+      "n_personas": 3,
+      "mean_bdi": 25.0,
+      "min_bdi": 13,
+      "max_bdi": 38
+    },
+    "Loss of pleasure": {
+      "n_personas": 3,
+      "mean_bdi": 11.6667,
+      "min_bdi": 7,
+      "max_bdi": 16
+    },
+    "Guilty feelings": {
+      "n_personas": 2,
+      "mean_bdi": 21.5,
+      "min_bdi": 15,
+      "max_bdi": 28
+    },
+    "Self-dislike": {
+      "n_personas": 1,
+      "mean_bdi": 13.0,
+      "min_bdi": 13,
+      "max_bdi": 13
+    },
+    "Self-criticalness": {
+      "n_personas": 7,
+      "mean_bdi": 16.4286,
+      "min_bdi": 5,
+      "max_bdi": 40
+    },
+    "Crying": {
+      "n_personas": 3,
+      "mean_bdi": 32.6667,
+      "min_bdi": 26,
+      "max_bdi": 37
+    },
+    "Agitation": {
+      "n_personas": 4,
+      "mean_bdi": 16.75,
+      "min_bdi": 6,
+      "max_bdi": 38
+    },
+    "Loss of interest": {
+      "n_personas": 7,
+      "mean_bdi": 22.2857,
+      "min_bdi": 5,
+      "max_bdi": 40
+    },
+    "Indecisiveness": {
+      "n_personas": 5,
+      "mean_bdi": 22.8,
+      "min_bdi": 12,
+      "max_bdi": 37
+    },
+    "Worthlessness": {
+      "n_personas": 4,
+      "mean_bdi": 26.5,
+      "min_bdi": 22,
+      "max_bdi": 35
+    },
+    "Loss of energy": {
+      "n_personas": 4,
+      "mean_bdi": 21.75,
+      "min_bdi": 15,
+      "max_bdi": 26
+    },
+    "Changes in sleeping pattern": {
+      "n_personas": 5,
+      "mean_bdi": 11.0,
+      "min_bdi": 5,
+      "max_bdi": 16
+    },
+    "Irritability": {
+      "n_personas": 6,
+      "mean_bdi": 14.0,
+      "min_bdi": 5,
+      "max_bdi": 37
+    },
+    "Changes in appetite": {
+      "n_personas": 5,
+      "mean_bdi": 19.8,
+      "min_bdi": 8,
+      "max_bdi": 37
+    },
+    "Concentration difficulty": {
+      "n_personas": 4,
+      "mean_bdi": 25.0,
+      "min_bdi": 15,
+      "max_bdi": 38
+    },
+    "Tiredness or fatigue": {
+      "n_personas": 7,
+      "mean_bdi": 20.8571,
+      "min_bdi": 6,
+      "max_bdi": 40
+    }
+  },
+  "mean_bdi_per_symptom_sorted": [
+    {
+      "symptom": "Crying",
+      "n_personas": 3,
+      "mean_bdi": 32.6667,
+      "min_bdi": 26,
+      "max_bdi": 37
+    },
+    {
+      "symptom": "Sadness",
+      "n_personas": 3,
+      "mean_bdi": 29.0,
+      "min_bdi": 23,
+      "max_bdi": 40
+    },
+    {
+      "symptom": "Worthlessness",
+      "n_personas": 4,
+      "mean_bdi": 26.5,
+      "min_bdi": 22,
+      "max_bdi": 35
+    },
+    {
+      "symptom": "Past failure",
+      "n_personas": 3,
+      "mean_bdi": 25.0,
+      "min_bdi": 13,
+      "max_bdi": 38
+    },
+    {
+      "symptom": "Concentration difficulty",
+      "n_personas": 4,
+      "mean_bdi": 25.0,
+      "min_bdi": 15,
+      "max_bdi": 38
+    },
+    {
+      "symptom": "Indecisiveness",
+      "n_personas": 5,
+      "mean_bdi": 22.8,
+      "min_bdi": 12,
+      "max_bdi": 37
+    },
+    {
+      "symptom": "Loss of interest",
+      "n_personas": 7,
+      "mean_bdi": 22.2857,
+      "min_bdi": 5,
+      "max_bdi": 40
+    },
+    {
+      "symptom": "Loss of energy",
+      "n_personas": 4,
+      "mean_bdi": 21.75,
+      "min_bdi": 15,
+      "max_bdi": 26
+    },
+    {
+      "symptom": "Guilty feelings",
+      "n_personas": 2,
+      "mean_bdi": 21.5,
+      "min_bdi": 15,
+      "max_bdi": 28
+    },
+    {
+      "symptom": "Tiredness or fatigue",
+      "n_personas": 7,
+      "mean_bdi": 20.8571,
+      "min_bdi": 6,
+      "max_bdi": 40
+    },
+    {
+      "symptom": "Pessimism",
+      "n_personas": 6,
+      "mean_bdi": 20.5,
+      "min_bdi": 6,
+      "max_bdi": 35
+    },
+    {
+      "symptom": "Changes in appetite",
+      "n_personas": 5,
+      "mean_bdi": 19.8,
+      "min_bdi": 8,
+      "max_bdi": 37
+    },
+    {
+      "symptom": "Agitation",
+      "n_personas": 4,
+      "mean_bdi": 16.75,
+      "min_bdi": 6,
+      "max_bdi": 38
+    },
+    {
+      "symptom": "Self-criticalness",
+      "n_personas": 7,
+      "mean_bdi": 16.4286,
+      "min_bdi": 5,
+      "max_bdi": 40
+    },
+    {
+      "symptom": "Irritability",
+      "n_personas": 6,
+      "mean_bdi": 14.0,
+      "min_bdi": 5,
+      "max_bdi": 37
+    },
+    {
+      "symptom": "Self-dislike",
+      "n_personas": 1,
+      "mean_bdi": 13.0,
+      "min_bdi": 13,
+      "max_bdi": 13
+    },
+    {
+      "symptom": "Loss of pleasure",
+      "n_personas": 3,
+      "mean_bdi": 11.6667,
+      "min_bdi": 7,
+      "max_bdi": 16
+    },
+    {
+      "symptom": "Changes in sleeping pattern",
+      "n_personas": 5,
+      "mean_bdi": 11.0,
+      "min_bdi": 5,
+      "max_bdi": 16
+    }
+  ],
+  "cooccurrence": {
+    "items_order": [
+      "Sadness",
+      "Pessimism",
+      "Past failure",
+      "Loss of pleasure",
+      "Guilty feelings",
+      "Punishment feelings",
+      "Self-dislike",
+      "Self-criticalness",
+      "Suicidal thoughts or wishes",
+      "Crying",
+      "Agitation",
+      "Loss of interest",
+      "Indecisiveness",
+      "Worthlessness",
+      "Loss of energy",
+      "Changes in sleeping pattern",
+      "Irritability",
+      "Changes in appetite",
+      "Concentration difficulty",
+      "Tiredness or fatigue",
+      "Loss of interest in sex"
+    ],
+    "matrix": [
+      [
+        3,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        6,
+        0,
+        0,
+        2,
+        0,
+        0,
+        2,
+        0,
+        1,
+        1,
+        2,
+        2,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        4,
+        0
+      ],
+      [
+        1,
+        0,
+        3,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        1,
+        1,
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        2,
+        1,
+        1,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        7,
+        0,
+        0,
+        3,
+        3,
+        0,
+        0,
+        0,
+        3,
+        2,
+        1,
+        0,
+        3,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        1,
+        2,
+        1,
+        0,
+        1,
+        2,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        2,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        4,
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      [
+        1,
+        2,
+        1,
+        1,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        1,
+        7,
+        2,
+        1,
+        1,
+        2,
+        2,
+        0,
+        1,
+        2,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        1,
+        2,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        2,
+        5,
+        1,
+        2,
+        1,
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        1,
+        1,
+        4,
+        2,
+        0,
+        0,
+        1,
+        1,
+        2,
+        0
+      ],
+      [
+        1,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        2,
+        2,
+        4,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        2,
+        2,
+        1,
+        0,
+        0,
+        5,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        2,
+        0,
+        1,
+        0,
+        2,
+        1,
+        0,
+        0,
+        2,
+        6,
+        4,
+        1,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        2,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        4,
+        5,
+        1,
+        1,
+        0
+      ],
+      [
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        4,
+        1,
+        0
+      ],
+      [
+        2,
+        4,
+        0,
+        0,
+        1,
+        0,
+        0,
+        3,
+        0,
+        1,
+        1,
+        2,
+        1,
+        2,
+        0,
+        0,
+        2,
+        1,
+        1,
+        7,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "diagonal_note": "diagonal = number of personas listing that symptom (distinct within persona)",
+    "top_pairs": [
+      {
+        "symptom_a": "Irritability",
+        "symptom_b": "Changes in appetite",
+        "count": 4
+      },
+      {
+        "symptom_a": "Pessimism",
+        "symptom_b": "Tiredness or fatigue",
+        "count": 4
+      },
+      {
+        "symptom_a": "Loss of pleasure",
+        "symptom_b": "Changes in sleeping pattern",
+        "count": 3
+      },
+      {
+        "symptom_a": "Self-criticalness",
+        "symptom_b": "Agitation",
+        "count": 3
+      },
+      {
+        "symptom_a": "Self-criticalness",
+        "symptom_b": "Changes in sleeping pattern",
+        "count": 3
+      },
+      {
+        "symptom_a": "Self-criticalness",
+        "symptom_b": "Loss of interest",
+        "count": 3
+      },
+      {
+        "symptom_a": "Self-criticalness",
+        "symptom_b": "Tiredness or fatigue",
+        "count": 3
+      },
+      {
+        "symptom_a": "Agitation",
+        "symptom_b": "Changes in sleeping pattern",
+        "count": 2
+      },
+      {
+        "symptom_a": "Changes in sleeping pattern",
+        "symptom_b": "Irritability",
+        "count": 2
+      },
+      {
+        "symptom_a": "Crying",
+        "symptom_b": "Changes in appetite",
+        "count": 2
+      },
+      {
+        "symptom_a": "Crying",
+        "symptom_b": "Worthlessness",
+        "count": 2
+      },
+      {
+        "symptom_a": "Guilty feelings",
+        "symptom_b": "Indecisiveness",
+        "count": 2
+      },
+      {
+        "symptom_a": "Indecisiveness",
+        "symptom_b": "Loss of energy",
+        "count": 2
+      },
+      {
+        "symptom_a": "Irritability",
+        "symptom_b": "Tiredness or fatigue",
+        "count": 2
+      },
+      {
+        "symptom_a": "Loss of interest",
+        "symptom_b": "Changes in sleeping pattern",
+        "count": 2
+      },
+      {
+        "symptom_a": "Loss of interest",
+        "symptom_b": "Indecisiveness",
+        "count": 2
+      },
+      {
+        "symptom_a": "Loss of interest",
+        "symptom_b": "Irritability",
+        "count": 2
+      },
+      {
+        "symptom_a": "Loss of interest",
+        "symptom_b": "Tiredness or fatigue",
+        "count": 2
+      },
+      {
+        "symptom_a": "Loss of pleasure",
+        "symptom_b": "Agitation",
+        "count": 2
+      },
+      {
+        "symptom_a": "Loss of pleasure",
+        "symptom_b": "Self-criticalness",
+        "count": 2
+      }
+    ]
+  },
+  "per_persona": [
+    {
+      "patient_id": 1,
+      "patient_name": "Aisha",
+      "bdi_score": 26,
+      "band": "moderate",
+      "key_symptoms": [
+        "Crying",
+        "Worthlessness",
+        "Loss of energy",
+        "Changes in appetite"
+      ],
+      "key_symptoms_raw": [
+        "Crying",
+        "Worthlessness",
+        "Loss of energy",
+        "Changes in appetite"
+      ]
+    },
+    {
+      "patient_id": 2,
+      "patient_name": "Alex",
+      "bdi_score": 15,
+      "band": "mild",
+      "key_symptoms": [
+        "Concentration difficulty",
+        "Irritability",
+        "Changes in sleeping pattern",
+        "Changes in appetite"
+      ],
+      "key_symptoms_raw": [
+        "Concentration difficulty",
+        "Irritability",
+        "Changes in sleeping pattern",
+        "Changes in appetite"
+      ]
+    },
+    {
+      "patient_id": 3,
+      "patient_name": "Amara",
+      "bdi_score": 8,
+      "band": "minimal",
+      "key_symptoms": [
+        "Irritability",
+        "Tiredness or fatigue",
+        "Self-criticalness",
+        "Changes in appetite"
+      ],
+      "key_symptoms_raw": [
+        "Irritability",
+        "Tiredness or fatigue",
+        "Self-criticalness",
+        "Changes in appetite"
+      ]
+    },
+    {
+      "patient_id": 4,
+      "patient_name": "Amir",
+      "bdi_score": 16,
+      "band": "mild",
+      "key_symptoms": [
+        "Loss of pleasure",
+        "Self-criticalness",
+        "Agitation",
+        "Changes in sleeping pattern"
+      ],
+      "key_symptoms_raw": [
+        "Loss of pleasure",
+        "Self-criticalness",
+        "Agitation",
+        "Changes in sleeping pattern"
+      ]
+    },
+    {
+      "patient_id": 5,
+      "patient_name": "Carlos",
+      "bdi_score": 37,
+      "band": "severe",
+      "key_symptoms": [
+        "Indecisiveness",
+        "Crying",
+        "Changes in appetite",
+        "Irritability"
+      ],
+      "key_symptoms_raw": [
+        "Indecisiveness",
+        "Crying",
+        "Changes in appetite",
+        "Irritability"
+      ]
+    },
+    {
+      "patient_id": 6,
+      "patient_name": "Daniel",
+      "bdi_score": 33,
+      "band": "severe",
+      "key_symptoms": [
+        "Pessimism",
+        "Self-criticalness",
+        "Loss of interest",
+        "Loss of interest"
+      ],
+      "key_symptoms_raw": [
+        "Pessimism",
+        "Self-criticalness",
+        "Loss of interest",
+        "Loss of interest"
+      ]
+    },
+    {
+      "patient_id": 7,
+      "patient_name": "Elena",
+      "bdi_score": 35,
+      "band": "severe",
+      "key_symptoms": [
+        "Pessimism",
+        "Crying",
+        "Tiredness or fatigue",
+        "Worthlessness"
+      ],
+      "key_symptoms_raw": [
+        "Pessimism",
+        "Crying",
+        "Tiredness or fatigue",
+        "Worthlessness"
+      ]
+    },
+    {
+      "patient_id": 8,
+      "patient_name": "Emma",
+      "bdi_score": 24,
+      "band": "moderate",
+      "key_symptoms": [
+        "Sadness",
+        "Past failure",
+        "Loss of energy",
+        "Concentration difficulty"
+      ],
+      "key_symptoms_raw": [
+        "Sadness",
+        "Past failure",
+        "Loss of energy",
+        "Concentration difficulty"
+      ]
+    },
+    {
+      "patient_id": 9,
+      "patient_name": "Ethan",
+      "bdi_score": 12,
+      "band": "mild",
+      "key_symptoms": [
+        "Loss of pleasure",
+        "Loss of interest",
+        "Changes in sleeping pattern",
+        "Indecisiveness"
+      ],
+      "key_symptoms_raw": [
+        "Loss of pleasure",
+        "Loss of interest",
+        "Changes in sleeping pattern",
+        "Indecisiveness"
+      ]
+    },
+    {
+      "patient_id": 10,
+      "patient_name": "Gabriel",
+      "bdi_score": 13,
+      "band": "mild",
+      "key_symptoms": [
+        "Irritability",
+        "Past failure",
+        "Changes in appetite",
+        "Self-dislike"
+      ],
+      "key_symptoms_raw": [
+        "Irritability",
+        "Past failure",
+        "Changes in appetite",
+        "Self-dislike"
+      ]
+    },
+    {
+      "patient_id": 11,
+      "patient_name": "James",
+      "bdi_score": 22,
+      "band": "moderate",
+      "key_symptoms": [
+        "Loss of energy",
+        "Worthlessness",
+        "Loss of interest",
+        "Indecisiveness"
+      ],
+      "key_symptoms_raw": [
+        "Loss of energy",
+        "Worthlessness",
+        "Loss of interest",
+        "Indecisiveness"
+      ]
+    },
+    {
+      "patient_id": 12,
+      "patient_name": "Javier",
+      "bdi_score": 15,
+      "band": "mild",
+      "key_symptoms": [
+        "Pessimism",
+        "Guilty feelings",
+        "Loss of energy",
+        "Indecisiveness"
+      ],
+      "key_symptoms_raw": [
+        "Pessimism",
+        "Guilty feelings",
+        "Loss of energy",
+        "Indecisiveness"
+      ]
+    },
+    {
+      "patient_id": 13,
+      "patient_name": "Laura",
+      "bdi_score": 23,
+      "band": "moderate",
+      "key_symptoms": [
+        "Sadness",
+        "Worthlessness",
+        "Tiredness or fatigue",
+        "Concentration difficulty"
+      ],
+      "key_symptoms_raw": [
+        "Sadness",
+        "Worthlessness",
+        "Tiredness or fatigue",
+        "Concentration difficulty"
+      ]
+    },
+    {
+      "patient_id": 14,
+      "patient_name": "Linda",
+      "bdi_score": 28,
+      "band": "moderate",
+      "key_symptoms": [
+        "Guilty feelings",
+        "Pessimism",
+        "Indecisiveness",
+        "Tiredness or fatigue"
+      ],
+      "key_symptoms_raw": [
+        "Guilty feelings",
+        "Pessimism",
+        "Indecisiveness",
+        "Tiredness or fatigue"
+      ]
+    },
+    {
+      "patient_id": 15,
+      "patient_name": "Marco",
+      "bdi_score": 38,
+      "band": "severe",
+      "key_symptoms": [
+        "Past failure",
+        "Agitation",
+        "Loss of interest",
+        "Concentration difficulty"
+      ],
+      "key_symptoms_raw": [
+        "Past failure",
+        "Agitation",
+        "Loss of interest",
+        "Concentration difficulty"
+      ]
+    },
+    {
+      "patient_id": 16,
+      "patient_name": "Maria",
+      "bdi_score": 40,
+      "band": "severe",
+      "key_symptoms": [
+        "Sadness",
+        "Tiredness or fatigue",
+        "Self-criticalness",
+        "Loss of interest"
+      ],
+      "key_symptoms_raw": [
+        "Sadness",
+        "Tiredness or fatigue",
+        "Self-criticalness",
+        "Loss of interest"
+      ]
+    },
+    {
+      "patient_id": 17,
+      "patient_name": "Maya",
+      "bdi_score": 6,
+      "band": "minimal",
+      "key_symptoms": [
+        "Pessimism",
+        "Agitation",
+        "Self-criticalness",
+        "Tiredness or fatigue"
+      ],
+      "key_symptoms_raw": [
+        "Pessimism",
+        "Agitation",
+        "Self-criticalness",
+        "Tiredness or fatigue"
+      ]
+    },
+    {
+      "patient_id": 18,
+      "patient_name": "Noah",
+      "bdi_score": 5,
+      "band": "minimal",
+      "key_symptoms": [
+        "Self-criticalness",
+        "Loss of interest",
+        "Irritability",
+        "Changes in sleeping pattern"
+      ],
+      "key_symptoms_raw": [
+        "Self-criticalness",
+        "Loss of interest",
+        "Irritability",
+        "Changes in sleeping pattern"
+      ]
+    },
+    {
+      "patient_id": 19,
+      "patient_name": "Priya",
+      "bdi_score": 7,
+      "band": "minimal",
+      "key_symptoms": [
+        "Agitation",
+        "Changes in sleeping pattern",
+        "Self-criticalness",
+        "Loss of pleasure"
+      ],
+      "key_symptoms_raw": [
+        "Agitation",
+        "Changes in sleeping pattern",
+        "Self-criticalness",
+        "Loss of pleasure"
+      ]
+    },
+    {
+      "patient_id": 20,
+      "patient_name": "Sofia",
+      "bdi_score": 6,
+      "band": "minimal",
+      "key_symptoms": [
+        "Pessimism",
+        "Irritability",
+        "Tiredness or fatigue",
+        "Loss of interest"
+      ],
+      "key_symptoms_raw": [
+        "Pessimism",
+        "Irritability",
+        "Tiredness or fatigue",
+        "Loss of interest"
+      ]
+    }
+  ]
+}

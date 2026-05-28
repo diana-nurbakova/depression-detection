@@ -1,0 +1,81 @@
+# Theory-of-Mind × ACT explanatory analysis (MentalRiskES 2026 test data)
+# =======================================================================
+# Drives the two-pass LLM signal generation + Wasserstein + analysis described
+# in specs/MentalRiskES/tom_act_analysis_spec_v0.5.md.
+#
+# Two model classes are used deliberately (circularity mitigation, spec §5.1):
+#   - Llama-3.3-70B-Instruct-Turbo (DeepInfra) for ACT-process state snapshots
+#     + PHQ-9/GAD-7/CompACT-10 assessor item-vector views.
+#   - Gemma (OpenRouter) for the ToM-specific signals (views, tiers, stance,
+#     presencia).
+#
+# Run (dry-run first; see CLI --dry-run / --limit-* flags):
+#   uv run mentalriskes-tom-act --config config/tom_act.yaml --dry-run \
+#       --limit-sessions S07 --limit-rounds 3 regen-llama gen-gemma
+
+# --- Llama regeneration pass (ACT process + assessor views) ---------------
+llama:
+  provider: deepinfra
+  api_key_env: "DEEPINFRA_API_KEY"
+  model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"
+  temperature: 0.1          # state-tracker / assessor default
+  max_tokens: 4096
+  timeout: 300
+  # Pipeline configuration reused for the state-tracker step (spec §5.8).
+  # Framing/pipeline affect the *selection* step which we do NOT run; only the
+  # state-update prompt (lang + window) matters for procesos_act / fase.
+  lang: "es"
+  lookback_window: 3        # W3
+  # Assessor scoring mode (cost lever):
+  #   combined       -> PHQ-9+GAD-7+CompACT-10 in ONE call/round (~1,136 Llama calls total)
+  #   per_instrument -> three task1 CoT calls/round (~2,272), higher per-item fidelity
+  assessor_mode: "per_instrument"
+
+# --- Gemma signal generation pass (ToM signals) ---------------------------
+gemma:
+  provider: openrouter
+  api_key_env: "OPENROUTER_API_KEY"
+  model: "google/gemma-4-31b-it"        # primary (Gemma 4 31B, OpenRouter), spec §5.1
+  temperature: 0.0          # per-signal temperatures are overridden in code (§5.4/5.5/5.6)
+  max_tokens: 2048
+  timeout: 180
+  # Optional OpenRouter provider routing pin for reproducibility (§5.1).
+  # provider_order: ["DeepInfra", "Together"]
+
+# Sensitivity model — conditional, run only after primary (spec §5.1). Disabled here.
+gemma_sensitivity:
+  enabled: false
+  provider: openrouter
+  api_key_env: "OPENROUTER_API_KEY"
+  model: "google/gemma-3-27b-it"   # Gemma 3 27B sensitivity model (spec §5.1)
+
+# --- Data --------------------------------------------------------------------
+data:
+  task1_dir: "data/MentalRiskES-2026/test/task1/test/data"
+  task2_dir: "data/MentalRiskES-2026/test/task2/test/data"
+  gold_dir: "data/MentalRiskES-2026/test/task2/test/gold"
+  session_gold: "data/MentalRiskES-2026/test/task1/test/gold_label.json"
+  # 10 sessions present in the released test data (spec §2.1).
+  sessions: ["S01", "S03", "S04", "S05", "S06", "S07", "S09", "S12", "S15", "S16"]
+
+# --- Persistence (spec §6.1) -------------------------------------------------
+run:
+  root: "runs/tom_act_explanatory"
+  max_attempts: 3                 # §6.4 retry cap on failed parses
+
+# --- Wasserstein (spec §7) ---------------------------------------------------
+wasserstein:
+  temporal_variants: ["consecutive", "barycenter"]   # emit both (confirmed)
+  alert_sigma: 2.0                # μ + 2σ rupture threshold (§7.3)
+  # Aggregation weights ∝ instrument scale ranges (§7.2), normalised in code.
+  instrument_ranges:
+    PHQ-9: 27
+    GAD-7: 21
+    CompACT-10: 60
+
+# --- Analysis (spec §8) ------------------------------------------------------
+analysis:
+  bootstrap_resamples: 10000
+  fdr_method: "fdr_bh"            # Benjamini-Hochberg
+  case_study_sessions: ["S07", "S09"]
+  micro_validation_seed: 20260527

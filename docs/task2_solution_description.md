@@ -356,15 +356,22 @@ The Theory of Mind (ToM) module captures **dual perspectives** on the target use
 
 Three implementation options are available, all producing the same 47d feature vector:
 
-| Option | Method | LLM Required | Active |
+| Option | Method | LLM Required | Where it was used |
 |--------|--------|-------------|--------|
-| **Option A** | Embedding-based | No | Fallback (always computed) |
-| **Option B** | Response category classification | Yes | Optional |
-| **Option C** | LLM dual mentalizing | Yes | Primary (when Ollama available) |
+| **Option A** | Embedding-based | No | **Live test run** (`run_pipeline`, local machine) |
+| **Option B** | Response category classification | Yes | Implemented, not used |
+| **Option C** | LLM dual mentalizing | Yes | **Training feature build** (Colab notebook) |
 
-### 6.2 Option C: LLM-Based Dual Mentalizing (Primary)
+> **Note — ToM train/test mismatch (important).** The two phases used *different* ToM implementations:
+>
+> - **Training features (Colab, `notebooks/task2.ipynb`)** were built with **Option C — LLM dual mentalizing** via `ToMModule(method="option_c", chained=False, symptom_variant="C")` using the **HuggingFace Inference API** (`huggingface_hub.InferenceClient`) running **`meta-llama/Llama-3.3-70B-Instruct`** — *not* Ollama (the config default `backend="ollama"` is misleading), and *not* TogetherAI (a Together key was set as a fallback but the ToM client was the HF one). The result was saved to `tom_features.npz` (47d × 909 users) and loaded by the notebook (cell 63) to train the shipped "with-ToM" classifiers. Confirmation the LLM ran: observer-view symptom dimensions in the npz hold exactly {0.333, 0.667, 1.0} (= LLM scores 1/2/3 ÷ 3), and the concern/community-response dims are populated — both impossible under Option A.
+> - **The live test run** (executed locally via `run_pipeline` in `src/erisk_task2/pipeline.py`) computes ToM **inline as Option A** (embedding-based) via `_compute_tom_a_features()` — **no LLM** — and with community-comment (observer) encoding disabled for latency (see §6 runtime note in the results analysis). At inference, therefore, only the self-view embedding norm `[42]` is non-zero; the observer norm `[43]`, insight gap `[44]`, the 21+21 symptom-score slots `[0:42]`, and the concern/community slots `[45:46]` are all ~0.
+>
+> **Consequence:** the classifiers learned weights on rich LLM-derived ToM features (observer symptom scores, concern level, community-response type, insight gap) that are fed near-zeros at test time — a genuine train/test mismatch. It also explains why **R0 (full features) ≈ R4 (no-ToM ablation)** on the live submission: same XGBoost model, the `no_tom` mask just zeroes the 47d block, and R0's block is already ~all-zero live, so the two runs differ by a single scalar (1 subject / 1 FP in our re-score). The no-ToM ablation is thus confounded — it could not measure the ToM contribution that training actually relied on. `src/erisk_task2/pipeline.py` never loads `tom_features.npz`; that LLM path lives only in the Colab notebook and `src/erisk_task2/tom/`.
 
-Uses **Llama 3.3 70B** via Ollama (temperature 0.1, context window 8192 tokens) to generate structured JSON assessments.
+### 6.2 Option C: LLM-Based Dual Mentalizing (used to build the training features)
+
+Uses **`meta-llama/Llama-3.3-70B-Instruct`** via the **HuggingFace Inference API** (temperature 0.1) to generate structured JSON assessments. (The codebase also ships an `OllamaClient` with the same interface; the config default points at Ollama, but the Colab feature build used the HuggingFace `InferenceClient`.)
 
 **Prompt 1 — Self-View**: Analyzes ONLY the target user's own writings. The system prompt includes the full 21 BDI-II symptom definitions. Output:
 - `active_symptoms`: dict of symptom name → {score: 1-3, evidence: "..."}
@@ -659,7 +666,7 @@ The system includes a structured mapping from DSM-5 major depressive episode cri
 | `all-MiniLM-L12-v2` | Sentence embedding (384d) | sentence-transformers (HuggingFace) |
 | `all-distilroberta-v1` | Sentence embedding (768d) | sentence-transformers (HuggingFace) |
 | `j-hartmann/emotion-english-distilroberta-base` | Emotion classification (8 classes) | HuggingFace |
-| Llama 3.3 70B | ToM dual mentalizing (Option C) | Ollama (local) |
+| Llama 3.3 70B (`meta-llama/Llama-3.3-70B-Instruct`) | ToM dual mentalizing (Option C) — used to build **training** features; live run falls back to embedding Option A (see §6 note) | HuggingFace Inference API |
 | VADER | Sentiment analysis | vaderSentiment (NLTK) |
 | BERTopic | Dynamic topic modeling | bertopic (HuggingFace) |
 | UMAP + HDBSCAN | Dimensionality reduction + clustering (BERTopic internals) | umap-learn, hdbscan |
@@ -718,9 +725,9 @@ Training with the full feature set excluding ToM features (Option A embedding fa
 
 XGBoost achieves the best F1 and lowest ERDE scores. The ensemble shows the lowest variance (std=0.043) but does not outperform the single XGBoost model — likely because the SVM base learner contributes noise in high dimensions.
 
-### 18.3 Cross-Validation Results (With ToM — Option C, Llama 3.3 70B)
+### 18.3 Cross-Validation Results (With ToM — Option C, LLM dual mentalizing)
 
-After integrating LLM-based Theory of Mind features (47d) via Llama 3.3 70B on Ollama:
+After adding the 47d Theory of Mind feature block, built with **Option C** — `meta-llama/Llama-3.3-70B-Instruct` via the **HuggingFace Inference API** (not Ollama; see §6 note). These `training_results_with_tom.json` numbers are computed on the Colab-built `tom_features.npz`. **Caveat:** the live submission does *not* reproduce this setting — `run_pipeline` falls back to embedding-based Option A with the observer view disabled, so the LLM ToM signal measured here is largely absent at test time (the train/test mismatch documented in §6).
 
 | Classifier | F1 | ERDE5 | ERDE50 | F_latency |
 |------------|------|-------|--------|-----------|
@@ -728,12 +735,12 @@ After integrating LLM-based Theory of Mind features (47d) via Llama 3.3 70B on O
 | **MLP** | 0.704 | 0.079 | 0.070 | 0.704 |
 | **Ensemble** | 0.726 | 0.082 | 0.069 | 0.725 |
 
-**ToM contribution**: Adding LLM-based ToM features provides a consistent improvement:
+**ToM contribution** (Option C, LLM dual mentalizing via Llama-3.3-70B): adding the 47d ToM features provides a consistent improvement in cross-validation:
 - XGBoost: F1 +0.2pp, ERDE5 −0.2pp (marginal)
 - MLP: F1 +1.8pp, ERDE50 −1.1pp (moderate)
 - Ensemble: F1 +3.3pp, ERDE50 −0.9pp (substantial)
 
-The ensemble benefits most from ToM features, likely because the meta-learner can learn to weight the ToM signal appropriately across different user profiles. The MLP shows moderate gains, suggesting ToM features provide non-linear patterns that complement the neural network's capacity.
+The ensemble benefits most from ToM features, likely because the meta-learner can learn to weight the ToM signal appropriately across different user profiles. The MLP shows moderate gains, suggesting ToM features provide non-linear patterns that complement the neural network's capacity. **However, this gain does not transfer to the live submission:** the live run computes ToM with embedding-based Option A and the observer view disabled, so the rich LLM dimensions measured here (observer symptom scores, concern, community response) are ~zero at test time. The §18.4 round-by-round simulation — which also uses Option A — shows R0 and R4 (no-ToM) as numerically identical, confirming that under the live ToM regime the block contributes essentially nothing. The true value of LLM ToM therefore remains effectively untested on the submission.
 
 ### 18.4 Simulated Evaluation (Round-by-Round, Full Training Set)
 

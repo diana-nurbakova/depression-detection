@@ -1,0 +1,523 @@
+{
+  "meta": {
+    "generated": "2026-05-27 19:14:02",
+    "corpus_dir": "C:\\Users\\dnurb\\Documents\\depression-detection\\data\\eRisk-2026\\task3-adhd-symptom-ranking-20260204T094934Z-3-001\\task3-adhd-symptom-ranking\\output_trec_files\\output_trec_files",
+    "qrels_majority": "C:\\Users\\dnurb\\Documents\\depression-detection\\data\\eRisk-2026\\eRisk26-datasets-20260519T175618Z-3-001\\eRisk26-datasets\\task3-adhd-symptom-ranking\\golden-data\\qrels_majority-final.csv",
+    "qrels_unanimity": "C:\\Users\\dnurb\\Documents\\depression-detection\\data\\eRisk-2026\\eRisk26-datasets-20260519T175618Z-3-001\\eRisk26-datasets\\task3-adhd-symptom-ranking\\golden-data\\qrels_unanimity-final.csv",
+    "corpus_file_sample_every_n": null,
+    "sampled": false,
+    "corpus_pass_seconds": 38.4
+  },
+  "corpus": {
+    "n_files": 4521,
+    "total_subjects": 4521,
+    "total_sentences": 4170875,
+    "total_sentences_millions": 4.171,
+    "empty_text_sentences": 0,
+    "malformed_blocks": 0,
+    "sentence_length_words": {
+      "count": 4170875,
+      "min": 1.0,
+      "max": 3976.0,
+      "mean": 13.045818203614576,
+      "median_approx": 11.0,
+      "std": 11.959956164424225
+    },
+    "sentence_length_chars": {
+      "count": 4170875,
+      "min": 3.0,
+      "max": 38547.0,
+      "mean": 71.45812329546455,
+      "median_approx": 55.0,
+      "std": 70.05209729402756
+    },
+    "sentences_per_subject": {
+      "count": 4521,
+      "min": 0.0,
+      "max": 26272.0,
+      "mean": 922.5558504755597,
+      "median_approx": 600.0,
+      "std": 998.4619508174578
+    },
+    "sentences_per_post": {
+      "count": 1466392,
+      "min": 1.0,
+      "max": 1176.0,
+      "mean": 2.8443110709824126,
+      "median_approx": 2.0,
+      "std": 4.62708692401632
+    },
+    "posts_per_subject": {
+      "count": 4521,
+      "min": 0.0,
+      "max": 1347.0,
+      "mean": 324.3512497235121,
+      "median_approx": 250.0,
+      "std": 237.78275649583878
+    }
+  },
+  "qrels": {
+    "majority": {
+      "n_rows": 5224,
+      "n_unique_doc_ids": 4362,
+      "total_judged": 5224,
+      "total_relevant": 751,
+      "per_symptom": {
+        "1": {
+          "symptom": "Trouble wrapping up final details",
+          "judged": 311,
+          "relevant": 39,
+          "relevance_rate": 0.12540192926045016
+        },
+        "2": {
+          "symptom": "Difficulty getting things in order",
+          "judged": 306,
+          "relevant": 59,
+          "relevance_rate": 0.19281045751633988
+        },
+        "3": {
+          "symptom": "Problems remembering appointments/obligations",
+          "judged": 281,
+          "relevant": 51,
+          "relevance_rate": 0.18149466192170818
+        },
+        "4": {
+          "symptom": "Avoiding/delaying tasks requiring thought",
+          "judged": 321,
+          "relevant": 101,
+          "relevance_rate": 0.3146417445482866
+        },
+        "5": {
+          "symptom": "Fidgeting hands/feet",
+          "judged": 258,
+          "relevant": 42,
+          "relevance_rate": 0.16279069767441862
+        },
+        "6": {
+          "symptom": "Feeling overly active/compelled",
+          "judged": 331,
+          "relevant": 22,
+          "relevance_rate": 0.06646525679758308
+        },
+        "7": {
+          "symptom": "Careless mistakes on boring/difficult work",
+          "judged": 337,
+          "relevant": 23,
+          "relevance_rate": 0.06824925816023739
+        },
+        "8": {
+          "symptom": "Difficulty keeping attention on boring/repetitive work",
+          "judged": 303,
+          "relevant": 56,
+          "relevance_rate": 0.1848184818481848
+        },
+        "9": {
+          "symptom": "Difficulty concentrating on what people say",
+          "judged": 292,
+          "relevant": 47,
+          "relevance_rate": 0.16095890410958905
+        },
+        "10": {
+          "symptom": "Misplacing/finding things",
+          "judged": 323,
+          "relevant": 34,
+          "relevance_rate": 0.10526315789473684
+        },
+        "11": {
+          "symptom": "Distracted by activity/noise",
+          "judged": 280,
+          "relevant": 38,
+          "relevance_rate": 0.1357142857142857
+        },
+        "12": {
+          "symptom": "Leaving seat when seated expected",
+          "judged": 294,
+          "relevant": 15,
+          "relevance_rate": 0.05102040816326531
+        },
+        "13": {
+          "symptom": "Feeling restless/fidgety",
+          "judged": 262,
+          "relevant": 72,
+          "relevance_rate": 0.2748091603053435
+        },
+        "14": {
+          "symptom": "Difficulty unwinding/relaxing",
+          "judged": 304,
+          "relevant": 69,
+          "relevance_rate": 0.22697368421052633
+        },
+        "15": {
+          "symptom": "Talking too much",
+          "judged": 277,
+          "relevant": 34,
+          "relevance_rate": 0.12274368231046931
+        },
+        "16": {
+          "symptom": "Finishing others' sentences",
+          "judged": 231,
+          "relevant": 11,
+          "relevance_rate": 0.047619047619047616
+        },
+        "17": {
+          "symptom": "Difficulty waiting your turn",
+          "judged": 298,
+          "relevant": 21,
+          "relevance_rate": 0.07046979865771812
+        },
+        "18": {
+          "symptom": "Interrupting others",
+          "judged": 215,
+          "relevant": 17,
+          "relevance_rate": 0.07906976744186046
+        }
+      }
+    },
+    "unanimity": {
+      "n_rows": 5224,
+      "n_unique_doc_ids": 4362,
+      "total_judged": 5224,
+      "total_relevant": 483,
+      "per_symptom": {
+        "1": {
+          "symptom": "Trouble wrapping up final details",
+          "judged": 311,
+          "relevant": 30,
+          "relevance_rate": 0.09646302250803858
+        },
+        "2": {
+          "symptom": "Difficulty getting things in order",
+          "judged": 306,
+          "relevant": 44,
+          "relevance_rate": 0.1437908496732026
+        },
+        "3": {
+          "symptom": "Problems remembering appointments/obligations",
+          "judged": 281,
+          "relevant": 38,
+          "relevance_rate": 0.13523131672597866
+        },
+        "4": {
+          "symptom": "Avoiding/delaying tasks requiring thought",
+          "judged": 321,
+          "relevant": 77,
+          "relevance_rate": 0.2398753894080997
+        },
+        "5": {
+          "symptom": "Fidgeting hands/feet",
+          "judged": 258,
+          "relevant": 20,
+          "relevance_rate": 0.07751937984496124
+        },
+        "6": {
+          "symptom": "Feeling overly active/compelled",
+          "judged": 331,
+          "relevant": 8,
+          "relevance_rate": 0.02416918429003021
+        },
+        "7": {
+          "symptom": "Careless mistakes on boring/difficult work",
+          "judged": 337,
+          "relevant": 11,
+          "relevance_rate": 0.032640949554896145
+        },
+        "8": {
+          "symptom": "Difficulty keeping attention on boring/repetitive work",
+          "judged": 303,
+          "relevant": 21,
+          "relevance_rate": 0.06930693069306931
+        },
+        "9": {
+          "symptom": "Difficulty concentrating on what people say",
+          "judged": 292,
+          "relevant": 22,
+          "relevance_rate": 0.07534246575342465
+        },
+        "10": {
+          "symptom": "Misplacing/finding things",
+          "judged": 323,
+          "relevant": 22,
+          "relevance_rate": 0.06811145510835913
+        },
+        "11": {
+          "symptom": "Distracted by activity/noise",
+          "judged": 280,
+          "relevant": 24,
+          "relevance_rate": 0.08571428571428572
+        },
+        "12": {
+          "symptom": "Leaving seat when seated expected",
+          "judged": 294,
+          "relevant": 8,
+          "relevance_rate": 0.027210884353741496
+        },
+        "13": {
+          "symptom": "Feeling restless/fidgety",
+          "judged": 262,
+          "relevant": 60,
+          "relevance_rate": 0.22900763358778625
+        },
+        "14": {
+          "symptom": "Difficulty unwinding/relaxing",
+          "judged": 304,
+          "relevant": 52,
+          "relevance_rate": 0.17105263157894737
+        },
+        "15": {
+          "symptom": "Talking too much",
+          "judged": 277,
+          "relevant": 19,
+          "relevance_rate": 0.06859205776173286
+        },
+        "16": {
+          "symptom": "Finishing others' sentences",
+          "judged": 231,
+          "relevant": 4,
+          "relevance_rate": 0.017316017316017316
+        },
+        "17": {
+          "symptom": "Difficulty waiting your turn",
+          "judged": 298,
+          "relevant": 11,
+          "relevance_rate": 0.03691275167785235
+        },
+        "18": {
+          "symptom": "Interrupting others",
+          "judged": 215,
+          "relevant": 12,
+          "relevance_rate": 0.05581395348837209
+        }
+      }
+    },
+    "highlights": {
+      "most_relevant_symptoms": [
+        {
+          "sid": 4,
+          "symptom": "Avoiding/delaying tasks requiring thought",
+          "relevant": 101
+        },
+        {
+          "sid": 13,
+          "symptom": "Feeling restless/fidgety",
+          "relevant": 72
+        },
+        {
+          "sid": 14,
+          "symptom": "Difficulty unwinding/relaxing",
+          "relevant": 69
+        }
+      ],
+      "fewest_relevant_symptoms": [
+        {
+          "sid": 16,
+          "symptom": "Finishing others' sentences",
+          "relevant": 11
+        },
+        {
+          "sid": 12,
+          "symptom": "Leaving seat when seated expected",
+          "relevant": 15
+        },
+        {
+          "sid": 18,
+          "symptom": "Interrupting others",
+          "relevant": 17
+        }
+      ],
+      "highest_relevance_rate": [
+        {
+          "sid": 4,
+          "symptom": "Avoiding/delaying tasks requiring thought",
+          "relevance_rate": 0.3146417445482866
+        },
+        {
+          "sid": 13,
+          "symptom": "Feeling restless/fidgety",
+          "relevance_rate": 0.2748091603053435
+        },
+        {
+          "sid": 14,
+          "symptom": "Difficulty unwinding/relaxing",
+          "relevance_rate": 0.22697368421052633
+        }
+      ],
+      "lowest_relevance_rate": [
+        {
+          "sid": 16,
+          "symptom": "Finishing others' sentences",
+          "relevance_rate": 0.047619047619047616
+        },
+        {
+          "sid": 12,
+          "symptom": "Leaving seat when seated expected",
+          "relevance_rate": 0.05102040816326531
+        },
+        {
+          "sid": 6,
+          "symptom": "Feeling overly active/compelled",
+          "relevance_rate": 0.06646525679758308
+        }
+      ]
+    }
+  },
+  "agreement_majority_vs_unanimity": {
+    "per_symptom": {
+      "1": {
+        "symptom": "Trouble wrapping up final details",
+        "majority_relevant": 39,
+        "unanimity_relevant": 30,
+        "survive_ratio": 0.7692307692307693
+      },
+      "2": {
+        "symptom": "Difficulty getting things in order",
+        "majority_relevant": 59,
+        "unanimity_relevant": 44,
+        "survive_ratio": 0.7457627118644068
+      },
+      "3": {
+        "symptom": "Problems remembering appointments/obligations",
+        "majority_relevant": 51,
+        "unanimity_relevant": 38,
+        "survive_ratio": 0.7450980392156863
+      },
+      "4": {
+        "symptom": "Avoiding/delaying tasks requiring thought",
+        "majority_relevant": 101,
+        "unanimity_relevant": 77,
+        "survive_ratio": 0.7623762376237624
+      },
+      "5": {
+        "symptom": "Fidgeting hands/feet",
+        "majority_relevant": 42,
+        "unanimity_relevant": 20,
+        "survive_ratio": 0.47619047619047616
+      },
+      "6": {
+        "symptom": "Feeling overly active/compelled",
+        "majority_relevant": 22,
+        "unanimity_relevant": 8,
+        "survive_ratio": 0.36363636363636365
+      },
+      "7": {
+        "symptom": "Careless mistakes on boring/difficult work",
+        "majority_relevant": 23,
+        "unanimity_relevant": 11,
+        "survive_ratio": 0.4782608695652174
+      },
+      "8": {
+        "symptom": "Difficulty keeping attention on boring/repetitive work",
+        "majority_relevant": 56,
+        "unanimity_relevant": 21,
+        "survive_ratio": 0.375
+      },
+      "9": {
+        "symptom": "Difficulty concentrating on what people say",
+        "majority_relevant": 47,
+        "unanimity_relevant": 22,
+        "survive_ratio": 0.46808510638297873
+      },
+      "10": {
+        "symptom": "Misplacing/finding things",
+        "majority_relevant": 34,
+        "unanimity_relevant": 22,
+        "survive_ratio": 0.6470588235294118
+      },
+      "11": {
+        "symptom": "Distracted by activity/noise",
+        "majority_relevant": 38,
+        "unanimity_relevant": 24,
+        "survive_ratio": 0.631578947368421
+      },
+      "12": {
+        "symptom": "Leaving seat when seated expected",
+        "majority_relevant": 15,
+        "unanimity_relevant": 8,
+        "survive_ratio": 0.5333333333333333
+      },
+      "13": {
+        "symptom": "Feeling restless/fidgety",
+        "majority_relevant": 72,
+        "unanimity_relevant": 60,
+        "survive_ratio": 0.8333333333333334
+      },
+      "14": {
+        "symptom": "Difficulty unwinding/relaxing",
+        "majority_relevant": 69,
+        "unanimity_relevant": 52,
+        "survive_ratio": 0.7536231884057971
+      },
+      "15": {
+        "symptom": "Talking too much",
+        "majority_relevant": 34,
+        "unanimity_relevant": 19,
+        "survive_ratio": 0.5588235294117647
+      },
+      "16": {
+        "symptom": "Finishing others' sentences",
+        "majority_relevant": 11,
+        "unanimity_relevant": 4,
+        "survive_ratio": 0.36363636363636365
+      },
+      "17": {
+        "symptom": "Difficulty waiting your turn",
+        "majority_relevant": 21,
+        "unanimity_relevant": 11,
+        "survive_ratio": 0.5238095238095238
+      },
+      "18": {
+        "symptom": "Interrupting others",
+        "majority_relevant": 17,
+        "unanimity_relevant": 12,
+        "survive_ratio": 0.7058823529411765
+      }
+    },
+    "overall": {
+      "total_majority_relevant": 751,
+      "total_unanimity_relevant": 483,
+      "overall_shrinkage_ratio": 0.6431424766977364
+    }
+  },
+  "text_length_comparison": {
+    "relevant_majority": {
+      "count": 670,
+      "mean": 19.649253731343283,
+      "median": 18.0,
+      "std": 11.372037887368288,
+      "min": 2,
+      "max": 74
+    },
+    "all_judged": {
+      "count": 4362,
+      "mean": 17.30261348005502,
+      "median": 15.0,
+      "std": 12.14972833925252,
+      "min": 1,
+      "max": 122
+    },
+    "n_relevant_docids_unique": 670,
+    "n_judged_text_captured": 4362,
+    "relevant_docids_missing_from_corpus": 0
+  },
+  "missed_symptoms_retrieval": {
+    "sids": [
+      7,
+      9,
+      10
+    ],
+    "note": "Symptoms 7/9/10 had zero relevant docs retrieved in our runs' top-1000 (docs/task3_results_analysis.md §5).",
+    "majority_relevant_in_missed": {
+      "7": 23,
+      "9": 47,
+      "10": 34
+    },
+    "share_of_total_majority_relevant": 0.1385
+  },
+  "figures": {
+    "sentences_per_subject": "C:\\Users\\dnurb\\Documents\\depression-detection\\analysis\\eda_task3\\sentences_per_subject.png",
+    "sentence_length_dist": "C:\\Users\\dnurb\\Documents\\depression-detection\\analysis\\eda_task3\\sentence_length_dist.png",
+    "qrels_relevant_per_symptom": "C:\\Users\\dnurb\\Documents\\depression-detection\\analysis\\eda_task3\\qrels_relevant_per_symptom.png",
+    "relevance_rate_per_symptom": "C:\\Users\\dnurb\\Documents\\depression-detection\\analysis\\eda_task3\\relevance_rate_per_symptom.png",
+    "majority_vs_unanimity_agreement": "C:\\Users\\dnurb\\Documents\\depression-detection\\analysis\\eda_task3\\majority_vs_unanimity_agreement.png",
+    "relevant_vs_corpus_length": "C:\\Users\\dnurb\\Documents\\depression-detection\\analysis\\eda_task3\\relevant_vs_corpus_length.png"
+  }
+}

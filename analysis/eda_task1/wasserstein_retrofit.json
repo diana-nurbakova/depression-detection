@@ -1,0 +1,3326 @@
+{
+  "title": "eRisk 2026 Task 1 - retrofitted Wasserstein (W1) trajectories",
+  "honesty_note": "POST-HOC reconstruction. POT was unavailable during the official runs (pot_available=false in every log) so NO W1 was computed live; the eRisk tracker's W_self is never read by the orchestrator either (only coverage gaps + W_align feed get_orchestrator_context, and W_align was empty too). These W1 values informed analysis, not the live interviewing policy.",
+  "method": {
+    "ground_metric": "tom.get_cost_matrix (clinical BDI-II item cost)",
+    "normalisation": "each E(t) L1-normalised -> profile shape only (severity-mass invariant)",
+    "barycenter": "W1(E(t), running-mean(E(1..t)))  [temporal.compute_w1_trajectory / trial CSV]",
+    "w_self": "W1(E(t), E(t-1)) = eRisk W_self[t][1]  [tom.compute_wasserstein_metrics]",
+    "firing_rule": "fire iff W1 > running_mu + 2*running_sigma over rounds strictly before t",
+    "warmup": "first 3 trajectory points never fire; sigma floored with +1e-6",
+    "threshold_factor": 2.0
+  },
+  "coverage": {
+    "retrofittable_persona_ids": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "note": "Only Run-3 ToM-era logs (personas 12-19) saved per-turn E_profiles. Personas 1-11 (incl. Daniel pid 6) and Runs 1-2 logged empty ToM and are not retrofittable from logs without re-running the assessor pipeline.",
+    "not_retrofittable": [
+      {
+        "persona_id": 1,
+        "persona_name": "Aisha",
+        "gold_bdi": 26
+      },
+      {
+        "persona_id": 2,
+        "persona_name": "Alex",
+        "gold_bdi": 15
+      },
+      {
+        "persona_id": 3,
+        "persona_name": "Amara",
+        "gold_bdi": 8
+      },
+      {
+        "persona_id": 4,
+        "persona_name": "Amir",
+        "gold_bdi": 16
+      },
+      {
+        "persona_id": 5,
+        "persona_name": "Carlos",
+        "gold_bdi": 37
+      },
+      {
+        "persona_id": 6,
+        "persona_name": "Daniel",
+        "gold_bdi": 33
+      },
+      {
+        "persona_id": 7,
+        "persona_name": "Elena",
+        "gold_bdi": 35
+      },
+      {
+        "persona_id": 8,
+        "persona_name": "Emma",
+        "gold_bdi": 24
+      },
+      {
+        "persona_id": 9,
+        "persona_name": "Ethan",
+        "gold_bdi": 12
+      },
+      {
+        "persona_id": 10,
+        "persona_name": "Gabriel",
+        "gold_bdi": 13
+      },
+      {
+        "persona_id": 11,
+        "persona_name": "James",
+        "gold_bdi": 22
+      },
+      {
+        "persona_id": 20,
+        "persona_name": "Sofia",
+        "gold_bdi": 6
+      }
+    ]
+  },
+  "counterfactual": {
+    "question": "What could W1 have changed in the live system?",
+    "answerable": "PARTIALLY. The signal the live policy would have seen is reconstructable from logs (fact). Its effect on final predictions is NOT measurable without re-running, since acting on it changes the questions and the personas would respond differently (hypothesis).",
+    "live_levers": [
+      "W_align hint -> orchestrator question selection (already plumbed into get_orchestrator_context / orchestrator.py:246; only needs POT).",
+      "A W1 fire -> defer early termination (should_terminate allows early stop after min_turns=5 once band stable; orchestrator.py:305). Not currently wired."
+    ],
+    "w_align_signal_fact": {
+      "Javier_run3": {
+        "misalignment_rounds": [
+          1,
+          4,
+          5,
+          6,
+          7
+        ],
+        "hints": [
+          "moderate_misalignment",
+          "good_alignment",
+          "good_alignment",
+          "high_misalignment",
+          "high_misalignment",
+          "high_misalignment",
+          "moderate_misalignment"
+        ]
+      },
+      "Laura_run3": {
+        "misalignment_rounds": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "hints": [
+          "moderate_misalignment",
+          "moderate_misalignment",
+          "moderate_misalignment",
+          "moderate_misalignment",
+          "good_alignment",
+          "good_alignment",
+          "good_alignment"
+        ]
+      },
+      "Linda_run3": {
+        "misalignment_rounds": [
+          1,
+          4
+        ],
+        "hints": [
+          "moderate_misalignment",
+          "good_alignment",
+          "good_alignment",
+          "moderate_misalignment",
+          "good_alignment"
+        ]
+      },
+      "Marco_run3": {
+        "misalignment_rounds": [
+          1,
+          2
+        ],
+        "hints": [
+          "high_misalignment",
+          "moderate_misalignment",
+          "good_alignment",
+          "good_alignment",
+          "good_alignment",
+          "good_alignment",
+          "good_alignment"
+        ]
+      },
+      "Maria_run3": {
+        "misalignment_rounds": [
+          1
+        ],
+        "hints": [
+          "moderate_misalignment",
+          "good_alignment",
+          "good_alignment",
+          "good_alignment",
+          "good_alignment",
+          "good_alignment",
+          "good_alignment"
+        ]
+      },
+      "Maya_run3": {
+        "misalignment_rounds": [
+          1,
+          2,
+          3
+        ],
+        "hints": [
+          "high_misalignment",
+          "high_misalignment",
+          "moderate_misalignment",
+          "good_alignment",
+          "good_alignment",
+          "good_alignment",
+          "good_alignment"
+        ]
+      },
+      "Noah_run3": {
+        "misalignment_rounds": [
+          1,
+          2,
+          3,
+          6
+        ],
+        "hints": [
+          "high_misalignment",
+          "moderate_misalignment",
+          "moderate_misalignment",
+          "good_alignment",
+          "good_alignment",
+          "moderate_misalignment",
+          "good_alignment"
+        ]
+      },
+      "Priya_run3": {
+        "misalignment_rounds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "hints": [
+          "high_misalignment",
+          "moderate_misalignment",
+          "moderate_misalignment",
+          "moderate_misalignment",
+          "moderate_misalignment",
+          "high_misalignment",
+          "high_misalignment"
+        ]
+      }
+    },
+    "termination_timing_fact": {
+      "Javier_run3": {
+        "n_rounds": 7,
+        "min_turns": 5,
+        "max_turns": 10,
+        "fired_rounds_barycenter": [
+          4
+        ],
+        "mass_trajectory": [
+          2,
+          6,
+          15,
+          6,
+          15,
+          6,
+          24
+        ],
+        "mass_rising_at_final_round": true
+      },
+      "Laura_run3": {
+        "n_rounds": 7,
+        "min_turns": 5,
+        "max_turns": 10,
+        "fired_rounds_barycenter": [],
+        "mass_trajectory": [
+          3,
+          9,
+          16,
+          21,
+          19,
+          22,
+          21
+        ],
+        "mass_rising_at_final_round": false
+      },
+      "Linda_run3": {
+        "n_rounds": 5,
+        "min_turns": 5,
+        "max_turns": 10,
+        "fired_rounds_barycenter": [
+          4
+        ],
+        "mass_trajectory": [
+          7,
+          13,
+          11,
+          15,
+          19
+        ],
+        "mass_rising_at_final_round": true
+      },
+      "Marco_run3": {
+        "n_rounds": 7,
+        "min_turns": 5,
+        "max_turns": 10,
+        "fired_rounds_barycenter": [
+          4
+        ],
+        "mass_trajectory": [
+          3,
+          6,
+          9,
+          13,
+          16,
+          17,
+          18
+        ],
+        "mass_rising_at_final_round": true
+      },
+      "Maria_run3": {
+        "n_rounds": 7,
+        "min_turns": 5,
+        "max_turns": 10,
+        "fired_rounds_barycenter": [],
+        "mass_trajectory": [
+          5,
+          7,
+          11,
+          15,
+          13,
+          12,
+          14
+        ],
+        "mass_rising_at_final_round": true
+      },
+      "Maya_run3": {
+        "n_rounds": 7,
+        "min_turns": 5,
+        "max_turns": 10,
+        "fired_rounds_barycenter": [
+          4
+        ],
+        "mass_trajectory": [
+          2,
+          3,
+          4,
+          7,
+          8,
+          10,
+          10
+        ],
+        "mass_rising_at_final_round": false
+      },
+      "Noah_run3": {
+        "n_rounds": 7,
+        "min_turns": 5,
+        "max_turns": 10,
+        "fired_rounds_barycenter": [],
+        "mass_trajectory": [
+          1,
+          2,
+          4,
+          5,
+          7,
+          7,
+          7
+        ],
+        "mass_rising_at_final_round": false
+      },
+      "Priya_run3": {
+        "n_rounds": 7,
+        "min_turns": 5,
+        "max_turns": 10,
+        "fired_rounds_barycenter": [],
+        "mass_trajectory": [
+          2,
+          4,
+          7,
+          6,
+          13,
+          11,
+          11
+        ],
+        "mass_rising_at_final_round": false
+      }
+    },
+    "verdict": "W_align cleanly separates the two pathological conversations (Javier loop, Priya over-probe) from the six healthy ones -> real diagnostic value. Plausible-but-unverified live wins: break Javier's loop, curb Priya's over-prediction, defer Linda's premature cutoff (fired t4, terminated t5 at min_turns with mass still rising 15->19). NO effect on the dominant error (severe under-prediction Marco 38->18, Maria 40->14) -> that is an assessor calibration problem orthogonal to W1."
+  },
+  "highlighted_examples": {
+    "primary_positive": {
+      "persona": "Marco",
+      "persona_id": 15,
+      "run": 3,
+      "why": "Named Daniel-substitute (Daniel pid6 predates ToM logging, not retrofittable). Clean monotonic disclosure over 7 rounds. Barycenter W1 fires at t4 on an interpretable anhedonia/worthlessness disclosure; W_self never fires (it misses the disclosure -> the eRisk-native metric's failure mode, shown side by side).",
+      "fired_rounds_barycenter": [
+        4
+      ],
+      "fired_rounds_w_self": [],
+      "disclosure_round": 4,
+      "cause": "Rounds 1-2 are purely somatic (energy/sleep/fatigue); t3 adds sadness/grief (lost sister); at t4 Marco discloses anhedonia + withdrawal + worthlessness ('I just focus on work and staying tired. It's easier than trying to pretend I'm okay'), shifting the symptom-distribution centre of mass -> barycenter W1 spikes.",
+      "note_on_strength": "Marginal fire (W1 just clears the threshold): the early rounds 2-3 disclosure inflates the running baseline, so a genuine mid-conversation disclosure only barely trips mu+2sigma. This is the honest behaviour on clean trajectories.",
+      "rounds": [
+        {
+          "round": 1,
+          "expressed_mass": 3.0,
+          "new_or_increased_symptoms": {
+            "Loss of energy": [
+              0,
+              1
+            ],
+            "Sleep changes": [
+              0,
+              1
+            ],
+            "Tiredness/fatigue": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I guess I've been okay, I guess. Just tired a lot lately. I work nights, so I'm always running on coffee.",
+          "barycenter": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.3333,
+            "hint": "high_misalignment"
+          }
+        },
+        {
+          "round": 2,
+          "expressed_mass": 6.0,
+          "new_or_increased_symptoms": {
+            "Loss of energy": [
+              1,
+              2
+            ],
+            "Sleep changes": [
+              1,
+              2
+            ],
+            "Tiredness/fatigue": [
+              1,
+              2
+            ]
+          },
+          "persona_utterance": "I usually fall asleep around two or three. Then I wake up around six and just lie there. By the time I get home, I just crash.",
+          "barycenter": {
+            "w1": 0.0,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.6786,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 3,
+          "expressed_mass": 9.0,
+          "new_or_increased_symptoms": {
+            "Sadness": [
+              0,
+              2
+            ],
+            "Pessimism": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "It's been pretty down lately. I just miss my sister a lot. It's been a year since she passed, but it still feels like a hole in my life.",
+          "barycenter": {
+            "w1": 0.3333,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": 0.0,
+            "threshold_mu_plus_2sigma": 0.0,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.6667,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": 0.0,
+            "threshold_mu_plus_2sigma": 0.0,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.3254,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 4,
+          "expressed_mass": 13.0,
+          "new_or_increased_symptoms": {
+            "Loss of pleasure": [
+              0,
+              1
+            ],
+            "Self-dislike": [
+              0,
+              1
+            ],
+            "Loss of interest": [
+              0,
+              1
+            ],
+            "Worthlessness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "No, I don't really have time for that. I just focus on work and staying tired. It's easier than trying to pretend I'm okay, I guess.",
+          "barycenter": {
+            "w1": 0.4318,
+            "running_mu_through_prev": 0.1111,
+            "running_sigma_through_prev": 0.1571,
+            "threshold_mu_plus_2sigma": 0.4254,
+            "fired": true
+          },
+          "w_self": {
+            "w1": 0.4103,
+            "running_mu_through_prev": 0.2222,
+            "running_sigma_through_prev": 0.3143,
+            "threshold_mu_plus_2sigma": 0.8508,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.1964,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 5,
+          "expressed_mass": 16.0,
+          "new_or_increased_symptoms": {
+            "Loss of interest": [
+              1,
+              2
+            ],
+            "Indecisiveness": [
+              0,
+              2
+            ]
+          },
+          "persona_utterance": "I guess I feel like I'm just going through the motions. I don't know what I'm doing with my life, and I just keep moving forward because I have to.",
+          "barycenter": {
+            "w1": 0.3989,
+            "running_mu_through_prev": 0.1913,
+            "running_sigma_through_prev": 0.1944,
+            "threshold_mu_plus_2sigma": 0.5801,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.1731,
+            "running_mu_through_prev": 0.2692,
+            "running_sigma_through_prev": 0.2841,
+            "threshold_mu_plus_2sigma": 0.8374,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.1732,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 6,
+          "expressed_mass": 17.0,
+          "new_or_increased_symptoms": {
+            "Loss of pleasure": [
+              1,
+              2
+            ],
+            "Concentration difficulty": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I don't know. Maybe just being able to sleep through the night. I miss having someone to share that with.",
+          "barycenter": {
+            "w1": 0.239,
+            "running_mu_through_prev": 0.2328,
+            "running_sigma_through_prev": 0.1927,
+            "threshold_mu_plus_2sigma": 0.6182,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.1213,
+            "running_mu_through_prev": 0.25,
+            "running_sigma_through_prev": 0.257,
+            "threshold_mu_plus_2sigma": 0.764,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.2612,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 7,
+          "expressed_mass": 18.0,
+          "new_or_increased_symptoms": {
+            "Past failure": [
+              0,
+              1
+            ],
+            "Self-criticalness": [
+              0,
+              1
+            ],
+            "Worthlessness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I guess it's just that I'm not good at anything lately. I used to help my sister with stuff, and now she's gone. I feel useless.",
+          "barycenter": {
+            "w1": 0.2561,
+            "running_mu_through_prev": 0.2338,
+            "running_sigma_through_prev": 0.1759,
+            "threshold_mu_plus_2sigma": 0.5857,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.1765,
+            "running_mu_through_prev": 0.2286,
+            "running_sigma_through_prev": 0.2394,
+            "threshold_mu_plus_2sigma": 0.7074,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.2483,
+            "hint": "good_alignment"
+          }
+        }
+      ]
+    },
+    "secondary_positive": {
+      "persona": "Linda",
+      "persona_id": 14,
+      "run": 3,
+      "why": "Second named substitute; barycenter W1 fires at t4 on a self-identity/cognitive disclosure.",
+      "fired_rounds_barycenter": [
+        4
+      ],
+      "disclosure_round": 4,
+      "cause": "After somatic/anhedonia rounds 1-3, t4 discloses loss of competence and indecisiveness ('I used to be the one with the answers... Now I don't know. I feel like I've lost that part of myself') -> Past failure, Self-criticalness, Indecisiveness, Concentration appear.",
+      "rounds": [
+        {
+          "round": 1,
+          "expressed_mass": 7.0,
+          "new_or_increased_symptoms": {
+            "Pessimism": [
+              0,
+              1
+            ],
+            "Loss of interest": [
+              0,
+              1
+            ],
+            "Loss of energy": [
+              0,
+              2
+            ],
+            "Sleep changes": [
+              0,
+              1
+            ],
+            "Tiredness/fatigue": [
+              0,
+              2
+            ]
+          },
+          "persona_utterance": "It's been tough. Just feeling really drained. Like I'm running on empty all the time. I wake up early, but I don't really want to do anything. Just... tired.",
+          "barycenter": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.8095,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 2,
+          "expressed_mass": 13.0,
+          "new_or_increased_symptoms": {
+            "Loss of pleasure": [
+              0,
+              2
+            ],
+            "Self-dislike": [
+              0,
+              1
+            ],
+            "Loss of interest": [
+              1,
+              2
+            ],
+            "Worthlessness": [
+              0,
+              1
+            ],
+            "Sleep changes": [
+              1,
+              2
+            ]
+          },
+          "persona_utterance": "I usually wake up around 6. I lie there for a bit, just staring at the ceiling. Then I force myself out of bed, usually around 7. I make some coffee, but it tastes bad. I just go through the motions. I don't really enjoy anything anymore.",
+          "barycenter": {
+            "w1": 0.1808,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.5165,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.4103,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 3,
+          "expressed_mass": 11.0,
+          "new_or_increased_symptoms": {
+            "Pessimism": [
+              1,
+              2
+            ],
+            "Self-dislike": [
+              1,
+              2
+            ]
+          },
+          "persona_utterance": "There was one yesterday. I was walking to the store and saw a kid playing with a ball. He was laughing, and it just... stopped me. I felt this pang in my chest, like I was missing out on that. It made me realize I'm just going through the motions.",
+          "barycenter": {
+            "w1": 0.1877,
+            "running_mu_through_prev": 0.0904,
+            "running_sigma_through_prev": 0.0904,
+            "threshold_mu_plus_2sigma": 0.2712,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.3916,
+            "running_mu_through_prev": 0.2582,
+            "running_sigma_through_prev": 0.2582,
+            "threshold_mu_plus_2sigma": 0.7747,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.3124,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 4,
+          "expressed_mass": 15.0,
+          "new_or_increased_symptoms": {
+            "Past failure": [
+              0,
+              1
+            ],
+            "Self-criticalness": [
+              0,
+              1
+            ],
+            "Indecisiveness": [
+              0,
+              2
+            ],
+            "Concentration difficulty": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I used to be the one with the answers. I had a plan. Now... I don't know. I feel like I've lost that part of myself. I'm just trying to figure out how to get back to being the person I used to be.",
+          "barycenter": {
+            "w1": 0.3087,
+            "running_mu_through_prev": 0.1228,
+            "running_sigma_through_prev": 0.0869,
+            "threshold_mu_plus_2sigma": 0.2966,
+            "fired": true
+          },
+          "w_self": {
+            "w1": 0.2909,
+            "running_mu_through_prev": 0.3027,
+            "running_sigma_through_prev": 0.22,
+            "threshold_mu_plus_2sigma": 0.7428,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.5155,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 5,
+          "expressed_mass": 19.0,
+          "new_or_increased_symptoms": {
+            "Sadness": [
+              0,
+              1
+            ],
+            "Loss of pleasure": [
+              0,
+              2
+            ],
+            "Loss of interest": [
+              0,
+              2
+            ]
+          },
+          "persona_utterance": "I used to love hiking. Just getting out into the woods, exploring. Now... I look at my gear and just put it back on the shelf. I don't have the energy. It feels like too much work.",
+          "barycenter": {
+            "w1": 0.2607,
+            "running_mu_through_prev": 0.1693,
+            "running_sigma_through_prev": 0.1102,
+            "threshold_mu_plus_2sigma": 0.3897,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.3474,
+            "running_mu_through_prev": 0.2998,
+            "running_sigma_through_prev": 0.1906,
+            "threshold_mu_plus_2sigma": 0.681,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.3541,
+            "hint": "good_alignment"
+          }
+        }
+      ]
+    },
+    "failure_mode_spurious_fire": {
+      "persona": "Javier",
+      "persona_id": 12,
+      "run": 3,
+      "why": "Honest negative result for the results section. Barycenter W1 fires STRONGLY at t4 (and W_self at t7) but NOT because of disclosure: the interviewer loops (t5/t6 are near-identical questions and answers) and the assessor drops then re-adds whole symptom clusters, so the expressed mass oscillates 15->6->15->6->24. The spikes track assessor instability, not the persona -> a false positive (fails the interpretable-cause criterion).",
+      "fired_rounds_barycenter": [
+        4
+      ],
+      "fired_rounds_w_self": [
+        7
+      ],
+      "expressed_mass_trajectory": [
+        2.0,
+        6.0,
+        15.0,
+        6.0,
+        15.0,
+        6.0,
+        24.0
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "expressed_mass": 2.0,
+          "new_or_increased_symptoms": {
+            "Sadness": [
+              0,
+              1
+            ],
+            "Pessimism": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "Honestly, it's been tough. I have this lingering sense of sadness I can't quite shake. I know I should be moving on by now, but it feels like I'm stuck in this fog.",
+          "barycenter": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.6667,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 2,
+          "expressed_mass": 6.0,
+          "new_or_increased_symptoms": {
+            "Loss of pleasure": [
+              0,
+              1
+            ],
+            "Loss of interest": [
+              0,
+              1
+            ],
+            "Loss of energy": [
+              0,
+              1
+            ],
+            "Tiredness/fatigue": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "Yeah... I used to love spending time with my friends, but now even the thought of going out feels like too much effort. I just want to stay home and avoid the noise, so I can just sit here with my memories.",
+          "barycenter": {
+            "w1": 0.1667,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.6667,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.4524,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 3,
+          "expressed_mass": 15.0,
+          "new_or_increased_symptoms": {
+            "Sadness": [
+              1,
+              2
+            ],
+            "Past failure": [
+              0,
+              1
+            ],
+            "Loss of pleasure": [
+              1,
+              2
+            ],
+            "Self-dislike": [
+              0,
+              2
+            ],
+            "Self-criticalness": [
+              0,
+              2
+            ],
+            "Loss of interest": [
+              1,
+              2
+            ],
+            "Worthlessness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "It's terrible. I catch myself saying things like, 'You're a failure' or 'You should be over this by now.' It's like I'm telling myself I'm not good enough to move on, and I don't know how to quiet that voice.",
+          "barycenter": {
+            "w1": 0.1159,
+            "running_mu_through_prev": 0.0833,
+            "running_sigma_through_prev": 0.0833,
+            "threshold_mu_plus_2sigma": 0.25,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.5,
+            "running_mu_through_prev": 0.3333,
+            "running_sigma_through_prev": 0.3333,
+            "threshold_mu_plus_2sigma": 1.0,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.3746,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 4,
+          "expressed_mass": 6.0,
+          "new_or_increased_symptoms": {},
+          "persona_utterance": "I wake up early, but I don't really get out of bed. I just lie there thinking about him, and then I end up sleeping most of the day. I know it's not healthy, but it feels like the only way to keep the sadness at bay.",
+          "barycenter": {
+            "w1": 0.5862,
+            "running_mu_through_prev": 0.0942,
+            "running_sigma_through_prev": 0.0698,
+            "threshold_mu_plus_2sigma": 0.2337,
+            "fired": true
+          },
+          "w_self": {
+            "w1": 0.7333,
+            "running_mu_through_prev": 0.3889,
+            "running_sigma_through_prev": 0.2833,
+            "threshold_mu_plus_2sigma": 0.9554,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.2619,
+            "hint": "high_misalignment"
+          }
+        },
+        {
+          "round": 5,
+          "expressed_mass": 15.0,
+          "new_or_increased_symptoms": {
+            "Pessimism": [
+              0,
+              2
+            ],
+            "Past failure": [
+              0,
+              1
+            ],
+            "Guilty feelings": [
+              0,
+              1
+            ],
+            "Self-dislike": [
+              0,
+              2
+            ],
+            "Self-criticalness": [
+              0,
+              2
+            ],
+            "Worthlessness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I sleep maybe three hours, and then I'm so tired. I skip breakfast and maybe grab a cup of coffee around lunchtime. I just don't have the appetite.",
+          "barycenter": {
+            "w1": 0.2818,
+            "running_mu_through_prev": 0.2172,
+            "running_sigma_through_prev": 0.2214,
+            "threshold_mu_plus_2sigma": 0.6601,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.6,
+            "running_mu_through_prev": 0.475,
+            "running_sigma_through_prev": 0.2871,
+            "threshold_mu_plus_2sigma": 1.0492,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.1333,
+            "hint": "high_misalignment"
+          }
+        },
+        {
+          "round": 6,
+          "expressed_mass": 6.0,
+          "new_or_increased_symptoms": {},
+          "persona_utterance": "I sleep maybe three hours, and then I'm so tired. I skip breakfast and maybe grab a cup of coffee around lunchtime. I just don't have the appetite.",
+          "barycenter": {
+            "w1": 0.52,
+            "running_mu_through_prev": 0.2301,
+            "running_sigma_through_prev": 0.1997,
+            "threshold_mu_plus_2sigma": 0.6296,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.6,
+            "running_mu_through_prev": 0.5,
+            "running_sigma_through_prev": 0.2616,
+            "threshold_mu_plus_2sigma": 1.0232,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.5079,
+            "hint": "high_misalignment"
+          }
+        },
+        {
+          "round": 7,
+          "expressed_mass": 24.0,
+          "new_or_increased_symptoms": {
+            "Pessimism": [
+              0,
+              2
+            ],
+            "Past failure": [
+              0,
+              1
+            ],
+            "Guilty feelings": [
+              0,
+              1
+            ],
+            "Self-dislike": [
+              0,
+              2
+            ],
+            "Self-criticalness": [
+              0,
+              2
+            ],
+            "Worthlessness": [
+              0,
+              2
+            ],
+            "Loss of energy": [
+              0,
+              2
+            ],
+            "Sleep changes": [
+              0,
+              2
+            ],
+            "Appetite changes": [
+              0,
+              2
+            ],
+            "Tiredness/fatigue": [
+              0,
+              2
+            ]
+          },
+          "persona_utterance": "It's just a cycle. I lie down at night, but I don't really sleep. Then I'm so tired the next day. I eat maybe a little something in the morning, but it's just going through me.",
+          "barycenter": {
+            "w1": 0.3806,
+            "running_mu_through_prev": 0.2784,
+            "running_sigma_through_prev": 0.2119,
+            "threshold_mu_plus_2sigma": 0.7023,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 1.0833,
+            "running_mu_through_prev": 0.5167,
+            "running_sigma_through_prev": 0.2417,
+            "threshold_mu_plus_2sigma": 1.0001,
+            "fired": true
+          },
+          "w_align": {
+            "w1": 0.7143,
+            "hint": "moderate_misalignment"
+          }
+        }
+      ]
+    }
+  },
+  "personas": {
+    "Javier_run3": {
+      "persona_id": 12,
+      "predicted_bdi": 24,
+      "predicted_band": "moderate",
+      "source_log": "runs\\task1\\task1_results_20260331_tom\\persona12\\internal_3.json",
+      "n_rounds": 7,
+      "fired_rounds_barycenter": [
+        4
+      ],
+      "fired_rounds_w_self": [
+        7
+      ],
+      "w_align_misalignment_rounds": [
+        1,
+        4,
+        5,
+        6,
+        7
+      ],
+      "expressed_mass_trajectory": [
+        2,
+        6,
+        15,
+        6,
+        15,
+        6,
+        24
+      ],
+      "mass_rising_at_final_round": true,
+      "rounds": [
+        {
+          "round": 1,
+          "expressed_mass": 2.0,
+          "new_or_increased_symptoms": {
+            "Sadness": [
+              0,
+              1
+            ],
+            "Pessimism": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "Honestly, it's been tough. I have this lingering sense of sadness I can't quite shake. I know I should be moving on by now, but it feels like I'm stuck in this fog.",
+          "barycenter": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.6667,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 2,
+          "expressed_mass": 6.0,
+          "new_or_increased_symptoms": {
+            "Loss of pleasure": [
+              0,
+              1
+            ],
+            "Loss of interest": [
+              0,
+              1
+            ],
+            "Loss of energy": [
+              0,
+              1
+            ],
+            "Tiredness/fatigue": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "Yeah... I used to love spending time with my friends, but now even the thought of going out feels like too much effort. I just want to stay home and avoid the noise, so I can just sit here with my memories.",
+          "barycenter": {
+            "w1": 0.1667,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.6667,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.4524,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 3,
+          "expressed_mass": 15.0,
+          "new_or_increased_symptoms": {
+            "Sadness": [
+              1,
+              2
+            ],
+            "Past failure": [
+              0,
+              1
+            ],
+            "Loss of pleasure": [
+              1,
+              2
+            ],
+            "Self-dislike": [
+              0,
+              2
+            ],
+            "Self-criticalness": [
+              0,
+              2
+            ],
+            "Loss of interest": [
+              1,
+              2
+            ],
+            "Worthlessness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "It's terrible. I catch myself saying things like, 'You're a failure' or 'You should be over this by now.' It's like I'm telling myself I'm not good enough to move on, and I don't know how to quiet that voice.",
+          "barycenter": {
+            "w1": 0.1159,
+            "running_mu_through_prev": 0.0833,
+            "running_sigma_through_prev": 0.0833,
+            "threshold_mu_plus_2sigma": 0.25,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.5,
+            "running_mu_through_prev": 0.3333,
+            "running_sigma_through_prev": 0.3333,
+            "threshold_mu_plus_2sigma": 1.0,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.3746,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 4,
+          "expressed_mass": 6.0,
+          "new_or_increased_symptoms": {},
+          "persona_utterance": "I wake up early, but I don't really get out of bed. I just lie there thinking about him, and then I end up sleeping most of the day. I know it's not healthy, but it feels like the only way to keep the sadness at bay.",
+          "barycenter": {
+            "w1": 0.5862,
+            "running_mu_through_prev": 0.0942,
+            "running_sigma_through_prev": 0.0698,
+            "threshold_mu_plus_2sigma": 0.2337,
+            "fired": true
+          },
+          "w_self": {
+            "w1": 0.7333,
+            "running_mu_through_prev": 0.3889,
+            "running_sigma_through_prev": 0.2833,
+            "threshold_mu_plus_2sigma": 0.9554,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.2619,
+            "hint": "high_misalignment"
+          }
+        },
+        {
+          "round": 5,
+          "expressed_mass": 15.0,
+          "new_or_increased_symptoms": {
+            "Pessimism": [
+              0,
+              2
+            ],
+            "Past failure": [
+              0,
+              1
+            ],
+            "Guilty feelings": [
+              0,
+              1
+            ],
+            "Self-dislike": [
+              0,
+              2
+            ],
+            "Self-criticalness": [
+              0,
+              2
+            ],
+            "Worthlessness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I sleep maybe three hours, and then I'm so tired. I skip breakfast and maybe grab a cup of coffee around lunchtime. I just don't have the appetite.",
+          "barycenter": {
+            "w1": 0.2818,
+            "running_mu_through_prev": 0.2172,
+            "running_sigma_through_prev": 0.2214,
+            "threshold_mu_plus_2sigma": 0.6601,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.6,
+            "running_mu_through_prev": 0.475,
+            "running_sigma_through_prev": 0.2871,
+            "threshold_mu_plus_2sigma": 1.0492,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.1333,
+            "hint": "high_misalignment"
+          }
+        },
+        {
+          "round": 6,
+          "expressed_mass": 6.0,
+          "new_or_increased_symptoms": {},
+          "persona_utterance": "I sleep maybe three hours, and then I'm so tired. I skip breakfast and maybe grab a cup of coffee around lunchtime. I just don't have the appetite.",
+          "barycenter": {
+            "w1": 0.52,
+            "running_mu_through_prev": 0.2301,
+            "running_sigma_through_prev": 0.1997,
+            "threshold_mu_plus_2sigma": 0.6296,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.6,
+            "running_mu_through_prev": 0.5,
+            "running_sigma_through_prev": 0.2616,
+            "threshold_mu_plus_2sigma": 1.0232,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.5079,
+            "hint": "high_misalignment"
+          }
+        },
+        {
+          "round": 7,
+          "expressed_mass": 24.0,
+          "new_or_increased_symptoms": {
+            "Pessimism": [
+              0,
+              2
+            ],
+            "Past failure": [
+              0,
+              1
+            ],
+            "Guilty feelings": [
+              0,
+              1
+            ],
+            "Self-dislike": [
+              0,
+              2
+            ],
+            "Self-criticalness": [
+              0,
+              2
+            ],
+            "Worthlessness": [
+              0,
+              2
+            ],
+            "Loss of energy": [
+              0,
+              2
+            ],
+            "Sleep changes": [
+              0,
+              2
+            ],
+            "Appetite changes": [
+              0,
+              2
+            ],
+            "Tiredness/fatigue": [
+              0,
+              2
+            ]
+          },
+          "persona_utterance": "It's just a cycle. I lie down at night, but I don't really sleep. Then I'm so tired the next day. I eat maybe a little something in the morning, but it's just going through me.",
+          "barycenter": {
+            "w1": 0.3806,
+            "running_mu_through_prev": 0.2784,
+            "running_sigma_through_prev": 0.2119,
+            "threshold_mu_plus_2sigma": 0.7023,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 1.0833,
+            "running_mu_through_prev": 0.5167,
+            "running_sigma_through_prev": 0.2417,
+            "threshold_mu_plus_2sigma": 1.0001,
+            "fired": true
+          },
+          "w_align": {
+            "w1": 0.7143,
+            "hint": "moderate_misalignment"
+          }
+        }
+      ],
+      "persona_name": "Javier",
+      "gold_bdi": 15,
+      "gold_band": "mild",
+      "run": 3
+    },
+    "Laura_run3": {
+      "persona_id": 13,
+      "predicted_bdi": 21,
+      "predicted_band": "moderate",
+      "source_log": "runs\\task1\\task1_results_20260331_tom\\persona13\\internal_3.json",
+      "n_rounds": 7,
+      "fired_rounds_barycenter": [],
+      "fired_rounds_w_self": [],
+      "w_align_misalignment_rounds": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "expressed_mass_trajectory": [
+        3,
+        9,
+        16,
+        21,
+        19,
+        22,
+        21
+      ],
+      "mass_rising_at_final_round": false,
+      "rounds": [
+        {
+          "round": 1,
+          "expressed_mass": 3.0,
+          "new_or_increased_symptoms": {
+            "Pessimism": [
+              0,
+              1
+            ],
+            "Loss of energy": [
+              0,
+              1
+            ],
+            "Tiredness/fatigue": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "Honestly, a bit drained. It's been a tough few weeks at work, and I don't know if it's just me or if everyone else is struggling too.",
+          "barycenter": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.8571,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 2,
+          "expressed_mass": 9.0,
+          "new_or_increased_symptoms": {
+            "Sadness": [
+              0,
+              1
+            ],
+            "Loss of pleasure": [
+              0,
+              2
+            ],
+            "Loss of interest": [
+              0,
+              1
+            ],
+            "Loss of energy": [
+              1,
+              2
+            ],
+            "Tiredness/fatigue": [
+              1,
+              2
+            ]
+          },
+          "persona_utterance": "Yeah, definitely. I look at my garden and think about how nice it used to be, but now the thought of going out there just feels like too much effort.",
+          "barycenter": {
+            "w1": 0.1667,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.6667,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.6508,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 3,
+          "expressed_mass": 16.0,
+          "new_or_increased_symptoms": {
+            "Past failure": [
+              0,
+              2
+            ],
+            "Guilty feelings": [
+              0,
+              1
+            ],
+            "Self-dislike": [
+              0,
+              2
+            ],
+            "Self-criticalness": [
+              0,
+              2
+            ],
+            "Worthlessness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I think I just get stuck on how I'm failing at everything. It sounds silly, but I feel like I'm letting everyone down, including myself.",
+          "barycenter": {
+            "w1": 0.2768,
+            "running_mu_through_prev": 0.0833,
+            "running_sigma_through_prev": 0.0833,
+            "threshold_mu_plus_2sigma": 0.25,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.6458,
+            "running_mu_through_prev": 0.3333,
+            "running_sigma_through_prev": 0.3333,
+            "threshold_mu_plus_2sigma": 1.0,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.7768,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 4,
+          "expressed_mass": 21.0,
+          "new_or_increased_symptoms": {
+            "Loss of pleasure": [
+              1,
+              2
+            ],
+            "Guilty feelings": [
+              1,
+              2
+            ],
+            "Loss of interest": [
+              1,
+              2
+            ],
+            "Worthlessness": [
+              1,
+              2
+            ],
+            "Sleep changes": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "It's been really light. I wake up early, but I don't have the drive to do anything. I just end up sitting on the couch until the evening, wondering what I'm doing wrong.",
+          "barycenter": {
+            "w1": 0.1701,
+            "running_mu_through_prev": 0.1478,
+            "running_sigma_through_prev": 0.1138,
+            "threshold_mu_plus_2sigma": 0.3754,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.1101,
+            "running_mu_through_prev": 0.4375,
+            "running_sigma_through_prev": 0.3095,
+            "threshold_mu_plus_2sigma": 1.0565,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.5536,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 5,
+          "expressed_mass": 19.0,
+          "new_or_increased_symptoms": {},
+          "persona_utterance": "I look at the invitation to the garden club, and I think about going, but I just can't bring myself to pick up the phone. It feels like too much effort, and I don't know if it's just me getting old.",
+          "barycenter": {
+            "w1": 0.0851,
+            "running_mu_through_prev": 0.1534,
+            "running_sigma_through_prev": 0.099,
+            "threshold_mu_plus_2sigma": 0.3514,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0752,
+            "running_mu_through_prev": 0.3557,
+            "running_sigma_through_prev": 0.3032,
+            "threshold_mu_plus_2sigma": 0.962,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.483,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 6,
+          "expressed_mass": 22.0,
+          "new_or_increased_symptoms": {
+            "Indecisiveness": [
+              0,
+              1
+            ],
+            "Concentration difficulty": [
+              0,
+              2
+            ]
+          },
+          "persona_utterance": "I suppose just having a day where I don't feel so tired. Maybe I could plant something small, just to prove I can still do it.",
+          "barycenter": {
+            "w1": 0.0364,
+            "running_mu_through_prev": 0.1397,
+            "running_sigma_through_prev": 0.0927,
+            "threshold_mu_plus_2sigma": 0.3251,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.1172,
+            "running_mu_through_prev": 0.2996,
+            "running_sigma_through_prev": 0.2935,
+            "threshold_mu_plus_2sigma": 0.8865,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.4859,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 7,
+          "expressed_mass": 21.0,
+          "new_or_increased_symptoms": {},
+          "persona_utterance": "Fear, I suppose. I worry that I'll fail or make things worse. It feels safer to just stay quiet and wait for things to sort themselves out.",
+          "barycenter": {
+            "w1": 0.0399,
+            "running_mu_through_prev": 0.1225,
+            "running_sigma_through_prev": 0.093,
+            "threshold_mu_plus_2sigma": 0.3084,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0671,
+            "running_mu_through_prev": 0.2692,
+            "running_sigma_through_prev": 0.2764,
+            "threshold_mu_plus_2sigma": 0.822,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.3776,
+            "hint": "good_alignment"
+          }
+        }
+      ],
+      "persona_name": "Laura",
+      "gold_bdi": 23,
+      "gold_band": "moderate",
+      "run": 3
+    },
+    "Linda_run3": {
+      "persona_id": 14,
+      "predicted_bdi": 19,
+      "predicted_band": "mild",
+      "source_log": "runs\\task1\\task1_results_20260408\\persona14\\internal_3.json",
+      "n_rounds": 5,
+      "fired_rounds_barycenter": [
+        4
+      ],
+      "fired_rounds_w_self": [],
+      "w_align_misalignment_rounds": [
+        1,
+        4
+      ],
+      "expressed_mass_trajectory": [
+        7,
+        13,
+        11,
+        15,
+        19
+      ],
+      "mass_rising_at_final_round": true,
+      "rounds": [
+        {
+          "round": 1,
+          "expressed_mass": 7.0,
+          "new_or_increased_symptoms": {
+            "Pessimism": [
+              0,
+              1
+            ],
+            "Loss of interest": [
+              0,
+              1
+            ],
+            "Loss of energy": [
+              0,
+              2
+            ],
+            "Sleep changes": [
+              0,
+              1
+            ],
+            "Tiredness/fatigue": [
+              0,
+              2
+            ]
+          },
+          "persona_utterance": "It's been tough. Just feeling really drained. Like I'm running on empty all the time. I wake up early, but I don't really want to do anything. Just... tired.",
+          "barycenter": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.8095,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 2,
+          "expressed_mass": 13.0,
+          "new_or_increased_symptoms": {
+            "Loss of pleasure": [
+              0,
+              2
+            ],
+            "Self-dislike": [
+              0,
+              1
+            ],
+            "Loss of interest": [
+              1,
+              2
+            ],
+            "Worthlessness": [
+              0,
+              1
+            ],
+            "Sleep changes": [
+              1,
+              2
+            ]
+          },
+          "persona_utterance": "I usually wake up around 6. I lie there for a bit, just staring at the ceiling. Then I force myself out of bed, usually around 7. I make some coffee, but it tastes bad. I just go through the motions. I don't really enjoy anything anymore.",
+          "barycenter": {
+            "w1": 0.1808,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.5165,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.4103,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 3,
+          "expressed_mass": 11.0,
+          "new_or_increased_symptoms": {
+            "Pessimism": [
+              1,
+              2
+            ],
+            "Self-dislike": [
+              1,
+              2
+            ]
+          },
+          "persona_utterance": "There was one yesterday. I was walking to the store and saw a kid playing with a ball. He was laughing, and it just... stopped me. I felt this pang in my chest, like I was missing out on that. It made me realize I'm just going through the motions.",
+          "barycenter": {
+            "w1": 0.1877,
+            "running_mu_through_prev": 0.0904,
+            "running_sigma_through_prev": 0.0904,
+            "threshold_mu_plus_2sigma": 0.2712,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.3916,
+            "running_mu_through_prev": 0.2582,
+            "running_sigma_through_prev": 0.2582,
+            "threshold_mu_plus_2sigma": 0.7747,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.3124,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 4,
+          "expressed_mass": 15.0,
+          "new_or_increased_symptoms": {
+            "Past failure": [
+              0,
+              1
+            ],
+            "Self-criticalness": [
+              0,
+              1
+            ],
+            "Indecisiveness": [
+              0,
+              2
+            ],
+            "Concentration difficulty": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I used to be the one with the answers. I had a plan. Now... I don't know. I feel like I've lost that part of myself. I'm just trying to figure out how to get back to being the person I used to be.",
+          "barycenter": {
+            "w1": 0.3087,
+            "running_mu_through_prev": 0.1228,
+            "running_sigma_through_prev": 0.0869,
+            "threshold_mu_plus_2sigma": 0.2966,
+            "fired": true
+          },
+          "w_self": {
+            "w1": 0.2909,
+            "running_mu_through_prev": 0.3027,
+            "running_sigma_through_prev": 0.22,
+            "threshold_mu_plus_2sigma": 0.7428,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.5155,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 5,
+          "expressed_mass": 19.0,
+          "new_or_increased_symptoms": {
+            "Sadness": [
+              0,
+              1
+            ],
+            "Loss of pleasure": [
+              0,
+              2
+            ],
+            "Loss of interest": [
+              0,
+              2
+            ]
+          },
+          "persona_utterance": "I used to love hiking. Just getting out into the woods, exploring. Now... I look at my gear and just put it back on the shelf. I don't have the energy. It feels like too much work.",
+          "barycenter": {
+            "w1": 0.2607,
+            "running_mu_through_prev": 0.1693,
+            "running_sigma_through_prev": 0.1102,
+            "threshold_mu_plus_2sigma": 0.3897,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.3474,
+            "running_mu_through_prev": 0.2998,
+            "running_sigma_through_prev": 0.1906,
+            "threshold_mu_plus_2sigma": 0.681,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.3541,
+            "hint": "good_alignment"
+          }
+        }
+      ],
+      "persona_name": "Linda",
+      "gold_bdi": 28,
+      "gold_band": "moderate",
+      "run": 3
+    },
+    "Marco_run3": {
+      "persona_id": 15,
+      "predicted_bdi": 18,
+      "predicted_band": "mild",
+      "source_log": "runs\\task1\\task1_results_20260408\\persona15\\internal_3.json",
+      "n_rounds": 7,
+      "fired_rounds_barycenter": [
+        4
+      ],
+      "fired_rounds_w_self": [],
+      "w_align_misalignment_rounds": [
+        1,
+        2
+      ],
+      "expressed_mass_trajectory": [
+        3,
+        6,
+        9,
+        13,
+        16,
+        17,
+        18
+      ],
+      "mass_rising_at_final_round": true,
+      "rounds": [
+        {
+          "round": 1,
+          "expressed_mass": 3.0,
+          "new_or_increased_symptoms": {
+            "Loss of energy": [
+              0,
+              1
+            ],
+            "Sleep changes": [
+              0,
+              1
+            ],
+            "Tiredness/fatigue": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I guess I've been okay, I guess. Just tired a lot lately. I work nights, so I'm always running on coffee.",
+          "barycenter": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.3333,
+            "hint": "high_misalignment"
+          }
+        },
+        {
+          "round": 2,
+          "expressed_mass": 6.0,
+          "new_or_increased_symptoms": {
+            "Loss of energy": [
+              1,
+              2
+            ],
+            "Sleep changes": [
+              1,
+              2
+            ],
+            "Tiredness/fatigue": [
+              1,
+              2
+            ]
+          },
+          "persona_utterance": "I usually fall asleep around two or three. Then I wake up around six and just lie there. By the time I get home, I just crash.",
+          "barycenter": {
+            "w1": 0.0,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.6786,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 3,
+          "expressed_mass": 9.0,
+          "new_or_increased_symptoms": {
+            "Sadness": [
+              0,
+              2
+            ],
+            "Pessimism": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "It's been pretty down lately. I just miss my sister a lot. It's been a year since she passed, but it still feels like a hole in my life.",
+          "barycenter": {
+            "w1": 0.3333,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": 0.0,
+            "threshold_mu_plus_2sigma": 0.0,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.6667,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": 0.0,
+            "threshold_mu_plus_2sigma": 0.0,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.3254,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 4,
+          "expressed_mass": 13.0,
+          "new_or_increased_symptoms": {
+            "Loss of pleasure": [
+              0,
+              1
+            ],
+            "Self-dislike": [
+              0,
+              1
+            ],
+            "Loss of interest": [
+              0,
+              1
+            ],
+            "Worthlessness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "No, I don't really have time for that. I just focus on work and staying tired. It's easier than trying to pretend I'm okay, I guess.",
+          "barycenter": {
+            "w1": 0.4318,
+            "running_mu_through_prev": 0.1111,
+            "running_sigma_through_prev": 0.1571,
+            "threshold_mu_plus_2sigma": 0.4254,
+            "fired": true
+          },
+          "w_self": {
+            "w1": 0.4103,
+            "running_mu_through_prev": 0.2222,
+            "running_sigma_through_prev": 0.3143,
+            "threshold_mu_plus_2sigma": 0.8508,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.1964,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 5,
+          "expressed_mass": 16.0,
+          "new_or_increased_symptoms": {
+            "Loss of interest": [
+              1,
+              2
+            ],
+            "Indecisiveness": [
+              0,
+              2
+            ]
+          },
+          "persona_utterance": "I guess I feel like I'm just going through the motions. I don't know what I'm doing with my life, and I just keep moving forward because I have to.",
+          "barycenter": {
+            "w1": 0.3989,
+            "running_mu_through_prev": 0.1913,
+            "running_sigma_through_prev": 0.1944,
+            "threshold_mu_plus_2sigma": 0.5801,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.1731,
+            "running_mu_through_prev": 0.2692,
+            "running_sigma_through_prev": 0.2841,
+            "threshold_mu_plus_2sigma": 0.8374,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.1732,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 6,
+          "expressed_mass": 17.0,
+          "new_or_increased_symptoms": {
+            "Loss of pleasure": [
+              1,
+              2
+            ],
+            "Concentration difficulty": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I don't know. Maybe just being able to sleep through the night. I miss having someone to share that with.",
+          "barycenter": {
+            "w1": 0.239,
+            "running_mu_through_prev": 0.2328,
+            "running_sigma_through_prev": 0.1927,
+            "threshold_mu_plus_2sigma": 0.6182,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.1213,
+            "running_mu_through_prev": 0.25,
+            "running_sigma_through_prev": 0.257,
+            "threshold_mu_plus_2sigma": 0.764,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.2612,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 7,
+          "expressed_mass": 18.0,
+          "new_or_increased_symptoms": {
+            "Past failure": [
+              0,
+              1
+            ],
+            "Self-criticalness": [
+              0,
+              1
+            ],
+            "Worthlessness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I guess it's just that I'm not good at anything lately. I used to help my sister with stuff, and now she's gone. I feel useless.",
+          "barycenter": {
+            "w1": 0.2561,
+            "running_mu_through_prev": 0.2338,
+            "running_sigma_through_prev": 0.1759,
+            "threshold_mu_plus_2sigma": 0.5857,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.1765,
+            "running_mu_through_prev": 0.2286,
+            "running_sigma_through_prev": 0.2394,
+            "threshold_mu_plus_2sigma": 0.7074,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.2483,
+            "hint": "good_alignment"
+          }
+        }
+      ],
+      "persona_name": "Marco",
+      "gold_bdi": 38,
+      "gold_band": "severe",
+      "run": 3
+    },
+    "Maria_run3": {
+      "persona_id": 16,
+      "predicted_bdi": 14,
+      "predicted_band": "mild",
+      "source_log": "runs\\task1\\task1_results_20260413\\persona16\\internal_3.json",
+      "n_rounds": 7,
+      "fired_rounds_barycenter": [],
+      "fired_rounds_w_self": [],
+      "w_align_misalignment_rounds": [
+        1
+      ],
+      "expressed_mass_trajectory": [
+        5,
+        7,
+        11,
+        15,
+        13,
+        12,
+        14
+      ],
+      "mass_rising_at_final_round": true,
+      "rounds": [
+        {
+          "round": 1,
+          "expressed_mass": 5.0,
+          "new_or_increased_symptoms": {
+            "Pessimism": [
+              0,
+              1
+            ],
+            "Past failure": [
+              0,
+              1
+            ],
+            "Loss of pleasure": [
+              0,
+              1
+            ],
+            "Self-criticalness": [
+              0,
+              1
+            ],
+            "Loss of interest": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I'm doing all right. It's been a bit of a struggle lately to keep up with my usual routine. I feel a bit flat, like I should be doing more to help the environment.",
+          "barycenter": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.6667,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 2,
+          "expressed_mass": 7.0,
+          "new_or_increased_symptoms": {
+            "Loss of energy": [
+              0,
+              1
+            ],
+            "Sleep changes": [
+              0,
+              1
+            ],
+            "Tiredness/fatigue": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I've been sleeping okay, I think. I wake up early, but then I crash around 4 pm. I just feel like I should be pushing myself to stay up later.",
+          "barycenter": {
+            "w1": 0.3571,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.8571,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.4762,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 3,
+          "expressed_mass": 11.0,
+          "new_or_increased_symptoms": {
+            "Sadness": [
+              0,
+              1
+            ],
+            "Loss of pleasure": [
+              0,
+              1
+            ],
+            "Loss of energy": [
+              1,
+              2
+            ],
+            "Sleep changes": [
+              1,
+              2
+            ],
+            "Tiredness/fatigue": [
+              1,
+              2
+            ]
+          },
+          "persona_utterance": "It makes me want to just stay in bed, mostly. I'll skip seeing friends or going out because I don't want to be a downer.",
+          "barycenter": {
+            "w1": 0.3202,
+            "running_mu_through_prev": 0.1786,
+            "running_sigma_through_prev": 0.1786,
+            "threshold_mu_plus_2sigma": 0.5357,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.3636,
+            "running_mu_through_prev": 0.4286,
+            "running_sigma_through_prev": 0.4286,
+            "threshold_mu_plus_2sigma": 1.2857,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.1313,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 4,
+          "expressed_mass": 15.0,
+          "new_or_increased_symptoms": {
+            "Sadness": [
+              1,
+              2
+            ],
+            "Past failure": [
+              0,
+              1
+            ],
+            "Self-dislike": [
+              0,
+              1
+            ],
+            "Worthlessness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I think I'm just a bit of a failure. I should be able to handle this better. It's annoying, because I know I'm usually a good person to be around.",
+          "barycenter": {
+            "w1": 0.014,
+            "running_mu_through_prev": 0.2258,
+            "running_sigma_through_prev": 0.1604,
+            "threshold_mu_plus_2sigma": 0.5465,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.297,
+            "running_mu_through_prev": 0.4069,
+            "running_sigma_through_prev": 0.3513,
+            "threshold_mu_plus_2sigma": 1.1095,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.2964,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 5,
+          "expressed_mass": 13.0,
+          "new_or_increased_symptoms": {},
+          "persona_utterance": "It's been hard to get the energy to go hiking with my friends, but I still love looking at their photos.",
+          "barycenter": {
+            "w1": 0.0724,
+            "running_mu_through_prev": 0.1728,
+            "running_sigma_through_prev": 0.1664,
+            "threshold_mu_plus_2sigma": 0.5056,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.1077,
+            "running_mu_through_prev": 0.3794,
+            "running_sigma_through_prev": 0.3079,
+            "threshold_mu_plus_2sigma": 0.9953,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.4196,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 6,
+          "expressed_mass": 12.0,
+          "new_or_increased_symptoms": {},
+          "persona_utterance": "Yeah, seeing my friends in person. Just being around people who care about me, that helps me feel better than anything else.",
+          "barycenter": {
+            "w1": 0.0675,
+            "running_mu_through_prev": 0.1527,
+            "running_sigma_through_prev": 0.1542,
+            "threshold_mu_plus_2sigma": 0.4611,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0833,
+            "running_mu_through_prev": 0.3251,
+            "running_sigma_through_prev": 0.2961,
+            "threshold_mu_plus_2sigma": 0.9172,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.3433,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 7,
+          "expressed_mass": 14.0,
+          "new_or_increased_symptoms": {
+            "Worthlessness": [
+              0,
+              1
+            ],
+            "Appetite changes": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "My appetite has been a bit off, but I'm not too worried about it. It's just a minor thing.",
+          "barycenter": {
+            "w1": 0.0584,
+            "running_mu_through_prev": 0.1385,
+            "running_sigma_through_prev": 0.1443,
+            "threshold_mu_plus_2sigma": 0.4271,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0952,
+            "running_mu_through_prev": 0.2848,
+            "running_sigma_through_prev": 0.2849,
+            "threshold_mu_plus_2sigma": 0.8546,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.2942,
+            "hint": "good_alignment"
+          }
+        }
+      ],
+      "persona_name": "Maria",
+      "gold_bdi": 40,
+      "gold_band": "severe",
+      "run": 3
+    },
+    "Maya_run3": {
+      "persona_id": 17,
+      "predicted_bdi": 10,
+      "predicted_band": "minimal",
+      "source_log": "runs\\task1\\task1_results_20260413\\persona17\\internal_3.json",
+      "n_rounds": 7,
+      "fired_rounds_barycenter": [
+        4
+      ],
+      "fired_rounds_w_self": [],
+      "w_align_misalignment_rounds": [
+        1,
+        2,
+        3
+      ],
+      "expressed_mass_trajectory": [
+        2,
+        3,
+        4,
+        7,
+        8,
+        10,
+        10
+      ],
+      "mass_rising_at_final_round": false,
+      "rounds": [
+        {
+          "round": 1,
+          "expressed_mass": 2.0,
+          "new_or_increased_symptoms": {
+            "Loss of energy": [
+              0,
+              1
+            ],
+            "Tiredness/fatigue": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I've been doing okay, just a bit tired lately. Maybe just the usual stress of work catching up with me. I haven't really had a chance to complain about it, though.",
+          "barycenter": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.5238,
+            "hint": "high_misalignment"
+          }
+        },
+        {
+          "round": 2,
+          "expressed_mass": 3.0,
+          "new_or_increased_symptoms": {
+            "Irritability": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "Maybe a little irritability at home, but I don't think it's anything serious. I just try to keep my cool and move on.",
+          "barycenter": {
+            "w1": 0.2667,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.6667,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.0952,
+            "hint": "high_misalignment"
+          }
+        },
+        {
+          "round": 3,
+          "expressed_mass": 4.0,
+          "new_or_increased_symptoms": {
+            "Sleep changes": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "Sleep is pretty good, but I wake up feeling a bit groggy sometimes. I just drink a coffee and I'm good to go.",
+          "barycenter": {
+            "w1": 0.1944,
+            "running_mu_through_prev": 0.1333,
+            "running_sigma_through_prev": 0.1333,
+            "threshold_mu_plus_2sigma": 0.4,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.3333,
+            "running_mu_through_prev": 0.3333,
+            "running_sigma_through_prev": 0.3333,
+            "threshold_mu_plus_2sigma": 1.0,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.7579,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 4,
+          "expressed_mass": 7.0,
+          "new_or_increased_symptoms": {
+            "Pessimism": [
+              0,
+              1
+            ],
+            "Past failure": [
+              0,
+              1
+            ],
+            "Loss of interest": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I think I'm just stuck in a bit of a rut, maybe. I feel like I'm not quite where I should be with my career, but I'm trying not to let it bother me too much.",
+          "barycenter": {
+            "w1": 0.4107,
+            "running_mu_through_prev": 0.1537,
+            "running_sigma_through_prev": 0.1126,
+            "threshold_mu_plus_2sigma": 0.3789,
+            "fired": true
+          },
+          "w_self": {
+            "w1": 0.6429,
+            "running_mu_through_prev": 0.3333,
+            "running_sigma_through_prev": 0.2722,
+            "threshold_mu_plus_2sigma": 0.8777,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.3214,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 5,
+          "expressed_mass": 8.0,
+          "new_or_increased_symptoms": {
+            "Loss of pleasure": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I haven't really been doing much. I just play video games with friends sometimes. It's been a while since I've done anything big, but I don't really have time anyway.",
+          "barycenter": {
+            "w1": 0.3333,
+            "running_mu_through_prev": 0.218,
+            "running_sigma_through_prev": 0.148,
+            "threshold_mu_plus_2sigma": 0.5139,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.1429,
+            "running_mu_through_prev": 0.4107,
+            "running_sigma_through_prev": 0.2711,
+            "threshold_mu_plus_2sigma": 0.953,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.3321,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 6,
+          "expressed_mass": 10.0,
+          "new_or_increased_symptoms": {
+            "Self-criticalness": [
+              0,
+              1
+            ],
+            "Indecisiveness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I guess I'm just trying to figure it out. I'm not sure if I'm on the right path or not, but I'm trying to stay positive.",
+          "barycenter": {
+            "w1": 0.3412,
+            "running_mu_through_prev": 0.241,
+            "running_sigma_through_prev": 0.1402,
+            "threshold_mu_plus_2sigma": 0.5214,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.225,
+            "running_mu_through_prev": 0.3571,
+            "running_sigma_through_prev": 0.2651,
+            "threshold_mu_plus_2sigma": 0.8874,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.4476,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 7,
+          "expressed_mass": 10.0,
+          "new_or_increased_symptoms": {},
+          "persona_utterance": "I guess I just hope I can find a way to make my work more fulfilling. Maybe take on more responsibility or something.",
+          "barycenter": {
+            "w1": 0.2636,
+            "running_mu_through_prev": 0.2577,
+            "running_sigma_through_prev": 0.1333,
+            "threshold_mu_plus_2sigma": 0.5243,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": 0.3351,
+            "running_sigma_through_prev": 0.247,
+            "threshold_mu_plus_2sigma": 0.8291,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.4408,
+            "hint": "good_alignment"
+          }
+        }
+      ],
+      "persona_name": "Maya",
+      "gold_bdi": 6,
+      "gold_band": "minimal",
+      "run": 3
+    },
+    "Noah_run3": {
+      "persona_id": 18,
+      "predicted_bdi": 7,
+      "predicted_band": "minimal",
+      "source_log": "runs\\task1\\task1_results_20260420\\persona18\\internal_3.json",
+      "n_rounds": 7,
+      "fired_rounds_barycenter": [],
+      "fired_rounds_w_self": [],
+      "w_align_misalignment_rounds": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "expressed_mass_trajectory": [
+        1,
+        2,
+        4,
+        5,
+        7,
+        7,
+        7
+      ],
+      "mass_rising_at_final_round": false,
+      "rounds": [
+        {
+          "round": 1,
+          "expressed_mass": 1.0,
+          "new_or_increased_symptoms": {
+            "Agitation": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I'm good, just a bit... jittery. It's just wedding stuff, I'm sure. I don't want to make a big deal out of it. *smiles*",
+          "barycenter": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.4762,
+            "hint": "high_misalignment"
+          }
+        },
+        {
+          "round": 2,
+          "expressed_mass": 2.0,
+          "new_or_increased_symptoms": {
+            "Irritability": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I get a bit snappish with my friends when they ask about the planning. I know it's just stress, so I try not to dwell on it. *laughs*",
+          "barycenter": {
+            "w1": 0.3333,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 1.0,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.6905,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 3,
+          "expressed_mass": 4.0,
+          "new_or_increased_symptoms": {
+            "Loss of energy": [
+              0,
+              1
+            ],
+            "Tiredness/fatigue": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I'm running on a bit less coffee than I used to, but I'm managing. I just try to keep the momentum going. I'm sure I'll be back to my usual self after the wedding. *smiles*",
+          "barycenter": {
+            "w1": 0.25,
+            "running_mu_through_prev": 0.1667,
+            "running_sigma_through_prev": 0.1667,
+            "threshold_mu_plus_2sigma": 0.5,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.75,
+            "running_mu_through_prev": 0.5,
+            "running_sigma_through_prev": 0.5,
+            "threshold_mu_plus_2sigma": 1.5,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.5476,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 4,
+          "expressed_mass": 5.0,
+          "new_or_increased_symptoms": {
+            "Self-criticalness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "Sometimes I worry I'm not doing enough. I get a bit anxious about the details, but I know I'm organized enough. It's just a normal part of planning, really.",
+          "barycenter": {
+            "w1": 0.25,
+            "running_mu_through_prev": 0.1944,
+            "running_sigma_through_prev": 0.1416,
+            "threshold_mu_plus_2sigma": 0.4777,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.35,
+            "running_mu_through_prev": 0.5833,
+            "running_sigma_through_prev": 0.4249,
+            "threshold_mu_plus_2sigma": 1.4332,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.4857,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 5,
+          "expressed_mass": 7.0,
+          "new_or_increased_symptoms": {
+            "Loss of pleasure": [
+              0,
+              1
+            ],
+            "Loss of interest": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I'm still doing yoga and stuff, but it's not as... automatic. It feels a bit like work, like I'm doing it to be good. I know it's good for me, though. *smiles*",
+          "barycenter": {
+            "w1": 0.3008,
+            "running_mu_through_prev": 0.2083,
+            "running_sigma_through_prev": 0.125,
+            "threshold_mu_plus_2sigma": 0.4583,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.4,
+            "running_mu_through_prev": 0.525,
+            "running_sigma_through_prev": 0.3816,
+            "threshold_mu_plus_2sigma": 1.2882,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.419,
+            "hint": "good_alignment"
+          }
+        },
+        {
+          "round": 6,
+          "expressed_mass": 7.0,
+          "new_or_increased_symptoms": {},
+          "persona_utterance": "I'm excited for the new chapter, but I'm also nervous about how things will settle down after the wedding. I know it'll be different, but I'm ready for that change.",
+          "barycenter": {
+            "w1": 0.2198,
+            "running_mu_through_prev": 0.2268,
+            "running_sigma_through_prev": 0.1178,
+            "threshold_mu_plus_2sigma": 0.4623,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": 0.5,
+            "running_sigma_through_prev": 0.345,
+            "threshold_mu_plus_2sigma": 1.1899,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.5397,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 7,
+          "expressed_mass": 7.0,
+          "new_or_increased_symptoms": {
+            "Appetite changes": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I'm a bit more picky about food lately, which is weird because I love food. I just want to sit down and actually enjoy it instead of just grabbing something on the go. I'm managing, though. *smiles*",
+          "barycenter": {
+            "w1": 0.2165,
+            "running_mu_through_prev": 0.2256,
+            "running_sigma_through_prev": 0.1075,
+            "threshold_mu_plus_2sigma": 0.4407,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.1429,
+            "running_mu_through_prev": 0.4167,
+            "running_sigma_through_prev": 0.3659,
+            "threshold_mu_plus_2sigma": 1.1485,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.3793,
+            "hint": "good_alignment"
+          }
+        }
+      ],
+      "persona_name": "Noah",
+      "gold_bdi": 5,
+      "gold_band": "minimal",
+      "run": 3
+    },
+    "Priya_run3": {
+      "persona_id": 19,
+      "predicted_bdi": 11,
+      "predicted_band": "minimal",
+      "source_log": "runs\\task1\\task1_results_20260420\\persona19\\internal_3.json",
+      "n_rounds": 7,
+      "fired_rounds_barycenter": [],
+      "fired_rounds_w_self": [],
+      "w_align_misalignment_rounds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "expressed_mass_trajectory": [
+        2,
+        4,
+        7,
+        6,
+        13,
+        11,
+        11
+      ],
+      "mass_rising_at_final_round": false,
+      "rounds": [
+        {
+          "round": 1,
+          "expressed_mass": 2.0,
+          "new_or_increased_symptoms": {
+            "Loss of energy": [
+              0,
+              1
+            ],
+            "Tiredness/fatigue": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I've been okay, just a bit... tired, I guess. I have these days where I just want to curl up and not move. It's weird.",
+          "barycenter": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": null,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.5238,
+            "hint": "high_misalignment"
+          }
+        },
+        {
+          "round": 2,
+          "expressed_mass": 4.0,
+          "new_or_increased_symptoms": {
+            "Sadness": [
+              0,
+              1
+            ],
+            "Indecisiveness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "It's a bit heavy. I feel like I'm carrying a weight around, but I don't know what to do about it. I usually just try to keep busy and not think about it.",
+          "barycenter": {
+            "w1": 0.3333,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 1.0,
+            "running_mu_through_prev": 0.0,
+            "running_sigma_through_prev": null,
+            "threshold_mu_plus_2sigma": null,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.5238,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 3,
+          "expressed_mass": 7.0,
+          "new_or_increased_symptoms": {
+            "Loss of pleasure": [
+              0,
+              1
+            ],
+            "Agitation": [
+              0,
+              1
+            ],
+            "Loss of interest": [
+              0,
+              1
+            ],
+            "Irritability": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I get a bit foggy in the afternoon. I might snap at someone for no reason or just feel like I'm stuck in neutral. I try to shake it off by doing something fun, like baking or watching a show. It helps me shift gears.",
+          "barycenter": {
+            "w1": 0.3626,
+            "running_mu_through_prev": 0.1667,
+            "running_sigma_through_prev": 0.1667,
+            "threshold_mu_plus_2sigma": 0.5,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.5357,
+            "running_mu_through_prev": 0.5,
+            "running_sigma_through_prev": 0.5,
+            "threshold_mu_plus_2sigma": 1.5,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.5873,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 4,
+          "expressed_mass": 6.0,
+          "new_or_increased_symptoms": {
+            "Guilty feelings": [
+              0,
+              1
+            ],
+            "Irritability": [
+              1,
+              2
+            ],
+            "Concentration difficulty": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I guess I'm more irritable than I should be. I snap at my partner for little things and then feel bad about it. I want to be the patient one, but it's hard when I'm tired.",
+          "barycenter": {
+            "w1": 0.5088,
+            "running_mu_through_prev": 0.232,
+            "running_sigma_through_prev": 0.1645,
+            "threshold_mu_plus_2sigma": 0.5609,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.5238,
+            "running_mu_through_prev": 0.5119,
+            "running_sigma_through_prev": 0.4086,
+            "threshold_mu_plus_2sigma": 1.3291,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.7857,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 5,
+          "expressed_mass": 13.0,
+          "new_or_increased_symptoms": {
+            "Self-dislike": [
+              0,
+              1
+            ],
+            "Self-criticalness": [
+              0,
+              1
+            ],
+            "Agitation": [
+              0,
+              1
+            ],
+            "Loss of interest": [
+              0,
+              1
+            ],
+            "Loss of energy": [
+              0,
+              1
+            ],
+            "Tiredness/fatigue": [
+              0,
+              2
+            ]
+          },
+          "persona_utterance": "It's been pretty standard. I wake up early, get my coffee, and get going. I try to stay focused at work, but sometimes I just feel like I'm going through the motions. I usually try to get home and cook something nice to take my mind off it.",
+          "barycenter": {
+            "w1": 0.1106,
+            "running_mu_through_prev": 0.3012,
+            "running_sigma_through_prev": 0.1862,
+            "threshold_mu_plus_2sigma": 0.6735,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.5,
+            "running_mu_through_prev": 0.5149,
+            "running_sigma_through_prev": 0.3539,
+            "threshold_mu_plus_2sigma": 1.2227,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 0.5194,
+            "hint": "moderate_misalignment"
+          }
+        },
+        {
+          "round": 6,
+          "expressed_mass": 11.0,
+          "new_or_increased_symptoms": {
+            "Pessimism": [
+              0,
+              1
+            ],
+            "Indecisiveness": [
+              0,
+              1
+            ]
+          },
+          "persona_utterance": "I want to get more settled, I guess. I keep saying I should start a new project or learn something new, but I haven't actually done it. I think I'm just waiting for the energy to catch up with my ambition.",
+          "barycenter": {
+            "w1": 0.4693,
+            "running_mu_through_prev": 0.2631,
+            "running_sigma_through_prev": 0.1831,
+            "threshold_mu_plus_2sigma": 0.6293,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.5874,
+            "running_mu_through_prev": 0.5119,
+            "running_sigma_through_prev": 0.3166,
+            "threshold_mu_plus_2sigma": 1.1451,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.0404,
+            "hint": "high_misalignment"
+          }
+        },
+        {
+          "round": 7,
+          "expressed_mass": 11.0,
+          "new_or_increased_symptoms": {},
+          "persona_utterance": "It's been pretty standard. I wake up early, get my coffee, and get going. I try to stay focused at work, but sometimes I just feel like I'm going through the motions. I usually try to get home and cook something nice to take my mind off it.",
+          "barycenter": {
+            "w1": 0.3737,
+            "running_mu_through_prev": 0.2974,
+            "running_sigma_through_prev": 0.184,
+            "threshold_mu_plus_2sigma": 0.6654,
+            "fired": false
+          },
+          "w_self": {
+            "w1": 0.0,
+            "running_mu_through_prev": 0.5245,
+            "running_sigma_through_prev": 0.2904,
+            "threshold_mu_plus_2sigma": 1.1052,
+            "fired": false
+          },
+          "w_align": {
+            "w1": 1.1515,
+            "hint": "high_misalignment"
+          }
+        }
+      ],
+      "persona_name": "Priya",
+      "gold_bdi": 7,
+      "gold_band": "minimal",
+      "run": 3
+    }
+  }
+}
