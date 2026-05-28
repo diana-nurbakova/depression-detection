@@ -227,9 +227,18 @@ We submit three runs with different correction strategies to hedge across evalua
 |-----|-----------|-----------|-----------|
 | **Run 1** | `band_aware` | 8 | Safety run — optimizes ADODL (closeness ratio), best on TalkDep |
 | **Run 2** | `flat_minus_2` | 8 | Calibrated risk — balanced MAD/DCHR trade-off |
-| **Run 3** | `flat_minus_3` | 8 | Balanced hedge — conservative across all metrics |
+| **Run 3** | `flat_minus_3` (early personas) → **ToM config, no post-hoc correction** (later personas) | 8 | Balanced hedge; switched mid-stream to ToM (see note) |
 
 All three runs use the full pipeline: specialized assessors + linguistic features + Bayesian prior + justificator + SDC. Assessors run in parallel with 0.1 temperature.
+
+> **Run 3 changed mid-submission (no-ToM → ToM).** Because the 20 personas were processed and submitted in batches over several weeks, Run 3's configuration was **changed part-way through**. The early batches used `config/task1_colab_run3.yaml` (`flat_minus_3`, no ToM); from the **2026-03-31 batch onward** we switched to `config/task1_colab_run3_tom.yaml` (`correction: none`, `tom.corrections_enabled: true`). The cutoff is **patient_id 13 (Laura) — submission folder `persona12`**:
+>
+> | Run 3 segment | personas | `correction_strategy` | ToM | Net effect on total |
+> |---|---|---|---|---|
+> | Head | patient_id 2–12 (folders `persona1`–`persona11`) | `flat_minus_3` (−3) | off (no `tom` block) | `bdi = raw_total − 3` |
+> | Tail | patient_id 13–20 (folders `persona12`–`persona19`) | `none` (0) | tracking on; C1/C2 config-enabled | `bdi = raw_total` (C1/C2 net-zero on all 8) |
+>
+> Verified from the per-batch `internal_3.json` `correction` blocks (the submitted files match these byte-for-byte). Consequence: the tail received **no −3 reduction** and the ToM C1/C2 corrections that were meant to replace it produced **net-zero change** on every tail persona, so the tail is effectively *uncorrected raw totals* — a contributor to the tail's weaker DCHR (0.375 vs the head's 0.636; see §8.7).
 
 ---
 
@@ -481,7 +490,15 @@ The ToM ablation compared two conditions on TalkDep personas:
 | Marco | 38 | 33 | ✓ Severe |
 | Maria | 40 | 26 | ✗ Moderate |
 
-**Finding:** ToM-on performed poorly (DCHR ≈ 0.33), primarily because C1+C2 corrections introduced systematic bias — the confidence gate (C1) dropped too many scored items, and the somatic boost (C2) added inappropriate points. The ToM perception tracking itself provides useful coverage diagnostics (e.g., Maria's Somatic_LowToM category had 0% evidence coverage), but the correction mechanisms need further calibration. **Conclusion:** ToM tracking is enabled for orchestrator guidance but C1/C2 corrections are disabled in the submission runs.
+**Finding (this TalkDep ablation):** ToM-on performed poorly (DCHR ≈ 0.33), primarily because C1+C2 corrections introduced systematic bias — the confidence gate (C1) dropped too many scored items, and the somatic boost (C2) added inappropriate points. The ToM perception tracking itself provides useful coverage diagnostics (e.g., Maria's Somatic_LowToM category had 0% evidence coverage), but the correction mechanisms need further calibration.
+
+> **What the submitted runs actually did (correcting an earlier over-simplification).** This sentence previously read "ToM tracking is enabled for orchestrator guidance but C1/C2 corrections are disabled in the submission runs." That is accurate for **Runs 1 and 2 and for the Run 3 head** (patient_id 2–12), but **not uniform**:
+>
+> - **Runs 1, 2:** ToM tracking on for orchestrator guidance; no ToM C1/C2; post-hoc `band_aware` / `flat_minus_2`.
+> - **Run 3 head (patient_id 2–12):** ToM off entirely; post-hoc `flat_minus_3`.
+> - **Run 3 tail (patient_id 13–20, from the 2026-03-31 batch, submission folder `persona12` onward):** ran `config/task1_colab_run3_tom.yaml` with `tom.corrections_enabled: true` and no post-hoc correction. So C1/C2 were **configured ON** here — but they produced **net-zero change** on every tail persona (`bdi = raw_total` for all 8), so no submitted total was actually altered by C1/C2.
+>
+> Net: C1/C2 never changed a submitted score, but they were *enabled in config* on the Run 3 tail (not "disabled" as the old wording implied). See §5 for the per-segment table. The TalkDep ablation above (where C1/C2 *did* fire and hurt) is a separate offline experiment, not the submission.
 
 #### ToM Analysis Detail (Maria)
 
