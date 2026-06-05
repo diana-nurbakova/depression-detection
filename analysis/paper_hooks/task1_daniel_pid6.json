@@ -1,0 +1,304 @@
+{
+  "metadata": {
+    "task": "eRisk 2026 Task 1 — Conversational Depression Detection",
+    "purpose": "Candidate verbatim exchanges for the paper's opening hook: ordinary-sounding talk that nonetheless carries severe-band BDI-II signal, illustrating the system's dominant failure (severe under-prediction).",
+    "persona_name": "Daniel",
+    "patient_id": 6,
+    "submission_folder": "runs/task1/official_submission/task1-llms-results/persona5",
+    "gold": {
+      "bdi_total": 33,
+      "band": "severe",
+      "band_definition_official": "minimal 0–9 / mild 10–18 / moderate 19–29 / severe 30–63",
+      "key_symptoms_as_released": [
+        "Pessimism",
+        "Self-criticalness",
+        "Loss of interest",
+        "Loss of interest"
+      ],
+      "key_symptoms_distinct": [
+        "Pessimism",
+        "Self-criticalness",
+        "Loss of interest"
+      ],
+      "key_symptoms_note": "The released JSONL repeats 'Loss of interest' twice in the patient_key_symptoms list; the three distinct gold symptoms are Pessimism, Self-criticalness, Loss of interest."
+    },
+    "system_predictions": {
+      "Run_1": {
+        "predicted_bdi": 17,
+        "predicted_band": "mild",
+        "delta_vs_gold": -16,
+        "band_correct": false
+      },
+      "Run_2": {
+        "predicted_bdi": 18,
+        "predicted_band": "mild",
+        "delta_vs_gold": -15,
+        "band_correct": false
+      },
+      "Run_3": {
+        "predicted_bdi": 19,
+        "predicted_band": "moderate",
+        "delta_vs_gold": -14,
+        "band_correct": false
+      }
+    },
+    "selection_criteria": [
+      "1. Surface-ordinary language — no overtly clinical/alarming vocabulary; a non-expert first read should land on 'mild / ordinary'.",
+      "2. Implicit severe-signal — at least one of Daniel's gold key symptoms (Pessimism, Self-criticalness, Loss of interest) recoverable from the wording, oblique not stated.",
+      "3. Self-implicating — picks exchanges our pipeline plausibly under-read; previews the dominant severe-under-prediction failure honestly.",
+      "4. Self-contained — interpretable without earlier turns; the excerpt as a whole carries enough context.",
+      "5. Short — two exchanges (interviewer + Daniel × 2), three at most.",
+      "6. Interviewer doing real OARS work — open, non-leading probe (bonus, supports the §1 P3 claim).",
+      "7. Verbatim — quoted exactly, including disfluencies, ellipsis, and curly quotes."
+    ],
+    "disqualifiers_applied": [
+      "Overtly clinical/alarming terms (hopeless, worthless, hollow, lost the spark, etc.) — breaks the surprise.",
+      "Any mention of BDI item 9 (suicidal ideation) — neither among Daniel's gold symptoms nor appropriate tone.",
+      "Turns needing earlier conversation context to parse.",
+      "Turns where our pipeline already scored well (would not be honest about the failure mode)."
+    ],
+    "verbatim_note": "Text reproduced exactly from interactions_{1,3}.json including original punctuation. Note: Run 1 (Candidates B, C) uses curly right single quotes (’); Run 3 (Candidate A) uses ASCII apostrophes (') and 3-dot ellipsis (...). Differences are preserved as the persona LLM emitted them."
+  },
+  "candidates": [
+    {
+      "id": "A",
+      "recommendation_rank": 1,
+      "recommendation": "primary",
+      "label": "Run 3 opening + follow-up (\"I'm 40, I should have it together by now\")",
+      "source_file": "runs/task1/official_submission/task1-llms-results/persona5/interactions_3.json",
+      "source_run": 3,
+      "turn_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "interviewer_provider_as_submitted": "OpenAI gpt-5-nano (Colab config)",
+      "exchanges": [
+        {
+          "turn": 0,
+          "role": "interviewer",
+          "speaker_label": "Interviewer",
+          "message": "Hi there—it's really nice to connect with you. How have you been doing lately? I'm here to listen to whatever you want to share."
+        },
+        {
+          "turn": 1,
+          "role": "persona",
+          "speaker_label": "Daniel",
+          "message": "Honestly? It's been tough. Work is keeping me up at night, and my mind is racing with things that I should probably let go of. I just feel... stuck."
+        },
+        {
+          "turn": 2,
+          "role": "interviewer",
+          "speaker_label": "Interviewer",
+          "message": "That sounds really heavy. It makes sense that your mind is racing and you're feeling stuck with work keeping you up at night. What's been weighing on you the most lately?"
+        },
+        {
+          "turn": 3,
+          "role": "persona",
+          "speaker_label": "Daniel",
+          "message": "Just the usual stuff. I'm 40, I should have it together by now, but I don't. I'm just trying to make ends meet and figure out what I'm doing with my life. It feels like I'm just going through the motions."
+        }
+      ],
+      "implicit_signal_map": [
+        {
+          "gold_symptom": "Pessimism",
+          "carrier_phrases": [
+            "things that I should probably let go of",
+            "I just feel... stuck",
+            "figure out what I'm doing with my life"
+          ],
+          "register": "ordinary midlife rumination"
+        },
+        {
+          "gold_symptom": "Self-criticalness",
+          "carrier_phrases": [
+            "I should have it together by now, but I don't"
+          ],
+          "register": "midlife normalisation; sharpest implicit line in the set"
+        },
+        {
+          "gold_symptom": "Loss of interest",
+          "carrier_phrases": [
+            "going through the motions"
+          ],
+          "register": "everyday idiom"
+        }
+      ],
+      "non_expert_first_read": "Tired 40-year-old, ordinary midlife frustration; stressed about work, can't sleep.",
+      "self_implicating_delta_vs_gold": -14,
+      "criteria_assessment": {
+        "1_surface_ordinary": "pass — no clinical vocabulary; the boldest line ('I should have it together by now') is normalised as midlife talk",
+        "2_implicit_severe_signal": "pass — all three of Daniel's gold symptoms recoverable from wording, none stated",
+        "3_self_implicating": "pass — Run 3 scored 19 (moderate) including this turn; under-read by 14 points",
+        "4_self_contained": "pass — turn 2's reflection summarises turn 1 inside the excerpt; no earlier context needed",
+        "5_short": "pass — exactly 2 exchanges",
+        "6_oars_quality": "pass — turn 0 is a clean open prompt; turn 2 is reflection + open follow-up",
+        "7_verbatim": "pass — text matches interactions_3.json byte-for-byte (curly quotes and ellipsis preserved)"
+      },
+      "concerns": [
+        "‘I just feel… stuck’ (ellipsis) and ‘It's been tough’ tilt slightly toward distress-coded surface — a careful layperson may notice.",
+        "‘I should have it together by now, but I don't’ is the boldest line; framed as midlife normalisation but a sharp reader could call it overt self-criticalness."
+      ]
+    },
+    {
+      "id": "B",
+      "recommendation_rank": 2,
+      "recommendation": "secondary",
+      "label": "Run 1 opening + follow-up (\"stare at the wall\" / \"watching someone else's life move on\")",
+      "source_file": "runs/task1/official_submission/task1-llms-results/persona5/interactions_1.json",
+      "source_run": 1,
+      "turn_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "interviewer_provider_as_submitted": "OpenAI gpt-5-nano (Colab config)",
+      "exchanges": [
+        {
+          "turn": 0,
+          "role": "interviewer",
+          "speaker_label": "Interviewer",
+          "message": "Hi there, it’s really nice to chat with you today. How have you been feeling lately?"
+        },
+        {
+          "turn": 1,
+          "role": "persona",
+          "speaker_label": "Daniel",
+          "message": "Honestly? It’s been tough. I just feel like I’m running on empty. I get up, go to work, come home, and just stare at the wall. I used to love playing guitar, but now I can’t even bring myself to pick it up."
+        },
+        {
+          "turn": 2,
+          "role": "interviewer",
+          "speaker_label": "Interviewer",
+          "message": "That sounds really hard, like you’re running on empty and even things you used to love don’t pull you in anymore. Has there been a recent moment or experience that’s felt especially heavy or sad for you?"
+        },
+        {
+          "turn": 3,
+          "role": "persona",
+          "speaker_label": "Daniel",
+          "message": "Definitely. My best mate got married a few months ago, and it really hit me hard. I felt like I was watching someone else’s life move on without me. It made me realize how stagnant I am."
+        }
+      ],
+      "implicit_signal_map": [
+        {
+          "gold_symptom": "Loss of interest",
+          "carrier_phrases": [
+            "I used to love playing guitar, but now I can’t even bring myself to pick it up"
+          ],
+          "register": "concrete behaviour-anchored; everyday 'haven't gotten around to it' framing"
+        },
+        {
+          "gold_symptom": "Pessimism",
+          "carrier_phrases": [
+            "watching someone else’s life move on without me",
+            "how stagnant I am"
+          ],
+          "register": "wistful midlife framing"
+        },
+        {
+          "gold_symptom": "Self-criticalness",
+          "carrier_phrases": [
+            "how stagnant I am"
+          ],
+          "register": "faint; doubles with Pessimism"
+        }
+      ],
+      "non_expert_first_read": "Stressed and tired at work, recently saddened by a friend's wedding; routine-numbed but functional.",
+      "self_implicating_delta_vs_gold": -16,
+      "criteria_assessment": {
+        "1_surface_ordinary": "pass — 'get up, go to work, come home, and just stare at the wall' is the most mundane routine description in any of the three transcripts",
+        "2_implicit_severe_signal": "pass — Loss of interest and Pessimism clearly carried; Self-criticalness faintly via 'stagnant'",
+        "3_self_implicating": "pass — Run 1 scored 17 (mild); under-read by 16 points (largest gap of the three runs)",
+        "4_self_contained": "pass — turn 2's quote-back is bounded to turn 1 which is shown in the excerpt",
+        "5_short": "pass — exactly 2 exchanges",
+        "6_oars_quality": "partial — turn 2 includes a mild lead ('especially heavy or sad') rather than a clean OARS open probe",
+        "7_verbatim": "pass — matches interactions_1.json byte-for-byte"
+      },
+      "concerns": [
+        "‘Running on empty’ and ‘tough’ are distress-coded surface markers — present but milder than Candidate A's strongest line.",
+        "Turn 2 interviewer prompt asks for the 'especially heavy or sad' moment — a small lead away from pure OARS.",
+        "Wedding episode is a concrete trigger, which can make the severity read as situational sadness rather than chronic — slightly weakens the 'looks ordinary, scores severe' thesis."
+      ]
+    },
+    {
+      "id": "C",
+      "recommendation_rank": 3,
+      "recommendation": "fallback / minimal",
+      "label": "Run 1 opening alone (single-exchange tight hook)",
+      "source_file": "runs/task1/official_submission/task1-llms-results/persona5/interactions_1.json",
+      "source_run": 1,
+      "turn_indices": [
+        0,
+        1
+      ],
+      "interviewer_provider_as_submitted": "OpenAI gpt-5-nano (Colab config)",
+      "exchanges": [
+        {
+          "turn": 0,
+          "role": "interviewer",
+          "speaker_label": "Interviewer",
+          "message": "Hi there, it’s really nice to chat with you today. How have you been feeling lately?"
+        },
+        {
+          "turn": 1,
+          "role": "persona",
+          "speaker_label": "Daniel",
+          "message": "Honestly? It’s been tough. I just feel like I’m running on empty. I get up, go to work, come home, and just stare at the wall. I used to love playing guitar, but now I can’t even bring myself to pick it up."
+        }
+      ],
+      "implicit_signal_map": [
+        {
+          "gold_symptom": "Loss of interest",
+          "carrier_phrases": [
+            "I used to love playing guitar, but now I can’t even bring myself to pick it up"
+          ],
+          "register": "concrete, behaviour-anchored"
+        }
+      ],
+      "non_expert_first_read": "Burnt-out at work and stopped a hobby; tired but not alarming.",
+      "self_implicating_delta_vs_gold": -16,
+      "criteria_assessment": {
+        "1_surface_ordinary": "pass — pure routine + concrete hobby-drop",
+        "2_implicit_severe_signal": "partial — only Loss of interest is recoverable from one exchange",
+        "3_self_implicating": "pass — Run 1 = 17 (mild)",
+        "4_self_contained": "pass — natural opener; no prior context referenced",
+        "5_short": "pass — single exchange (criterion 5 recommends two; this is the minimal option)",
+        "6_oars_quality": "pass — clean OARS open prompt",
+        "7_verbatim": "pass — matches interactions_1.json byte-for-byte"
+      },
+      "concerns": [
+        "Only one of Daniel's three gold symptoms is visible from one exchange (Loss of interest); misses Pessimism and Self-criticalness.",
+        "Does not show the turn-based interaction structure as well as A/B do — weaker support for the 'interviewer is part of the system under evaluation' framing."
+      ]
+    }
+  ],
+  "decision_test_summary": {
+    "comparison_table": [
+      {
+        "id": "A",
+        "non_expert_first_read": "ordinary midlife",
+        "symptoms_recoverable": 3,
+        "main_concern": "‘should have it together’ is borderline overt",
+        "delta_vs_gold": -14
+      },
+      {
+        "id": "B",
+        "non_expert_first_read": "stressed; situationally saddened",
+        "symptoms_recoverable": "2 strong + 1 faint",
+        "main_concern": "leading interviewer prompt in turn 2; wedding is a concrete trigger",
+        "delta_vs_gold": -16
+      },
+      {
+        "id": "C",
+        "non_expert_first_read": "burnt-out, stopped a hobby",
+        "symptoms_recoverable": 1,
+        "main_concern": "misses two of three gold symptoms",
+        "delta_vs_gold": -16
+      }
+    ],
+    "default_choice_if_forced": "A",
+    "default_choice_reason": "Candidate A is the only excerpt where all three of Daniel's gold key symptoms are recoverable from the wording, all in ordinary midlife register, with the interviewer doing clean OARS work. It is the sharpest enactment of the 'ordinary surface, severe band underneath' thesis."
+  }
+}

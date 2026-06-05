@@ -1,0 +1,313 @@
+{
+  "generated_from": "runs\\task3_all_results.json",
+  "spec": "specs/task-3/analysis-oracle-map.md",
+  "headline": {
+    "majority": {
+      "qrels": "majority",
+      "oracle_MAP": 0.1911,
+      "best_actual_MAP": 0.159,
+      "best_actual_run": "Ensemble",
+      "headroom": 0.0321
+    },
+    "unanimity": {
+      "qrels": "unanimity",
+      "oracle_MAP": 0.1719,
+      "best_actual_MAP": 0.134,
+      "best_actual_run": "LLM_cascade",
+      "headroom": 0.0379
+    }
+  },
+  "per_run_pick_counts": {
+    "majority": {
+      "LLM_cascade": 6,
+      "HiPerT_full": 3,
+      "Ensemble": 2,
+      "DepTransfer": 1,
+      "BiEnc_baseline": 6
+    },
+    "unanimity": {
+      "LLM_cascade": 6,
+      "HiPerT_full": 3,
+      "Ensemble": 4,
+      "DepTransfer": 1,
+      "BiEnc_baseline": 4
+    }
+  },
+  "per_symptom_selection_table": [
+    {
+      "symptom_id": 1,
+      "short_name": "Wrap-up details",
+      "asrs_description": "Trouble wrapping up the final details of a project",
+      "selected_run_majority": "BiEnc_baseline",
+      "selected_AP_majority": 0.1591,
+      "tie_majority": null,
+      "selected_run_unanimity": "BiEnc_baseline",
+      "selected_AP_unanimity": 0.1271,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 2,
+      "short_name": "Order",
+      "asrs_description": "Difficulty getting things in order",
+      "selected_run_majority": "BiEnc_baseline",
+      "selected_AP_majority": 0.1986,
+      "tie_majority": null,
+      "selected_run_unanimity": "Ensemble",
+      "selected_AP_unanimity": 0.2013,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 3,
+      "short_name": "Remember appts",
+      "asrs_description": "Problems remembering appointments or obligations",
+      "selected_run_majority": "LLM_cascade",
+      "selected_AP_majority": 0.3298,
+      "tie_majority": null,
+      "selected_run_unanimity": "LLM_cascade",
+      "selected_AP_unanimity": 0.3162,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 4,
+      "short_name": "Avoid effortful tasks",
+      "asrs_description": "Avoiding or delaying tasks requiring a lot of thought",
+      "selected_run_majority": "BiEnc_baseline",
+      "selected_AP_majority": 0.2212,
+      "tie_majority": null,
+      "selected_run_unanimity": "BiEnc_baseline",
+      "selected_AP_unanimity": 0.1856,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 5,
+      "short_name": "Fidget hands/feet",
+      "asrs_description": "Fidgeting or squirming with hands or feet",
+      "selected_run_majority": "Ensemble",
+      "selected_AP_majority": 0.3092,
+      "tie_majority": null,
+      "selected_run_unanimity": "Ensemble",
+      "selected_AP_unanimity": 0.3477,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 6,
+      "short_name": "Over-active drive",
+      "asrs_description": "Feeling overly active and compelled to do things",
+      "selected_run_majority": "BiEnc_baseline",
+      "selected_AP_majority": 0.1176,
+      "tie_majority": null,
+      "selected_run_unanimity": "BiEnc_baseline",
+      "selected_AP_unanimity": 0.247,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 7,
+      "short_name": "Careless mistakes",
+      "asrs_description": "Making careless mistakes on boring or difficult work",
+      "selected_run_majority": "LLM_cascade",
+      "selected_AP_majority": 0.0,
+      "tie_majority": [
+        "LLM_cascade",
+        "HiPerT_full",
+        "Ensemble",
+        "DepTransfer",
+        "BiEnc_baseline"
+      ],
+      "selected_run_unanimity": "LLM_cascade",
+      "selected_AP_unanimity": 0.0,
+      "tie_unanimity": [
+        "LLM_cascade",
+        "HiPerT_full",
+        "Ensemble",
+        "DepTransfer",
+        "BiEnc_baseline"
+      ]
+    },
+    {
+      "symptom_id": 8,
+      "short_name": "Sustain attention",
+      "asrs_description": "Difficulty keeping attention on boring or repetitive work",
+      "selected_run_majority": "HiPerT_full",
+      "selected_AP_majority": 0.0347,
+      "tie_majority": null,
+      "selected_run_unanimity": "HiPerT_full",
+      "selected_AP_unanimity": 0.0075,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 9,
+      "short_name": "Concentrate on speech",
+      "asrs_description": "Difficulty concentrating on what people say",
+      "selected_run_majority": "LLM_cascade",
+      "selected_AP_majority": 0.0,
+      "tie_majority": [
+        "LLM_cascade",
+        "HiPerT_full",
+        "Ensemble",
+        "DepTransfer",
+        "BiEnc_baseline"
+      ],
+      "selected_run_unanimity": "LLM_cascade",
+      "selected_AP_unanimity": 0.0,
+      "tie_unanimity": [
+        "LLM_cascade",
+        "HiPerT_full",
+        "Ensemble",
+        "DepTransfer",
+        "BiEnc_baseline"
+      ]
+    },
+    {
+      "symptom_id": 10,
+      "short_name": "Misplace items",
+      "asrs_description": "Misplacing or having difficulty finding things",
+      "selected_run_majority": "DepTransfer",
+      "selected_AP_majority": 0.0001,
+      "tie_majority": null,
+      "selected_run_unanimity": "DepTransfer",
+      "selected_AP_unanimity": 0.0001,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 11,
+      "short_name": "Distracted by noise",
+      "asrs_description": "Distracted by activity or noise around you",
+      "selected_run_majority": "BiEnc_baseline",
+      "selected_AP_majority": 0.0185,
+      "tie_majority": null,
+      "selected_run_unanimity": "LLM_cascade",
+      "selected_AP_unanimity": 0.0103,
+      "tie_unanimity": [
+        "LLM_cascade",
+        "BiEnc_baseline"
+      ]
+    },
+    {
+      "symptom_id": 12,
+      "short_name": "Leave seat",
+      "asrs_description": "Leaving your seat in meetings or situations where seated is expected",
+      "selected_run_majority": "HiPerT_full",
+      "selected_AP_majority": 0.4126,
+      "tie_majority": null,
+      "selected_run_unanimity": "Ensemble",
+      "selected_AP_unanimity": 0.2518,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 13,
+      "short_name": "Restless/fidgety",
+      "asrs_description": "Feeling restless or fidgety",
+      "selected_run_majority": "BiEnc_baseline",
+      "selected_AP_majority": 0.2644,
+      "tie_majority": null,
+      "selected_run_unanimity": "BiEnc_baseline",
+      "selected_AP_unanimity": 0.3096,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 14,
+      "short_name": "Hard to unwind",
+      "asrs_description": "Difficulty unwinding and relaxing when you have time",
+      "selected_run_majority": "Ensemble",
+      "selected_AP_majority": 0.0188,
+      "tie_majority": null,
+      "selected_run_unanimity": "Ensemble",
+      "selected_AP_unanimity": 0.0237,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 15,
+      "short_name": "Talk too much",
+      "asrs_description": "Talking too much in social situations",
+      "selected_run_majority": "LLM_cascade",
+      "selected_AP_majority": 0.2673,
+      "tie_majority": null,
+      "selected_run_unanimity": "LLM_cascade",
+      "selected_AP_unanimity": 0.2898,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 16,
+      "short_name": "Finish sentences",
+      "asrs_description": "Finishing the sentences of others before they finish themselves",
+      "selected_run_majority": "LLM_cascade",
+      "selected_AP_majority": 0.4425,
+      "tie_majority": null,
+      "selected_run_unanimity": "HiPerT_full",
+      "selected_AP_unanimity": 0.2646,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 17,
+      "short_name": "Wait turn",
+      "asrs_description": "Difficulty waiting your turn",
+      "selected_run_majority": "HiPerT_full",
+      "selected_AP_majority": 0.1238,
+      "tie_majority": null,
+      "selected_run_unanimity": "HiPerT_full",
+      "selected_AP_unanimity": 0.1239,
+      "tie_unanimity": null
+    },
+    {
+      "symptom_id": 18,
+      "short_name": "Interrupt others",
+      "asrs_description": "Interrupting others when they are busy",
+      "selected_run_majority": "LLM_cascade",
+      "selected_AP_majority": 0.5213,
+      "tie_majority": null,
+      "selected_run_unanimity": "LLM_cascade",
+      "selected_AP_unanimity": 0.3881,
+      "tie_unanimity": null
+    }
+  ],
+  "sanity": {
+    "all_zero_tie_symptoms": {
+      "majority": [
+        7,
+        9
+      ],
+      "unanimity": [
+        7,
+        9
+      ]
+    },
+    "note_on_expected_majority_mismatch": "Expected counts from numerical-claims.md (BiEnc 6, CADRE 5, LLM 4, Ensemble 2, DepTransfer 1) require breaking 2 of the 3 all-zero ties (items 7, 9, 10) to HiPerT_full. The clean trec_eval-style argmax used here breaks ties by RUN_ORDER iteration (LLM_cascade first), giving LLM_cascade those slots. The oracle MAP is invariant to this choice (max=0 either way); only the per-run pick counts differ.",
+    "oracle_ge_best_actual": {
+      "majority": true,
+      "unanimity": true
+    },
+    "pick_counts_sum_to_18": {
+      "majority": true,
+      "unanimity": true
+    },
+    "expected_majority_counts_v_actual": {
+      "expected": {
+        "BiEnc_baseline": 6,
+        "HiPerT_full": 5,
+        "LLM_cascade": 4,
+        "Ensemble": 2,
+        "DepTransfer": 1
+      },
+      "actual": {
+        "LLM_cascade": 6,
+        "HiPerT_full": 3,
+        "Ensemble": 2,
+        "DepTransfer": 1,
+        "BiEnc_baseline": 6
+      }
+    },
+    "item13_tie_notes": {},
+    "crosscheck_majority_BiEnc_baseline": {
+      "MAP_recomputed_from_TREC": 0.1165,
+      "MAP_cached": 0.1165,
+      "n_symptoms_mismatched": 0,
+      "mismatches": []
+    },
+    "crosscheck_unanimity_LLM_cascade": {
+      "MAP_recomputed_from_TREC": 0.1343,
+      "MAP_cached": 0.1343,
+      "n_symptoms_mismatched": 0,
+      "mismatches": []
+    }
+  }
+}

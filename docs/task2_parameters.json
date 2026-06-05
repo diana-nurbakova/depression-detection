@@ -1,0 +1,365 @@
+{
+  "$schema": "verified parameter values for eRisk 2026 Task 2 pipeline",
+  "source_truth": [
+    "config/task2.yaml",
+    "src/erisk_task2/models.py",
+    "src/erisk_task2/config.py",
+    "src/erisk_task2/features/{layer1,layer2,layer3}.py",
+    "src/erisk_task2/distances/{wasserstein,mahalanobis}.py",
+    "src/erisk_task2/tom/{tom_module,llm_client,hf_client,prompts}.py",
+    "src/erisk_task2/bandits/thompson.py",
+    "src/erisk_task2/classification/{feature_assembler,classifiers}.py",
+    "src/erisk_task2/decision/policy.py",
+    "src/erisk_task2/formatting/thread_formatter.py"
+  ],
+
+  "layer1": {
+    "embedding_ensemble": {
+      "models": [
+        {"name": "all-mpnet-base-v2",      "dim": 768},
+        {"name": "all-MiniLM-L12-v2",      "dim": 384},
+        {"name": "all-distilroberta-v1",   "dim": 768}
+      ],
+      "total_dim": 1920,
+      "device": "cpu",
+      "batch_size": 64
+    },
+    "exponential_decay": {
+      "lambda": 0.95,
+      "update_rule": "sum = lambda*sum + emb;  weight = lambda*weight + 1;  mean = sum / weight",
+      "source": "src/erisk_task2/features/layer1.py:242-256"
+    },
+    "bdi_symptoms": {
+      "n_symptoms": 21,
+      "variant_used": "C",
+      "per_round_dim": 21,
+      "aggregated": {
+        "max_pool_dim": 21,
+        "mean_pool_dim": 21,
+        "distributional_stats_per_symptom": ["mean", "var", "skew", "kurtosis", "Q25", "Q50", "Q75"],
+        "distributional_stats_dim": 147
+      },
+      "source": "src/erisk_task2/features/layer1.py:48-71, 207-239"
+    },
+    "lexical_block": {
+      "dim_total": 4,
+      "feature_per_category": "ratio = count / total_words",
+      "categories": [
+        {"name": "first_person_singular", "wordlist_size": 9,  "feature_dim": 1},
+        {"name": "negative_emotion",      "wordlist_size": 36, "feature_dim": 1},
+        {"name": "absolutist",            "wordlist_size": 15, "feature_dim": 1},
+        {"name": "cognitive_process",     "wordlist_size": 18, "feature_dim": 1}
+      ],
+      "note": "wordlist_size is the lookup set size, not a feature count. Total lexical dim = 4 (one ratio per category).",
+      "source": "src/erisk_task2/features/layer1.py:26-46, 178-204"
+    }
+  },
+
+  "layer2": {
+    "reply_sentiment": {
+      "dim": 3,
+      "components": ["mean compound (VADER)", "std", "linear-trend slope"],
+      "note": "per-round VADER produces one scalar; the 3-d aggregate is computed over the round series",
+      "source": "src/erisk_task2/classification/feature_assembler.py:91-96"
+    },
+    "concern_detection": {
+      "phrase_count_actual": 42,
+      "phrase_count_outline_claim": 40,
+      "feature_dim": 1,
+      "feature_definition": "ratio of rounds with at least one concern-phrase match (over all non-target text)",
+      "matching": "case-insensitive substring (re.escape + IGNORECASE), one match per comment",
+      "source": "src/erisk_task2/features/layer2.py:22-97"
+    },
+    "conversational_position": {
+      "dim_in_feature_vector": 3,
+      "fields_used":     ["is_author_ratio", "target_silent_ratio", "reply_depth_mean"],
+      "fields_computed_but_discarded": ["text_volume_mean", "text_volume_trend"],
+      "source": "src/erisk_task2/features/layer2.py:100-130 (compute), src/erisk_task2/classification/feature_assembler.py:104-110 (use)"
+    },
+    "thread_topic_similarity": {
+      "dim": 21,
+      "definition": "cosine(title_embedding, 21 BDI symptom references), averaged across rounds",
+      "source": "src/erisk_task2/features/layer2.py:133-150"
+    },
+    "total_dim": 28,
+    "total_dim_breakdown": "3 + 1 + 3 + 21"
+  },
+
+  "layer3": {
+    "emotion": {
+      "model": "j-hartmann/emotion-english-distilroberta-base",
+      "labels_plutchik": ["anger","anticipation","disgust","fear","joy","sadness","surprise","trust"],
+      "min_words_for_classification": 10,
+      "short_text_fallback": "uniform 1/8 distribution",
+      "feature_dim": 9,
+      "feature_breakdown": "8 mean-distribution + 1 Shannon entropy"
+    },
+    "bertopic": {
+      "n_topics_target": 40,
+      "umap_n_neighbors": 15,
+      "umap_n_components": 5,
+      "hdbscan_min_cluster_size": 50,
+      "hdbscan_min_samples": 10,
+      "rolling_buffer_size": 5,
+      "transform_method": "model.transform([text])  (probabilistic, soft assignment)",
+      "feature_dim": 41,
+      "feature_breakdown": {
+        "topic_distribution_dim": 40,
+        "depression_proportion_dim": 1,
+        "depression_proportion_kind": "hard assignment: 1.0 if top-1 topic is in depression_topic_ids else 0.0; averaged across rounds",
+        "entropy_used_in_final_vector": false,
+        "note": "the inline code comment at pipeline.py:272 says '+1 entropy' but the assembled slot is the cross-round MEAN of depression_proportion, not entropy"
+      },
+      "depression_topic_identification": "topics with dep_count/total > 1.5 * base_rate and total > 10 (layer3.py:182-188)",
+      "source": "src/erisk_task2/features/layer3.py:104-227, src/erisk_task2/pipeline.py:258-275"
+    }
+  },
+
+  "distances": {
+    "wasserstein": {
+      "short_window": 5,
+      "medium_window": 25,
+      "scales": [
+        {"name": "short",  "definition": "[k-10, k-5] vs [k-5, k]",   "min_rounds": 10},
+        {"name": "medium", "definition": "[k-50, k-25] vs [k-25, k]", "min_rounds": 50},
+        {"name": "long",   "definition": "[0, n/2] vs [n/2, n]",      "min_rounds": 20}
+      ],
+      "sliced_wasserstein_n_projections": 50,
+      "feature_dim": 72,
+      "feature_breakdown": "63 (3 scales x 21 symptoms) + 3 (emotion entropy) + 3 (embedding sliced) + 3 (topic entropy)",
+      "source": "src/erisk_task2/distances/wasserstein.py"
+    },
+    "mahalanobis": {
+      "n_pca_components": 50,
+      "effective_n_components": "min(50, n_features, n_control - 1)",
+      "regularization": "ledoit_wolf",
+      "control_mean_cov": "fit on 807 control users",
+      "depressed_mean_cov": "fit on 102 depressed users (if >5 samples)",
+      "feature_dim": 3,
+      "feature_components": ["D_M_control", "D_M_relative = D_M_control - D_M_depressed", "D_M_depressed"],
+      "source": "src/erisk_task2/distances/mahalanobis.py"
+    }
+  },
+
+  "tom": {
+    "options": {
+      "option_a": "embedding-based (no LLM)",
+      "option_b": "response-category classification (LLM)",
+      "option_c": "LLM dual mentalizing (default for training)"
+    },
+    "default_method": "option_c",
+    "chained_default": false,
+    "symptom_variant": "C",
+    "llm_backend_config_default": "ollama",
+    "llm_backend_actually_used_for_training_features": "huggingface (meta-llama/Llama-3.3-70B-Instruct)",
+    "live_run_method": "option_a (embedding only; observer-view disabled)",
+    "ollama_client": {
+      "model": "llama3.3:70b",
+      "num_ctx": 8192,
+      "temperature": 0.1,
+      "max_output_tokens": "uncapped (num_predict not set; model default)",
+      "timeout_seconds": 120,
+      "max_retries": 3,
+      "retry_backoff_seconds": "2 ** attempt",
+      "retry_temperature_override": "none (same temperature on every attempt)",
+      "keep_alive": "24h",
+      "source": "src/erisk_task2/tom/llm_client.py"
+    },
+    "hf_client": {
+      "model": "meta-llama/Llama-3.3-70B-Instruct",
+      "temperature": 0.1,
+      "max_tokens": 2048,
+      "timeout_seconds": 120,
+      "max_retries": 3,
+      "retry_backoff_seconds": "2 ** attempt",
+      "retry_temperature_override": "none (same temperature on every attempt)",
+      "source": "src/erisk_task2/tom/hf_client.py"
+    },
+    "batching_policy": "sequential per (thread, user); no batching across users; per-thread: self-view then observer-view (or observer-only when target has no text)",
+    "thread_format_max_tokens": 2000,
+    "chars_per_token_heuristic": 4,
+    "feature_dim": 47,
+    "feature_layout_47d": {
+      "[0:21]":  "self-view symptom scores (LLM 1-3 / 3)",
+      "[21:42]": "observer-view symptom scores",
+      "[42]":    "self depression_probability",
+      "[43]":    "observer depression_probability",
+      "[44]":    "insight_gap (mean |self - observer| symptom diff)",
+      "[45]":    "observer_concern_level / 3",
+      "[46]":    "community_response_type encoded {concern:1.0, support:0.8, advice:0.6, mixed:0.5, normalization:0.3, casual:0.0}"
+    }
+  },
+
+  "thompson": {
+    "n_symptoms": 21,
+    "activation_threshold_tau": 0.3,
+    "prior": "Beta(1, 1)",
+    "update_rule": "alpha_i += 1 if activation_i > tau else beta_i += 1",
+    "weights_at_inference": "expected value alpha_i/(alpha_i+beta_i), normalized to sum to 1",
+    "feature_dim": 25,
+    "feature_breakdown": {
+      "weighted_symptom_score": 1,
+      "symptom_entropy": 1,
+      "active_symptom_count": 1,
+      "weight_vector": 21,
+      "posterior_uncertainty": 1
+    },
+    "source": "src/erisk_task2/bandits/thompson.py"
+  },
+
+  "classifiers": {
+    "xgboost": {
+      "max_depth": 6,
+      "n_estimators": 300,
+      "learning_rate": 0.1,
+      "scale_pos_weight": "auto = n_neg / n_pos at fit time (~7.9 on training set)",
+      "eval_metric": "logloss",
+      "preprocessing": "StandardScaler",
+      "random_state": 42,
+      "source": "src/erisk_task2/classification/classifiers.py:42-99"
+    },
+    "mlp": {
+      "architecture": "Linear(D, 256) -> BN -> ReLU -> Dropout(0.3) -> Linear(256, 64) -> BN -> ReLU -> Dropout(0.3) -> Linear(64, 1)",
+      "hidden_sizes": [256, 64],
+      "dropout": 0.3,
+      "loss": "BCEWithLogitsLoss(pos_weight = n_neg / n_pos)",
+      "optimizer": "Adam(lr=1e-3)",
+      "batch_size": 64,
+      "max_epochs": 100,
+      "early_stopping_patience": 10,
+      "early_stopping_monitor": "epoch_loss",
+      "preprocessing": "StandardScaler",
+      "source": "src/erisk_task2/classification/classifiers.py:101-213"
+    },
+    "svm": {
+      "kernel": "rbf",
+      "gamma": "scale (sklearn default; not tuned)",
+      "C": 1.0,
+      "C_note": "sklearn default; not tuned",
+      "probability": true,
+      "class_weight": "balanced",
+      "preprocessing": "StandardScaler",
+      "random_state": 42,
+      "source": "src/erisk_task2/classification/classifiers.py:216-244"
+    },
+    "ensemble_meta_learner": {
+      "type": "LogisticRegression",
+      "class_weight": "balanced",
+      "random_state": 42,
+      "stacking": "5-fold StratifiedKFold OOF predictions from {xgboost, mlp, svm}; meta fit on (n, 3) matrix; base classifiers refit on full data",
+      "source": "src/erisk_task2/classification/classifiers.py:247-300"
+    }
+  },
+
+  "feature_vector_assembly": {
+    "approx_total_dim": 2341,
+    "components": [
+      {"name": "embedding_running_mean",   "dim": 1920},
+      {"name": "symptom_max_pool",         "dim": 21},
+      {"name": "symptom_mean_pool",        "dim": 21},
+      {"name": "symptom_distributional",   "dim": 147},
+      {"name": "lexical",                  "dim": 4},
+      {"name": "reply_sentiment",          "dim": 3},
+      {"name": "concern_ratio",            "dim": 1},
+      {"name": "conversational_position",  "dim": 3},
+      {"name": "thread_topic_similarity",  "dim": 21},
+      {"name": "emotion",                  "dim": 9},
+      {"name": "bertopic",                 "dim": 41},
+      {"name": "wasserstein",              "dim": 72},
+      {"name": "mahalanobis",              "dim": 3},
+      {"name": "combined_distributional",  "dim": 2},
+      {"name": "tom",                      "dim": 47},
+      {"name": "thompson",                 "dim": 25},
+      {"name": "meta_rounds_seen",         "dim": 1}
+    ],
+    "feature_mask": "feature_mask=['no_tom'] zeros the 47d ToM block (but keeps the slot)"
+  },
+
+  "decision_policy": {
+    "latency_cost_function": "lc_o(k) = sigmoid(k - o) = 1 / (1 + exp(-(k - o)))",
+    "threshold_schedule": "theta(k) = theta_init - (theta_init - theta_floor) * lc_o(k)",
+    "alert_rule": "alert latched (irrevocable) once consecutive_positives >= t_con",
+    "consecutive_reset": "any round below threshold resets consecutive_positives to 0",
+    "source": "src/erisk_task2/decision/policy.py:15-85"
+  },
+
+  "runs": {
+    "source_truth": "src/erisk_task2/models.py:206-213 (DEFAULT_RUNS)",
+    "configs": [
+      {
+        "run": "R0",
+        "name": "FULL_XGBOOST_ERDE50",
+        "classifier": "xgboost",
+        "theta_init": 0.85,
+        "theta_floor": 0.45,
+        "erde_o": 50,
+        "t_con": 2,
+        "feature_mask": null,
+        "strategy": "conservative baseline: high threshold, slow decay, double confirmation"
+      },
+      {
+        "run": "R1",
+        "name": "FULL_XGBOOST_ERDE5",
+        "classifier": "xgboost",
+        "theta_init": 0.70,
+        "theta_floor": 0.35,
+        "erde_o": 5,
+        "t_con": 1,
+        "feature_mask": null,
+        "strategy": "aggressive early: lower threshold, fast decay, single confirmation; optimizes ERDE5"
+      },
+      {
+        "run": "R2",
+        "name": "FULL_NN_ERDE50",
+        "classifier": "neural_net",
+        "theta_init": 0.85,
+        "theta_floor": 0.45,
+        "erde_o": 50,
+        "t_con": 2,
+        "feature_mask": null,
+        "strategy": "neural alternative under conservative policy"
+      },
+      {
+        "run": "R3",
+        "name": "FULL_ENSEMBLE_BALANCED",
+        "classifier": "ensemble",
+        "theta_init": 0.80,
+        "theta_floor": 0.40,
+        "erde_o": 30,
+        "t_con": 2,
+        "feature_mask": null,
+        "strategy": "stacked ensemble at intermediate ERDE operating point"
+      },
+      {
+        "run": "R4",
+        "name": "NO_TOM_XGBOOST_ERDE50",
+        "classifier": "xgboost",
+        "theta_init": 0.85,
+        "theta_floor": 0.45,
+        "erde_o": 50,
+        "t_con": 2,
+        "feature_mask": ["no_tom"],
+        "strategy": "ToM ablation: identical to R0 except ToM 47d block is zeroed"
+      }
+    ]
+  },
+
+  "server_loop": {
+    "base_url": "https://erisk.irlab.org/challenge-t2",
+    "max_retries": 5,
+    "initial_delay_seconds": 2.0,
+    "backoff_factor": 2.0,
+    "timeout_seconds": 60,
+    "checkpointing": "full pickle state after each round (resume on restart)"
+  },
+
+  "training_data": {
+    "source": "eRisk 2025 Task 2",
+    "n_users_total": 909,
+    "n_depressed": 102,
+    "n_control": 807,
+    "depressed_rate": 0.112,
+    "cv_folds": 5,
+    "cv_split": "StratifiedKFold (preserves 11.2% positive ratio per fold)"
+  }
+}

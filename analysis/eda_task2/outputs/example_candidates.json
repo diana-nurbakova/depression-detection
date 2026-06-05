@@ -1,0 +1,334 @@
+{
+  "data_source": {
+    "checkpoint": "runs\\task2\\train\\checkpoint\\round_0500_state.pkl",
+    "decisions_dir": "runs\\task2\\train\\decisions",
+    "golden": "data\\eRisk-2026\\eRisk26-datasets-20260519T175618Z-3-001\\eRisk26-datasets\\task2-contextualized-depression\\golden-data\\risk_golden_truth_t2_2026.txt"
+  },
+  "n_subjects": 523,
+  "n_positives": 91,
+  "rules": {
+    "1_intro_signal": {
+      "rule": "Run-0 TPs, target_words_per_round < TP median AND concern_density > TP median; nearest z-scored centroid.",
+      "tp_cohort_size": 77,
+      "subset_size": 13,
+      "tp_median_target_words_per_round": 52.79661016949152,
+      "tp_median_concern_density": 0.18181818181818182,
+      "chosen": {
+        "subject_id": "subject_qMXSpL4",
+        "target_words_per_round": 37.93859649122807,
+        "concern_density": 0.23410404624277456,
+        "rounds_with_target": 456,
+        "rounds_with_concern": 81,
+        "first_alert_round_run0": 41
+      },
+      "subset_members": [
+        {
+          "subject_id": "subject_XC0JEVw",
+          "target_words_per_round": 28.122736418511067,
+          "concern_density": 0.3873015873015873
+        },
+        {
+          "subject_id": "subject_7cxOXIb",
+          "target_words_per_round": 36.71370967741935,
+          "concern_density": 0.3
+        },
+        {
+          "subject_id": "subject_amxZtQC",
+          "target_words_per_round": 31.23469387755102,
+          "concern_density": 0.2919254658385093
+        },
+        {
+          "subject_id": "subject_lVfF5jC",
+          "target_words_per_round": 37.977551020408164,
+          "concern_density": 0.2616033755274262
+        },
+        {
+          "subject_id": "subject_GXv5RFU",
+          "target_words_per_round": 22.365384615384617,
+          "concern_density": 0.25384615384615383
+        },
+        {
+          "subject_id": "subject_ieKFZZ6",
+          "target_words_per_round": 48.85988483685221,
+          "concern_density": 0.24431818181818182
+        },
+        {
+          "subject_id": "subject_qMXSpL4",
+          "target_words_per_round": 37.93859649122807,
+          "concern_density": 0.23410404624277456
+        },
+        {
+          "subject_id": "subject_RH0bgak",
+          "target_words_per_round": 42.605940594059405,
+          "concern_density": 0.22151898734177214
+        },
+        {
+          "subject_id": "subject_drnQkBT",
+          "target_words_per_round": 43.25458248472505,
+          "concern_density": 0.21107266435986158
+        },
+        {
+          "subject_id": "subject_WuGhoOy",
+          "target_words_per_round": 32.49074074074074,
+          "concern_density": 0.2073170731707317
+        }
+      ]
+    },
+    "2_w1_scale_split": {
+      "rule": "User where mean-symptom W1 trajectory fires running mu+2sigma at exactly one scale (short or long), not the other. Prefer Run-0 TPs.",
+      "counts": {
+        "short_only": 153,
+        "long_only": 5
+      },
+      "chosen_short_only": {
+        "subject_id": "subject_Pop2mTP",
+        "label": "short",
+        "is_true_positive": true,
+        "gold": 1,
+        "first_alert_round_run0": 116,
+        "short_scale": {
+          "fired": true,
+          "fired_rounds": [
+            27,
+            28,
+            112,
+            155,
+            173,
+            174,
+            175,
+            176,
+            177,
+            249,
+            253,
+            254,
+            257,
+            332,
+            417,
+            418,
+            419
+          ],
+          "n_fires": 17,
+          "max_overshoot": 0.05345160401225266
+        },
+        "long_scale": {
+          "fired": false,
+          "fired_rounds": [],
+          "n_fires": 0,
+          "max_overshoot": null
+        }
+      },
+      "chosen_long_only": {
+        "subject_id": "subject_OvzSZuo",
+        "label": "long",
+        "is_true_positive": false,
+        "gold": 0,
+        "first_alert_round_run0": null,
+        "short_scale": {
+          "fired": false,
+          "fired_rounds": [],
+          "n_fires": 0,
+          "max_overshoot": null
+        },
+        "long_scale": {
+          "fired": true,
+          "fired_rounds": [
+            23,
+            24,
+            26
+          ],
+          "n_fires": 3,
+          "max_overshoot": 0.01014289046869931
+        }
+      }
+    },
+    "3_early_alert": {
+      "rule": "TPs (gold==1) where Run 1 alerts >=5 rounds before Run 0; pick member with gap nearest the median.",
+      "cohort_size": 28,
+      "median_gap": 21.0,
+      "mean_gap": 38.464285714285715,
+      "gap_distribution": {
+        "min": 5,
+        "p25": 9.0,
+        "p50": 21.0,
+        "p75": 45.75,
+        "max": 154
+      },
+      "chosen": {
+        "subject_id": "subject_kcdgN0X",
+        "gap": 21,
+        "first_alert_round_run0": 50,
+        "first_alert_round_run1": 29
+      },
+      "all_qualifying": [
+        {
+          "subject_id": "subject_KjQQIm7",
+          "gap": 154,
+          "run0_round": 200,
+          "run1_round": 46
+        },
+        {
+          "subject_id": "subject_Lqynfyb",
+          "gap": 132,
+          "run0_round": 146,
+          "run1_round": 14
+        },
+        {
+          "subject_id": "subject_GXv5RFU",
+          "gap": 124,
+          "run0_round": 244,
+          "run1_round": 120
+        },
+        {
+          "subject_id": "subject_Pop2mTP",
+          "gap": 95,
+          "run0_round": 116,
+          "run1_round": 21
+        },
+        {
+          "subject_id": "subject_nSHtp5D",
+          "gap": 89,
+          "run0_round": 119,
+          "run1_round": 30
+        },
+        {
+          "subject_id": "subject_UQ2s9Iz",
+          "gap": 63,
+          "run0_round": 71,
+          "run1_round": 8
+        },
+        {
+          "subject_id": "subject_wvz0Brc",
+          "gap": 48,
+          "run0_round": 50,
+          "run1_round": 2
+        },
+        {
+          "subject_id": "subject_TkL1UoA",
+          "gap": 45,
+          "run0_round": 60,
+          "run1_round": 15
+        },
+        {
+          "subject_id": "subject_1Zjhjs4",
+          "gap": 42,
+          "run0_round": 51,
+          "run1_round": 9
+        },
+        {
+          "subject_id": "subject_qMXSpL4",
+          "gap": 37,
+          "run0_round": 41,
+          "run1_round": 4
+        },
+        {
+          "subject_id": "subject_Kcu6Y5w",
+          "gap": 36,
+          "run0_round": 49,
+          "run1_round": 13
+        },
+        {
+          "subject_id": "subject_19pCMu5",
+          "gap": 25,
+          "run0_round": 30,
+          "run1_round": 5
+        },
+        {
+          "subject_id": "subject_djU9NoU",
+          "gap": 22,
+          "run0_round": 31,
+          "run1_round": 9
+        },
+        {
+          "subject_id": "subject_kcdgN0X",
+          "gap": 21,
+          "run0_round": 50,
+          "run1_round": 29
+        },
+        {
+          "subject_id": "subject_1S0M1Kj",
+          "gap": 21,
+          "run0_round": 39,
+          "run1_round": 18
+        },
+        {
+          "subject_id": "subject_AoqY7j0",
+          "gap": 16,
+          "run0_round": 51,
+          "run1_round": 35
+        },
+        {
+          "subject_id": "subject_geNJiZ0",
+          "gap": 14,
+          "run0_round": 32,
+          "run1_round": 18
+        },
+        {
+          "subject_id": "subject_pLe1bpo",
+          "gap": 14,
+          "run0_round": 15,
+          "run1_round": 1
+        },
+        {
+          "subject_id": "subject_oPDi4Yc",
+          "gap": 13,
+          "run0_round": 52,
+          "run1_round": 39
+        },
+        {
+          "subject_id": "subject_xnh1dgX",
+          "gap": 12,
+          "run0_round": 20,
+          "run1_round": 8
+        },
+        {
+          "subject_id": "subject_SuH9CLI",
+          "gap": 9,
+          "run0_round": 16,
+          "run1_round": 7
+        },
+        {
+          "subject_id": "subject_amxZtQC",
+          "gap": 9,
+          "run0_round": 11,
+          "run1_round": 2
+        },
+        {
+          "subject_id": "subject_jrlbg3m",
+          "gap": 9,
+          "run0_round": 20,
+          "run1_round": 11
+        },
+        {
+          "subject_id": "subject_NOmFyqT",
+          "gap": 7,
+          "run0_round": 27,
+          "run1_round": 20
+        },
+        {
+          "subject_id": "subject_7cxOXIb",
+          "gap": 5,
+          "run0_round": 15,
+          "run1_round": 10
+        },
+        {
+          "subject_id": "subject_36C2iWa",
+          "gap": 5,
+          "run0_round": 5,
+          "run1_round": 0
+        },
+        {
+          "subject_id": "subject_WUO40uL",
+          "gap": 5,
+          "run0_round": 6,
+          "run1_round": 1
+        },
+        {
+          "subject_id": "subject_ieKFZZ6",
+          "gap": 5,
+          "run0_round": 20,
+          "run1_round": 15
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "n_subjects": 523,
+  "n_positive": 91,
+  "auc_per_scale": {
+    "short": {
+      "max_w1": 0.8297975172975173,
+      "mean_w1": 0.8752798127798128,
+      "p95_w1": 0.859025234025234,
+      "n_fires": 0.5615588115588116,
+      "max_overshoot": 0.6821581196581197,
+      "fired_flag": 0.5307030932030932
+    },
+    "medium": {
+      "max_w1": 0.7492750305250305,
+      "mean_w1": 0.7745090557590557,
+      "p95_w1": 0.7516661579161579,
+      "n_fires": 0.5914351851851852,
+      "max_overshoot": 0.6788003663003663,
+      "fired_flag": 0.5683506308506309
+    },
+    "long": {
+      "max_w1": 0.7916030728530729,
+      "mean_w1": 0.7149343711843712,
+      "p95_w1": 0.7511574074074074,
+      "n_fires": 0.5019332519332519,
+      "max_overshoot": 0.5236060236060236,
+      "fired_flag": 0.49668040293040294
+    }
+  },
+  "scale_correlations_spearman_maxw1": {
+    "spearman_short_long": 0.6995531311776135,
+    "spearman_short_medium": 0.7012414470600518,
+    "spearman_medium_long": 0.572381251944369
+  },
+  "contingency_short_x_long_fired": {
+    "short=False, long=False": {
+      "n": 74,
+      "n_pos": 9,
+      "n_neg": 65,
+      "pos_rate": 0.12162162162162163
+    },
+    "short=False, long=True": {
+      "n": 10,
+      "n_pos": 1,
+      "n_neg": 9,
+      "pos_rate": 0.1
+    },
+    "short=True, long=False": {
+      "n": 199,
+      "n_pos": 39,
+      "n_neg": 160,
+      "pos_rate": 0.19597989949748743
+    },
+    "short=True, long=True": {
+      "n": 240,
+      "n_pos": 42,
+      "n_neg": 198,
+      "pos_rate": 0.175
+    }
+  },
+  "xgb_importance": {
+    "n_features": 2341,
+    "total_importance": 1.0,
+    "wasserstein_block_share": 0.025039272382855415,
+    "symptom_short_share": 0.010221733711659908,
+    "symptom_medium_share": 0.014280829578638077,
+    "symptom_long_share": 0.0003679664805531502,
+    "other_short_share": 0.0,
+    "other_medium_share": 0.00016874296125024557,
+    "other_long_share": 0.0,
+    "symptom_short_nonzero_dims": 4,
+    "symptom_medium_nonzero_dims": 5,
+    "symptom_long_nonzero_dims": 2
+  },
+  "interpretation_keys": {
+    "auc_0.5_means_no_discrimination": true,
+    "fired_flag_AUC_summarizes_running_threshold_signal": true
+  }
+}

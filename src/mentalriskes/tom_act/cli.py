@@ -85,7 +85,13 @@ def cli(ctx, config_path, tier, dry_run, limit_sessions, limit_rounds):
         "sessions": sessions,
         "limit_rounds": limit_rounds,
         "tier": tier_obj,
-        "dispatcher": Dispatcher(cfg["run"]["root"], cfg["run"].get("max_attempts", 3)),
+        # Per-tier meta file when --tier is set, so concurrent tier passes never
+        # share a writer on meta.jsonl. Non-tier commands keep the default file.
+        "dispatcher": Dispatcher(
+            cfg["run"]["root"],
+            cfg["run"].get("max_attempts", 3),
+            meta_suffix=tier_obj.name if tier_obj else None,
+        ),
     }
 
 
@@ -169,10 +175,13 @@ def wasserstein_cmd(ctx):
 
 
 @cli.command("reparse")
+@click.option("--signals", default=None,
+              help="Comma-separated signal types to scope reparse to (e.g. self_b,observer_pt).")
 @click.pass_context
-def reparse_cmd(ctx):
+def reparse_cmd(ctx, signals):
     """Re-parse previously-failed JSONL lines with updated recovery logic (no LLM calls)."""
-    summary = reparse_mod.reparse(ctx.obj["root"])
+    sigs = [s.strip() for s in signals.split(",")] if signals else None
+    summary = reparse_mod.reparse(ctx.obj["root"], sigs)
     total = sum(summary.values())
     logger.info("reparse complete: recovered %d call(s) total: %s",
                 total, {k: v for k, v in summary.items() if v})

@@ -45,3 +45,22 @@ def test_stance_label_roundtrip():
     for es in C.TOM_STANCE_LABELS_ES:
         en = C.TOM_STANCE_EN_FROM_ES[es]
         assert C.TOM_STANCE_ES_FROM_EN[en] == es
+
+
+def test_canonical_phase_handles_accent_variants():
+    # Accented and unaccented variants collapse to the accented canonical.
+    assert C.canonical_phase("defusión") == "defusión"
+    assert C.canonical_phase("defusion") == "defusión"
+    assert C.canonical_phase("EXPLORACIÓN") == "exploración"
+    assert C.canonical_phase("exploracion") == "exploración"
+    assert C.canonical_phase("Activacion") == "activación"
+    assert C.canonical_phase("integración") == "integración"
+    assert C.canonical_phase("crisis") == "crisis"
+    assert C.canonical_phase("cierre") == "cierre"
+
+
+def test_canonical_phase_pass_through_and_unknown():
+    assert C.canonical_phase(None) is None
+    assert C.canonical_phase("") == ""
+    # Unknown phase falls through to accent-stripped lowercase form (no lookup hit).
+    assert C.canonical_phase("Misceláneo") == "miscelaneo"

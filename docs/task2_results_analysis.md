@@ -128,37 +128,60 @@ P@10 and NDCG@10 are 1.000 from 100 writings onward across all 5 runs — the to
 
 ## 6. Runtime / latency engineering — why per-round response time varied
 
-The live server loop processes one round per server release; the system must return a decision for every subject before the next round unlocks. Two encoding bottlenecks in the original `run_pipeline()` ([src/erisk_task2/pipeline.py](../src/erisk_task2/pipeline.py)) dominated wall-clock time, and both were fixed in commit `c6f6cbc` (developed during the test window, committed 1 May).
+The live server loop processes one round per server release; the system must return a decision for every subject before the next round unlocks. The submission was produced in **two distinct code regimes** because a bundle of memory/latency fixes (eventually committed as `c6f6cbc`) was deployed **mid-run, between rounds 19 and 20**. The early rounds therefore ran a *different* pipeline than the later rounds — both at the wall-clock level and in the *content* of some feature dimensions.
 
-### The two bottlenecks
+### The two regimes — read from the live run log
 
-1. **One encode call per user, not batched.** The original loop iterated subjects and called `encoder.encode(target_texts)` separately for each of the ~522 subjects (plus a separate call per title) — ~1,000+ tiny forward passes through the **3-model sentence-transformer ensemble** every round, with poor batch utilization.
-2. **Encoding every other participant's comments each round.** For the ToM "observer view" feature, the old `process_thread` ran `encoder.encode(other_texts).mean(axis=0)` over **all** non-target comments in the thread — purely to produce one mean embedding. Per the test-set EDA, context volume is enormous (mean 48 comments/thread, max 5,093; positive subjects sit in discussions with a median ~13,700 context comments), so this encoded tens of thousands of context texts per round. The fix comment names it directly: *"only used for ToM observer view and add ~10x encoding overhead."*
+[runs/task2/train/run.log](../runs/task2/train/run.log) timestamps each LIVE-pipeline session start and the BERTopic load/skip decision. Boundaries verified directly from the log:
 
-### The fix (`c6f6cbc`)
+| | **Phase 1 — pre-fix** | **Phase 2 — post-fix** |
+|---|---|---|
+| Window | 2026-04-17 18:02 → 04-19 10:16 | 2026-04-19 10:16 → 04-23 21:38 |
+| Rounds processed | **20** (rounds 0–19) | **481** (rounds 20–500) |
+| Encoder loop | per-subject (`~1,000+` tiny `encoder.encode` calls per round through the 3-model SBERT ensemble) | one batched `encoder.encode(all_texts)` per round, sliced back per subject |
+| Other-participant comments | encoded for the ToM observer view (per the EDA, mean 48 comments/thread, max 5,093 — tens of thousands of context texts/round) | skipped; observer-view set to `None` |
+| BERTopic (Layer 3, 41-dim) | **loaded and used** (training-fitted model, 41 real topic features) | **skipped**, 41 features zeroed |
+| Per-round timing logs | absent (not yet in the binary) | `Encoding N texts: Xs` / `Process threads: Xs` |
+| Mean wall-clock per round | **~90–110 min/round** (~1.5–2 h) | **~13 min/round** average |
+| Run-0 alerts accumulated | **50** | +51 (total 101 at run end) |
 
-- **Batch once per round** ([pipeline.py:995-1038](../src/erisk_task2/pipeline.py#L995-L1038)): collect all subjects' target texts + titles into a single list, run **one** `encoder.encode(all_texts)`, slice the result back per subject.
-- **Skip `other_comments` in live mode** ([pipeline.py:222](../src/erisk_task2/pipeline.py#L222)): the observer-view feature is set to `None`; only target writings + title are encoded.
-- **Skip BERTopic in live mode** ([pipeline.py:936](../src/erisk_task2/pipeline.py#L936)): it loads its own 4th sentence-transformer and OOM'd alongside the 3 encoders; its 41 features are zeroed.
-- Added `Encoding N texts: Xs` / `Process threads: Xs` timing logs so per-round latency became measurable.
+The "fix comment" in the code names the dominant Phase-1 cost directly: encoding `other_comments` was *"only used for ToM observer view and add ~10× encoding overhead."* Combined with the per-subject (non-batched) encoder calls and the 4th-model memory footprint of BERTopic, those three things together accounted for the 90–110 min/round in Phase 1.
 
-(The offline-eval analogue is the `precompute_embeddings` Phase-1/Phase-2 split in commits `e388cb1` + `887dbbb`.)
+### Why the *content* of the feature vector changes across the phases
 
-### How this explains the per-round profile
+The classifiers consume a fixed 2341-dim vector for every round. Two of those slots are **not** the same across the run:
 
-Measured per-round encode times from the live run log ([runs/task2/train/run.log](../runs/task2/train/run.log), 405 timed rounds):
+- **41 BERTopic topic-features** carry real values in Phase 1 (rounds 0–19) and **are 41 zeros** in Phase 2 (rounds 20–500). Source: [feature_assembler.py:124-128](../src/erisk_task2/classification/feature_assembler.py#L124-L128); the live-mode skip set at [pipeline.py:936](../src/erisk_task2/pipeline.py#L936).
+- **ToM observer-view dimensions** (in the 47-dim ToM block) were populated in Phase 1 from `encoder.encode(other_texts).mean(axis=0)` and become null in Phase 2 (see §6 of the solution description for the broader train/test ToM mismatch).
 
-| Round | Texts encoded | Encode time |
+So the early-round and late-round feature vectors are drawn from *slightly different distributions*, and the classifiers — trained with both topic features and (LLM Option C) ToM features non-zero — see a closer-to-training feature vector in Phase 1 than in Phase 2.
+
+### How this maps onto the submitted result
+
+Because **half of Run 0's final 101 alerts (50) fired in Phase 1** (rounds 0–19), and because the ERDE5 / latency-TP metrics weigh *early* correct positives most heavily, a disproportionate share of the latency-aware score comes from the BERTopic-on / observer-view-on regime. The official metrics for Run 0 (F1 0.80, ERDE5 0.16, ERDE50 0.07, latencyTP 13) therefore reflect a *blended* feature pipeline, not a single one.
+
+### Per-round encode times — Phase 2 only
+
+The `Encoding N texts: Xs` log line only existed in Phase 2 (it was added with the fix), so this table is **Phase-2-only**, 405 timed rounds:
+
+| Round event | Texts encoded | Encode time |
 |---|---:|---:|
-| Round 0 (first) | 19,832 | **2,416 s (~40 min)** |
-| Early rounds | ~678 | ~100–120 s |
+| Phase-2 restart catch-up (2026-04-23 00:39, ~41 min after a session start) | 19,832 | **2,416 s (~40 min)** |
+| Typical early Phase-2 rounds | ~678 | ~100–120 s |
 | Late rounds | 10–14 | 2.5–7 s |
 
-Mean 358 texts/round → 53.9 s; min 2.5 s; max 2,416 s.
+Phase-2 mean 358 texts/round → 53.9 s; min 2.5 s; max 2,416 s. (For comparison, Phase 1's per-round wall-clock was ~90–110 min, but it was *dominated by context-comment encoding* — there's no comparable per-encode log to break down.)
 
-- **Round 0 is the spike** because the first release delivers every subject's initial backlog of writings at once (~38 target texts × 522 subjects ≈ 19,832). Even after the fix it's ~40 min; *before* the fix it would also have dragged in all context comments (hundreds of thousands of texts) — the "encoding took too long at first" symptom.
-- **Later rounds get faster** because each round only adds the next thread per subject and subjects exhaust their streams — active subjects decay **522 → 12** over the run (see [§ test-set EDA](task2_test_eda.md)). Encode time tracks that decay almost linearly.
-- **Before the fix, round-to-round time was erratic** because it was dominated by how many other-participant comments happened to land in that round's threads (highly variable). After the fix, per-round time depends only on the number of *target* writings, making latency smooth and letting early rounds finish in seconds — directly relevant to the ERDE5 / latency-TP results, since Run 1's median alert at ~8–9 writings lands inside the high-coverage early window.
+A correction to an earlier draft of this table: the 2,416 s / 19,832-text encode is **not** round 0 — it is a Phase-2 session-restart catch-up event on 2026-04-23. The true round 0 completed on 2026-04-17 19:53 with the Phase-1 code in **111 min** wall-clock; no per-encode timing log exists for it because the timing logs were not yet in the binary.
+
+### Reading the per-round profile
+
+- **Phase 2 round-time decay** tracks active-subject decay (522 → 12 across the run; see [§ test-set EDA](task2_test_eda.md)), because once the slow context-comment loop is gone, what's left scales roughly linearly with target-writings-per-round.
+- **Phase 1 round-time was erratic and slow** — dominated by how many other-participant comments happened to land in that round's threads (highly variable, sometimes thousands per thread).
+- **Phase-2 restart catch-ups** explain the few large Phase-2 spikes (the 19,832-text / 40-min event is the clearest): when a session resumes from checkpoint and the server has accumulated state, the first round after resume drains a backlog.
+- The offline-eval analogue of the Phase-2 batching strategy is the `precompute_embeddings` Phase-1/Phase-2 split in commits `e388cb1` + `887dbbb`.
+
+The net effect for the metrics: Phase-1 latency (≥1.5 h per round) was painful operationally but **didn't penalize the official scores** — those scores are over round indices, not wall-clock — and the Phase-1 features were closer in distribution to training. Phase-2 made the operation tractable for the remaining 481 rounds and yielded the predictable latency profile that lets Run 1's median alert at ~8–9 writings sit inside the high-coverage early window.
 
 ---
 

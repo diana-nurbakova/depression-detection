@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "date": "2026-05-31",
+    "team": "INSA-Lyon",
+    "task": "eRisk 2026 Task 2 — Contextualized Early Detection of Depression",
+    "spec": "specs/task-2/data-extraction-request.md",
+    "sources": {
+      "official_results_document": "docs/eRisk_2026__Preliminary_results-with-Task3.pdf",
+      "local_rescoring_decisions": "runs/task2/train/decisions/",
+      "local_gold_truth": "data/eRisk-2026/eRisk26-datasets-20260519T175618Z-3-001/eRisk26-datasets/task2-contextualized-depression/golden-data/risk_golden_truth_t2_2026.txt",
+      "local_compute_script": "scripts/compute_task2_alert_metrics.py"
+    },
+    "task2_field_size": {
+      "teams": 17,
+      "runs": 70,
+      "note": "spec assumed 'field of 63' — actual field is 70 runs from 17 teams (see Table 5)"
+    },
+    "gold_truth_summary": {
+      "n_subjects": 522,
+      "n_positives": 91,
+      "n_negatives": 431
+    },
+    "local_vs_official_consistency": {
+      "alert_counts": "Local exactly reproduces official decision counts (R0 total = 101 alerts; TP counts = round(R * 91); FP = total - TP).",
+      "median_tp_latency": "Local medians are -2 rounds relative to official (R0 local 11 vs official 13; R1 local 7 vs official 9). Difference is a constant round-indexing offset (local file rounds are 0-indexed; official counts writings 1-indexed, plus possibly the initial context post)."
+    }
+  },
+
+  "G1_1_ranking_metrics_per_run_at_500_writings": {
+    "source": "PDF Table 7 — INSA-Lyon rows at 500 writings",
+    "rows": [
+      {"run": "R0", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.89},
+      {"run": "R1", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.89},
+      {"run": "R2", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.85},
+      {"run": "R3", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.89},
+      {"run": "R4", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.89}
+    ],
+    "bonus_intermediate_checkpoints": {
+      "1_writing": [
+        {"run": "R0", "P_at_10": 0.80, "NDCG_at_10": 0.87, "NDCG_at_100": 0.64},
+        {"run": "R1", "P_at_10": 0.80, "NDCG_at_10": 0.87, "NDCG_at_100": 0.64},
+        {"run": "R2", "P_at_10": 0.90, "NDCG_at_10": 0.81, "NDCG_at_100": 0.55},
+        {"run": "R3", "P_at_10": 0.80, "NDCG_at_10": 0.87, "NDCG_at_100": 0.64},
+        {"run": "R4", "P_at_10": 0.80, "NDCG_at_10": 0.87, "NDCG_at_100": 0.63}
+      ],
+      "100_writings": [
+        {"run": "R0", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.84},
+        {"run": "R1", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.84},
+        {"run": "R2", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.80},
+        {"run": "R3", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.84},
+        {"run": "R4", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.84}
+      ],
+      "250_writings": [
+        {"run": "R0", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.87},
+        {"run": "R1", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.87},
+        {"run": "R2", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.83},
+        {"run": "R3", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.87},
+        {"run": "R4", "P_at_10": 1.00, "NDCG_at_10": 1.00, "NDCG_at_100": 0.87}
+      ]
+    },
+    "notes": "Trajectory: R0/R1/R3/R4 reach 1.00 P@10 and NDCG@10 by 100 writings and stay there; NDCG@100 rises from 0.64 (1 writing) to 0.84 (100w), 0.87 (250w), 0.89 (500w). R2 trails by ~0.04 on NDCG@100 throughout."
+  },
+
+  "G1_2_field_rank_and_leader_values": {
+    "source": "PDF Tables 6 and 7 — INSA-Lyon position within full field of 70 runs",
+    "F1": {
+      "INSA_Lyon_best": 0.80,
+      "INSA_Lyon_best_runs": ["R0", "R4"],
+      "rank_in_field": "tied at 5 of 70",
+      "field_leader": {"team": "HUGETIME", "run": 0, "value": 0.83},
+      "runs_above_us": [
+        {"team": "HUGETIME", "run": 0, "F1": 0.83},
+        {"team": "UNED-GELP", "run": 2, "F1": 0.82},
+        {"team": "NoirByte", "run": 0, "F1": 0.82},
+        {"team": "MindAILab", "run": 0, "F1": 0.82}
+      ],
+      "spec_assumption_correction": "spec said 'best of our portfolio = 0.76' — actual best is 0.80 (R0 and R4 both at 0.80; R3 at 0.75 was probably the value remembered)"
+    },
+    "NDCG_at_100": {
+      "INSA_Lyon_best": 0.89,
+      "INSA_Lyon_best_runs": ["R0", "R1", "R3", "R4"],
+      "rank_in_field": "tied at 3 of 70 (nine runs share 0.89: 5 NoirByte runs + 4 INSA-Lyon runs)",
+      "field_leader": {"team": "DeepCare", "run": 0, "value": 0.91},
+      "runs_above_us": [
+        {"team": "DeepCare", "run": 0, "NDCG_at_100": 0.91},
+        {"team": "MindAILab", "run": 0, "NDCG_at_100": 0.90}
+      ],
+      "spec_assumption_correction": "spec said 'NDCG@100 ... 0.87 (already known)' — actual field max at 500 writings is 0.91 (DeepCare run 0). Our best is 0.89, not the field max."
+    },
+    "ERDE_5": {
+      "INSA_Lyon_best": 0.14,
+      "INSA_Lyon_best_run": "R2",
+      "rank_of_best_in_field": "tied at 23 of 70",
+      "INSA_Lyon_R1_value": 0.15,
+      "rank_of_R1_in_field": "tied at 30 of 70",
+      "field_leader": {"team": "HUTECH-NLP", "run": 3, "value": 0.08},
+      "note": "Lower is better for ERDE. HUTECH-NLP runs 0 and 3 both reach 0.08–0.09. R1 (0.15) is mid-pack."
+    }
+  },
+
+  "G1_3_decision_metrics_table_5_columns": {
+    "source": "PDF Table 6 — INSA-Lyon rows (decision-based evaluation)",
+    "rows": [
+      {"run": "R0", "P": 0.76, "R": 0.85, "F1": 0.80, "ERDE_5": 0.16, "ERDE_50": 0.07, "latency_TP": 13.00, "speed": 0.95, "F_latency": 0.76},
+      {"run": "R1", "P": 0.69, "R": 0.89, "F1": 0.78, "ERDE_5": 0.15, "ERDE_50": 0.05, "latency_TP": 9.00, "speed": 0.97, "F_latency": 0.75},
+      {"run": "R2", "P": 0.46, "R": 0.95, "F1": 0.62, "ERDE_5": 0.14, "ERDE_50": 0.08, "latency_TP": 7.50, "speed": 0.97, "F_latency": 0.60},
+      {"run": "R3", "P": 0.63, "R": 0.92, "F1": 0.75, "ERDE_5": 0.16, "ERDE_50": 0.06, "latency_TP": 11.50, "speed": 0.96, "F_latency": 0.72},
+      {"run": "R4", "P": 0.75, "R": 0.85, "F1": 0.80, "ERDE_5": 0.16, "ERDE_50": 0.07, "latency_TP": 14.00, "speed": 0.95, "F_latency": 0.76}
+    ]
+  },
+
+  "G2_1_per_run_alert_counts": {
+    "source": "local re-scoring (scripts/compute_task2_alert_metrics.py over runs/task2/train/decisions/)",
+    "rows": [
+      {"run": "R0", "total_alerts": 101, "true_positives": 77, "false_positives": 24},
+      {"run": "R1", "total_alerts": 117, "true_positives": 81, "false_positives": 36},
+      {"run": "R2", "total_alerts": 188, "true_positives": 86, "false_positives": 102},
+      {"run": "R3", "total_alerts": 133, "true_positives": 84, "false_positives": 49},
+      {"run": "R4", "total_alerts": 102, "true_positives": 77, "false_positives": 25}
+    ],
+    "verification": "Local TP counts and totals exactly match what would be derived from Table 6's P and R columns (e.g., R0: TP = R*91 = 77, total = TP/P = 77/0.76 = 101). The 101-alert figure for R0 mentioned in the §5.1 ¶2 draft is confirmed.",
+    "phase_split_for_R0": "R0 first_alert distribution: 50 alerts fired in rounds ≤ 50 (Phase 1), 51 fired in rounds 51–499 (Phase 2). The original '50 in Phase 1' draft sentence is consistent with the local data."
+  },
+
+  "G2_2_per_run_median_tp_latency": {
+    "source_official": "PDF Table 6 — latency_TP column",
+    "source_local": "scripts/compute_task2_alert_metrics.py",
+    "official_table_6_values": {"R0": 13.0, "R1": 9.0, "R2": 7.5, "R3": 11.5, "R4": 14.0},
+    "local_rescoring_values": {"R0": 11.0, "R1": 7.0, "R2": 5.5, "R3": 9.5, "R4": 12.0},
+    "offset": "Local values are exactly 2 rounds below official across all 5 runs — consistent round-indexing offset (local rounds 0-indexed; official 1-indexed plus initial context).",
+    "recommended_for_paper": "Use the official Table 6 values (13, 9, 7.5, 11.5, 14) since the paper references official Table 5 / Table 6 numbers throughout."
+  },
+
+  "G2_3_per_subject_latency": {
+    "source": "local re-scoring + analysis/eda_task2/outputs/example_candidates.json",
+    "rows": [
+      {"subject_tag": "Subject A", "real_id": "qMXSpL4", "gold": 1, "R0_alert_round": 41, "R1_alert_round": 4, "gap_R0_minus_R1": 37,
+       "note": "TP. Larger-gap example. Mentioned in §1.1 illustrative example (sparse target text + community concern)."},
+      {"subject_tag": "Subject B", "real_id": "kcdgN0X", "gold": 1, "R0_alert_round": 50, "R1_alert_round": 29, "gap_R0_minus_R1": 21,
+       "note": "TP. Sits at the median of the 28-subject early-alert cohort (median gap = 21)."},
+      {"subject_tag": "Subject C", "real_id": "OvzSZuo", "gold": 0, "R0_alert_round": null, "R1_alert_round": 7, "gap_R0_minus_R1": null,
+       "note": "Control (gold = 0). R0 never alerts (true negative). R1 false-alerts at round 7 (false positive). Spec marked this as 'n/a (control)' for the gap column."},
+      {"subject_tag": "Subject D", "real_id": "Pop2mTP", "gold": 1, "R0_alert_round": 116, "R1_alert_round": 21, "gap_R0_minus_R1": 95,
+       "note": "TP. Among the very-large-gap subjects in the cohort (gap = 95)."}
+    ],
+    "early_alert_cohort_summary": {
+      "definition": "TPs (gold = 1) where both R0 and R1 alert AND R1 alerts ≥ 5 rounds before R0",
+      "n_qualifying_subjects": 28,
+      "median_gap_rounds": 21,
+      "mean_gap_rounds": 38.46,
+      "gap_distribution": {"min": 5, "p25": 9, "p50": 21, "p75": 45.75, "max": 154}
+    }
+  },
+
+  "G2_4_per_run_training_mean_alert_round": {
+    "status": "PARTIAL — local mean is reportable (over the 522-subject test cohort), but the 158 / 114 numbers from the prior draft cannot be reproduced",
+    "explanation": "The 'training-simulation mean alert round' values 158 (R0) and 114 (R1) cited in the prior draft must come from a separate training-simulation log (likely the 2025 train data with 909 users, processed across longer round sequences) which is not present in the local runs/task2/ directory. The available decision files (runs/task2/train/decisions/) correspond to the 522 2026 test subjects (matching the 2026 gold truth file).",
+    "local_means_over_test_cohort": {
+      "R0": {"mean_TP_first_alert_round": 36.58, "mean_first_alert_round_all_alerts": 51.83},
+      "R1": {"mean_TP_first_alert_round": 30.59, "mean_first_alert_round_all_alerts": 46.94},
+      "R2": {"mean_TP_first_alert_round": 33.08, "mean_first_alert_round_all_alerts": 68.27},
+      "R3": {"mean_TP_first_alert_round": 34.74, "mean_first_alert_round_all_alerts": 71.53},
+      "R4": {"mean_TP_first_alert_round": 39.47, "mean_first_alert_round_all_alerts": 56.16}
+    },
+    "recommendation": "Either drop the train/test comparison from §5.4 ¶2, or re-run the system on the 2025 training corpus (909 users) to regenerate the training-mean values. Local re-scoring on test data does not substitute for it."
+  }
+}

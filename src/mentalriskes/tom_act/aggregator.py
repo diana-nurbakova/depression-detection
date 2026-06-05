@@ -15,7 +15,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from .constants import ACT_PROCESS_KEYS, GEMMA_VIEW_SIGNALS
+from .constants import ACT_PROCESS_KEYS, GEMMA_VIEW_SIGNALS, canonical_phase
 from .llama_regen import (
     SIG_ASSESS,
     SIG_ASSESS_COMBINED,
@@ -135,7 +135,7 @@ def build_llama_state_long(run_root: Path) -> pd.DataFrame:
         parsed = rec.get("response_parsed") or {}
         procesos = parsed.get("procesos_act", {}) or {}
         row = {"session_id": sid, "round": rnd,
-               "fase_terapeutica": parsed.get("fase_terapeutica")}
+               "fase_terapeutica": canonical_phase(parsed.get("fase_terapeutica"))}
         for k in ACT_PROCESS_KEYS:
             try:
                 row[k] = float(procesos.get(k)) if procesos.get(k) is not None else None

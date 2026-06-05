@@ -1,0 +1,280 @@
+{
+  "data_source": {
+    "decisions_dir": "C:\\Users\\dnurb\\Documents\\depression-detection\\runs\\task2\\train\\decisions",
+    "gold": "C:\\Users\\dnurb\\Documents\\depression-detection\\data\\eRisk-2026\\eRisk26-datasets-20260519T175618Z-3-001\\eRisk26-datasets\\task2-contextualized-depression\\golden-data\\risk_golden_truth_t2_2026.txt"
+  },
+  "G2_1_per_run_alert_counts": [
+    {
+      "run": "R0",
+      "total_alerts": 101,
+      "true_positives": 77,
+      "false_positives": 24
+    },
+    {
+      "run": "R1",
+      "total_alerts": 117,
+      "true_positives": 81,
+      "false_positives": 36
+    },
+    {
+      "run": "R2",
+      "total_alerts": 188,
+      "true_positives": 86,
+      "false_positives": 102
+    },
+    {
+      "run": "R3",
+      "total_alerts": 133,
+      "true_positives": 84,
+      "false_positives": 49
+    },
+    {
+      "run": "R4",
+      "total_alerts": 102,
+      "true_positives": 77,
+      "false_positives": 25
+    }
+  ],
+  "G2_2_per_run_median_tp_latency": {
+    "R0": 11,
+    "R1": 7,
+    "R2": 5.5,
+    "R3": 9.5,
+    "R4": 12
+  },
+  "G2_3_per_subject_latency": [
+    {
+      "subject": "subject_qMXSpL4",
+      "gold": 1,
+      "R0_alert_round": 41,
+      "R1_alert_round": 4,
+      "R2_alert_round": 23,
+      "R3_alert_round": 5,
+      "R4_alert_round": 41
+    },
+    {
+      "subject": "subject_kcdgN0X",
+      "gold": 1,
+      "R0_alert_round": 50,
+      "R1_alert_round": 29,
+      "R2_alert_round": 29,
+      "R3_alert_round": 32,
+      "R4_alert_round": 50
+    },
+    {
+      "subject": "subject_OvzSZuo",
+      "gold": 0,
+      "R0_alert_round": null,
+      "R1_alert_round": 7,
+      "R2_alert_round": null,
+      "R3_alert_round": null,
+      "R4_alert_round": null
+    },
+    {
+      "subject": "subject_Pop2mTP",
+      "gold": 1,
+      "R0_alert_round": 116,
+      "R1_alert_round": 21,
+      "R2_alert_round": 80,
+      "R3_alert_round": 108,
+      "R4_alert_round": 116
+    }
+  ],
+  "G2_3_early_alert_cohort_R1_vs_R0_gap_ge_5": {
+    "n_qualifying": 28,
+    "median_gap": 21.0,
+    "mean_gap": 38.464285714285715,
+    "members": [
+      {
+        "subject": "subject_KjQQIm7",
+        "r0_round": 200,
+        "r1_round": 46,
+        "gap": 154
+      },
+      {
+        "subject": "subject_Lqynfyb",
+        "r0_round": 146,
+        "r1_round": 14,
+        "gap": 132
+      },
+      {
+        "subject": "subject_GXv5RFU",
+        "r0_round": 244,
+        "r1_round": 120,
+        "gap": 124
+      },
+      {
+        "subject": "subject_Pop2mTP",
+        "r0_round": 116,
+        "r1_round": 21,
+        "gap": 95
+      },
+      {
+        "subject": "subject_nSHtp5D",
+        "r0_round": 119,
+        "r1_round": 30,
+        "gap": 89
+      },
+      {
+        "subject": "subject_UQ2s9Iz",
+        "r0_round": 71,
+        "r1_round": 8,
+        "gap": 63
+      },
+      {
+        "subject": "subject_wvz0Brc",
+        "r0_round": 50,
+        "r1_round": 2,
+        "gap": 48
+      },
+      {
+        "subject": "subject_TkL1UoA",
+        "r0_round": 60,
+        "r1_round": 15,
+        "gap": 45
+      },
+      {
+        "subject": "subject_1Zjhjs4",
+        "r0_round": 51,
+        "r1_round": 9,
+        "gap": 42
+      },
+      {
+        "subject": "subject_qMXSpL4",
+        "r0_round": 41,
+        "r1_round": 4,
+        "gap": 37
+      },
+      {
+        "subject": "subject_Kcu6Y5w",
+        "r0_round": 49,
+        "r1_round": 13,
+        "gap": 36
+      },
+      {
+        "subject": "subject_19pCMu5",
+        "r0_round": 30,
+        "r1_round": 5,
+        "gap": 25
+      },
+      {
+        "subject": "subject_djU9NoU",
+        "r0_round": 31,
+        "r1_round": 9,
+        "gap": 22
+      },
+      {
+        "subject": "subject_1S0M1Kj",
+        "r0_round": 39,
+        "r1_round": 18,
+        "gap": 21
+      },
+      {
+        "subject": "subject_kcdgN0X",
+        "r0_round": 50,
+        "r1_round": 29,
+        "gap": 21
+      },
+      {
+        "subject": "subject_AoqY7j0",
+        "r0_round": 51,
+        "r1_round": 35,
+        "gap": 16
+      },
+      {
+        "subject": "subject_pLe1bpo",
+        "r0_round": 15,
+        "r1_round": 1,
+        "gap": 14
+      },
+      {
+        "subject": "subject_geNJiZ0",
+        "r0_round": 32,
+        "r1_round": 18,
+        "gap": 14
+      },
+      {
+        "subject": "subject_oPDi4Yc",
+        "r0_round": 52,
+        "r1_round": 39,
+        "gap": 13
+      },
+      {
+        "subject": "subject_xnh1dgX",
+        "r0_round": 20,
+        "r1_round": 8,
+        "gap": 12
+      },
+      {
+        "subject": "subject_amxZtQC",
+        "r0_round": 11,
+        "r1_round": 2,
+        "gap": 9
+      },
+      {
+        "subject": "subject_SuH9CLI",
+        "r0_round": 16,
+        "r1_round": 7,
+        "gap": 9
+      },
+      {
+        "subject": "subject_jrlbg3m",
+        "r0_round": 20,
+        "r1_round": 11,
+        "gap": 9
+      },
+      {
+        "subject": "subject_NOmFyqT",
+        "r0_round": 27,
+        "r1_round": 20,
+        "gap": 7
+      },
+      {
+        "subject": "subject_36C2iWa",
+        "r0_round": 5,
+        "r1_round": 0,
+        "gap": 5
+      },
+      {
+        "subject": "subject_WUO40uL",
+        "r0_round": 6,
+        "r1_round": 1,
+        "gap": 5
+      },
+      {
+        "subject": "subject_7cxOXIb",
+        "r0_round": 15,
+        "r1_round": 10,
+        "gap": 5
+      },
+      {
+        "subject": "subject_ieKFZZ6",
+        "r0_round": 20,
+        "r1_round": 15,
+        "gap": 5
+      }
+    ]
+  },
+  "G2_4_per_run_mean_alert_round": {
+    "R0": {
+      "mean_tp_first_alert_round": 36.58441558441559,
+      "mean_alert_round_all_alerts": 51.83168316831683
+    },
+    "R1": {
+      "mean_tp_first_alert_round": 30.59259259259259,
+      "mean_alert_round_all_alerts": 46.94017094017094
+    },
+    "R2": {
+      "mean_tp_first_alert_round": 33.08139534883721,
+      "mean_alert_round_all_alerts": 68.27127659574468
+    },
+    "R3": {
+      "mean_tp_first_alert_round": 34.73809523809524,
+      "mean_alert_round_all_alerts": 71.52631578947368
+    },
+    "R4": {
+      "mean_tp_first_alert_round": 39.467532467532465,
+      "mean_alert_round_all_alerts": 56.15686274509804
+    }
+  }
+}

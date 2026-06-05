@@ -13,6 +13,7 @@ import logging
 import numpy as np
 import pandas as pd
 
+from ..constants import canonical_phase
 from . import common
 
 logger = logging.getLogger(__name__)
@@ -25,8 +26,11 @@ def _candidate_frame(run_root, sessions, tables) -> pd.DataFrame:
     if stance.empty or presc.empty:
         return pd.DataFrame()
 
-    phase = (state[["session_id", "round", "fase_terapeutica"]]
+    phase = (state[["session_id", "round", "fase_terapeutica"]].copy()
              if not state.empty else pd.DataFrame())
+    if not phase.empty:
+        # Defensive normalisation in case the aggregator wasn't re-run.
+        phase["fase_terapeutica"] = phase["fase_terapeutica"].map(canonical_phase)
 
     df = stance.merge(presc, on=["session_id", "round", "candidate"], how="outer")
     if not phase.empty:

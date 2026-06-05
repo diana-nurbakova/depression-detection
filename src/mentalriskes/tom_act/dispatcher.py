@@ -81,13 +81,19 @@ class _Completed:
 class Dispatcher:
     """Routes LLM calls through recovery + atomic JSONL persistence with resume."""
 
-    def __init__(self, run_root: str | Path, max_attempts: int = 3) -> None:
+    def __init__(self, run_root: str | Path, max_attempts: int = 3,
+                 meta_suffix: str | None = None) -> None:
+        """If ``meta_suffix`` is set, meta events go to ``meta.<suffix>.jsonl``
+        (e.g. ``meta.T1.jsonl``) so concurrent tier passes never share a writer.
+        Default is the spec's single ``meta.jsonl``."""
         self.root = Path(run_root)
         self.logs = self.root / "logs"
         self.logs.mkdir(parents=True, exist_ok=True)
         self.max_attempts = max_attempts
         self.code_version = _git_commit()
-        self.meta_path = self.logs / "meta.jsonl"
+        self.meta_path = self.logs / (
+            f"meta.{meta_suffix}.jsonl" if meta_suffix else "meta.jsonl"
+        )
         # Per-signal resume index: {signal_type: {signature: _Completed}}
         self._index: dict[str, dict[str, _Completed]] = {}
 

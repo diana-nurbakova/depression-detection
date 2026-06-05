@@ -245,12 +245,12 @@ We apply **VADER** sentiment analysis to direct replies to the target user (or b
 
 #### 4.2.2 Concern Detection (1d)
 
-We scan all thread text for 40 concern phrases that indicate community worry about the target user, such as:
+We scan all thread text (all non-target comments, plus the submission body when the target is not the author) for **42 concern phrases** (case-insensitive substring match) that indicate community worry about the target user, such as:
 - "are you okay", "please get help", "reach out to someone"
-- "suicide hotline", "therapist", "medication"
-- "worried about you", "take care of yourself"
+- "suicide hotline", "crisis line", "988"
+- "i'm worried", "take care of yourself", "hope you're doing better"
 
-The feature is the ratio of rounds where at least one concern phrase was detected.
+A round is flagged if any phrase matches (one match per comment is enough). The feature is the **ratio of rounds with at least one match** across the user's history. See [src/erisk_task2/features/layer2.py:22-97](../src/erisk_task2/features/layer2.py#L22-L97).
 
 #### 4.2.3 Conversational Position (3d)
 
@@ -267,22 +267,95 @@ For each thread, the title (or body if title is absent) is embedded using the sa
 
 #### 4.3.1 Emotion Classification (9d)
 
-We use the `j-hartmann/emotion-english-distilroberta-base` model, a fine-tuned DistilRoBERTa classifier for Plutchik's 8 basic emotions:
+We use the `j-hartmann/emotion-english-distilroberta-base` model. Our intent at design time was Plutchik's 8 primary emotions; the **actual deployed pairing is mismatched** — see §4.3.1a immediately below. The wire shape of the feature block is unchanged (9d = 8 emotion slots + 1 entropy), but the *semantics* of those 8 slots differ from what the doc previously claimed.
 
-| Emotion | Index |
-|---------|-------|
-| Anger | 0 |
-| Anticipation | 1 |
-| Disgust | 2 |
-| Fear | 3 |
-| Joy | 4 |
-| Sadness | 5 |
-| Surprise | 6 |
-| Trust | 7 |
+**Slot layout in the feature vector (`PLUTCHIK_EMOTIONS` in [layer3.py:18-22](../src/erisk_task2/features/layer3.py#L18-L22)):**
 
-**Per-round**: Each target text is classified → (8d) distribution. Texts with fewer than 10 words receive a uniform (1/8) distribution to avoid noisy classifications on very short texts. Per-round distributions are averaged.
+| Slot | Name in code (Plutchik) | Populated at runtime? |
+| --- | --- | --- |
+| 0 | Anger | yes — matches model's `anger` |
+| 1 | Anticipation | **never** — model has no `anticipation` class |
+| 2 | Disgust | yes — matches model's `disgust` |
+| 3 | Fear | yes — matches model's `fear` |
+| 4 | Joy | yes — matches model's `joy` |
+| 5 | Sadness | yes — matches model's `sadness` |
+| 6 | Surprise | yes — matches model's `surprise` |
+| 7 | Trust | **never** — model has no `trust` class |
 
-**Final features (9d)**: Mean emotion distribution across all rounds (8d) + Shannon entropy of the mean distribution (1d). Low entropy indicates dominant emotional state; high entropy indicates emotional variability.
+Model's `neutral` class has no destination slot (no Plutchik name is a substring of `"neutral"`) and is silently dropped before renormalisation (see §4.3.1a).
+
+**Per-round**: Each target text is classified → 8-d distribution buffer (slots 1 and 7 always 0). Texts with fewer than 10 words receive a uniform (1/8) distribution to avoid noisy classifications on very short texts. Per-round distributions are averaged.
+
+**Final features (9d)**: Mean emotion distribution across all rounds (8d) + Shannon entropy of the mean distribution (1d). Low entropy indicates dominant emotional state; high entropy indicates emotional variability. Because two of the eight slots are structurally zero, the maximum achievable entropy is `log(6) ≈ 1.79` (not `log(8) ≈ 2.08`), but the entropy is *computed* over the full 8-d buffer, so the published value is on the smaller scale.
+
+#### 4.3.1a Taxonomy mismatch: Plutchik-8 vs Ekman-6 + neutral (known bug)
+
+The constant in [layer3.py:17-22](../src/erisk_task2/features/layer3.py#L17-L22) declares Plutchik's 8 emotions, but `j-hartmann/emotion-english-distilroberta-base` is trained on **Ekman's 6 emotions plus a `neutral` class** (7 classes total). The pairing was an authoring error; the two label sets agree on 6 emotions and diverge on the rest.
+
+**Verified empirically.** Loading the model and running it on three sample inputs returns 7 labels per prediction. Its `config.id2label`:
+
+```python
+{0: 'anger', 1: 'disgust', 2: 'fear', 3: 'joy',
+ 4: 'neutral', 5: 'sadness', 6: 'surprise'}
+```
+
+The final classification head is `Linear(hidden_dim → 7)` — there is no neuron that can fire `anticipation` or `trust`. It is a structural impossibility, not a probabilistic rarity.
+
+**The two vocabularies side-by-side:**
+
+| Class | In Plutchik (code's assumption) | In Ekman + neutral (actual model) | Result at runtime |
+| --- | --- | --- | --- |
+| Anger | ✓ slot 0 | ✓ id 0 | mapped → slot 0 |
+| Disgust | ✓ slot 2 | ✓ id 1 | mapped → slot 2 |
+| Fear | ✓ slot 3 | ✓ id 2 | mapped → slot 3 |
+| Joy | ✓ slot 4 | ✓ id 3 | mapped → slot 4 |
+| Sadness | ✓ slot 5 | ✓ id 5 | mapped → slot 5 |
+| Surprise | ✓ slot 6 | ✓ id 6 | mapped → slot 6 |
+| **Anticipation** | ✓ slot 1 | ✗ not in model | **slot 1 always 0** |
+| **Trust** | ✓ slot 7 | ✗ not in model | **slot 7 always 0** |
+| **Neutral** | ✗ not in code | ✓ id 4 | **score discarded before renormalisation** |
+
+**The dispatch loop ([layer3.py:65-83](../src/erisk_task2/features/layer3.py#L65-L83))**:
+
+```python
+for p in preds:                                  # 7 iterations (model labels)
+    label = p["label"].lower()
+    for j, emotion in enumerate(PLUTCHIK_EMOTIONS):
+        if emotion in label:                     # first-match-wins substring test
+            dist[j] = p["score"]
+            break                                # nothing happens if no name matches
+# ...
+total = dist.sum()
+if total > 0:
+    dist = dist / total                          # renormalises over 6 non-zero slots
+```
+
+Worked example on the input `"I feel completely hopeless and empty inside, nothing matters anymore."` (model output sorted by score):
+
+| Model output | Slot written | Comment |
+| --- | --- | --- |
+| `sadness 0.9822` | `dist[5] = 0.9822` | matches `sadness ∈ "sadness"` |
+| `neutral 0.0068` | none | **dropped** — no Plutchik name is a substring of `"neutral"` |
+| `disgust 0.0056` | `dist[2] = 0.0056` | |
+| `fear 0.0019` | `dist[3] = 0.0019` | |
+| `anger 0.0014` | `dist[0] = 0.0014` | |
+| `surprise 0.0012` | `dist[6] = 0.0012` | |
+| `joy 0.0010` | `dist[4] = 0.0010` | |
+
+After renormalisation (total = 0.9933; neutral's 0.0068 is gone):
+
+```text
+dist = [0.00141,  0,       0.00564,  0.00191,  0.00101,  0.98886,  0.00121,  0     ]
+        anger    anticip.  disgust   fear      joy       sadness   surprise  trust
+```
+
+**Three consequences for the trained pipeline.**
+
+1. **Two wasted feature dimensions.** Slots 1 and 7 are exactly zero in every emotion vector ever produced — for every user, every round, every fold. XGBoost still has to consider them as split candidates (each split iteration scans every feature column); they will never be selected, but they cost a small amount of training-time overhead and pollute the feature-importance ranking with two guaranteed zeros.
+2. **Distorted distributions for emotionally-bland posts.** When the model says `0.95 neutral + 0.01 × {anger, disgust, …}`, the renormalisation amplifies each surviving 0.01 to roughly 0.167 across the 6 active slots. The downstream Shannon entropy then reads "near-uniform emotional state" (high entropy) when the model's actual reading was "this text is mostly neutral" (which carries different prior weight on depression). The Reddit base rate of low-affect posts is high, so this distortion touches a non-trivial share of inputs.
+3. **Entropy ceiling shift.** Because the support is 6 active dims, the achievable Shannon-entropy range is `[0, log 6 ≈ 1.79]`, not `[0, log 8 ≈ 2.08]`. The classifier learned its split thresholds on this restricted range, so the bug is internally consistent for training and inference — but the "entropy of an 8-emotion distribution" interpretation in earlier drafts of this doc is wrong.
+
+**Fix options.** A correct mapping would replace `PLUTCHIK_EMOTIONS` with the Ekman+neutral set (`["anger", "disgust", "fear", "joy", "neutral", "sadness", "surprise"]`), changing the block dimension from 9d to 8d (7 emotion slots + 1 entropy). That would mean re-training every classifier on the corrected feature matrix; we did not do this for the submission because (a) the wasted-slot cost is bounded and (b) the entropy-ceiling shift is internally consistent across train and inference. The bug is recorded here and in [task2_results_analysis.md](task2_results_analysis.md) §6 as a known limitation of the submission run.
 
 #### 4.3.2 BERTopic Dynamic Topic Modeling (41d)
 
@@ -298,11 +371,14 @@ We fit a BERTopic model on all target user texts from the training set:
 
 **Fitting**: Documents from all training users (with ≥10 words each) are pooled. Depression labels are used to identify which topics are disproportionately associated with depressed users (depression_proportion metric).
 
-**Per-user transform**: A rolling buffer of the last 5 target texts is maintained. The concatenated buffer text is transformed into a topic distribution via the fitted model.
+**Per-user transform**: A rolling buffer of the last 5 target texts is maintained. The concatenated buffer text is run through BERTopic's `transform([text])` — the **40d topic distribution is the soft (probabilistic) output**, while the depression-proportion uses the **hard top-1 topic** (`topics[0] ∈ depression_topic_ids`).
 
-**Final features (41d)**:
-- 40d topic distribution vector
-- 1d mean depression proportion across all rounds
+**Depression-topic identification (fit time)**: A topic is labeled "depression-related" if (a) total count > 10 and (b) `dep_count / total > 1.5 × base_rate` ([layer3.py:182-188](../src/erisk_task2/features/layer3.py#L182-L188)).
+
+**Final features (41d)** ([feature_assembler.py:33](../src/erisk_task2/classification/feature_assembler.py#L33), [pipeline.py:258-275](../src/erisk_task2/pipeline.py#L258-L275)):
+
+- 40d topic distribution vector (last round's `transform` output, zero-padded if BERTopic returned fewer than 40 topics).
+- **1d mean depression-proportion across all rounds** (NB: the inline comment "40d distribution + entropy" at `pipeline.py:272` is misleading — the assembled slot 40 is the mean of `depression_proportion`, not the topic entropy. Topic entropy is computed and used elsewhere in the Wasserstein block, but not in this 41-d vector).
 
 ---
 
@@ -342,9 +418,12 @@ The Mahalanobis distance provides an anomaly score measuring how far a user's fe
 - **D_M_depressed**: Mahalanobis distance from the depressed distribution center.
 - **D_M_relative**: D_M_control − D_M_depressed. Positive values indicate the user is closer to the depressed distribution than to the control distribution.
 
-**Combined distributional score (2d)**: Additionally, we include:
-- D_M_control (duplicated for emphasis)
-- Mean Wasserstein distance (average of all 72 Wasserstein features)
+**Combined distributional score (2d)** ([feature_assembler.py:136-142](../src/erisk_task2/classification/feature_assembler.py#L136-L142)): a 2-scalar summary block produced only when both upstream blocks are present (else zeroed).
+
+- **Slot [0]** = `mahalanobis_features[0]` = **D_M_control**, identical to the first Mahalanobis slot. A literal duplicate, not a re-weighted or rescaled version — XGBoost simply sees the same scalar twice. The duplication is what the code does; it is not load-bearing modelling-wise.
+- **Slot [1]** = `wasserstein_features.mean()` = **unweighted arithmetic mean of the 72-d Wasserstein vector** (= flat average across 63 symptom × 3 scales + 3 emotion + 3 embedding + 3 topic). No length-normalisation, no scale-specific weighting, no per-block re-scaling beyond what each component natively produces.
+
+Both slots are zeroed when either Mahalanobis or Wasserstein is unavailable for a user (e.g., insufficient round history).
 
 ---
 
@@ -368,10 +447,32 @@ Three implementation options are available, all producing the same 47d feature v
 > - **The live test run** (executed locally via `run_pipeline` in `src/erisk_task2/pipeline.py`) computes ToM **inline as Option A** (embedding-based) via `_compute_tom_a_features()` — **no LLM** — and with community-comment (observer) encoding disabled for latency (see §6 runtime note in the results analysis). At inference, therefore, only the self-view embedding norm `[42]` is non-zero; the observer norm `[43]`, insight gap `[44]`, the 21+21 symptom-score slots `[0:42]`, and the concern/community slots `[45:46]` are all ~0.
 >
 > **Consequence:** the classifiers learned weights on rich LLM-derived ToM features (observer symptom scores, concern level, community-response type, insight gap) that are fed near-zeros at test time — a genuine train/test mismatch. It also explains why **R0 (full features) ≈ R4 (no-ToM ablation)** on the live submission: same XGBoost model, the `no_tom` mask just zeroes the 47d block, and R0's block is already ~all-zero live, so the two runs differ by a single scalar (1 subject / 1 FP in our re-score). The no-ToM ablation is thus confounded — it could not measure the ToM contribution that training actually relied on. `src/erisk_task2/pipeline.py` never loads `tom_features.npz`; that LLM path lives only in the Colab notebook and `src/erisk_task2/tom/`.
+>
+> **A second train/test heterogeneity — BERTopic topic-features (41-d).** The 41 Layer-3 BERTopic dimensions ([feature_assembler.py:124-128](../src/erisk_task2/classification/feature_assembler.py#L124-L128)) hold real topic-similarity values in training (the BERTopic model was fitted on training texts; see §4.3.2) but are **not uniform at test time**. The live run was produced in two regimes (boundary verified in `runs/task2/train/run.log`):
+>
+> - **Phase 1 (rounds 0–19, 2026-04-17 → 04-19):** BERTopic loaded and used — 41 real topic features per subject per round, the closest-to-training feature configuration.
+> - **Phase 2 (rounds 20–500, 2026-04-19 → 04-23):** BERTopic skipped in live mode ([pipeline.py:936](../src/erisk_task2/pipeline.py#L936), `BERTopic skipped in live pipeline (memory optimization)`) — the 41 topic features are zeroed for memory reasons (BERTopic loads its own 4th sentence-transformer alongside the 3 encoders and OOM'd on the local box).
+>
+> So the early-round and late-round feature vectors come from *different distributions* in two slots (topic features and the ToM observer dimensions described above). Because ERDE5 / latency-TP weight *early* correct positives most heavily, and because **50 of Run 0's 101 final alerts fired in Phase 1**, a disproportionate share of the latency-aware score reflects the BERTopic-on / observer-view-on regime. See [docs/task2_results_analysis.md](task2_results_analysis.md) §6 for the per-phase timing detail and round counts. (The same heterogeneity affects every classifier-based run — R0–R4 — not just the ToM ablation.)
 
 ### 6.2 Option C: LLM-Based Dual Mentalizing (used to build the training features)
 
-Uses **`meta-llama/Llama-3.3-70B-Instruct`** via the **HuggingFace Inference API** (temperature 0.1) to generate structured JSON assessments. (The codebase also ships an `OllamaClient` with the same interface; the config default points at Ollama, but the Colab feature build used the HuggingFace `InferenceClient`.)
+Uses **`meta-llama/Llama-3.3-70B-Instruct`** via the **HuggingFace Inference API** to generate structured JSON assessments. (The codebase also ships an `OllamaClient` with the same interface; the config default points at Ollama, but the Colab feature build used the HuggingFace `InferenceClient`.)
+
+**Decoding & request parameters** ([hf_client.py:21-86](../src/erisk_task2/tom/hf_client.py#L21-L86), [llm_client.py:21-85](../src/erisk_task2/tom/llm_client.py#L21-L85)):
+
+| Parameter | HF Inference (used for training features) | Ollama (config default) |
+| --- | --- | --- |
+| Temperature | 0.1 (all prompts, all attempts) | 0.1 |
+| Max output tokens | 2048 (`max_tokens`) | uncapped (`num_predict` not set → model default) |
+| Context window | n/a (chat-completion endpoint) | `num_ctx = 8192` |
+| Timeout | 120 s | 120 s |
+| Retries | `max_retries = 3` (up to 2 retries after first call) | `max_retries = 3` |
+| Retry back-off | `2 ** attempt` seconds | `2 ** attempt` seconds |
+| Retry temperature override | **none** (same 0.1 on every attempt) | **none** |
+| JSON fallback | regex-based markdown/code-fence stripping in `_extract_json`; on parse failure, the slot is recorded as `None` and the corresponding 21-d sub-vector is left at zero — there is no second LLM call with a stricter temperature | same |
+
+**Batching policy**: per-thread ToM is **sequential** — for each (user, round) we issue at most two calls (self-view then observer-view; chained mode would pipe the self-view JSON into the observer prompt, but the config default is `chained=False`, so they are independent). No batching across users or across rounds. System prompts are pre-formatted in `ToMModule.__init__` and reused byte-identically for KV-cache reuse on the Ollama side.
 
 **Prompt 1 — Self-View**: Analyzes ONLY the target user's own writings. The system prompt includes the full 21 BDI-II symptom definitions. Output:
 - `active_symptoms`: dict of symptom name → {score: 1-3, evidence: "..."}
@@ -389,21 +490,40 @@ System prompts are pre-formatted and kept **byte-identical** across calls to max
 ### 6.3 Option A: Embedding-Based (Fallback)
 
 When no LLM is available, we compute:
+
 - **Self-view**: Mean embedding of target user texts → embedding norm as depression_probability proxy.
 - **Observer-view**: Mean embedding of all other comments → embedding norm.
 - **Gap metric**: 1 − cosine_similarity(self, observer) as insight_gap proxy.
 
-### 6.4 ToM Feature Vector (47d)
+### 6.4 ToM Feature Vector (47d) — Training-Time Layout
 
-| Offset | Dimension | Feature |
-|--------|-----------|---------|
-| 0–20 | 21 | Self-view symptom scores (normalized to 0–1 from LLM scores 1–3) |
-| 21–41 | 21 | Observer-view symptom scores |
-| 42 | 1 | Self depression_probability |
-| 43 | 1 | Observer depression_probability |
-| 44 | 1 | Insight gap (mean absolute difference between self and observer symptom scores) |
-| 45 | 1 | Observer concern level (0–3, normalized to 0–1) |
-| 46 | 1 | Community response type encoded (concern→1.0, support→0.8, advice→0.6, mixed→0.5, normalization→0.3, casual→0.0) |
+This is the layout the classifiers were **trained** on (Option C, LLM dual mentalizing). Live-mode (Option A) actually populates only the highlighted row — see §6.5.
+
+| Offset | Dimension | Feature (training, Option C) | Live (Option A) value |
+| --- | --- | --- | --- |
+| 0–20 | 21 | Self-view symptom scores (normalized to 0–1 from LLM scores 1–3) | **0** |
+| 21–41 | 21 | Observer-view symptom scores | **0** |
+| **42** | 1 | Self depression_probability (LLM, ∈ [0, 1]) | **`‖ mean_over_rounds( round_mean ) ‖₂`** — unbounded L2 norm |
+| 43 | 1 | Observer depression_probability | **0** (observer embeddings not computed live) |
+| 44 | 1 | Insight gap (mean abs diff between self and observer symptom scores) | **0** |
+| 45 | 1 | Observer concern level (0–3, normalized to 0–1) | **0** |
+| 46 | 1 | Community response type encoded (concern→1.0, support→0.8, advice→0.6, mixed→0.5, normalization→0.3, casual→0.0) | **0** |
+
+### 6.5 ToM at inference (live mode) — what actually populated each slot
+
+The live pipeline does **not** call any LLM. It computes Option A inline, and within Option A it skips encoding `other_comments` to avoid a ~10× sentence-transformer cost ([pipeline.py:995-996](../src/erisk_task2/pipeline.py#L995-L996), [pipeline.py:214-225](../src/erisk_task2/pipeline.py#L214-L225)). The consequence is that **only slot [42] is non-zero at inference**, and the value at slot [42] is not on the same scale as the training-time value.
+
+**Slot [42], live**: `‖ mean_over_rounds( round_mean_target_text_embedding ) ‖₂` — the L2 norm of the **centroid** of the per-round mean target-text embeddings (`mean → norm`, in that order, not `norm → mean`).
+
+**Three caveats to keep in mind when reading this slot:**
+
+1. **Order matters.** `_compute_tom_a_features` ([pipeline.py:326-362](../src/erisk_task2/pipeline.py#L326-L362)) stacks per-round means, averages them, then takes a single norm. It is therefore the magnitude of the centroid — not the average magnitude of the rounds.
+2. **Embeddings are not L2-normalised.** The 1920-d concat of mpnet-base-v2 + MiniLM-L12-v2 + distilroberta-v1 is the raw `encode()` output. Each model's `encode()` returns un-normalised vectors by default. The resulting norm is unbounded above and tracks "how much accumulated semantic content" the target's own posts carry, not a probability.
+3. **Training–test distributional mismatch at slot [42].** During Colab training-feature build, slot [42] was `self_view["depression_probability"]` from Prompt 1, a Llama-3.3-70B-emitted scalar in `[0, 1]`. At inference, the same slot carries an unnormalised embedding norm. The XGBoost split thresholds learned around `[0, 1]` simply do not fire on the live distribution.
+
+**Mechanism behind R0 ≈ R4.** Combined with `[0:42] = 0`, `[43] = 0`, `[44] = 0`, `[45] = 0`, `[46] = 0`, only one of 47 slots carries any live signal — and it is on the wrong scale. Zeroing the ToM block via `feature_mask=["no_tom"]` (R4) is therefore numerically almost identical to leaving it as-is (R0): R4 zeros 47 slots; R0 has 46 of them already at zero and the 47th miscalibrated. The ablation could not measure the ToM contribution that training actually relied on. See §18.4 / §18.5 and the train/test mismatch note in §6.1.
+
+The full call-shape, retry policy, temperature, JSON-enforcement, batching, and output-token-cap details are in [docs/task2_prompts_extracted.md §9](task2_prompts_extracted.md#9-appendix-b--call-shape--runtime-details).
 
 ---
 
@@ -418,8 +538,9 @@ Not all 21 BDI-II symptoms are equally informative for every user. Some users' d
 We maintain a **21-armed bandit** with **Beta(α, β) posteriors** per symptom per user, initialized to Beta(1, 1) (uniform prior).
 
 **Per-round update**:
+
 1. Observe symptom activation vector (21d) from the current round.
-2. For each symptom: if activation > τ_active (0.3), mark as **active**.
+2. For each symptom: if `activation > τ_active`, mark as **active**. The activation threshold is **τ_active = 0.3** (`config.symptom.activation_threshold` in [config/task2.yaml:19](../config/task2.yaml#L19); passed as `tau_active` to `ThompsonSampler` in [pipeline.py:411](../src/erisk_task2/pipeline.py#L411)). The same threshold also drives the `active_symptom_count` feature reported below.
 3. Update: α_i += (active ? 1 : 0), β_i += (¬active ? 1 : 0).
 
 **Weight computation**: Expected weight = α_i / (α_i + β_i), normalized to sum to 1.
@@ -517,7 +638,9 @@ We train four classifier types, all sharing a common interface (`fit`, `predict_
 - Max epochs: 100, batch size: 64
 
 #### SVM
-- Kernel: RBF, probability=True, class_weight='balanced'
+
+- Kernel: RBF, `probability=True`, `class_weight='balanced'`, `random_state=42`
+- `gamma='scale'` and `C=1.0` — left at sklearn defaults (not tuned)
 - StandardScaler preprocessing
 
 #### Ensemble (Stacking)
@@ -855,3 +978,113 @@ All trained models and intermediate artifacts are stored under `runs/task2/train
 | `training_results.json` | — | CV metrics (without ToM) |
 | `training_results_with_tom.json` | — | CV metrics (with ToM) |
 | `eval_results.json` | — | Full simulated evaluation metrics per run |
+
+---
+
+## Appendix A — Parameter Summary
+
+A machine-readable copy of every numeric setting verified against the source is kept in [docs/task2_parameters.json](task2_parameters.json). The table below pins the values most likely to be quoted in a paper / system description; each row cites the canonical source file.
+
+### A.1 Layer 1 — Target-user text features
+
+| Block | Parameter | Value | Source |
+| --- | --- | --- | --- |
+| Embedding ensemble | Models | mpnet-base-v2 (768d) + MiniLM-L12-v2 (384d) + distilroberta-v1 (768d) → concat 1920d | [config.py:14-23](../src/erisk_task2/config.py#L14-L23) |
+| Embedding ensemble | Batch size | 64 | [config.py:23](../src/erisk_task2/config.py#L23) |
+| Running mean | Decay λ | 0.95 | [config/task2.yaml:12](../config/task2.yaml#L12) |
+| BDI symptoms | n_symptoms / variant | 21 / "C" (clinical-formulation reference texts) | [layer1.py:48-71](../src/erisk_task2/features/layer1.py#L48-L71) |
+| BDI distributional stats | Per symptom | mean, var, skew, kurtosis, Q25, Q50, Q75 (7 stats) → 147d | [layer1.py:207-239](../src/erisk_task2/features/layer1.py#L207-L239) |
+| Lexical block | Total dim | 4 (one ratio per category) | [layer1.py:178-204](../src/erisk_task2/features/layer1.py#L178-L204) |
+| Lexical wordlist sizes | first-person / neg-emotion / absolutist / cognitive | 9 / 36 / 15 / 18 | [layer1.py:26-46](../src/erisk_task2/features/layer1.py#L26-L46) |
+
+### A.2 Layer 2 — Conversational context
+
+| Block | Parameter | Value | Source |
+| --- | --- | --- | --- |
+| Reply sentiment | Dim | 3 (mean compound, std, linear-trend slope) | [feature_assembler.py:91-96](../src/erisk_task2/classification/feature_assembler.py#L91-L96) |
+| Concern detection | Phrase count | **42** (outline previously said "~40") | [layer2.py:22-35](../src/erisk_task2/features/layer2.py#L22-L35) |
+| Concern detection | Feature dim | 1 (cross-round flag ratio) | [feature_assembler.py:98-102](../src/erisk_task2/classification/feature_assembler.py#L98-L102) |
+| Conv. position | Dim **in feature vector** | 3 (`is_author_ratio`, `target_silent_ratio`, `reply_depth_mean`) | [feature_assembler.py:104-110](../src/erisk_task2/classification/feature_assembler.py#L104-L110) |
+| Conv. position | Computed but discarded | `text_volume_mean`, `text_volume_trend` | [layer2.py:106-130](../src/erisk_task2/features/layer2.py#L106-L130) |
+| Thread topic similarity | Dim | 21 (title × 21 BDI references, averaged across rounds) | [layer2.py:133-150](../src/erisk_task2/features/layer2.py#L133-L150) |
+| **Layer 2 total** | — | **28d** (3 + 1 + 3 + 21) | — |
+
+### A.3 Layer 3 — Emotion + Topics
+
+| Block | Parameter | Value | Source |
+| --- | --- | --- | --- |
+| Emotion | Model | `j-hartmann/emotion-english-distilroberta-base` | [config/task2.yaml:30](../config/task2.yaml#L30) |
+| Emotion | Min words for classification | 10 (else uniform 1/8 fallback) | [layer3.py:47-83](../src/erisk_task2/features/layer3.py#L47-L83) |
+| Emotion | Feature dim | 9 (8 mean-dist + 1 Shannon entropy) | [feature_assembler.py:118-122](../src/erisk_task2/classification/feature_assembler.py#L118-L122) |
+| BERTopic | n_topics | 40 | [config/task2.yaml:22](../config/task2.yaml#L22) |
+| BERTopic | UMAP n_neighbors / n_components | 15 / 5 | [config/task2.yaml:23-24](../config/task2.yaml#L23-L24) |
+| BERTopic | HDBSCAN min_cluster_size / min_samples | 50 / 10 | [config/task2.yaml:25-26](../config/task2.yaml#L25-L26) |
+| BERTopic | Rolling buffer | 5 last target texts | [config/task2.yaml:27](../config/task2.yaml#L27) |
+| BERTopic | Test-time topic assignment | `model.transform()` → **soft (probabilistic)** for the 40d distribution; **hard top-1** for the depression-proportion slot | [layer3.py:195-227](../src/erisk_task2/features/layer3.py#L195-L227) |
+| BERTopic | Feature dim | 41 = 40d distribution + 1d **mean depression-proportion** (not entropy) | [pipeline.py:258-275](../src/erisk_task2/pipeline.py#L258-L275) |
+
+### A.4 Distributional distances
+
+| Block | Parameter | Value | Source |
+| --- | --- | --- | --- |
+| Wasserstein | short_window / medium_window | 5 / 25 | [config/task2.yaml:34-35](../config/task2.yaml#L34-L35) |
+| Sliced Wasserstein | n_projections | 50 (random unit directions in R^1920) | [config/task2.yaml:36](../config/task2.yaml#L36) |
+| Wasserstein | Feature dim | 72 (63 symptom + 3 emotion + 3 embedding + 3 topic) | [wasserstein.py:142-196](../src/erisk_task2/distances/wasserstein.py#L142-L196) |
+| Mahalanobis | n_pca_components | 50 (effective = min(50, n_features, n_control − 1)) | [config/task2.yaml:39](../config/task2.yaml#L39) |
+| Mahalanobis | Regularization | `LedoitWolf` shrinkage covariance | [mahalanobis.py:51, 58](../src/erisk_task2/distances/mahalanobis.py#L51) |
+| Mahalanobis | Feature dim | 3 (D_M_control, D_M_relative, D_M_depressed) | [mahalanobis.py:68-91](../src/erisk_task2/distances/mahalanobis.py#L68-L91) |
+
+### A.5 ToM (LLM) operationalisation
+
+| Block | Parameter | Value | Source |
+| --- | --- | --- | --- |
+| Backend (training features) | Provider / model | HuggingFace InferenceClient / `meta-llama/Llama-3.3-70B-Instruct` | [hf_client.py:23](../src/erisk_task2/tom/hf_client.py#L23) |
+| HF max output tokens | `max_tokens` | 2048 | [config.py:85](../src/erisk_task2/config.py#L85) |
+| Ollama context | `num_ctx` | 8192 | [config/task2.yaml:50](../config/task2.yaml#L50) |
+| Ollama max output tokens | `num_predict` | **not set** → model default (uncapped from the client side) | [llm_client.py:50-59](../src/erisk_task2/tom/llm_client.py#L50-L59) |
+| Temperature | All prompts, all attempts | 0.1 | [config/task2.yaml:52](../config/task2.yaml#L52) |
+| Retry policy | `max_retries` / back-off | 3 / `2 ** attempt` seconds | [hf_client.py:64-83](../src/erisk_task2/tom/hf_client.py#L64-L83), [llm_client.py:64-82](../src/erisk_task2/tom/llm_client.py#L64-L82) |
+| Retry temperature override | — | **none** (no temperature=0 fallback) | same |
+| Batching | Across users / rounds | sequential, no batching | [tom_module.py:155-204](../src/erisk_task2/tom/tom_module.py#L155-L204) |
+| Thread format | Max tokens | 2000 (~8000 chars) | [config/task2.yaml:67](../config/task2.yaml#L67) |
+| ToM feature dim | — | 47 | [tom_module.py:207-251](../src/erisk_task2/tom/tom_module.py#L207-L251) |
+
+### A.6 Thompson Sampling
+
+| Parameter | Value | Source |
+| --- | --- | --- |
+| n_symptoms (arms) | 21 | [thompson.py:16](../src/erisk_task2/bandits/thompson.py#L16) |
+| Activation threshold τ_active | **0.3** | [config/task2.yaml:19](../config/task2.yaml#L19) |
+| Prior | **Beta(1, 1)** (uniform) | [thompson.py:20-25](../src/erisk_task2/bandits/thompson.py#L20-L25) |
+| Feature dim | 25 (1 weighted score + 1 entropy + 1 active count + 21 weights + 1 uncertainty) | [thompson.py:68-105](../src/erisk_task2/bandits/thompson.py#L68-L105) |
+
+### A.7 Classifiers
+
+| Classifier | Hyperparameter | Value | Source |
+| --- | --- | --- | --- |
+| XGBoost | max_depth | 6 | [config/task2.yaml:72](../config/task2.yaml#L72) |
+| XGBoost | n_estimators | 300 | [config/task2.yaml:73](../config/task2.yaml#L73) |
+| XGBoost | learning_rate | 0.1 | [config/task2.yaml:74](../config/task2.yaml#L74) |
+| XGBoost | `scale_pos_weight` | **auto = n_neg / n_pos** at fit time (~7.9 on training data) | [classifiers.py:66-71](../src/erisk_task2/classification/classifiers.py#L66-L71) |
+| XGBoost | eval_metric / random_state | `logloss` / 42 | [classifiers.py:73-79](../src/erisk_task2/classification/classifiers.py#L73-L79) |
+| MLP | Hidden widths | (256, 64) | [classifiers.py:104](../src/erisk_task2/classification/classifiers.py#L104) |
+| MLP | Dropout | 0.3 | [classifiers.py:104](../src/erisk_task2/classification/classifiers.py#L104) |
+| MLP | Optimizer / lr | Adam / 1e-3 | [classifiers.py:137](../src/erisk_task2/classification/classifiers.py#L137) |
+| MLP | Batch size / max epochs / patience | 64 / 100 / 10 | [classifiers.py:107, 143, 147](../src/erisk_task2/classification/classifiers.py#L107) |
+| MLP | Loss | `BCEWithLogitsLoss(pos_weight = n_neg / n_pos)` | [classifiers.py:121-138](../src/erisk_task2/classification/classifiers.py#L121-L138) |
+| SVM | Kernel / γ / C | RBF / `'scale'` / 1.0 (sklearn defaults; not tuned) | [classifiers.py:223-227](../src/erisk_task2/classification/classifiers.py#L223-L227) |
+| SVM | class_weight | balanced | same |
+| Stacking meta | Model / weighting | LogisticRegression / `class_weight='balanced'` | [classifiers.py:272](../src/erisk_task2/classification/classifiers.py#L272) |
+| Stacking meta | OOF strategy | 5-fold StratifiedKFold from {XGB, MLP, SVM} | [classifiers.py:262](../src/erisk_task2/classification/classifiers.py#L262) |
+
+### A.8 Per-run decision-policy parameters (source of truth: [models.py:206-213](../src/erisk_task2/models.py#L206-L213))
+
+| Run | Classifier | θ_init | θ_floor | ERDE o | t_con | Feature mask |
+| --- | --- | --- | --- | --- | --- | --- |
+| **R0** | XGBoost | 0.85 | 0.45 | 50 | 2 | — |
+| **R1** | XGBoost | 0.70 | 0.35 | 5 | 1 | — |
+| **R2** | MLP | 0.85 | 0.45 | 50 | 2 | — |
+| **R3** | Ensemble | 0.80 | 0.40 | 30 | 2 | — |
+| **R4** | XGBoost | 0.85 | 0.45 | 50 | 2 | `["no_tom"]` |
+
+Threshold schedule: `θ(k) = θ_init − (θ_init − θ_floor) · σ(k − o)` ([policy.py:30-41](../src/erisk_task2/decision/policy.py#L30-L41)). Alert latches once `consecutive_positives ≥ t_con` ([policy.py:44-85](../src/erisk_task2/decision/policy.py#L44-L85)).

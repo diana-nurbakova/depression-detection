@@ -164,6 +164,50 @@ ACT_PROCESS_KEYS = [
 ]
 
 # ---------------------------------------------------------------------------
+# Therapeutic phase canonicalisation (spec §5.8 ``fase_terapeutica``)
+# ---------------------------------------------------------------------------
+# Llama emits the same phase in both accented and unaccented Spanish forms
+# (e.g. ``defusion`` and ``defusión``), inflating RQ4's phase-conditional terms.
+# The canonical set keeps Spanish accents; the lookup collapses unaccented
+# variants and casing back to canonical form.
+
+THERAPEUTIC_PHASES_ES = [
+    "crisis",
+    "exploración",
+    "defusión",
+    "aceptación",
+    "activación",
+    "integración",
+    "cierre",
+]
+
+
+def _strip_accents_lower(s: str) -> str:
+    import unicodedata
+    return "".join(
+        c for c in unicodedata.normalize("NFKD", s) if not unicodedata.combining(c)
+    ).lower().strip()
+
+
+_PHASE_LOOKUP = {_strip_accents_lower(p): p for p in THERAPEUTIC_PHASES_ES}
+
+
+def canonical_phase(value):
+    """Normalise a ``fase_terapeutica`` string to its canonical accented form.
+
+    - Accented and unaccented variants of a known phase collapse to the
+      accented canonical (e.g. ``"defusion"`` → ``"defusión"``).
+    - Casing is normalised (lowercased).
+    - Unknown phases fall back to the accent-stripped lowercase form so
+      future Llama outputs remain comparable across rows.
+    - ``None`` / empty / non-string inputs pass through unchanged.
+    """
+    if not isinstance(value, str) or not value.strip():
+        return value
+    key = _strip_accents_lower(value)
+    return _PHASE_LOOKUP.get(key, key)
+
+# ---------------------------------------------------------------------------
 # Signal types (spec §5.2 / §6.1)
 # ---------------------------------------------------------------------------
 LLAMA_SIGNAL = "llama_state_snapshot"
