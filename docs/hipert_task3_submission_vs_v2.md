@@ -121,3 +121,119 @@ with the **OrdinalCE / SymmetricCE + margin + hierarchy composite loss** and **u
 3-backbone averaging**. CORAL, ListMLE, the LSO-CV folds, and the cross-encoder
 hyperparameters all describe a **post-submission v2** that was never run in the
 submission notebook. **RRF k = 60** and the **top-1000 fusion** apply to both versions.
+
+---
+
+## Appendix: Four-layer prompt template (L1–L4)
+
+The LLM scorer used a four-layer per-item grounding
+([specs/asrs_four_layer_definitions.md](../specs/asrs_four_layer_definitions.md)),
+loaded from `config/symptoms.yaml` → `layers.{L1_clinical, L2_adult, L3_discussion,
+L4_differential}` and assembled by `PromptBuilder._build_elaboration`
+([prompt_builder.py:179](../src/hipert/scoring/prompt_builder.py#L179)). Token-budget
+strategy controls which layers are included per item: `full_4` (L1–L4, items 7–11),
+`compressed_3` (L1+L3+L4, items 1–4, 6, 13, 14), `minimal_2` (L1+L3, items 5, 12, 15–18).
+
+- **L1** — DSM-5-TR criterion text (clinical anchor)
+- **L2** — adult behavioural manifestation (plain-language presentation)
+- **L3** — empirical social-media language patterns (register, voice, self-reference)
+- **L4** — differential markers separating from depression/anxiety/etc.
+
+### Layer 1 — Clinical anchor
+
+Not a category set — the **formal DSM-5-TR criterion text**, quoted per item, rendered
+as `Clinical Definition:`. Two structural elements, identical in form across all 18 items:
+
+1. **Verbatim DSM-5-TR criterion clause** — the official 1a–1i / 2a–2i wording.
+2. **Adult-adaptation gloss** — a "for adults, this manifests as…" translation from the
+   child-oriented criterion to adult presentation.
+
+(No abstraction offered; any "categories" would be invented.)
+
+### Layer 2 — Adult behavioural manifestation
+
+Concrete daily-life presentations organised by **life-domain setting** (explicitly
+bulleted by domain in the grounding doc; flattened to prose in the deployed YAML, ranging
+over the same domains). Rendered as `Adult Manifestation:` (only in `full_4` items). The
+recurring domains:
+
+1. **Work / professional** — task execution, meetings, deadlines, colleague perception.
+2. **Home / household** — chores, maintenance, domestic routines.
+3. **Academic / learning** — studying, reading, coursework.
+4. **Administrative / financial** — bills, forms, taxes, appointments, paperwork.
+5. **Social / relational** — conversations, friendships, partner dynamics.
+6. **Personal / internal & daily routine** — leisure, sleep, self-regulation, daily habits.
+
+### Layer 3 — Empirical social-media language patterns
+
+L3 reaches the model via `PromptBuilder._build_elaboration`, which renders
+`symptom.discussion_topics` under the heading **"Online Discussion Patterns:"**
+([prompt_builder.py:191](../src/hipert/scoring/prompt_builder.py#L191)); that field is
+loaded verbatim from `config/symptoms.yaml` → `layers.L3_discussion`
+([config.py:142](../src/hipert/config.py#L142)).
+
+> ⚠️ **L3 is per-item free text, not an enumerated taxonomy.** In the deployed prompt
+> L3 is topic prose plus example phrasings, varying per symptom — there is no list of
+> "language-pattern categories" in the prompt itself. The discrete, labelled cue
+> categories the model was told to emit live in the **system prompt's response schema**
+> (`SYMPTOM_MATCH`, `SELF_REFERENCE`, `DETAIL_LEVEL`, `CONFOUNDERS`, plus the
+> valence-invariance and naming-insufficiency rules —
+> [prompt_builder.py:53-70](../src/hipert/scoring/prompt_builder.py#L53)), not in L3.
+
+Abstracting the recurring pattern-*types* across all 18 items' L3 prose (a description of
+the content, **not** a taxonomy the prompt enumerated):
+
+1. **Capability–selectivity contrast** — juxtaposes preserved ability (novelty, challenge,
+   hyperfocus) against domain-specific failure (routine, boring, finishing tasks); marks
+   interest-driven rather than global impairment.
+2. **Impaired-inhibition / involuntariness** — frames the behaviour as automatic and
+   resistant to will; locates the deficit in control, not in desire, knowledge, or fear.
+3. **Metacognitive awareness with self-judgment** — explicit self-monitoring and
+   retrospective regret, often pre-empting an external label (lazy / rude / careless);
+   the "I know it's X, but I can't" construction.
+4. **Embodied internal-state report** — first-person somatic restlessness, a "racing" or
+   "never-off" mind, or motor-driven sensation, framed as physical rather than mood or worry.
+5. **Coping-scaffold and treatment talk** — references to external compensations
+   (reminders, alarms, planners, trackers, headphones, body-doubling) and to
+   medication-driven symptom change, used as indirect evidence of the symptom.
+6. **Relational / third-party-perception framing** — surfaces the symptom through its
+   interpersonal or occupational fallout and how others read it, using others' reactions
+   as the evidentiary anchor.
+
+**Suggested methods-section wording:** *"Layer 3 supplied each item with
+empirically-grounded online discussion patterns. Rather than a fixed keyword list, these
+were rendered as per-item descriptions of how the symptom surfaces in self-report; the
+recurring pattern-types across items can be characterised post-hoc as six categories:
+capability–selectivity contrast, impaired-inhibition framing, metacognitive self-judgment,
+embodied internal-state report, coping-scaffold/treatment talk, and
+relational/third-party-perception framing."*
+
+### Layer 4 — Differential markers
+
+Genuinely enumerated in the content as **"vs. \<condition\>" contrasts**, rendered as
+`Differential Markers:` (in `full_4` and `compressed_3` items). Uniquely, every item also
+carries an `ADHD-specific:` confirming line (18/18). Unlike L3, the condition contrasts are
+*actual content* — the families below group ~25 distinct keyed conditions, not a post-hoc
+invention:
+
+1. **ADHD-specific signature** — the *confirming* pattern (all 18 items); interest-driven,
+   control-deficit, lifelong/pervasive framing — a positive cue, not a confound.
+2. **Mood (depression)** — most frequent contrast (5+ items); global amotivation, cognitive
+   fog, psychomotor agitation, mood-congruent rather than task-specific.
+3. **Anxiety spectrum** — GAD, social anxiety, PTSD; worry-/threat-driven, perfectionist or
+   avoidance-based rather than stimulation-driven.
+4. **Other psychiatric / neurodevelopmental** — OCD, mania/hypomania, autism, behavioural
+   addiction, personality traits (narcissistic/antisocial); each a distinct competing mechanism.
+5. **Medical / neurological / substance** — thyroid, restless-legs, akathisia, hearing/sensory
+   disorders, aging/dementia, caffeine; organic or drug-induced rule-outs.
+6. **Normal variation** — extroversion, ordinary impatience/boredom, flow states;
+   distinguished by severity, pervasiveness, and impairment.
+
+### Layer status summary
+
+| Layer | Form in deployed prompt | Categories above are… |
+|-------|-------------------------|------------------------|
+| L1 | Verbatim DSM-5-TR criterion + adult gloss | n/a (no taxonomy) |
+| L2 | Prose (domain-bulleted in grounding doc) | post-hoc domain grouping |
+| L3 | Per-item topic prose + example phrasings | post-hoc characterisation |
+| L4 | Keyed "vs. \<condition\>" contrasts + `ADHD-specific:` line | grouping of real content |
