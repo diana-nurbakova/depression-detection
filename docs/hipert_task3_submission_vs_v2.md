@@ -114,6 +114,52 @@ truncate to 1000), so RRF fuses the **union of two top-1000 lists** using ranks
 
 ---
 
+## v1 bi-encoder trainer config (the SUBMITTED HiPerT_full run)
+
+Source: `trainer.py`/`stage_a.py`/`stage_b.py` at submission commit `1067429`.
+This is the config that actually produced the submitted run.
+
+### Common settings (all stages)
+
+- **Optimizer:** AdamW (default β=0.9/0.999), `weight_decay=0.01`, `max_grad_norm=1.0`,
+  `gradient_accumulation_steps=1` ([trainer.py](../src/hipert/training/trainer.py)).
+- **LR schedule:** `LinearLR` warmup (start_factor 0.1, **500 steps**) →
+  `CosineAnnealingWarmRestarts(T_0=5)`, stitched via `SequentialLR(milestones=[500])`.
+  ⚠️ `T_0=5` is in **optimizer-step units**, so cosine restarts every 5 steps — the
+  notebook LR logs oscillate (~1e-5 ↔ ~1e-6) within each epoch instead of decaying smoothly.
+- **AMP:** Yes — `mixed_precision=True`, `torch.amp.GradScaler("cuda")` + autocast.
+- **Max sequence length:** `ScoringDataset` default **128 tokens per segment**
+  (never overridden). A1 = text only; A2/B encode text + pre + post as **three separate
+  128-token fields**.
+- **Early stopping:** validation = composite loss on a 10% held-out split (lower better);
+  best saved on `val < best − min_delta`, `min_delta=0.001`. Val batch = 2× train.
+- **Loss:** `CompositeLoss` λ=(1.0, 0.5, 0.05) throughout.
+
+### Per-stage
+
+| | Stage A1 (BDI-Sen) | Stage A2 (eRisk-2025 T1) | Stage B (ADHD silver) |
+|---|---|---|---|
+| LR (base) | 2e-5 | **1e-5** (0.5× base) | **1e-5** |
+| Epochs (max) | 10 | 5 | 15 |
+| Batch size | 32 | 32 | 32 |
+| Patience | 3 | 2 | 5 |
+| Ordinal loss | OrdinalCE (ε=0.2) | OrdinalCE (ε=0.2) | **SymmetricCE (α=1.0, β=0.5)** |
+| Curriculum | no | no | **yes** (p=2.0, β_scale=5.0) |
+| Context | text only | text + pre/post | text + pre/post |
+| num_symptoms | 21 (BDI-II) | 21 | 18 (ASRS) |
+| Layer freezing | **bottom 6 frozen**, `unfreeze_all` at **epoch 3**, LR → 2e-6 | full fine-tune (freeze=0) | full fine-tune (freeze=0) |
+
+**Freezing scheme:** Only A1 uses gradual unfreezing — bottom 6 backbone layers frozen for
+epochs 0–2, full backbone unfrozen at epoch 3 with the optimizer re-initialized at **0.1× LR
+(→2e-6)**. A2 and B load from a checkpoint (all params trainable) and run **full fine-tuning
+from step 0** (`freeze_backbone_layers=0` disables the unfreeze branch). Stage B is followed
+by per-symptom temperature + Dirichlet **calibration** fit on its val split.
+
+**Notebook args** (`task3_colab.ipynb`, = defaults above): A `max_epochs_a1=10,
+max_epochs_a2=5, batch=32, lr=2e-5`; B `max_epochs=15, batch=32, lr=1e-5, min_confidence=0.3`.
+
+---
+
 ## Bottom line for the paper
 
 If describing the **eRisk 2026 submission**, the ranking model was the **bi-encoder**
@@ -180,6 +226,8 @@ loaded verbatim from `config/symptoms.yaml` → `layers.L3_discussion`
 > valence-invariance and naming-insufficiency rules —
 > [prompt_builder.py:53-70](../src/hipert/scoring/prompt_builder.py#L53)), not in L3.
 
+### Post-hoc characterisation of L3 content
+
 Abstracting the recurring pattern-*types* across all 18 items' L3 prose (a description of
 the content, **not** a taxonomy the prompt enumerated):
 
@@ -207,33 +255,3 @@ recurring pattern-types across items can be characterised post-hoc as six catego
 capability–selectivity contrast, impaired-inhibition framing, metacognitive self-judgment,
 embodied internal-state report, coping-scaffold/treatment talk, and
 relational/third-party-perception framing."*
-
-### Layer 4 — Differential markers
-
-Genuinely enumerated in the content as **"vs. \<condition\>" contrasts**, rendered as
-`Differential Markers:` (in `full_4` and `compressed_3` items). Uniquely, every item also
-carries an `ADHD-specific:` confirming line (18/18). Unlike L3, the condition contrasts are
-*actual content* — the families below group ~25 distinct keyed conditions, not a post-hoc
-invention:
-
-1. **ADHD-specific signature** — the *confirming* pattern (all 18 items); interest-driven,
-   control-deficit, lifelong/pervasive framing — a positive cue, not a confound.
-2. **Mood (depression)** — most frequent contrast (5+ items); global amotivation, cognitive
-   fog, psychomotor agitation, mood-congruent rather than task-specific.
-3. **Anxiety spectrum** — GAD, social anxiety, PTSD; worry-/threat-driven, perfectionist or
-   avoidance-based rather than stimulation-driven.
-4. **Other psychiatric / neurodevelopmental** — OCD, mania/hypomania, autism, behavioural
-   addiction, personality traits (narcissistic/antisocial); each a distinct competing mechanism.
-5. **Medical / neurological / substance** — thyroid, restless-legs, akathisia, hearing/sensory
-   disorders, aging/dementia, caffeine; organic or drug-induced rule-outs.
-6. **Normal variation** — extroversion, ordinary impatience/boredom, flow states;
-   distinguished by severity, pervasiveness, and impairment.
-
-### Layer status summary
-
-| Layer | Form in deployed prompt | Categories above are… |
-|-------|-------------------------|------------------------|
-| L1 | Verbatim DSM-5-TR criterion + adult gloss | n/a (no taxonomy) |
-| L2 | Prose (domain-bulleted in grounding doc) | post-hoc domain grouping |
-| L3 | Per-item topic prose + example phrasings | post-hoc characterisation |
-| L4 | Keyed "vs. \<condition\>" contrasts + `ADHD-specific:` line | grouping of real content |
